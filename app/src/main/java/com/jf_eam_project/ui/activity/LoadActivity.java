@@ -9,7 +9,9 @@ import android.view.WindowManager;
 
 import com.jf_eam_project.R;
 
-/**登录界面**/
+/**
+ * 登录界面*
+ */
 public class LoadActivity extends BaseActivity {
 
     private static final int ANIMATION_DURATION = 2000;
@@ -39,7 +41,7 @@ public class LoadActivity extends BaseActivity {
     class splashhandler implements Runnable {
 
         public void run() {
-//            jumpLoginActivity();
+            jumpLoginActivity();
         }
 
     }
@@ -50,7 +52,7 @@ public class LoadActivity extends BaseActivity {
      */
     private void jumpLoginActivity() {
         Intent intent = new Intent();
-//        intent.setClass(this, LoginActivity.class);
+        intent.setClass(this, LoginActivity.class);
         startActivity(intent);
     }
 

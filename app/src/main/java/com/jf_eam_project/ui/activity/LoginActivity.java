@@ -12,7 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.utils.AccountUtils;
+import com.jf_eam_project.utils.MessageUtils;
 
 
 /**
@@ -60,11 +64,11 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
     @Override
     protected void initView() {
 
-//        boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
-//        if (isChecked) {
-//            mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
-//            mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
-//        }
+        boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
+        if (isChecked) {
+            mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
+            mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
+        }
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
     }
@@ -103,37 +107,37 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
         mProgressDialog = ProgressDialog.show(LoginActivity.this, null,
                 getString(R.string.login_loging), true, true);
 
-//        HttpManager.loginWithUsername(LoginActivity.this,
-//                mUsername.getText().toString(),
-//                mPassword.getText().toString(), imei,
-//                new HttpRequestHandler<String>() {
-//                    @Override
-//                    public void onSuccess(String data) {
-//
-//                        MessageUtils.showMiddleToast(LoginActivity.this, data);
-//                        mProgressDialog.dismiss();
-//                        if (isRemember) {
-//                            AccountUtils.setChecked(LoginActivity.this, isRemember);
-//                            //��ס����
-//                            AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
-//                        }
-//                        startIntent();
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(String data, int totalPages, int currentPage) {
-//                        MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_hint));
-//
-//                        startIntent();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error) {
-//                        MessageUtils.showErrorMessage(LoginActivity.this, error);
-//                        mProgressDialog.dismiss();
-//                    }
-//                });
+        HttpManager.loginWithUsername(LoginActivity.this,
+                mUsername.getText().toString(),
+                mPassword.getText().toString(), imei,
+                new HttpRequestHandler<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+
+                        MessageUtils.showMiddleToast(LoginActivity.this, data);
+                        mProgressDialog.dismiss();
+                        if (isRemember) {
+                            AccountUtils.setChecked(LoginActivity.this, isRemember);
+                            AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
+                        }
+                        startIntent();
+
+                    }
+
+                    @Override
+                    public void onSuccess(String data, int totalPages, int currentPage) {
+                        MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_hint));
+
+                        startIntent();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        MessageUtils.showErrorMessage(LoginActivity.this, error);
+                        mProgressDialog.dismiss();
+                        startIntent();
+                    }
+                });
     }
 
 
