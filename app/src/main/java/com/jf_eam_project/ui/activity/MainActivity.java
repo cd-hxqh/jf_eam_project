@@ -177,6 +177,7 @@ public class MainActivity extends BaseActivity
 //    }
 
 
+
     private long exitTime = 0;
 
     @Override
