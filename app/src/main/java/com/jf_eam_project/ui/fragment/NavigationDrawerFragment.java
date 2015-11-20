@@ -131,7 +131,6 @@ public class NavigationDrawerFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             closeDrawer();
-            showAlertDialog();
         }
     };
 
@@ -309,32 +308,7 @@ public class NavigationDrawerFragment extends BaseFragment {
     }
 
 
-    /**
-     * 退出程序*
-     */
-    public void showAlertDialog() {
 
-        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-        builder.setMessage("确定退出程序吗？");
-        builder.setTitle("提示");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //设置你的操作事项
-                AppManager.AppExit(getActivity());
-            }
-        });
-
-        builder.setNegativeButton("取消",
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builder.create().show();
-
-    }
 
 
 }

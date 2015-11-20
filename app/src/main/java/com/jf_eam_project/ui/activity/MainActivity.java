@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
+import com.jf_eam_project.ui.widget.CustomDialog;
 
 
 public class MainActivity extends BaseActivity
@@ -42,6 +44,10 @@ public class MainActivity extends BaseActivity
     private String[] mMainTitles;
 
     private TextView titleText;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +103,42 @@ public class MainActivity extends BaseActivity
             case 3:
 
                 break;
+            case 6:
+                mNavigationDrawerFragment.closeDrawer();
+                showAlertDialog();
+                break;
         }
 
     }
+
+
+    /**
+     * 退出程序*
+     */
+    public void showAlertDialog() {
+
+        CustomDialog.Builder builder = new CustomDialog.Builder(MainActivity.this);
+        builder.setMessage(getString(R.string.exit_dialog_hint));
+        builder.setTitle(getString(R.string.exit_dialog_title));
+        builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //设置你的操作事项
+                AppManager.AppExit(MainActivity.this);
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.canel),
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();
+
+    }
+
 
 
     public void restoreActionBar() {
