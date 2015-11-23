@@ -56,7 +56,12 @@
             android:screenOrientation="portrait"
             >
         </activity>
-
+        <activity
+            android:name=".ui.activity.Work_ListActivity"
+            android:label="@string/title_activity_work_list"
+            android:screenOrientation="portrait"
+            >
+        </activity>
     </application>
 
 </manifest>

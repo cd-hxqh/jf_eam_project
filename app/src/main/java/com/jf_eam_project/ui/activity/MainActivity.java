@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
+import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
 
 
@@ -45,6 +46,10 @@ public class MainActivity extends BaseActivity
 
     private TextView titleText;
 
+    /**
+     * 工单管理*
+     */
+    private WorkFragment mWorkFragment;
 
 
 
@@ -97,6 +102,12 @@ public class MainActivity extends BaseActivity
             case 0:
                 break;
             case 1:
+                if (mWorkFragment == null) {
+                    mWorkFragment = new WorkFragment();
+                    Bundle bundle = new Bundle();
+                    mWorkFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mWorkFragment).commit();
                 break;
             case 2:
                 break;
