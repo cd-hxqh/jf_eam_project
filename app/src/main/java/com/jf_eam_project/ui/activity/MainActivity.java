@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity
 
 
     /**
-     * ÍË³ö³ÌĞò*
+     * é€€å‡ºç¨‹åº
      */
     public void showAlertDialog() {
 
@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity
         builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //ÉèÖÃÄãµÄ²Ù×÷ÊÂÏî
                 AppManager.AppExit(MainActivity.this);
             }
         });
