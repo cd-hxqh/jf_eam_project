@@ -14,38 +14,38 @@ public class Po extends Entity {
     private static final String TAG = "PO";
     private static final long serialVersionUID = 2015050105L;
 
-    private String buyercompany;//
-    private String contact;//
-    private String currencycode;//
-    private String customernum;//
-    private String description;//
-    private String fob;//
-    private String freightterms;//
-    private String inclusive1;//
-    private String inspectionrequired;//
-    private String internal;//
-    private String orderdate;//
-    private String paymentterms;//
-    private String ponum;//
-    private String potype;//
-    private String pretaxtotal;//
-    private String priority;//
-    private String purchaseagent;//
-    private String requireddate;//
-    private String shipvia;//
-    private String sitedesc;//
-    private String siteid;//
-    private String status;//
-    private String statusdate;//
-    private String storeloc;//
-    private String storelocdesc;//
-    private String storelocsiteid;//
-    private String totalbasecost;//
-    private String totalcost;//
-    private String totaltax1;//
-    private String vendeliverydate;//
-    private String vendor;//
-    private String vendordesc;//
+    private String buyercompany;//买方公司
+    private String contact;//联系人
+    private String currencycode;//货币
+    private String customernum;//客户编号
+    private String description;//描述
+    private String fob;//离岸点
+    private String freightterms;//运输条款
+    private String inclusive1;//向供应商付税
+    private String inspectionrequired;//需要检查
+    private String internal;//指定供应商是否在您公司范围内
+    private String orderdate;//订购日期
+    private String paymentterms;//支付条款
+    private String ponum;// 采购单编号
+    private String potype;// 类型
+    private String pretaxtotal;//税前总计
+    private String priority;// 优先级
+    private String purchaseagent;//买方
+    private String requireddate;//要求日期
+    private String shipvia;//装运方式
+    private String sitedesc;//地点描述
+    private String siteid;// 地点
+    private String status;// 状态
+    private String statusdate;//状态日期
+    private String storeloc;//库房
+    private String storelocdesc;//库房描述
+    private String storelocsiteid;//库房地点
+    private String totalbasecost;//成本总计（以基本货币为单位）
+    private String totalcost;//成本总计
+    private String totaltax1;//税款总计
+    private String vendeliverydate;//供应商日期
+    private String vendor;//公司
+    private String vendordesc;//公司描述
 
 
     public String getBuyercompany() {
