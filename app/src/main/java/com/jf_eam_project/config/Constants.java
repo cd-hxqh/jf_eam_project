@@ -110,7 +110,7 @@ public class Constants {
     /**
      * 工单跳转类型标识
      */
-    public static final String FAULT = "CM";//故障工单
-    public static final String PREVENT = "PM";//预防性维护工单
-    public static final String STATUS = "SR";//状态维修工单
+    public static final String PLAN = "PLAN";//计划工单
+    public static final String PROJECT = "PROJECT";//项目工单
+    public static final String UNPLAN = "UNPLAN";//非计划工单
 }

@@ -62,6 +62,11 @@
     <string name="item_serve_work">项目维修</string>
     <string name="plan_serve_work">计划维修</string>
     <string name="not_plan_serve_work">非项目维修</string>
+    <string name="item_num_title">编号:</string>
+    <string name="item_desc_title">描述:</string>
+    <!-- hint -->
+    <string name="hint_item_num_title">暂无编号</string>
+    <string name="hint_item_desc_title">暂无描述</string>
 
 
     <!--弹出框-->
@@ -78,4 +83,8 @@
     <string name="polling_plan_text">巡检计划</string>
     <string name="polling_way_text">巡检路线</string>
     <string name="polling_order_text">巡检单</string>
+
+    <!---->
+    <string name="work_wonum">工单号</string>
+    <string name="work_desc">描述</string>
 </resources>

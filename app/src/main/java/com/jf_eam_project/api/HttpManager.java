@@ -5,7 +5,9 @@ import android.content.Context;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import com.jf_eam_project.R;
 import com.jf_eam_project.application.BaseApplication;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -38,15 +40,16 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(int curpage, int showcount) {
-            return "{'appid':'"+Constants.UDWOCM_APPID+"','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
+        if (search.equals("")) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "'}}";
+        } else{
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "','WONUM':'" + search + "'}}";
     }
 
-    public static String getworkorderUrl(String search, int curpage, int showcount) {
-        return "{'appid':'"+Constants.UDWOCM_APPID+"','objectname':'" + Constants.WORKORDER_NAME + "',"+
-                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "'}}";
-    }
+}
 
     /**
      * 设置计划任务接口*
@@ -241,29 +244,30 @@ public class HttpManager {
 //    }
 //
 //
-//    /**
-//     * 解析返回的结果--分页*
-//     */
-//    public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-//        Log.i(TAG, "data=" + data);
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams params = new RequestParams();
-//        params.put("data", data);
-//        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                Log.i(TAG, "statusCode" + "responseString=" + responseString);
-//                Results result = JsonUtils.parsingResults(cxt, responseString);
-//
-//                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
-//            }
-//        });
-//    }
+
+    /**
+     * 解析返回的结果--分页*
+     */
+    public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
+        Log.i(TAG, "data=" + data);
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("data", data);
+        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.i(TAG, "statusCode" + "responseString=" + responseString);
+                Results result = JsonUtils.parsingResults(cxt, responseString);
+
+                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
+            }
+        });
+    }
 
 
 }
