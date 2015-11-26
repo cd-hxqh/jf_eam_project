@@ -3,7 +3,9 @@ package com.jf_eam_project.api;
 import android.content.Context;
 import android.util.Log;
 
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.WorkOrder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,42 +44,42 @@ public class JsonUtils {
         }
     }
 
-//    /**
-//     * 分页解析返回的结果*
-//     */
-//    public static Results parsingResults(Context ctx, String data) {
-//        Log.i(TAG, "data=" + data);
-//        String result = null;
-//        Results results = null;
-//        try {
-//            JSONObject json = new JSONObject(data);
-//            String jsonString = json.getString("errcode");
-//            if (jsonString.equals(Constants.GETDATASUCCESS)) {
-//                result = json.getString("result");
-//                JSONObject rJson = new JSONObject(result);
-//                String curpage = rJson.getString("curpage");
-//                String totalresult = rJson.getString("totalresult");
-//                String resultlist = rJson.getString("resultlist");
-//                String totalpage = rJson.getString("totalpage");
-//                String showcount = rJson.getString("showcount");
-//                results = new Results();
-//                results.setCurpage(Integer.valueOf(curpage));
-//                results.setTotalresult(totalresult);
-//                results.setResultlist(resultlist);
-//                results.setTotalpage(totalpage);
-//                results.setShowcount(Integer.valueOf(showcount));
-//            }
-//
-//            return results;
-//
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            return results;
-//        }
-//
-//    }
-//
+    /**
+     * 分页解析返回的结果*
+     */
+    public static Results parsingResults(Context ctx, String data) {
+        Log.i(TAG, "data=" + data);
+        String result = null;
+        Results results = null;
+        try {
+            JSONObject json = new JSONObject(data);
+            String jsonString = json.getString("errcode");
+            if (jsonString.equals(Constants.GETDATASUCCESS)) {
+                result = json.getString("result");
+                JSONObject rJson = new JSONObject(result);
+                String curpage = rJson.getString("curpage");
+                String totalresult = rJson.getString("totalresult");
+                String resultlist = rJson.getString("resultlist");
+                String totalpage = rJson.getString("totalpage");
+                String showcount = rJson.getString("showcount");
+                results = new Results();
+                results.setCurpage(Integer.valueOf(curpage));
+                results.setTotalresult(totalresult);
+                results.setResultlist(resultlist);
+                results.setTotalpage(totalpage);
+                results.setShowcount(Integer.valueOf(showcount));
+            }
+
+            return results;
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return results;
+        }
+
+    }
+
 //    /**
 //     * 不分页解析返回的结果*
 //     */
@@ -141,56 +143,49 @@ public class JsonUtils {
 //        }
 //
 //    }
-//    /**
-//     * 解析工单信息
-//     */
-//    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data,String type) {
-//        Log.i(TAG, "WorkOrder data=" + data);
-//        ArrayList<WorkOrder> list = null;
-//        WorkOrder workOrder = null;
-//        try {
-//            JSONArray jsonArray = new JSONArray(data);
-//            JSONObject jsonObject;
-//            list = new ArrayList<WorkOrder>();
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                workOrder = new WorkOrder();
-//                jsonObject = jsonArray.getJSONObject(i);
-//                workOrder.wonum = jsonObject.getString("WONUM"); //工单号
-//                workOrder.status = jsonObject.getString("STATUS");//状态
-//                workOrder.statusdate = jsonObject.getString("STATUSDATE");//状态日期
-//                workOrder.worktype = type;//工单类型
-//                workOrder.description = jsonObject.getString("DESCRIPTION");//工单描述
-//                workOrder.assetnum = jsonObject.getString("ASSETNUM");//设备
-//                workOrder.assetdescription = jsonObject.getString("ASSETDESCRIPTION");//设备描述
-//                workOrder.udisaq = jsonObject.getString("UDISAQ");//是否安全
-//                workOrder.udisbx = jsonObject.getString("UDISBX");//是否保修
-//                workOrder.udiscb = jsonObject.getString("UDISCB");//是否抄表
-//                workOrder.udisjf = jsonObject.getString("UDISJF");//是否按项目计费
-//                workOrder.udisjj = jsonObject.getString("UDISJJ");//是否紧急维修
-//                workOrder.udisplayname = jsonObject.getString("UDISPLAYNAME");//
-//                workOrder.udremark = jsonObject.getString("UDREMARK");//备注
-//                workOrder.udtjsj = jsonObject.getString("UDTJSJ");//停机时间
-//                workOrder.actstart = jsonObject.getString("ACTSTART");//实际开始时间
-//                workOrder.actfinish = jsonObject.getString("ACTFINISH");//实际完成时间
-//                workOrder.glbz = jsonObject.getString("GLBZ");//设备管理班组编号
-//                workOrder.gls = jsonObject.getString("GLS");//设备管理室编号
-//                workOrder.glz = jsonObject.getString("GLZ");//设备管理组编号
-//                workOrder.jpnum = jsonObject.getString("JPNUM");//作业计划
-//                workOrder.ldispayname = jsonObject.getString("LDISPAYNAME");//
-//                workOrder.reportdate = jsonObject.getString("REPORTDATE");//汇报日期
-//                workOrder.reportedby = jsonObject.getString("REPORTEDBY");//报告人
-//                workOrder.sdisplayname = jsonObject.getString("SDISPLAYNAME");//
-//                workOrder.targstartdate = jsonObject.getString("TARGSTARTDATE");//计划开始时间
-//                workOrder.targcompdate = jsonObject.getString("TARGCOMPDATE");//计划完成时间
-//                list.add(workOrder);
-//            }
-//            return list;
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
+    /**
+     * 解析工单信息
+     */
+    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data,String type) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<WorkOrder> list = null;
+        WorkOrder workOrder = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<WorkOrder>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                workOrder = new WorkOrder();
+                jsonObject = jsonArray.getJSONObject(i);
+                workOrder.setWonum(jsonObject.getString("WONUM"));//工单号
+                workOrder.setActfinish(jsonObject.getString("ACTFINISH"));//计划完成时间
+                workOrder.setActstart(jsonObject.getString("ACTSTART"));//实际开始时间
+                workOrder.setAssetdesc(jsonObject.getString("ASSETDESC"));//设备描述
+                workOrder.setAssetnum(jsonObject.getString("ASSETNUM"));//设备编号
+                workOrder.setDescription(jsonObject.getString("DESCRIPTION"));//描述
+                workOrder.setEstdur(jsonObject.getString("ESTDUR"));//剩余时间
+                workOrder.setJpnum(jsonObject.getString("JPNUM"));//作业计划
+                workOrder.setJpnumdesc(jsonObject.getString("JPNUMDESC"));//作业计划描述
+                workOrder.setLocation(jsonObject.getString("LOCATION"));//位置
+                workOrder.setLocationdesc(jsonObject.getString("LOCATIONDESC"));//位置描述
+                workOrder.setOnbehalfof(jsonObject.getString("ONBEHALFOF"));//录入人工号
+                workOrder.setPmdesc(jsonObject.getString("PMDESC"));//
+                workOrder.setPmnum(jsonObject.getString("PMNUM"));//
+                workOrder.setReportdate(jsonObject.getString("REPORTDATE"));//汇报日期
+                workOrder.setStatus(jsonObject.getString("STATUS"));//状态
+                workOrder.setStatusdesc(jsonObject.getString("STATUSDESC"));//状态描述
+                workOrder.setUdwotype(jsonObject.getString("UDWOTYPE"));//工单类型
+                workOrder.setUdwotypedesc(jsonObject.getString("UDWOTYPEDESC"));//工单类型描述
+                workOrder.setWorktype(jsonObject.getString("WORKTYPE"));//工作类型
+                list.add(workOrder);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 //
 //    /**
 //     * 解析工单计划任务信息

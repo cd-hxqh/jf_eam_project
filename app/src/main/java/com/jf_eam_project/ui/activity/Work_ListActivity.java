@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,7 +22,14 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.JsonUtils;
+import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
 
 /**
  * Created by think on 2015/11/20.
@@ -37,6 +45,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
     private SwipeRefreshLayout refresh_layout = null;
+    private WorkListAdapter workListAdapter;
     private EditText search;
     private String searchText = "";
     private int page = 1;
@@ -83,19 +92,52 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        workListAdapter = new WorkListAdapter(this);
+        recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        String s = HttpManager.getworkorderUrl(1, 20);
-//        getData(searchText);
+        getData(searchText);
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
     }
 
-    private void setSearchEdit() {
+    private void getData(String search){
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,search,page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
+                if (items == null || items.isEmpty()) {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                } else {
+                    if(page==1){
+                        workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                        recyclerView.setAdapter(workListAdapter);
+                    }
+                    if(totalPages==page){
+                        workListAdapter.adddate(items);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    private void setSearchEdit(){
         SpannableString msp = new SpannableString("XX搜索");
         Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
         msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -130,6 +172,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 //        getData(search.getText().toString());
     }
 
+    //上拉加载
     @Override
     public void onLoad() {
         page++;

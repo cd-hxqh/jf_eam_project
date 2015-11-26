@@ -51,9 +51,9 @@ public class WorkFragment extends BaseFragment {
      * 设置跳转监听
      */
     private void setlistener(){
-        item_layout.setOnClickListener(new intentOnclicklistener(Constants.FAULT));
-        plan_layout.setOnClickListener(new intentOnclicklistener(Constants.PREVENT));
-        not_plan_layout.setOnClickListener(new intentOnclicklistener(Constants.STATUS));
+        item_layout.setOnClickListener(new intentOnclicklistener(Constants.PROJECT));
+        plan_layout.setOnClickListener(new intentOnclicklistener(Constants.PLAN));
+        not_plan_layout.setOnClickListener(new intentOnclicklistener(Constants.UNPLAN));
     }
 
     private class intentOnclicklistener implements View.OnClickListener{
