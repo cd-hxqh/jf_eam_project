@@ -9,124 +9,189 @@ import org.json.JSONObject;
 /**
  * Created by think on 2015/10/28.
  */
-public class WorkOrder extends Entity implements Parcelable {
+public class WorkOrder extends Entity {
     private static final String TAG = "WorkOrder";
     private static final long serialVersionUID = 2015050105L;
 
-    public String wonum;//工单号
-    public String actfinish;//计划完成时间
-    public String actstart;//实际开始时间
-    public String assetdesc;//设备描述
-    public String assetnum;//设备编号
-    public String description;//描述
-    public String estdur; //剩余时间
-    public String jpnum; //作业计划
-    public String jpnumdesc;//作业计划描述
-    public String location; //位置
-    public String locationdesc;//位置描述
-    public String onbehalfof; //录入人工号
-    public String pmdesc;
-    public String pmnum;
-    public String reportdate; //汇报日期
-    public String status; //状态
-    public String statusdesc; //状态描述
-    public String udwotype; //工单类型
-    public String udwotypedesc; //工单类型描述
-    public String worktype; //工作类型
+    private String wonum;//工单号
+    private String actfinish;//计划完成时间
+    private String actstart;//实际开始时间
+    private String assetdesc;//设备描述
+    private String assetnum;//设备编号
+    private String description;//描述
+    private String estdur; //剩余时间
+    private String jpnum; //作业计划
+    private String jpnumdesc;//作业计划描述
+    private String location; //位置
+    private String locationdesc;//位置描述
+    private String onbehalfof; //录入人工号
+    private String pmdesc;
+    private String pmnum;
+    private String reportdate; //汇报日期
+    private String status; //状态
+    private String statusdesc; //状态描述
+    private String udwotype; //工单类型
+    private String udwotypedesc; //工单类型描述
+    private String worktype; //工作类型
 
 
-    @Override
-    public void parse(JSONObject jsonObject) throws JSONException {
-        wonum = jsonObject.getString("wonum");
-        actfinish = jsonObject.getString("actfinish");
-        actstart = jsonObject.getString("actstart");
-        assetdesc = jsonObject.getString("assetdesc");
-        assetnum = jsonObject.getString("assetnum");
-        description = jsonObject.getString("description");
-        estdur = jsonObject.getString("estdur");
-        jpnum = jsonObject.getString("jpnum");
-        jpnumdesc = jsonObject.getString("jpnumdesc");
-        location = jsonObject.getString("location");
-        locationdesc = jsonObject.getString("locationdesc");
-        onbehalfof = jsonObject.getString("onbehalfof");
-        pmdesc = jsonObject.getString("pmdesc");
-        pmnum = jsonObject.getString("pmnum");
-        reportdate = jsonObject.getString("reportdate");
-        status = jsonObject.getString("status");
-        statusdesc = jsonObject.getString("statusdesc");
-        udwotype = jsonObject.getString("udwotype");
-        udwotypedesc = jsonObject.getString("udwotypedesc");
-        worktype = jsonObject.getString("worktype");
-
+    public String getWonum() {
+        return wonum;
     }
 
-    public WorkOrder() {
+    public void setWonum(String wonum) {
+        this.wonum = wonum;
     }
 
-
-    private WorkOrder(Parcel in) {
-        wonum = in.readString();
-        actfinish = in.readString();
-        actstart = in.readString();
-        assetdesc = in.readString();
-        assetnum = in.readString();
-        description = in.readString();
-        estdur = in.readString();
-        jpnum = in.readString();
-        jpnumdesc = in.readString();
-        location = in.readString();
-        locationdesc = in.readString();
-        onbehalfof = in.readString();
-        pmdesc = in.readString();
-        pmnum = in.readString();
-        reportdate = in.readString();
-        status = in.readString();
-        statusdesc = in.readString();
-        udwotype = in.readString();
-        udwotypedesc = in.readString();
-        worktype = in.readString();
-
+    public String getActfinish() {
+        return actfinish;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setActfinish(String actfinish) {
+        this.actfinish = actfinish;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(wonum);
-        dest.writeString(actfinish);
-        dest.writeString(actstart);
-        dest.writeString(assetdesc);
-        dest.writeString(assetnum);
-        dest.writeString(description);
-        dest.writeString(estdur);
-        dest.writeString(jpnum);
-        dest.writeString(jpnumdesc);
-        dest.writeString(location);
-        dest.writeString(locationdesc);
-        dest.writeString(onbehalfof);
-        dest.writeString(pmdesc);
-        dest.writeString(pmnum);
-        dest.writeString(reportdate);
-        dest.writeString(status);
-        dest.writeString(statusdesc);
-        dest.writeString(udwotype);
-        dest.writeString(udwotypedesc);
-        dest.writeString(worktype);
-
+    public String getActstart() {
+        return actstart;
     }
 
-    public static final Creator<WorkOrder> CREATOR = new Creator<WorkOrder>() {
-        @Override
-        public WorkOrder createFromParcel(Parcel source) {
-            return new WorkOrder(source);
-        }
+    public void setActstart(String actstart) {
+        this.actstart = actstart;
+    }
 
-        @Override
-        public WorkOrder[] newArray(int size) {
-            return new WorkOrder[size];
-        }
-    };
+    public String getAssetdesc() {
+        return assetdesc;
+    }
+
+    public void setAssetdesc(String assetdesc) {
+        this.assetdesc = assetdesc;
+    }
+
+    public String getAssetnum() {
+        return assetnum;
+    }
+
+    public void setAssetnum(String assetnum) {
+        this.assetnum = assetnum;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEstdur() {
+        return estdur;
+    }
+
+    public void setEstdur(String estdur) {
+        this.estdur = estdur;
+    }
+
+    public String getJpnum() {
+        return jpnum;
+    }
+
+    public void setJpnum(String jpnum) {
+        this.jpnum = jpnum;
+    }
+
+    public String getJpnumdesc() {
+        return jpnumdesc;
+    }
+
+    public void setJpnumdesc(String jpnumdesc) {
+        this.jpnumdesc = jpnumdesc;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocationdesc() {
+        return locationdesc;
+    }
+
+    public void setLocationdesc(String locationdesc) {
+        this.locationdesc = locationdesc;
+    }
+
+    public String getOnbehalfof() {
+        return onbehalfof;
+    }
+
+    public void setOnbehalfof(String onbehalfof) {
+        this.onbehalfof = onbehalfof;
+    }
+
+    public String getPmdesc() {
+        return pmdesc;
+    }
+
+    public void setPmdesc(String pmdesc) {
+        this.pmdesc = pmdesc;
+    }
+
+    public String getPmnum() {
+        return pmnum;
+    }
+
+    public void setPmnum(String pmnum) {
+        this.pmnum = pmnum;
+    }
+
+    public String getReportdate() {
+        return reportdate;
+    }
+
+    public void setReportdate(String reportdate) {
+        this.reportdate = reportdate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatusdesc() {
+        return statusdesc;
+    }
+
+    public void setStatusdesc(String statusdesc) {
+        this.statusdesc = statusdesc;
+    }
+
+    public String getUdwotype() {
+        return udwotype;
+    }
+
+    public void setUdwotype(String udwotype) {
+        this.udwotype = udwotype;
+    }
+
+    public String getUdwotypedesc() {
+        return udwotypedesc;
+    }
+
+    public void setUdwotypedesc(String udwotypedesc) {
+        this.udwotypedesc = udwotypedesc;
+    }
+
+    public String getWorktype() {
+        return worktype;
+    }
+
+    public void setWorktype(String worktype) {
+        this.worktype = worktype;
+    }
 }
