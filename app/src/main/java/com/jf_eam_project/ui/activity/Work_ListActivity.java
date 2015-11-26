@@ -25,9 +25,9 @@ import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 /**
  * Created by think on 2015/11/20.
- * π§µ•¡–±ÌΩÁ√Ê
+ * Â∑•ÂçïÂàóË°®ÁïåÈù¢
  */
-public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
+public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
     private TextView titlename;
     private ImageView addimg;
@@ -40,6 +40,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     private EditText search;
     private String searchText = "";
     private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +50,11 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         findViewById();
         initView();
     }
-    private void getIntentData(){
+
+    private void getIntentData() {
         worktype = getIntent().getStringExtra("worktype");
     }
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
@@ -80,10 +83,10 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        refresh_layout.setColor(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        refresh_layout.setColor(R.color.holo_blue_bright,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
         String s = HttpManager.getworkorderUrl(1, 20);
 //        getData(searchText);
@@ -92,8 +95,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-    private void setSearchEdit(){
-        SpannableString msp = new SpannableString("XXÀ—À˜");
+    private void setSearchEdit() {
+        SpannableString msp = new SpannableString("XXÊêúÁ¥¢");
         Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
         msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -103,7 +106,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    // œ»“˛≤ÿº¸≈Ã
+                    // ÂÖàÈöêËóèÈîÆÁõò
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
                                     Work_ListActivity.this.getCurrentFocus()
@@ -120,7 +123,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         });
     }
 
-    //œ¬¿≠À¢–¬¥•∑¢ ¬º˛
+    //‰∏ãÊãâÂà∑Êñ∞Ëß¶Âèë‰∫ã‰ª∂
     @Override
     public void onRefresh() {
         page = 1;
@@ -128,7 +131,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     @Override
-    public void onLoad(){
+    public void onLoad() {
         page++;
 //        getData(searchText);
     }

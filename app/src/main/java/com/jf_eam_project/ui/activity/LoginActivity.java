@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
                     public void onFailure(String error) {
                         MessageUtils.showErrorMessage(LoginActivity.this, error);
                         mProgressDialog.dismiss();
-                        startIntent();
+//                        startIntent();
                     }
                 });
     }

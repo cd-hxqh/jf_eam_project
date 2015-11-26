@@ -73,4 +73,9 @@
     <string name="sure">确定</string>
     <string name="canel">取消</string>
 
+
+    <!--巡检管理-->
+    <string name="polling_plan_text">巡检计划</string>
+    <string name="polling_way_text">巡检路线</string>
+    <string name="polling_order_text">巡检单</string>
 </resources>

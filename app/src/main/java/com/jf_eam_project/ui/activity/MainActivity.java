@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
+import com.jf_eam_project.ui.fragment.Polling_Fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
 
@@ -50,6 +51,9 @@ public class MainActivity extends BaseActivity
      * 工单管理*
      */
     private WorkFragment mWorkFragment;
+
+    /**巡检管理**/
+    private Polling_Fragment pollingFragment;
 
 
 
@@ -101,7 +105,7 @@ public class MainActivity extends BaseActivity
         switch (position) {
             case 0:
                 break;
-            case 1:
+            case 1: //工单管理
                 if (mWorkFragment == null) {
                     mWorkFragment = new WorkFragment();
                     Bundle bundle = new Bundle();
@@ -109,7 +113,15 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, mWorkFragment).commit();
                 break;
-            case 2:
+            case 2: //巡检管理
+
+                if (pollingFragment == null) {
+                    pollingFragment = new Polling_Fragment();
+                    Bundle bundle = new Bundle();
+                    pollingFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, pollingFragment).commit();
+
                 break;
             case 3:
 
