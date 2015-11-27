@@ -14,7 +14,7 @@ public class WorkOrder extends Entity {
     private static final long serialVersionUID = 2015050105L;
 
     private String wonum;//工单号
-    private String actfinish;//计划完成时间
+    private String actfinish;//实际完成时间
     private String actstart;//实际开始时间
     private String assetdesc;//设备描述
     private String assetnum;//设备编号

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.ui.activity.Work_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +46,11 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, Work_detailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("workOrder", workOrder);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, Work_DetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("workOrder", workOrder);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

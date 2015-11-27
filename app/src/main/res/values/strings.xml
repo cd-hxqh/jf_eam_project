@@ -34,6 +34,7 @@
     <string name="title_activity_login">登录界面</string>
     <string name="title_activity_main">主界面</string>
     <string name="title_activity_work_list">工单管理</string>
+    <string name="title_activity_work_details">工单详情</string>
 
     <!--网络信息提示-->
     <string name="error_title">错误</string>
@@ -90,8 +91,38 @@
     <string name="po_invoice_text">发票</string>
 
     <!---->
+    <!--工单页面-->
     <string name="work_wonum">工单号</string>
     <string name="work_desc">描述</string>
+    <string name="work_description_hint">请输入相关描述</string>
+    <string name="work_udwotype">工单类型</string>
+    <string name="work_udwotypedesc">工单类型描述</string>
+    <string name="work_assetnum">资产</string>
+    <string name="work_assetdesc">资产描述</string>
+    <string name="work_location">位置</string>
+    <string name="work_locationdesc">位置描述</string>
+    <string name="work_status">状态</string>
+    <string name="work_statusdesc">状态描述</string>
+
+    <string name="work_jpdetails">作业详情信息</string>
+    <string name="work_jpnum">作业计划</string>
+    <string name="work_jpnumdesc">作业计划描述</string>
+    <string name="work_pmnum">PM</string>
+    <string name="work_pmdesc">PM描述</string>
+    <string name="work_onbehalfof">录入人工号</string>
+    <string name="work_acstart">实际开始时间</string>
+    <string name="work_actfinish">实际完成时间</string>
+    <string name="work_targstartdate">计划开始时间</string>
+    <string name="work_targcompdate">计划完成时间</string>
+    <string name="work_faststarttime">最早开始时间</string>
+    <string name="work_lastfinishtime">最晚完成时间</string>
+    <string name="work_estdur">剩余时间</string>
+    <string name="work_reportdate">汇报日期</string>
+    <string name="work_worktype">工作类型</string>
+    
+    <string name="work_revise">修改</string>
+    <string name="work_work_flow">工作流</string>
+
     <string name="title_activity_po_order_">Po_order_Activity</string>
 
     <string name="hello_world">Hello world!</string>

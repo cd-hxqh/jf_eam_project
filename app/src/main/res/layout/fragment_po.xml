@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="@string/po_plan_text"
+                    android:text="@string/polling_plan_text"
                     android:textColor="@color/light_black"
                     android:textSize="18sp" />
 
@@ -63,7 +63,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="@string/po_order_text"
+                    android:text="@string/polling_order_text"
                     android:textColor="@color/light_black"
                     android:textSize="18sp" />
 
@@ -91,7 +91,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="@string/po_invoice_text"
+                    android:text="@string/polling_order_text"
                     android:textColor="@color/light_black"
                     android:textSize="18sp" />
 

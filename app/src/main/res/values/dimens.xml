@@ -8,4 +8,14 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="dimens_5_dip">5dip</dimen>
     <dimen name="dimens_10_dip">10dip</dimen>
+    <dimen name="dimens_10">10dip</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+    <dimen name="actionbar_dimen">56dp</dimen>
+
+    <dimen name="dimen_40dp">40dip</dimen>
+    <dimen name="dimen_5">5dp</dimen>
+    <dimen name="dimen_20sp">20sp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimens_16dp">16dp</dimen>
+    <dimen name="dimens_5">5dp</dimen>
 </resources>
