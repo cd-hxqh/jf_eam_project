@@ -79,6 +79,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     protected void initView() {
         setSearchEdit();
         titlename.setText(R.string.title_activity_work_list);
+        addimg.setImageResource(R.drawable.ic_drawer);
         addimg.setVisibility(View.VISIBLE);
 
         backlayout.setOnClickListener(new View.OnClickListener() {
