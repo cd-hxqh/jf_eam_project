@@ -25,161 +25,6 @@ public class HttpManager {
     private static AsyncHttpClient sClient = null;
     private static final String TAG = "HttpManager";
 
-    /**
-     * 设置待办事项接口*
-     */
-    public static String getwfassignmentUrl(String vlaue, int curpage, int showcount) {
-        if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-        } else {
-            return "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WFASSIGNMENTID':'" + vlaue + "'}}";
-        }
-    }
-
-
-    /**
-     * 设置工单接口*
-     */
-    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
-        if (search.equals("")) {
-            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "'}}";
-        } else{
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "','WONUM':'" + search + "'}}";
-    }
-
-}
-
-    /**
-     * 设置计划任务接口*
-     */
-    public static String getwoactivityUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
-
-    /**
-     * 设置计划员工接口*
-     */
-    public static String getwplaborUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
-
-    /**
-     * 设置计划物料接口*
-     */
-    public static String getwpitemUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WPITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
-
-    /**
-     * 设置任务分配接口*
-     */
-    public static String getassignmentUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
-
-    /**
-     * 设置实际员工接口
-     */
-    public static String getlabtransUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.LABTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
-
-    /**
-     * 设置故障汇报接口
-     */
-    public static String getfailurereportUrl(String type, String wonum) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.FAILUREREPORT_NAME + "','option':'read','condition':{'WONUM':'" + wonum + "'}}";
-    }
-
-    /**
-     * 设置库存查询的接口
-     */
-    public static String getInventorurl(String value, int curpage, int showcount) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVENTOR_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-        }
-        return "{'appid':'" + Constants.INVENTOR_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + value + "'}}";
-    }
-
-
-    /**
-     * 设置库存成本的接口
-     * 根据Itemnum
-     */
-    public static String getInvcosturl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVCOST_APPID + "','objectname':'" + Constants.INVCOST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-        } else {
-            return "{'appid':'" + Constants.INVCOST_APPID + "','objectname':'" + Constants.INVCOST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ITEMNUM':'" + value + "'}}";
-
-        }
-    }
-
-    /**
-     * 设置库存余量的接口
-     * 根据Itemnum
-     */
-    public static String getInvbalancesurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVBALANCES_APPID + "','objectname':'" + Constants.INVBALANCES_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.INVBALANCES_APPID + "','objectname':'" + Constants.INVBALANCES_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','BINNUM':'" + value + "'}}";
-
-        }
-    }
-
-
-    /**
-     * 设置入库的接口
-     * 根据Itemnum
-     */
-    public static String getMatrectransurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.MATRECTRANS_APPID + "','objectname':'" + Constants.MATRECTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.MATRECTRANS_APPID + "','objectname':'" + Constants.MATRECTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ISSUETYPE':'" + value + "'}}";
-        }
-    }
-
-    /**
-     * 设置出库的接口
-     * 根据Itemnum
-     */
-    public static String getMatusetransurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.MATUSETRANS_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.MATUSETRANS_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ISSUETYPE':'" + value + "'}}";
-
-        }
-    }
-
-    /**
-     * 设置领料单的接口
-     */
-    public static String getInvuseurl(String value, int curpage, int showcount) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVUSE_APPID + "','objectname':'" + Constants.INVUSE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-        }
-        return "{'appid':'" + Constants.INVUSE_APPID + "','objectname':'" + Constants.INVUSE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVUSENUM':'" + value + "'}}";
-    }
-
-    /**
-     * 设置领料单行的接口
-     */
-    public static String getInvuselineurl(String value, int curpage, int showcount, String invusenum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVUSELINE_APPID + "','objectname':'" + Constants.INVUSELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVUSENUM':'" + invusenum + "'}}";
-        } else {
-            return "{'appid':'" + Constants.INVUSELINE_APPID + "','objectname':'" + Constants.INVUSELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVUSENUM':'" + invusenum + "','ITEMNUM':'" + value + "'}}";
-        }
-    }
-
 
     /**
      * 使用用户名密码登录
@@ -216,6 +61,31 @@ public class HttpManager {
                 }
             }
         });
+    }
+
+    /**
+     * 设置工单接口*
+     */
+    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
+        if (search.equals("")) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'" + type + "','WONUM':'" + search + "'}}";
+        }
+
+    }
+
+    /**
+     * 设置采购订单接口*
+     */
+    public static String getPoUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
+        }
     }
 
 

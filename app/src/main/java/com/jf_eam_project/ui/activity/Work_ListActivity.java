@@ -36,8 +36,11 @@ import java.util.ArrayList;
  * 工单列表界面
  */
 public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-
+    /**标题**/
     private TextView titlename;
+    /**返回**/
+    private ImageView backImage;
+
     private ImageView addimg;
     private RelativeLayout backlayout;
     private String worktype;
@@ -68,7 +71,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         addimg = (ImageView) findViewById(R.id.title_add);
-        backlayout = (RelativeLayout) findViewById(R.id.title_back);
+        backImage = (ImageView) findViewById(R.id.title_back_id);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
@@ -82,7 +85,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         addimg.setImageResource(R.drawable.ic_drawer);
         addimg.setVisibility(View.VISIBLE);
 
-        backlayout.setOnClickListener(new View.OnClickListener() {
+        backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

@@ -33,10 +33,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/polling_plan_text"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="@string/po_plan_text"
                     android:textColor="@color/light_black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
 
@@ -62,10 +62,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/polling_order_text"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="@string/po_order_text"
                     android:textColor="@color/light_black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
 
@@ -90,10 +90,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/polling_order_text"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="@string/po_invoice_text"
                     android:textColor="@color/light_black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
         </TableRow>

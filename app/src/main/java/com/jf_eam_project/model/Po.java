@@ -11,6 +11,7 @@ import org.json.JSONObject;
  * 采购单表
  */
 public class Po extends Entity {
+
     private static final String TAG = "PO";
     private static final long serialVersionUID = 2015050105L;
 

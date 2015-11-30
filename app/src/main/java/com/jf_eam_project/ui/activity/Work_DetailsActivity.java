@@ -15,10 +15,19 @@ import com.jf_eam_project.model.WorkOrder;
  */
 public class Work_DetailsActivity extends BaseActivity {
     private WorkOrder workOrder;
-    private TextView titlename;
-    private ImageView menuImageView;
-    private RelativeLayout backlayout;
 
+    /**
+     * 标题*
+     */
+    private TextView titlename;
+    /**
+     * 菜单按钮*
+     */
+    private ImageView menuImageView;
+    /**
+     * 返回*
+     */
+    private ImageView backImageView;
     private TextView wonum;//工单号
     private TextView actfinish;//实际完成时间
     private TextView actstart;//实际开始时间
@@ -39,6 +48,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udwotype; //工单类型
     private TextView udwotypedesc; //工单类型描述
     private TextView worktype; //工作类型
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +70,7 @@ public class Work_DetailsActivity extends BaseActivity {
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
-        backlayout = (RelativeLayout) findViewById(R.id.title_back);
+        backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         wonum = (TextView) findViewById(R.id.work_wonum);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
@@ -89,7 +99,7 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
 
-        backlayout.setOnClickListener(new View.OnClickListener() {
+        backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

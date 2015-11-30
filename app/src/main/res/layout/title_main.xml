@@ -5,20 +5,16 @@
     android:layout_height="50dp"
     android:background="@drawable/ab_solid_example">
 
-    <RelativeLayout
-        android:id="@+id/title_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true">
 
-        <ImageView
-            android:id="@+id/title_back_id"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/title_back_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/dimens_5_dip"
+        android:src="@drawable/back" />
+
 
     <TextView
         android:id="@+id/title_name"
@@ -26,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:textSize="18sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 
     <ImageView

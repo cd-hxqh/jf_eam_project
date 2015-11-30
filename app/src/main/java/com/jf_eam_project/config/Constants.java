@@ -21,68 +21,23 @@ public class Constants {
     public static final String BASE_URL = HTTP_API_URL + "common/api";
 
     /**------------------数据库表名配置－－开始**/
-    //待办事项的appid
-    public static final String WFASSIGNMENT_APPID="INBOX";
 
-    //待办事项的表名
-    public static final String WFASSIGNMENT_NAME="WFASSIGNMENT";
     /**工单管理**/
-    //故障工单查询的appid
+    //工单查询的appid
     public static final String UDWOCM_APPID="UDWOTRACK";
-    //故障工单表名
+    //工单表名
     public static final String WORKORDER_NAME = "WORKORDER";
-    //工单计划任务表名
-    public static final String WOACTIVITY_NAME = "WOACTIVITY";
-    //工单计划员工表名
-    public static final String WPLABOR_NAME = "WPLABOR";
-    //工单计划物料表名
-    public static final String WPITEM_NAME = "WPITEM";
-    //工单任务分配表名
-    public static final String ASSIGNMENT_NAME = "ASSIGNMENT";
-    //工单实际员工表名
-    public static final String LABTRANS_NAME = "LABTRANS";
-    //故障汇报表名
-    public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
-
-    /**库存查询**/
-    //库存的appid
-    public static final String INVENTOR_APPID="UDINVENTOR";
-    //库存的表名
-    public static final String INVENTORY_NAME="INVENTORY";
-
-    //库存成本appid
-    public static final String INVCOST_APPID="UDINVENTOR";
-    //库存成本表名
-    public static final String INVCOST_NAME="INVCOST";
 
 
-    //库存余量appid
-    public static final String INVBALANCES_APPID="UDINVENTOR";
-    //库存余量表名
-    public static final String INVBALANCES_NAME="INVBALANCES";
 
 
-    //入库appid
-    public static final String MATRECTRANS_APPID="UDINVENTOR";
-    //入库表名
-    public static final String MATRECTRANS_NAME="MATRECTRANS";
+    /**采购管理**/
+    //采购单的appid
+    public static final String PO_APPID="UDPO";
 
-    //出库appid
-    public static final String MATUSETRANS_APPID="UDINVENTOR";
-    //出库表名
-    public static final String MATUSETRANS_NAME="MATUSETRANS";
-
-
-    //领料单appid
-    public static final String INVUSE_APPID="UDUSE";
-    //领料单表名
-    public static final String INVUSE_NAME="INVUSE";
-
-
-    //领料单行appid
-    public static final String INVUSELINE_APPID="UDUSE";
-    //领料单行表名
-    public static final String INVUSELINE_NAME="INVUSELINE";
+    //采购单的表名
+    public static final String PO_NAME="PO";
+    /**-----------表名配置--结束**/
 
 
 
@@ -106,6 +61,7 @@ public class Constants {
     public static final String USERNAMEERROR = "USER-E-100";//用户名密码错误
 
     public static final String GETDATASUCCESS = "GLOBAL-S-0";//获取数据成功
+
 
     /**
      * 工单跳转类型标识

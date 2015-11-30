@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
+import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
@@ -54,7 +55,8 @@ public class MainActivity extends BaseActivity
 
     /**巡检管理**/
     private Polling_Fragment pollingFragment;
-
+    /**采购管理**/
+    private Po_Fragment po_fragment;
 
 
 
@@ -125,6 +127,14 @@ public class MainActivity extends BaseActivity
                 break;
             case 3:
 
+                break;
+            case 4:
+                if (po_fragment == null) {
+                    po_fragment = new Po_Fragment();
+                    Bundle bundle = new Bundle();
+                    po_fragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, po_fragment).commit();
                 break;
             case 6:
                 mNavigationDrawerFragment.closeDrawer();
