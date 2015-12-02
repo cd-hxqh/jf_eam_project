@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Work_ListActivity;
 
 
@@ -62,20 +63,34 @@ public class Po_Fragment extends BaseFragment {
      * 设置跳转监听
      */
     private void setListener() {
+        po_plan_layout.setOnClickListener(onClickListener);
+        po_order_layout.setOnClickListener(onClickListener);
+        po_invoice_layout.setOnClickListener(onClickListener);
     }
 
-    private class intentOnclicklistener implements View.OnClickListener {
-        private String type;
-
-        private intentOnclicklistener(String type) {
-            this.type = type;
-        }
-
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(getActivity(), Work_ListActivity.class);
-            intent.putExtra("worktype", type);
-            startActivity(intent);
+        public void onClick(View v) {
+
+
+            switch (v.getId()) {
+                case R.id.po_linear_plan_id: //采购计划
+
+                    Intent intent = new Intent(getActivity(), Po_order_Activity.class);
+                    startActivityForResult(intent, 0);
+
+                    break;
+
+                case R.id.po_linear_order_id: //采购订单
+                    Intent intent1 = new Intent(getActivity(), Po_order_Activity.class);
+                    startActivityForResult(intent1, 0);
+                    break;
+                case R.id.po_linear_invoice_id: //发票
+                    Intent intent2 = new Intent(getActivity(), Po_order_Activity.class);
+                    startActivityForResult(intent2, 0);
+                    break;
+
+            }
         }
-    }
+    };
 }

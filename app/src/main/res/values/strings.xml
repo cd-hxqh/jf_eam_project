@@ -123,7 +123,9 @@
     <string name="work_revise">修改</string>
     <string name="work_work_flow">工作流</string>
 
-    <string name="title_activity_po_order_">Po_order_Activity</string>
+    <string name="title_activity_po_order_">采购订单</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="po_order_title">采购订单</string>
+    <string name="po_number_text">PO:</string>
 </resources>

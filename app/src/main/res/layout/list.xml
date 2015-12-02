@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.jf_eam_project.ui.activity.Work_ListActivity">
 
     <include layout="@layout/title_main"></include>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray"
         android:focusable="true"
         android:focusableInTouchMode="true">
-    <EditText
-        android:id="@+id/search_edit"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/dimens_5_dip"
-        android:gravity="center"
-        android:imeOptions="actionSearch"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:background="@color/white"/>
+
+        <EditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/dimens_5_dip"
+            android:background="@color/white"
+            android:gravity="center"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:singleLine="true" />
     </RelativeLayout>
+
     <include layout="@layout/work_list"></include>
 
 </LinearLayout>

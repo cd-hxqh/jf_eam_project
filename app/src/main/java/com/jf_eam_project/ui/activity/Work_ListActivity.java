@@ -41,6 +41,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     /**返回**/
     private ImageView backImage;
 
+    /**菜单按钮**/
     private ImageView addimg;
     private RelativeLayout backlayout;
     private String worktype;
@@ -56,7 +57,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_worklist);
+        setContentView(R.layout.list);
 
         getIntentData();
         findViewById();

@@ -1,52 +1,85 @@
 package com.jf_eam_project.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.instagram.common.json.annotation.JsonField;
+import com.instagram.common.json.annotation.JsonType;
+
+
 
 /**
  * Created by think on 2015/11/26.
  * 采购单表
  */
+@JsonType
 public class Po extends Entity {
 
     private static final String TAG = "PO";
     private static final long serialVersionUID = 2015050105L;
 
-    private String buyercompany;//买方公司
-    private String contact;//联系人
-    private String currencycode;//货币
-    private String customernum;//客户编号
-    private String description;//描述
-    private String fob;//离岸点
-    private String freightterms;//运输条款
-    private String inclusive1;//向供应商付税
-    private String inspectionrequired;//需要检查
-    private String internal;//指定供应商是否在您公司范围内
-    private String orderdate;//订购日期
-    private String paymentterms;//支付条款
-    private String ponum;// 采购单编号
-    private String potype;// 类型
-    private String pretaxtotal;//税前总计
-    private String priority;// 优先级
-    private String purchaseagent;//买方
-    private String requireddate;//要求日期
-    private String shipvia;//装运方式
-    private String sitedesc;//地点描述
-    private String siteid;// 地点
-    private String status;// 状态
-    private String statusdate;//状态日期
-    private String storeloc;//库房
-    private String storelocdesc;//库房描述
-    private String storelocsiteid;//库房地点
-    private String totalbasecost;//成本总计（以基本货币为单位）
-    private String totalcost;//成本总计
-    private String totaltax1;//税款总计
-    private String vendeliverydate;//供应商日期
-    private String vendor;//公司
-    private String vendordesc;//公司描述
+    @JsonField(fieldName = "buyercompany")
+    public String buyercompany;//买方公司
+    @JsonField(fieldName = "contact")
+    public String contact;//联系人
+    @JsonField(fieldName = "currencycode")
+    public String currencycode;//货币
+    @JsonField(fieldName = "customernum")
+    public String customernum;//客户编号
+    @JsonField(fieldName = "description")
+    public String description;//描述
+    @JsonField(fieldName = "fob")
+    public String fob;//离岸点
+    @JsonField(fieldName = "freightterms")
+    public String freightterms;//运输条款
+    @JsonField(fieldName = "inclusive1")
+    public String inclusive1;//向供应商付税
+    @JsonField(fieldName = "inspectionrequired")
+    public String inspectionrequired;//需要检查
+    @JsonField(fieldName = "internal")
+    public String internal;//指定供应商是否在您公司范围内
+    @JsonField(fieldName = "orderdate")
+    public String orderdate;//订购日期
+    @JsonField(fieldName = "paymentterms")
+    public String paymentterms;//支付条款
+    @JsonField(fieldName = "ponum")
+    public String ponum;// 采购单编号
+    @JsonField(fieldName = "potype")
+    public String potype;// 类型
+    @JsonField(fieldName = "pretaxtotal")
+    public String pretaxtotal;//税前总计
+    @JsonField(fieldName = "priority")
+    public String priority;// 优先级
+    @JsonField(fieldName = "purchaseagent")
+    public String purchaseagent;//买方
+    @JsonField(fieldName = "requireddate")
+    public String requireddate;//要求日期
+    @JsonField(fieldName = "shipvia")
+    public String shipvia;//装运方式
+    @JsonField(fieldName = "sitedesc")
+    public String sitedesc;//地点描述
+    @JsonField(fieldName = "siteid")
+    public String siteid;// 地点
+    @JsonField(fieldName = "STATUS")
+    public String status;// 状态
+    @JsonField(fieldName = "statusdate")
+    public String statusdate;//状态日期
+    @JsonField(fieldName = "storeloc")
+    public String storeloc;//库房
+    @JsonField(fieldName = "storelocdesc")
+    public String storelocdesc;//库房描述
+    @JsonField(fieldName = "storelocsiteid")
+    public String storelocsiteid;//库房地点
+    @JsonField(fieldName = "totalbasecost")
+    public String totalbasecost;//成本总计（以基本货币为单位）
+    @JsonField(fieldName = "totalcost")
+    public String totalcost;//成本总计
+    @JsonField(fieldName = "totaltax1")
+    public String totaltax1;//税款总计
+    @JsonField(fieldName = "vendeliverydate")
+    public String vendeliverydate;//供应商日期
+    @JsonField(fieldName = "vendor")
+    public String vendor;//公司
+    @JsonField(fieldName = "vendordesc")
+    public String vendordesc;//公司描述
 
 
     public String getBuyercompany() {

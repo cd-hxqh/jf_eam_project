@@ -1,14 +1,14 @@
 package com.jf_eam_project.bean;
 
 
+
 import java.io.Serializable;
 
 /**
  * Created by apple on 15/9/10.
  * 解析结果
  */
-
-public class Results implements Serializable {
+public class Results {
     private int id;
     /**
      * 当前页*
