@@ -18,9 +18,11 @@ import com.jf_eam_project.model.WorkOrder;
 public class Ig_Json_Model {
     private static final String TAG = "Ig_Json_Model";
 
+    /**²É¹º¶©µ¥**/
     public static ArrayList<Po> parseFromString(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return PO_JsonHelper.parseFromJsonList(input);
     }
+
 
 }
