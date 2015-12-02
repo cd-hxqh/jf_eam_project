@@ -16,6 +16,7 @@ import com.jf_eam_project.model.WorkOrder;
  *
  */
 public class Ig_Json_Model {
+
     private static final String TAG = "Ig_Json_Model";
 
     /**²É¹º¶©µ¥**/
