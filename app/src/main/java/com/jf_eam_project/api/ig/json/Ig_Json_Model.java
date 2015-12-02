@@ -15,8 +15,8 @@ import com.jf_eam_project.model.WorkOrder;
  * Helper class to parse the model.
  *
  */
-public class Ig_Po_Model {
-    private static final String TAG = "Ig_Po_Model";
+public class Ig_Json_Model {
+    private static final String TAG = "Ig_Json_Model";
 
     public static ArrayList<Po> parseFromString(String input) throws IOException {
         Log.i(TAG, "input=" + input);

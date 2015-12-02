@@ -2,7 +2,6 @@ package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,26 +11,21 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
-import com.jf_eam_project.api.ig.json.Ig_Po_Model;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Po;
-import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
-import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
@@ -200,7 +194,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
 
                 ArrayList<Po> items = null;
                 try {
-                    items = Ig_Po_Model.parseFromString(results.getResultlist());
+                    items = Ig_Json_Model.parseFromString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
