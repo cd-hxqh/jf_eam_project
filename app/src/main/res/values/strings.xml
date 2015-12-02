@@ -35,6 +35,7 @@
     <string name="title_activity_main">主界面</string>
     <string name="title_activity_work_list">工单管理</string>
     <string name="title_activity_work_details">工单详情</string>
+    <string name="title_activity_work_addnew">新建工单</string>
 
     <!--网络信息提示-->
     <string name="error_title">错误</string>
@@ -122,6 +123,11 @@
     
     <string name="work_revise">修改</string>
     <string name="work_work_flow">工作流</string>
+    <string name="work_plan">工单计划</string>
+    <string name="work_task">任务分配</string>
+    <string name="work_realinfo">实际情况</string>
+    <string name="work_report">故障报告</string>
+    
 
     <string name="title_activity_po_order_">采购订单</string>
 

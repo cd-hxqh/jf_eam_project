@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,11 +25,13 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.JsonUtils;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -83,8 +86,16 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     protected void initView() {
         setSearchEdit();
         titlename.setText(R.string.title_activity_work_list);
-        addimg.setImageResource(R.drawable.ic_drawer);
+        addimg.setImageResource(R.drawable.add_ico);
         addimg.setVisibility(View.VISIBLE);
+        addimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
+                intent.putExtra("worktype",worktype);
+                startActivity(intent);
+            }
+        });
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,19 +130,24 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                if (items == null || items.isEmpty()) {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                } else {
-                    if(page==1){
-                        workListAdapter = new WorkListAdapter(Work_ListActivity.this);
-                        recyclerView.setAdapter(workListAdapter);
+                ArrayList<WorkOrder> items = null;
+                try {
+                    items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    if (items == null || items.isEmpty()) {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+                        if(page==1){
+                            workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                            recyclerView.setAdapter(workListAdapter);
+                        }
+                        if(totalPages==page){
+                            workListAdapter.adddate(items);
+                        }
                     }
-                    if(totalPages==page){
-                        workListAdapter.adddate(items);
-                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
 

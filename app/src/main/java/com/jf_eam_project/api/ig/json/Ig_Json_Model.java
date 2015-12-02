@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.WorkOrder;
 
@@ -19,11 +20,14 @@ public class Ig_Json_Model {
 
     private static final String TAG = "Ig_Json_Model";
 
-    /**²É¹º¶©µ¥**/
+    /**ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½**/
     public static ArrayList<Po> parseFromString(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return PO_JsonHelper.parseFromJsonList(input);
     }
 
-
+    public static ArrayList<WorkOrder> parsingWorkOrder(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return WorkOrder_JsonHelper.parseFromJsonList(input);
+    }
 }

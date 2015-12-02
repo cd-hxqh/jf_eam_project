@@ -57,6 +57,7 @@
             android:layout_centerVertical="true"
             android:inputType="textMultiLine"
             android:hint="@string/work_description_hint"
+            android:gravity="right"
             android:textSize="@dimen/dimens_16dp"
             android:textColor="@color/light_black"
             />
@@ -88,7 +89,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -121,7 +122,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -154,7 +155,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -187,7 +188,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -220,7 +221,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -253,7 +254,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
@@ -286,7 +287,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_margin="@dimen/dimens_10"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/item_more"
