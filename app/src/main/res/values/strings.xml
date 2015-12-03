@@ -36,6 +36,7 @@
     <string name="title_activity_work_list">工单管理</string>
     <string name="title_activity_work_details">工单详情</string>
     <string name="title_activity_work_addnew">新建工单</string>
+    <string name="title_activity_work_plan">工单计划</string>
 
     <!--网络信息提示-->
     <string name="error_title">错误</string>
@@ -127,6 +128,13 @@
     <string name="work_task">任务分配</string>
     <string name="work_realinfo">实际情况</string>
     <string name="work_report">故障报告</string>
+    
+    <!--工单计划页面-->
+    <string name="work_woactivity">任务</string>
+    <string name="work_wplabor">员工</string>
+    <string name="work_wpmaterial">物料</string>
+    <string name="work_wpservice">服务</string>
+    <string name="work_wptool">工具</string>
     
 
     <string name="title_activity_po_order_">采购订单</string>

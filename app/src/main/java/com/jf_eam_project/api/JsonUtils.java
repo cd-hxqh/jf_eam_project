@@ -143,49 +143,49 @@ public class JsonUtils {
 //        }
 //
 //    }
-    /**
-     * 解析工单信息
-     */
-    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data,String type) {
-        Log.i(TAG, "WorkOrder data=" + data);
-        ArrayList<WorkOrder> list = null;
-        WorkOrder workOrder = null;
-        try {
-            JSONArray jsonArray = new JSONArray(data);
-            JSONObject jsonObject;
-            list = new ArrayList<WorkOrder>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                workOrder = new WorkOrder();
-                jsonObject = jsonArray.getJSONObject(i);
-                workOrder.setWonum(jsonObject.getString("WONUM"));//工单号
-                workOrder.setActfinish(jsonObject.getString("ACTFINISH"));//计划完成时间
-                workOrder.setActstart(jsonObject.getString("ACTSTART"));//实际开始时间
-                workOrder.setAssetdesc(jsonObject.getString("ASSETDESC"));//设备描述
-                workOrder.setAssetnum(jsonObject.getString("ASSETNUM"));//设备编号
-                workOrder.setDescription(jsonObject.getString("DESCRIPTION"));//描述
-                workOrder.setEstdur(jsonObject.getString("ESTDUR"));//剩余时间
-                workOrder.setJpnum(jsonObject.getString("JPNUM"));//作业计划
-                workOrder.setJpnumdesc(jsonObject.getString("JPNUMDESC"));//作业计划描述
-                workOrder.setLocation(jsonObject.getString("LOCATION"));//位置
-                workOrder.setLocationdesc(jsonObject.getString("LOCATIONDESC"));//位置描述
-                workOrder.setOnbehalfof(jsonObject.getString("ONBEHALFOF"));//录入人工号
-                workOrder.setPmdesc(jsonObject.getString("PMDESC"));//
-                workOrder.setPmnum(jsonObject.getString("PMNUM"));//
-                workOrder.setReportdate(jsonObject.getString("REPORTDATE"));//汇报日期
-                workOrder.setStatus(jsonObject.getString("STATUS"));//状态
-                workOrder.setStatusdesc(jsonObject.getString("STATUSDESC"));//状态描述
-                workOrder.setUdwotype(jsonObject.getString("UDWOTYPE"));//工单类型
-                workOrder.setUdwotypedesc(jsonObject.getString("UDWOTYPEDESC"));//工单类型描述
-                workOrder.setWorktype(jsonObject.getString("WORKTYPE"));//工作类型
-                list.add(workOrder);
-            }
-            return list;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
+//    /**
+//     * 解析工单信息
+//     */
+//    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data,String type) {
+//        Log.i(TAG, "WorkOrder data=" + data);
+//        ArrayList<WorkOrder> list = null;
+//        WorkOrder workOrder = null;
+//        try {
+//            JSONArray jsonArray = new JSONArray(data);
+//            JSONObject jsonObject;
+//            list = new ArrayList<WorkOrder>();
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                workOrder = new WorkOrder();
+//                jsonObject = jsonArray.getJSONObject(i);
+//                workOrder.setWonum(jsonObject.getString("WONUM"));//工单号
+//                workOrder.setActfinish(jsonObject.getString("ACTFINISH"));//计划完成时间
+//                workOrder.setActstart(jsonObject.getString("ACTSTART"));//实际开始时间
+//                workOrder.setAssetdesc(jsonObject.getString("ASSETDESC"));//设备描述
+//                workOrder.setAssetnum(jsonObject.getString("ASSETNUM"));//设备编号
+//                workOrder.setDescription(jsonObject.getString("DESCRIPTION"));//描述
+//                workOrder.setEstdur(jsonObject.getString("ESTDUR"));//剩余时间
+//                workOrder.setJpnum(jsonObject.getString("JPNUM"));//作业计划
+//                workOrder.setJpnumdesc(jsonObject.getString("JPNUMDESC"));//作业计划描述
+//                workOrder.setLocation(jsonObject.getString("LOCATION"));//位置
+//                workOrder.setLocationdesc(jsonObject.getString("LOCATIONDESC"));//位置描述
+//                workOrder.setOnbehalfof(jsonObject.getString("ONBEHALFOF"));//录入人工号
+//                workOrder.setPmdesc(jsonObject.getString("PMDESC"));//
+//                workOrder.setPmnum(jsonObject.getString("PMNUM"));//
+//                workOrder.setReportdate(jsonObject.getString("REPORTDATE"));//汇报日期
+//                workOrder.setStatus(jsonObject.getString("STATUS"));//状态
+//                workOrder.setStatusdesc(jsonObject.getString("STATUSDESC"));//状态描述
+//                workOrder.setUdwotype(jsonObject.getString("UDWOTYPE"));//工单类型
+//                workOrder.setUdwotypedesc(jsonObject.getString("UDWOTYPEDESC"));//工单类型描述
+//                workOrder.setWorktype(jsonObject.getString("WORKTYPE"));//工作类型
+//                list.add(workOrder);
+//            }
+//            return list;
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//    }
 //
 //    /**
 //     * 解析工单计划任务信息

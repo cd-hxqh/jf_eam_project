@@ -27,6 +27,8 @@ public class Constants {
     public static final String UDWOCM_APPID="UDWOTRACK";
     //工单表名
     public static final String WORKORDER_NAME = "WORKORDER";
+    //工单任务
+    public static final String WOACTIVITY_NAME = "WOACTIVITY";
 
 
 

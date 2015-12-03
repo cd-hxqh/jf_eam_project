@@ -78,6 +78,13 @@ public class HttpManager {
     }
 
     /**
+     * 设置计划任务接口*
+     */
+    public static String getwoactivityUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
      * 设置采购订单接口*
      */
     public static String getPoUrl(String vlaue, int curpage, int showcount) {

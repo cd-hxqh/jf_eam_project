@@ -3,9 +3,6 @@ package com.jf_eam_project.model;
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by think on 2015/10/28.
  */
