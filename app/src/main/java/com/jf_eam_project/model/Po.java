@@ -58,7 +58,7 @@ public class Po extends Entity {
     public String sitedesc;//地点描述
     @JsonField(fieldName = "siteid")
     public String siteid;// 地点
-    @JsonField(fieldName = "STATUS")
+    @JsonField(fieldName = "status")
     public String status;// 状态
     @JsonField(fieldName = "statusdate")
     public String statusdate;//状态日期

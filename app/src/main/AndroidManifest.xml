@@ -61,15 +61,25 @@
             android:name=".ui.activity.Work_DetailsActivity"
             android:label="@string/title_activity_work_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name=".ui.activity.Work_AddNewActivity"
             android:label="@string/title_activity_work_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PO_Details_Activity"
+            android:label="@string/title_activity_po__details_" >
+        </activity>
+        <activity
+            android:name=".ui.activity.Poline_Activity"
+            android:label="@string/title_activity_poline" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PoLine_Details_Activity"
+            android:label="@string/title_activity_po_line_details" >
         </activity>
         <activity
             android:name=".ui.activity.Work_PlanActivity"

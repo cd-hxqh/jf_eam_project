@@ -137,9 +137,51 @@
     <string name="work_wptool">工具</string>
     
 
+
     <string name="title_activity_po_order_">采购订单</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="po_order_title">采购订单</string>
     <string name="po_number_text">PO:</string>
+    <!--暂无信息提示-->
+    <string name="have_not_data">暂无信息</string>
+
+
+    <!--订单详情-->
+    <string name="title_activity_po__details_">订单详情</string>
+    <string name="po_num_title">PO:</string>
+    <string name="po_description_text">描述:</string>
+    <string name="po_potype_title">类型:</string>
+    <string name="po_siteid_title">地点:</string>
+    <string name="po_status_title">状态:</string>
+    <string name="po_buyercompany_title">买方公司:</string>
+    <string name="po_purchaseagent_title">买方:</string>
+    <string name="po_priority_title">优先级:</string>
+    <string name="po_statedate_title">状态日期:</string>
+    <string name="po_orderdate_title">订购日期:</string>
+    <string name="po_requireddate_title">要求日期:</string>
+    <string name="po_vendeliverydate_title">供应商日期:</string>
+    <string name="po_pretaxtotal_title">税前总计:</string>
+    <string name="po_totaltax1_title">税款总计:</string>
+    <string name="po_totalcost_title">成本总计:</string>
+    <string name="po_currencycode_title">货币:</string>
+
+    <!--采购单行-->
+    <string name="title_activity_poline">采购订单行</string>
+    <string name="poline_num_text">行:</string>
+    <!--采购单行详情-->
+    <string name="title_activity_po_line_details">采购订单行详情</string>
+    <string name="poline_num_title">行:</string>
+    <string name="poline_linetype_title">行类型:</string>
+    <string name="poline_itemnum_title">项目:</string>
+    <string name="poline_description_title">项目描述:</string>
+    <string name="poline_conversion_title">换算系数:</string>
+    <string name="poline_category_title">类别:</string>
+    <string name="poline_orderqty_title">数量:</string>
+    <string name="poline_orderunit_title">订购单位:</string>
+    <string name="poline_enterby_title">输入人:</string>
+    <string name="poline_enterdate_title">输入日期:</string>
+    <string name="poline_shiptoattn_title">接收人:</string>
+    <string name="poline_requestedby_title">请求者:</string>
+    <string name="poline_tositeid_title">交货地点：</string>
 </resources>

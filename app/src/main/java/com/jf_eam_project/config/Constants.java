@@ -39,6 +39,11 @@ public class Constants {
 
     //采购单的表名
     public static final String PO_NAME="PO";
+
+    //采购单行的appid
+    public static final String POLINE_APPID="UDPO";
+    //采购单行的表名
+    public static final String POLNE_NAME="POLINE";
     /**-----------表名配置--结束**/
 
 
