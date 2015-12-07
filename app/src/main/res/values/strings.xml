@@ -37,6 +37,8 @@
     <string name="title_activity_work_details">工单详情</string>
     <string name="title_activity_work_addnew">新建工单</string>
     <string name="title_activity_work_plan">工单计划</string>
+    <string name="title_activity_work_assignment">任务分配</string>
+    <string name="title_activity_work_realinfo">实际情况</string>
 
     <!--网络信息提示-->
     <string name="error_title">错误</string>

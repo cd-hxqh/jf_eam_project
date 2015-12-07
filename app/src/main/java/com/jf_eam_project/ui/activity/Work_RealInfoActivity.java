@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
@@ -28,9 +27,9 @@ import java.util.List;
 
 /**
  * Created by think on 2015/12/3.
- * 工单计划页面
+ * 工单实际情况页面
  */
-public class Work_PlanActivity extends BaseActivity {
+public class Work_RealInfoActivity extends BaseActivity {
 
     private TextView titlename;
     private ImageView menuImageView;
@@ -83,7 +82,7 @@ public class Work_PlanActivity extends BaseActivity {
     protected void initView() {
         mViewPager.setCurrentItem(currentIndex);
         mViewPager.setOffscreenPageLimit(4);
-        titlename.setText(getResources().getString(R.string.work_plan));
+        titlename.setText(getResources().getString(R.string.title_activity_work_realinfo));
         backimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

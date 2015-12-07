@@ -159,7 +159,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
-        // set up the drawer's list view with items and click listener
+        // set up the drawer's activity_work view with items and click listener
 
         android.support.v7.app.ActionBar actionBar = getActionBarActivity().getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

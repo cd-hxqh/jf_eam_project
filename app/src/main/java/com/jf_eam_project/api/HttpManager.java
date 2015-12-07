@@ -85,6 +85,41 @@ public class HttpManager {
     }
 
     /**
+     * 设置计划员工接口*
+     */
+    public static String getWplaborUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置计划物料接口*
+     */
+    public static String getWpmaterialUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置计划服务接口*
+     */
+    public static String getWpserviceUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置计划工具接口*
+     */
+    public static String getWptoolUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置计划工具接口*
+     */
+    public static String getAssignmentUrl(int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
      * 设置采购订单接口*
      */
     public static String getPoUrl(String vlaue, int curpage, int showcount) {

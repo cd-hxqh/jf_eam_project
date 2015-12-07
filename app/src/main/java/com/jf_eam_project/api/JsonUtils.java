@@ -113,12 +113,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Wfassignment> parsingWfassignment(Context ctx, String data) {
 //        Log.i(TAG, "Wfassignment data=" + data);
-//        ArrayList<Wfassignment> list = null;
+//        ArrayList<Wfassignment> activity_work = null;
 //        Wfassignment wfassignment = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Wfassignment>();
+//            activity_work = new ArrayList<Wfassignment>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                wfassignment = new Wfassignment();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -133,10 +133,10 @@ public class JsonUtils {
 //                wfassignment.processname = jsonObject.getString("PROCESSNAME"); //过程
 //                wfassignment.startdate = jsonObject.getString("STARTDATE"); //开始日期
 //
-//                list.add(wfassignment);
+//                activity_work.add(wfassignment);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -148,12 +148,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data,String type) {
 //        Log.i(TAG, "WorkOrder data=" + data);
-//        ArrayList<WorkOrder> list = null;
+//        ArrayList<WorkOrder> activity_work = null;
 //        WorkOrder workOrder = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<WorkOrder>();
+//            activity_work = new ArrayList<WorkOrder>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                workOrder = new WorkOrder();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -177,9 +177,9 @@ public class JsonUtils {
 //                workOrder.setUdwotype(jsonObject.getString("UDWOTYPE"));//工单类型
 //                workOrder.setUdwotypedesc(jsonObject.getString("UDWOTYPEDESC"));//工单类型描述
 //                workOrder.setWorktype(jsonObject.getString("WORKTYPE"));//工作类型
-//                list.add(workOrder);
+//                activity_work.add(workOrder);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -192,12 +192,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Woactivity> parsingWoactivity(Context ctx, String data) {
 //        Log.i(TAG, "Woactivity data=" + data);
-//        ArrayList<Woactivity> list = null;
+//        ArrayList<Woactivity> activity_work = null;
 //        Woactivity woactivity = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Woactivity>();
+//            activity_work = new ArrayList<Woactivity>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                woactivity = new Woactivity();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -210,9 +210,9 @@ public class JsonUtils {
 //                woactivity.actstart = jsonObject.getString("ACTSTART");//时间开始时间
 //                woactivity.actfinish = jsonObject.getString("ACTFINISH");//实际完成时间
 //                woactivity.estdur = jsonObject.getString("ESTDUR");//持续时间
-//                list.add(woactivity);
+//                activity_work.add(woactivity);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -225,12 +225,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Wplabor> parsingWplabor(Context ctx, String data) {
 //        Log.i(TAG, "Wplabor data=" + data);
-//        ArrayList<Wplabor> list = null;
+//        ArrayList<Wplabor> activity_work = null;
 //        Wplabor wplabor = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Wplabor>();
+//            activity_work = new ArrayList<Wplabor>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                wplabor = new Wplabor();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -244,9 +244,9 @@ public class JsonUtils {
 //                wplabor.orgid = jsonObject.getString("ORGID");//组织
 //                wplabor.siteid = jsonObject.getString("SITEID");//地点
 //                wplabor.wplaborid = jsonObject.getString("WPLABORID");//
-//                list.add(wplabor);
+//                activity_work.add(wplabor);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -259,12 +259,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Wpitem> parsingWpitem(Context ctx, String data) {
 //        Log.i(TAG, "Wpitem data=" + data);
-//        ArrayList<Wpitem> list = null;
+//        ArrayList<Wpitem> activity_work = null;
 //        Wpitem wpitem = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Wpitem>();
+//            activity_work = new ArrayList<Wpitem>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                wpitem = new Wpitem();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -280,9 +280,9 @@ public class JsonUtils {
 //                wpitem.requiredate = jsonObject.getString("REQUIREDATE");//要求的日期
 //                wpitem.orgid = jsonObject.getString("ORGID");//组织标识
 //                wpitem.siteid = jsonObject.getString("SITEID");//地点
-//                list.add(wpitem);
+//                activity_work.add(wpitem);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -295,12 +295,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Assignment> parsingAssignment(Context ctx, String data) {
 //        Log.i(TAG, "Wpitem data=" + data);
-//        ArrayList<Assignment> list = null;
+//        ArrayList<Assignment> activity_work = null;
 //        Assignment assignment = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Assignment>();
+//            activity_work = new ArrayList<Assignment>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                assignment = new Assignment();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -316,9 +316,9 @@ public class JsonUtils {
 //                assignment.orgid = jsonObject.getString("ORGID");//组织
 //                assignment.siteid = jsonObject.getString("SITEID");//地点
 //                assignment.assignmentid = jsonObject.getString("ASSIGNMENTID");//
-//                list.add(assignment);
+//                activity_work.add(assignment);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -330,12 +330,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Failurereport> parsingFailurereport(Context ctx, String data) {
 //        Log.i(TAG, "Failurereport data=" + data);
-//        ArrayList<Failurereport> list = null;
+//        ArrayList<Failurereport> activity_work = null;
 //        Failurereport failurereport = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Failurereport>();
+//            activity_work = new ArrayList<Failurereport>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                failurereport = new Failurereport();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -347,9 +347,9 @@ public class JsonUtils {
 //                failurereport.orgid = jsonObject.getString("ORGID");//组织
 //                failurereport.siteid = jsonObject.getString("SITEID");//地点
 //                failurereport.failurereportid = jsonObject.getString("FAILUREREPORTID");//供应商
-//                list.add(failurereport);
+//                activity_work.add(failurereport);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -361,12 +361,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Labtrans> parsingLabtrans(Context ctx, String data) {
 //        Log.i(TAG, "Labtrans data=" + data);
-//        ArrayList<Labtrans> list = null;
+//        ArrayList<Labtrans> activity_work = null;
 //        Labtrans labtrans = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Labtrans>();
+//            activity_work = new ArrayList<Labtrans>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                labtrans = new Labtrans();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -389,9 +389,9 @@ public class JsonUtils {
 //                labtrans.orgid = jsonObject.getString("ORGID");//组织
 //                labtrans.siteid = jsonObject.getString("SITEID");//地点
 //                labtrans.labtransid = jsonObject.getString("LABTRANSID");//
-//                list.add(labtrans);
+//                activity_work.add(labtrans);
 //            }
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -403,12 +403,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Inventory> parsingInventory(Context ctx, String data) {
 //        Log.i(TAG, "Inventory data=" + data);
-//        ArrayList<Inventory> list = null;
+//        ArrayList<Inventory> activity_work = null;
 //        Inventory inventory = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Inventory>();
+//            activity_work = new ArrayList<Inventory>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                inventory = new Inventory();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -422,10 +422,10 @@ public class JsonUtils {
 //                inventory.siteid = jsonObject.getString("SITEID"); //站点
 //                inventory.stdcost = jsonObject.getString("STDCOST"); //项目成本
 //
-//                list.add(inventory);
+//                activity_work.add(inventory);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -439,12 +439,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Invcost> parsingInvcost(Context ctx, String data) {
 //        Log.i(TAG, "Invcost data=" + data);
-//        ArrayList<Invcost> list = null;
+//        ArrayList<Invcost> activity_work = null;
 //        Invcost invcost = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Invcost>();
+//            activity_work = new ArrayList<Invcost>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                invcost = new Invcost();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -456,10 +456,10 @@ public class JsonUtils {
 //                invcost.siteid = jsonObject.getString("SITEID"); //站点
 //                invcost.stdcost = jsonObject.getString("STDCOST"); //项目成本
 //
-//                list.add(invcost);
+//                activity_work.add(invcost);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -472,12 +472,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Invbalances> parsingInvbalances(Context ctx, String data) {
 //        Log.i(TAG, "Invbalances data=" + data);
-//        ArrayList<Invbalances> list = null;
+//        ArrayList<Invbalances> activity_work = null;
 //        Invbalances invbalances = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Invbalances>();
+//            activity_work = new ArrayList<Invbalances>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                invbalances = new Invbalances();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -491,10 +491,10 @@ public class JsonUtils {
 //                invbalances.siteid = jsonObject.getString("SITEID"); //位置
 //                invbalances.stagedcurbal = jsonObject.getString("STAGEDCURBAL"); //暂存余量
 //
-//                list.add(invbalances);
+//                activity_work.add(invbalances);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -507,12 +507,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Matusetrans> parsingMatusetrans(Context ctx, String data) {
 //        Log.i(TAG, "Matusetrans data=" + data);
-//        ArrayList<Matusetrans> list = null;
+//        ArrayList<Matusetrans> activity_work = null;
 //        Matusetrans matusetrans = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Matusetrans>();
+//            activity_work = new ArrayList<Matusetrans>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                matusetrans = new Matusetrans();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -535,10 +535,10 @@ public class JsonUtils {
 //                matusetrans.transdate = jsonObject.getString("TRANSDATE"); //交易日期
 //                matusetrans.unitcost = jsonObject.getString("UNITCOST"); //单位成本
 //
-//                list.add(matusetrans);
+//                activity_work.add(matusetrans);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -551,12 +551,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Matrectrans> parsingMatrectrans(Context ctx, String data) {
 //        Log.i(TAG, "Matrectrans data=" + data);
-//        ArrayList<Matrectrans> list = null;
+//        ArrayList<Matrectrans> activity_work = null;
 //        Matrectrans matrectrans = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Matrectrans>();
+//            activity_work = new ArrayList<Matrectrans>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                matrectrans = new Matrectrans();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -573,10 +573,10 @@ public class JsonUtils {
 //                matrectrans.transdate = jsonObject.getString("TRANSDATE"); //交易日期
 //                matrectrans.unitcost = jsonObject.getString("UNITCOST"); //单位成本
 //
-//                list.add(matrectrans);
+//                activity_work.add(matrectrans);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -589,12 +589,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Invuse> parsingInvuse(Context ctx, String data) {
 //        Log.i(TAG, "Invuse data=" + data);
-//        ArrayList<Invuse> list = null;
+//        ArrayList<Invuse> activity_work = null;
 //        Invuse invuse = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Invuse>();
+//            activity_work = new ArrayList<Invuse>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                invuse = new Invuse();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -610,10 +610,10 @@ public class JsonUtils {
 //                invuse.udissueto = jsonObject.getString("UDISSUETO"); //领料人
 //                invuse.wonum = jsonObject.getString("WONUM"); //工单
 //
-//                list.add(invuse);
+//                activity_work.add(invuse);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;
@@ -625,12 +625,12 @@ public class JsonUtils {
 //     */
 //    public static ArrayList<Invuseline> parsingInvuseline(Context ctx, String data) {
 //        Log.i(TAG, "Invuseline data=" + data);
-//        ArrayList<Invuseline> list = null;
+//        ArrayList<Invuseline> activity_work = null;
 //        Invuseline invuseline = null;
 //        try {
 //            JSONArray jsonArray = new JSONArray(data);
 //            JSONObject jsonObject;
-//            list = new ArrayList<Invuseline>();
+//            activity_work = new ArrayList<Invuseline>();
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                invuseline = new Invuseline();
 //                jsonObject = jsonArray.getJSONObject(i);
@@ -655,10 +655,10 @@ public class JsonUtils {
 //                invuseline.usetype = jsonObject.getString("USETYPE"); //使用情况类型
 //                invuseline.wonum = jsonObject.getString("WONUM"); //工单
 //
-//                list.add(invuseline);
+//                activity_work.add(invuseline);
 //            }
 //
-//            return list;
+//            return activity_work;
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //            return null;

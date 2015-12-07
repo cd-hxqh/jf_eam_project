@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
-import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
@@ -60,7 +59,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list);
+        setContentView(R.layout.activity_work);
 
         getIntentData();
         findViewById();

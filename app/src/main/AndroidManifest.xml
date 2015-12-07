@@ -78,6 +78,20 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             >
         </activity>
+        <activity
+            android:name=".ui.activity.Work_AssignmentActivity"
+            android:label="@string/title_activity_work_assignment"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+        </activity>
+        <activity
+            android:name=".ui.activity.Work_RealInfoActivity"
+            android:label="@string/title_activity_work_realinfo"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+        </activity>
     </application>
 
 </manifest>

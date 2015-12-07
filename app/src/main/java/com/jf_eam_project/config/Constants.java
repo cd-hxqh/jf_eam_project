@@ -29,7 +29,16 @@ public class Constants {
     public static final String WORKORDER_NAME = "WORKORDER";
     //工单任务
     public static final String WOACTIVITY_NAME = "WOACTIVITY";
-
+    //工单员工
+    public static final String WPLABOR_NAME = "WPLABOR";
+    //工单物料
+    public static final String WPMATERIAL_NAME = "WPMATERIAL";
+    //工单服务
+    public static final String WPSERVICE_NAME = "WPSERVICE";
+    //工单工具
+    public static final String WPTOOL_NAME = "WPTOOL";
+    //任务分配
+    public static final String ASSIGNMENT_NAME = "ASSIGNMENT";
 
 
 

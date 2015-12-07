@@ -87,7 +87,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list);
+        setContentView(R.layout.activity_work);
         findViewById();
         initView();
     }
