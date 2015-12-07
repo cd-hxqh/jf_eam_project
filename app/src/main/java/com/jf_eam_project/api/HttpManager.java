@@ -131,6 +131,19 @@ public class HttpManager {
     }
 
 
+
+    /**
+     * 设置采购单行接口*
+     */
+    public static String getPoLineUrl(String vlaue,String search, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" + Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
+        } else {
+            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" + Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "','POLINENUM':'" + search + "'}}";
+        }
+    }
+
+
 //    /**
 //     * 不分页获取信息方法*
 //     */

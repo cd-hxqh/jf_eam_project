@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
-import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.ui.activity.PO_Details_Activity;
-import com.jf_eam_project.ui.activity.Work_DetailsActivity;
+import com.jf_eam_project.ui.activity.PoLine_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,13 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 采购
+ * 采购单行
  */
-public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder> {
+public class PoLineListAdapter extends RecyclerView.Adapter<PoLineListAdapter.ViewHolder> {
     Context mContext;
-    List<Po> poList = new ArrayList<>();
+    List<PoLine> polineList = new ArrayList<>();
 
-    public PoListAdapter(Context context) {
+    public PoLineListAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -42,17 +42,17 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Po po = poList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.po_number_text));
+        final PoLine poline = polineList.get(position);
+        holder.itemNumTitle.setText(mContext.getString(R.string.poline_num_text));
         holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
-        holder.itemNum.setText(po.getPonum());
-        holder.itemDesc.setText(po.getDescription());
+        holder.itemNum.setText(poline.getPolinenum());
+        holder.itemDesc.setText(poline.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PO_Details_Activity.class);
+                Intent intent = new Intent(mContext, PoLine_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("po", po);
+                bundle.putSerializable("poLine", poline);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -61,7 +61,7 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return poList.size();
+        return polineList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,10 +101,10 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
         }
     }
 
-    public void update(ArrayList<Po> data, boolean merge) {
-        if (merge && poList.size() > 0) {
-            for (int i = 0; i < poList.size(); i++) {
-                Po po = poList.get(i);
+    public void update(ArrayList<PoLine> data, boolean merge) {
+        if (merge && polineList.size() > 0) {
+            for (int i = 0; i < polineList.size(); i++) {
+                PoLine po = polineList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
                     if (data.get(j) == po) {
@@ -116,19 +116,26 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
                 data.add(po);
             }
         }
-        poList = data;
+        polineList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Po> data) {
+    public void adddate(ArrayList<PoLine> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!poList.contains(data.get(i))) {
-                    poList.add(data.get(i));
+                if (!polineList.contains(data.get(i))) {
+                    polineList.add(data.get(i));
                 }
             }
         }
         notifyDataSetChanged();
+    }
+
+
+    public void removeAllData() {
+        if (polineList.size() > 0) {
+            polineList.removeAll(polineList);
+        }
     }
 }
