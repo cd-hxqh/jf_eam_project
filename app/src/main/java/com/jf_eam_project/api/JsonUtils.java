@@ -45,7 +45,6 @@ public class JsonUtils {
         }
     }
 
-
     public static Webservice_result parsingWebservice_result(String data){
         Log.i(TAG, "data=" + data);
         Webservice_result webserviceResult = null;
