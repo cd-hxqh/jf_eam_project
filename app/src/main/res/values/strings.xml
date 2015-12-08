@@ -186,4 +186,24 @@
     <string name="poline_shiptoattn_title">接收人:</string>
     <string name="poline_requestedby_title">请求者:</string>
     <string name="poline_tositeid_title">交货地点：</string>
+
+    <!--采购计划-->
+    <string name="pr_title_text">采购计划</string>
+    <string name="pr_type_title">采购类型:</string>
+    <string name="pr_requestedby_title">申请人:</string>
+    <string name="pr_issuedate_title">申请日期:</string>
+    <string name="pr_statusdate_title">状态日期:</string>
+    <string name="pr_requireddate_title">要求的日期:</string>
+    <string name="pr_pretaxtotal_title">税前总计:</string>
+    <string name="pr_totaltax1_title">税款总计:</string>
+    <string name="pr_totalcost_title">成本总计:</string>
+    <string name="pr_currencycode_title">货币:</string>
+    <string name="pr_detail_title">计划详情</string>
+    <string name="prline_title">采购计划行</string>
+    <string name="prline_description">描述:</string>
+    <string name="prline_storeloc_title">库房:</string>
+    <string name="prline_unitcost_title">单位成本:</string>
+    <string name="prline_linecost_title">行成本:</string>
+    <string name="prline_tax1_title">税:</string>
+    <string name="prline_detail_title">计划单行详情</string>
 </resources>
