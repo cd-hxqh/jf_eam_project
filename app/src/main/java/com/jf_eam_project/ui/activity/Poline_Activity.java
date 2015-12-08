@@ -77,7 +77,7 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list);
+        setContentView(R.layout.activity_work);
 
         initData();
         findViewById();
