@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.jf_eam_project"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -35,4 +35,5 @@ dependencies {
     compile files('libs/httpcore-4.4.3.jar')
     compile 'com.instagram:ig-json-parser-processor-prerelease:0.0.6.0'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.0-rc1'
+    compile files('libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
 }

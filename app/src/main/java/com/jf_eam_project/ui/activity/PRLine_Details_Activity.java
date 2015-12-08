@@ -10,39 +10,39 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
 
 /**
- * ²É¹º¼Æ»®ÐÐÏêÇé*
+ * ï¿½É¹ï¿½ï¿½Æ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*
  */
 public class PRLine_Details_Activity extends BaseActivity {
 
     /**
-     * ±êÌâ*
+     * ï¿½ï¿½ï¿½ï¿½*
      */
     private TextView titleView;
     /**
-     * ·µ»Ø°´Å¥*
+     * ï¿½ï¿½ï¿½Ø°ï¿½Å¥*
      */
     private ImageView backImageView;
     /**
-     * ½çÃæÐÅÏ¢ÏÔÊ¾*
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾*
      */
-    private TextView prlinenumText; //ÐÐ
-    private TextView linetypeText; //ÐÐÀàÐÍ
-    private TextView itemnumText; //ÏîÄ¿
-    private TextView descriptionText; //ÏîÄ¿ÃèÊö
-    private TextView storelocText; //¿â·¿
-    private TextView categoryText; //Àà±ð
-    private TextView orderqtyText; //ÊýÁ¿
-    private TextView orderunitText; //¶©¹ºµ¥Î»
-    private TextView conversionText; //»»ËãÏµÊý
-    private TextView unitcostText; //µ¥Î»³É±¾
-    private TextView linecostText; //ÐÐ³É±¾
+    private TextView prlinenumText; //ï¿½ï¿½
+    private TextView linetypeText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private TextView itemnumText; //ï¿½ï¿½Ä¿
+    private TextView descriptionText; //ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½
+    private TextView storelocText; //ï¿½â·¿
+    private TextView categoryText; //ï¿½ï¿½ï¿½
+    private TextView orderqtyText; //ï¿½ï¿½ï¿½ï¿½
+    private TextView orderunitText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
+    private TextView conversionText; //ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    private TextView unitcostText; //ï¿½ï¿½Î»ï¿½É±ï¿½
+    private TextView linecostText; //ï¿½Ð³É±ï¿½
     private TextView tax1Text; //Ë°
-    private TextView enterbyText; //ÊäÈëÈË
-    private TextView enterdateText; //ÊäÈëÈÕÆÚ
-    private TextView requestedbyText; //ÇëÇóÕß
+    private TextView enterbyText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private TextView enterdateText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private TextView requestedbyText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     /**
-     * ²É¹º¶©µ¥ÐÐ*
+     * ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*
      */
     private PRLine prLine;
 
@@ -113,7 +113,7 @@ public class PRLine_Details_Activity extends BaseActivity {
 
 
     /**
-     * ·µ»Ø°´Å¥*
+     * ï¿½ï¿½ï¿½Ø°ï¿½Å¥*
      */
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override
