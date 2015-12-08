@@ -24,19 +24,21 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
+import com.jf_eam_project.ui.adapter.PrListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * 采购订单Acitivity*
+ * 采购计划Acitivity*
  */
 public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Po_order_Activity";
+    private static final String TAG = "Pr_order_Activity";
 
 
     /**
@@ -72,7 +74,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
     /**
      * 适配器*
      */
-    private PoListAdapter poListAdapter;
+    private PrListAdapter prListAdapter;
     /**
      * 编辑框*
      */
@@ -109,7 +111,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
         setSearchEdit();
 
 
-        titlename.setText(getString(R.string.po_order_title));
+        titlename.setText(getString(R.string.pr_title_text));
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
@@ -120,8 +122,8 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        poListAdapter = new PoListAdapter(this);
-        recyclerView.setAdapter(poListAdapter);
+        prListAdapter = new PrListAdapter(this);
+        recyclerView.setAdapter(prListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -143,12 +145,15 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onLoad() {
+        page = 1;
 
+        getData(searchText);
     }
 
     @Override
     public void onRefresh() {
-
+        page++;
+        getData(searchText);
     }
 
 
@@ -170,6 +175,11 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
+                    prListAdapter.removeAllData();
+                    nodatalayout.setVisibility(View.GONE);
+                    refresh_layout.setRefreshing(true);
+                    page = 1;
+                    getData(searchText);
                     return true;
                 }
                 return false;
@@ -181,7 +191,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getPoUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getPrUrl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -192,20 +202,20 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
                 Log.i(TAG, "results=" + results.getResultlist());
 
-                ArrayList<Po> items = null;
+                ArrayList<PR> items = null;
                 try {
-                    items = Ig_Json_Model.parseFromString(results.getResultlist());
+                    items = Ig_Json_Model.parsePrFromString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            poListAdapter = new PoListAdapter(Pr_Activity.this);
-                            recyclerView.setAdapter(poListAdapter);
+                            prListAdapter = new PrListAdapter(Pr_Activity.this);
+                            recyclerView.setAdapter(prListAdapter);
                         }
                         if (totalPages == page) {
-                            poListAdapter.adddate(items);
+                            prListAdapter.adddate(items);
                         }
                     }
 
