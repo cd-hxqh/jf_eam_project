@@ -34,7 +34,7 @@ import java.util.ArrayList;
 /**
  * 采购订单行
  */
-public class PrLine_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private static final String TAG = "Poline_Activity";
 
     /**
@@ -143,7 +143,7 @@ public class PrLine_Activity extends BaseActivity implements SwipeRefreshLayout.
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            poLineListAdapter = new PoLineListAdapter(PrLine_Activity.this);
+                            poLineListAdapter = new PoLineListAdapter(Prline_Activity.this);
                             recyclerView.setAdapter(poLineListAdapter);
                         }
                         if (totalPages == page) {
@@ -180,7 +180,7 @@ public class PrLine_Activity extends BaseActivity implements SwipeRefreshLayout.
                     // 隐藏软件盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    PrLine_Activity.this.getCurrentFocus()
+                                    Prline_Activity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();

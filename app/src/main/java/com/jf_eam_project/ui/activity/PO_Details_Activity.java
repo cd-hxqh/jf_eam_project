@@ -16,7 +16,7 @@ import com.jf_eam_project.model.Po;
 /**
  * 采购订单详情
  */
-public class Po_Details_Activity extends BaseActivity {
+public class PO_Details_Activity extends BaseActivity {
 
     private static final String TAG = "Po_Details_Activity";
 
@@ -104,7 +104,7 @@ public class Po_Details_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getResources().getString(R.string.title_activity_po__details_));
+        titleView.setText(getResources().getString(R.string.title_activity_po_details_));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
@@ -159,7 +159,7 @@ public class Po_Details_Activity extends BaseActivity {
      */
     private void showPopupWindow(View view) {
 
-        View contentView = LayoutInflater.from(Po_Details_Activity.this).inflate(
+        View contentView = LayoutInflater.from(PO_Details_Activity.this).inflate(
                 R.layout.popup_window, null);
 
 
@@ -181,7 +181,7 @@ public class Po_Details_Activity extends BaseActivity {
     private View.OnClickListener polineOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Po_Details_Activity.this, Poline_Activity.class);
+            Intent intent = new Intent(PO_Details_Activity.this, Poline_Activity.class);
             intent.putExtra("ponum", po.ponum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();

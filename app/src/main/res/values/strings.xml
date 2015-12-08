@@ -172,7 +172,7 @@
 
 
     <!--订单详情-->
-    <string name="title_activity_po__details_">订单详情</string>
+    <string name="title_activity_po_details_">订单详情</string>
     <string name="po_num_title">PO:</string>
     <string name="po_description_text">描述:</string>
     <string name="po_potype_title">类型:</string>
