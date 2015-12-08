@@ -7,44 +7,44 @@ import com.instagram.common.json.annotation.JsonType;
 
 /**
  * Created by think on 2015/11/26.
- * ²É¹º¼Æ»®ĞĞ
+ * é‡‡è´­è®¡åˆ’è¡Œ
  */
 @JsonType
 public class PRLine extends Entity {
 
 
     @JsonField(fieldName = "category")
-    public String category;//Àà±ğ
+    public String category;//ç±»åˆ«
     @JsonField(fieldName = "conversion")
-    public String conversion;//»»ËãÏµÊı
+    public String conversion;//æ¢ç®—ç³»æ•°
     @JsonField(fieldName = "description")
-    public String description;//ÃèÊö
+    public String description;//æè¿°
     @JsonField(fieldName = "enterby")
-    public String enterby;//ÊäÈëÈË
+    public String enterby;//è¾“å…¥äºº
     @JsonField(fieldName = "enterdate")
-    public String enterdate;//ÊäÈëÈÕÆÚ
+    public String enterdate;//è¾“å…¥æ—¥æœŸ
     @JsonField(fieldName = "itemnum")
-    public String itemnum;//ÏîÄ¿
+    public String itemnum;//é¡¹ç›®
     @JsonField(fieldName = "linecost")
-    public String linecost;//ĞĞ³É±¾
+    public String linecost;//è¡Œæˆæœ¬
     @JsonField(fieldName = "prlinenum")
-    public String prlinenum;//ĞĞ
+    public String prlinenum;//è¡Œ
     @JsonField(fieldName = "prnum")
-    public String prnum;//²É¹º¼Æ»®±àºÅ
+    public String prnum;//é‡‡è´­è®¡åˆ’ç¼–å·
     @JsonField(fieldName = "tax1")
-    public String tax1;//Ë°
+    public String tax1;//ç¨
     @JsonField(fieldName = "orderunit")
-    public String orderunit;//¶©¹ºµ¥Î»
+    public String orderunit;//è®¢è´­å•ä½
     @JsonField(fieldName = "orderqty")
-    public String orderqty;//ÊıÁ¿
+    public String orderqty;//æ•°é‡
     @JsonField(fieldName = "unitcost")
-    public String unitcost;//µ¥Î»³É±¾
+    public String unitcost;//å•ä½æˆæœ¬
     @JsonField(fieldName = "linetype")
-    public String linetype;//ĞĞÀàĞÍ
+    public String linetype;//è¡Œç±»å‹
     @JsonField(fieldName = "requestedby")
-    public String requestedby;//ÇëÇóÕß
+    public String requestedby;//è¯·æ±‚è€…
     @JsonField(fieldName = "storeloc")
-    public String storeloc;//¿â·¿
+    public String storeloc;//åº“æˆ¿
 
 
     public String getCategory() {

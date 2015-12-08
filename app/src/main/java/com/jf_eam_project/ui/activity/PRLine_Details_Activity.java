@@ -10,39 +10,39 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
 
 /**
- * ²É¹º¼Æ»®ĞĞÏêÇé*
+ * é‡‡è´­è®¡åˆ’è¡Œè¯¦æƒ…*
  */
 public class PRLine_Details_Activity extends BaseActivity {
 
     /**
-     * ±êÌâ*
+     * æ ‡é¢˜*
      */
     private TextView titleView;
     /**
-     * ·µ»Ø°´Å¥*
+     * è¿”å›æŒ‰é’®*
      */
     private ImageView backImageView;
     /**
-     * ½çÃæĞÅÏ¢ÏÔÊ¾*
+     * ç•Œé¢ä¿¡æ¯æ˜¾ç¤º*
      */
-    private TextView prlinenumText; //ĞĞ
-    private TextView linetypeText; //ĞĞÀàĞÍ
-    private TextView itemnumText; //ÏîÄ¿
-    private TextView descriptionText; //ÏîÄ¿ÃèÊö
-    private TextView storelocText; //¿â·¿
-    private TextView categoryText; //Àà±ğ
-    private TextView orderqtyText; //ÊıÁ¿
-    private TextView orderunitText; //¶©¹ºµ¥Î»
-    private TextView conversionText; //»»ËãÏµÊı
-    private TextView unitcostText; //µ¥Î»³É±¾
-    private TextView linecostText; //ĞĞ³É±¾
-    private TextView tax1Text; //Ë°
-    private TextView enterbyText; //ÊäÈëÈË
-    private TextView enterdateText; //ÊäÈëÈÕÆÚ
-    private TextView requestedbyText; //ÇëÇóÕß
+    private TextView prlinenumText; //è¡Œ
+    private TextView linetypeText; //è¡Œç±»å‹
+    private TextView itemnumText; //é¡¹ç›®
+    private TextView descriptionText; //é¡¹ç›®æè¿°
+    private TextView storelocText; //åº“æˆ¿
+    private TextView categoryText; //ç±»åˆ«
+    private TextView orderqtyText; //æ•°é‡
+    private TextView orderunitText; //è®¢è´­å•ä½
+    private TextView conversionText; //æ¢ç®—ç³»æ•°
+    private TextView unitcostText; //å•ä½æˆæœ¬
+    private TextView linecostText; //è¡Œæˆæœ¬
+    private TextView tax1Text; //ç¨
+    private TextView enterbyText; //è¾“å…¥äºº
+    private TextView enterdateText; //è¾“å…¥æ—¥æœŸ
+    private TextView requestedbyText; //è¯·æ±‚è€…
 
     /**
-     * ²É¹º¶©µ¥ĞĞ*
+     * é‡‡è´­è®¢å•è¡Œ*
      */
     private PRLine prLine;
 
@@ -113,7 +113,7 @@ public class PRLine_Details_Activity extends BaseActivity {
 
 
     /**
-     * ·µ»Ø°´Å¥*
+     * è¿”å›æŒ‰é’®*
      */
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override
