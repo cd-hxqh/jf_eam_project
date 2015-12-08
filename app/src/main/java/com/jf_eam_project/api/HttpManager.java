@@ -120,6 +120,38 @@ public class HttpManager {
     }
 
     /**
+     * 设置采购 计划接口*
+     */
+    public static String getPrUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" + Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" + Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
+        }
+    }
+
+    /**
+     * 设置采购计划行接口*
+     */
+    public static String getPrLineUrl(String vlaue,String search, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" + Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
+        } else {
+            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" + Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "','PRLINENUM':'" + search + "'}}";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * 设置采购订单接口*
      */
     public static String getPoUrl(String vlaue, int curpage, int showcount) {
