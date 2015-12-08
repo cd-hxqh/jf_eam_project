@@ -6,31 +6,35 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
+import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.Po;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * 解析采购计划数据*
+ *
+ */
 public final class PR_JsonHelper
-        implements JsonHelper<Po> {
-    private static final String TAG = "PO_JsonHelper";
+        implements JsonHelper<PR> {
+    private static final String TAG = "PR_JsonHelper";
 
     /**
      * 解析List*
      */
-    public static ArrayList<Po> parseFromJsonList(JsonParser jp)
+    public static ArrayList<PR> parseFromJsonList(JsonParser jp)
             throws IOException {
 
-        ArrayList<Po> results = null;
+        ArrayList<PR> results = null;
 
         // validate that we're on the right token
 
 
         if (jp.getCurrentToken() == JsonToken.START_ARRAY) {
-            results = new ArrayList<Po>();
+            results = new ArrayList<PR>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
-                Po parsed = parseFromJson(jp);
+                PR parsed = parseFromJson(jp);
                 Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
@@ -46,9 +50,9 @@ public final class PR_JsonHelper
     /**
      * 解析po
      */
-    public static Po parseFromJson(JsonParser jp)
+    public static PR parseFromJson(JsonParser jp)
             throws IOException {
-        Po instance = new Po();
+        PR instance = new PR();
 
         // validate that we're on the right token
         if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
@@ -66,66 +70,21 @@ public final class PR_JsonHelper
         return instance;
     }
 
-    public static boolean processSingleField(Po instance, String fieldName, JsonParser jp)
+    public static boolean processSingleField(PR instance, String fieldName, JsonParser jp)
             throws IOException {
-        if ("BUYERCOMPANY".equals(fieldName)) {
-            instance.buyercompany = jp.getValueAsString();
-            return true;
-        } else if ("CONTACT".equals(fieldName)) {
-            instance.contact = jp.getValueAsString();
-            return true;
-        } else if ("CURRENCYCODE".equals(fieldName)) {
-            instance.currencycode = jp.getValueAsString();
-        } else if ("CUSTOMERNUM".equals(fieldName)) {
-            instance.customernum = jp.getValueAsString();
-            return true;
-        } else if ("DESCRIPTION".equals(fieldName)) {
+        if ("DESCRIPTION".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
-        } else if ("FOB".equals(fieldName)) {
-            instance.fob = jp.getValueAsString();
+        } else if ("ISSUEDATE".equals(fieldName)) {
+            instance.issuedate = jp.getValueAsString();
             return true;
-        } else if ("FREIGHTTERMS".equals(fieldName)) {
-            instance.freightterms = jp.getValueAsString();
-            return true;
-        } else if ("INCLUSIVE1".equals(fieldName)) {
-            instance.inclusive1 = jp.getValueAsString();
-            return true;
-        } else if ("INSPECTIONREQUIRED".equals(fieldName)) {
-            instance.inspectionrequired = jp.getValueAsString();
-            return true;
-        } else if ("INTERNAL".equals(fieldName)) {
-            instance.internal = jp.getValueAsString();
-            return true;
-        } else if ("ORDERDATE".equals(fieldName)) {
-            instance.orderdate = jp.getValueAsString();
-            return true;
-        } else if ("PAYMENTTERMS".equals(fieldName)) {
-            instance.paymentterms = jp.getValueAsString();
-            return true;
-        } else if ("PONUM".equals(fieldName)) {
-            instance.ponum = jp.getValueAsString();
-            return true;
-        } else if ("POTYPE".equals(fieldName)) {
-            instance.potype = jp.getValueAsString();
-            return true;
-        } else if ("PRETAXTOTAL".equals(fieldName)) {
-            instance.pretaxtotal = jp.getValueAsString();
-            return true;
-        } else if ("PRIORITY".equals(fieldName)) {
-            instance.priority = jp.getValueAsString();
-            return true;
-        } else if ("PURCHASEAGENT".equals(fieldName)) {
-            instance.purchaseagent = jp.getValueAsString();
+        } else if ("PRNUM".equals(fieldName)) {
+            instance.prnum = jp.getValueAsString();
+        } else if ("REQUESTEDBY".equals(fieldName)) {
+            instance.requestedby = jp.getValueAsString();
             return true;
         } else if ("REQUIREDDATE".equals(fieldName)) {
             instance.requireddate = jp.getValueAsString();
-            return true;
-        } else if ("SHIPVIA".equals(fieldName)) {
-            instance.shipvia = jp.getValueAsString();
-            return true;
-        } else if ("SITEDESC".equals(fieldName)) {
-            instance.sitedesc = jp.getValueAsString();
             return true;
         } else if ("SITEID".equals(fieldName)) {
             instance.siteid = jp.getValueAsString();
@@ -136,32 +95,20 @@ public final class PR_JsonHelper
         } else if ("STATUSDATE".equals(fieldName)) {
             instance.statusdate = jp.getValueAsString();
             return true;
-        } else if ("STORELOC".equals(fieldName)) {
-            instance.storeloc = jp.getValueAsString();
+        } else if ("UDPRTYPE".equals(fieldName)) {
+            instance.udprtype = jp.getValueAsString();
             return true;
-        } else if ("STORELOCDESC".equals(fieldName)) {
-            instance.storelocdesc = jp.getValueAsString();
-            return true;
-        } else if ("STORELOCSITEID".equals(fieldName)) {
-            instance.storelocsiteid = jp.getValueAsString();
-            return true;
-        } else if ("TOTALBASECOST".equals(fieldName)) {
-            instance.totalbasecost = jp.getValueAsString();
-            return true;
-        } else if ("TOTALCOST".equals(fieldName)) {
-            instance.totalcost = jp.getValueAsString();
+        } else if ("PRETAXTOTAL".equals(fieldName)) {
+            instance.pretaxtotal = jp.getValueAsString();
             return true;
         } else if ("TOTALTAX1".equals(fieldName)) {
             instance.totaltax1 = jp.getValueAsString();
             return true;
-        } else if ("VENDELIVERYDATE".equals(fieldName)) {
-            instance.vendeliverydate = jp.getValueAsString();
+        } else if ("TOTALCOST".equals(fieldName)) {
+            instance.totalcost = jp.getValueAsString();
             return true;
-        } else if ("VENDOR".equals(fieldName)) {
-            instance.vendor = jp.getValueAsString();
-            return true;
-        } else if ("VENDORDESC".equals(fieldName)) {
-            instance.vendordesc = jp.getValueAsString();
+        } else if ("CURRENCYCODE".equals(fieldName)) {
+            instance.currencycode = jp.getValueAsString();
             return true;
         }
 
@@ -170,9 +117,9 @@ public final class PR_JsonHelper
     }
 
     /**
-     * 解析PO_List*
+     * 解析PR_List*
      */
-    public static ArrayList<Po> parseFromJsonList(String inputString)
+    public static ArrayList<PR> parseFromJsonList(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
@@ -180,9 +127,9 @@ public final class PR_JsonHelper
     }
 
     /**
-     * 解析PO*
+     * 解析PR*
      */
-    public static Po parseFromJson(String inputString)
+    public static PR parseFromJson(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
