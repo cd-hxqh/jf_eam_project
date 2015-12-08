@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
+import com.jf_eam_project.ui.activity.Pr_Activity;
 import com.jf_eam_project.ui.activity.Work_ListActivity;
 
 
@@ -76,7 +77,7 @@ public class Po_Fragment extends BaseFragment {
             switch (v.getId()) {
                 case R.id.po_linear_plan_id: //采购计划
 
-                    Intent intent = new Intent(getActivity(), Po_order_Activity.class);
+                    Intent intent = new Intent(getActivity(), Pr_Activity.class);
                     startActivityForResult(intent, 0);
 
                     break;
