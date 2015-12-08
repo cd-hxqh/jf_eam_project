@@ -21,9 +21,8 @@ import com.jf_eam_project.model.WorkOrder;
 /**
  * 采购订单详情
  */
-public class PO_Details_Activity extends BaseActivity {
+public class Po_Details_Activity extends BaseActivity {
 
-    private static final String TAG = "PO_Details_Activity";
 
     /**
      * 标题*
