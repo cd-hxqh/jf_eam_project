@@ -103,7 +103,7 @@
             android:label="@string/pr_detail_title" >
         </activity>
         <activity
-            android:name=".ui.activity.PrLine_Activity"
+            android:name=".ui.activity.Prline_Activity"
             android:label="@string/prline_title" >
         </activity>
         <activity
@@ -119,7 +119,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.Po_Details_Activity"
+            android:name=".ui.activity.PO_Details_Activity"
             android:label="@string/title_activity_po_details_" >
         </activity>
 
