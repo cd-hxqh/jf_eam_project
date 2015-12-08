@@ -48,6 +48,8 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
         </activity>
+
+        <!--工单管理-->
         <activity
             android:name=".ui.activity.Work_ListActivity"
             android:label="@string/title_activity_work_list"
@@ -69,18 +71,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
-        <activity
-            android:name=".ui.activity.PO_Details_Activity"
-            android:label="@string/title_activity_po__details_" >
-        </activity>
-        <activity
-            android:name=".ui.activity.Poline_Activity"
-            android:label="@string/title_activity_poline" >
-        </activity>
-        <activity
-            android:name=".ui.activity.PoLine_Details_Activity"
-            android:label="@string/title_activity_po_line_details" >
-        </activity>
+
+
         <activity
             android:name=".ui.activity.Work_PlanActivity"
             android:label="@string/title_activity_work_plan"
@@ -102,6 +94,44 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             >
         </activity>
+
+
+        <!--采购计划-->
+        <activity
+            android:name=".ui.activity.Pr_Activity"
+            android:label="@string/pr_title_text" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PR_Details_Activity"
+            android:label="@string/pr_detail_title" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PrLine_Activity"
+            android:label="@string/prline_title" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PRLine_Details_Activity"
+            android:label="@string/prline_detail_title" >
+        </activity>
+
+        <!--采购订单-->
+        <activity
+            android:name=".ui.activity.Po_Details_Activity"
+            android:label="@string/title_activity_po__details_" >
+        </activity>
+        <activity
+            android:name=".ui.activity.Poline_Activity"
+            android:label="@string/title_activity_poline" >
+        </activity>
+        <activity
+            android:name=".ui.activity.PoLine_Details_Activity"
+            android:label="@string/title_activity_po_line_details" >
+        </activity>
+
+
+
+
+
     </application>
 
 </manifest>
