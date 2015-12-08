@@ -7,52 +7,50 @@ import com.instagram.common.json.annotation.JsonType;
 
 /**
  * Created by think on 2015/11/26.
- * ²É¹ºµ¥ĞĞ
+ * é‡‡è´­å•è¡Œ
  */
 @JsonType
 public class PoLine extends Entity {
 
-    private static final String TAG = "PoLine";
-    private static final long serialVersionUID = 2015050105L;
 
     @JsonField(fieldName = "category")
-    public String category;//Àà±ğ
+    public String category;//ç±»åˆ«
     @JsonField(fieldName = "conversion")
-    public String conversion;//»»ËãÏµÊı
+    public String conversion;//æ¢ç®—ç³»æ•°
     @JsonField(fieldName = "description")
-    public String description;//ÃèÊö
+    public String description;//æè¿°
     @JsonField(fieldName = "enterby")
-    public String enterby;//ÊäÈëÈË
+    public String enterby;//è¾“å…¥äºº
     @JsonField(fieldName = "enterdate")
-    public String enterdate;//ÊäÈëÈÕÆÚ
+    public String enterdate;//è¾“å…¥æ—¥æœŸ
     @JsonField(fieldName = "itemnum")
-    public String itemnum;//ÏîÄ¿
+    public String itemnum;//é¡¹ç›®
     @JsonField(fieldName = "linecost")
-    public String linecost;//²»º¬Ë°×Ü¼Û
+    public String linecost;//ä¸å«ç¨æ€»ä»·
     @JsonField(fieldName = "polinenum")
-    public String polinenum;//ĞĞ
+    public String polinenum;//è¡Œ
     @JsonField(fieldName = "ponum")
-    public String ponum;//²É¹ºµ¥±àºÅ
+    public String ponum;//é‡‡è´­å•ç¼–å·
     @JsonField(fieldName = "tax1")
-    public String tax1;//Ë°
+    public String tax1;//ç¨
     @JsonField(fieldName = "tositeid")
-    public String tositeid;//µØµã
+    public String tositeid;//åœ°ç‚¹
     @JsonField(fieldName = "orderunit")
-    public String orderunit;//¶©¹ºµ¥Î»
+    public String orderunit;//è®¢è´­å•ä½
     @JsonField(fieldName = "orderqty")
-    public String orderqty;//ÊıÁ¿
+    public String orderqty;//æ•°é‡
     @JsonField(fieldName = "unitcosttax")
-    public String unitcosttax;//º¬Ë°µ¥¼Û
+    public String unitcosttax;//å«ç¨å•ä»·
     @JsonField(fieldName = "unitcost")
-    public String unitcost;//²»º¬Ë°µ¥¼Û
+    public String unitcost;//ä¸å«ç¨å•ä»·
     @JsonField(fieldName = "linetype")
-    public String linetype;//ĞĞÀàĞÍ
+    public String linetype;//è¡Œç±»å‹
     @JsonField(fieldName = "shiptoattn")
-    public String shiptoattn;//½ÓÊÕÈË
+    public String shiptoattn;//æ¥æ”¶äºº
     @JsonField(fieldName = "requestedby")
-    public String requestedby;//ÇëÇóÕß
+    public String requestedby;//è¯·æ±‚è€…
     @JsonField(fieldName = "storeloc")
-    public String storeloc;//¿â·¿
+    public String storeloc;//åº“æˆ¿
 
     public String getCategory() {
         return category;

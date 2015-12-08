@@ -7,13 +7,11 @@ import com.instagram.common.json.annotation.JsonType;
 
 /**
  * Created by think on 2015/11/26.
- * 采购单行
+ * 采购计划行
  */
 @JsonType
 public class PRLine extends Entity {
 
-    private static final String TAG = "PoLine";
-    private static final long serialVersionUID = 2015050105L;
 
     @JsonField(fieldName = "category")
     public String category;//类别
@@ -28,31 +26,26 @@ public class PRLine extends Entity {
     @JsonField(fieldName = "itemnum")
     public String itemnum;//项目
     @JsonField(fieldName = "linecost")
-    public String linecost;//不含税总价
-    @JsonField(fieldName = "polinenum")
-    public String polinenum;//行
-    @JsonField(fieldName = "ponum")
-    public String ponum;//采购单编号
+    public String linecost;//行成本
+    @JsonField(fieldName = "prlinenum")
+    public String prlinenum;//行
+    @JsonField(fieldName = "prnum")
+    public String prnum;//采购计划编号
     @JsonField(fieldName = "tax1")
     public String tax1;//税
-    @JsonField(fieldName = "tositeid")
-    public String tositeid;//地点
     @JsonField(fieldName = "orderunit")
     public String orderunit;//订购单位
     @JsonField(fieldName = "orderqty")
     public String orderqty;//数量
-    @JsonField(fieldName = "unitcosttax")
-    public String unitcosttax;//含税单价
     @JsonField(fieldName = "unitcost")
-    public String unitcost;//不含税单价
+    public String unitcost;//单位成本
     @JsonField(fieldName = "linetype")
     public String linetype;//行类型
-    @JsonField(fieldName = "shiptoattn")
-    public String shiptoattn;//接收人
     @JsonField(fieldName = "requestedby")
     public String requestedby;//请求者
     @JsonField(fieldName = "storeloc")
     public String storeloc;//库房
+
 
     public String getCategory() {
         return category;
@@ -110,20 +103,20 @@ public class PRLine extends Entity {
         this.linecost = linecost;
     }
 
-    public String getPolinenum() {
-        return polinenum;
+    public String getPrlinenum() {
+        return prlinenum;
     }
 
-    public void setPolinenum(String polinenum) {
-        this.polinenum = polinenum;
+    public void setPrlinenum(String prlinenum) {
+        this.prlinenum = prlinenum;
     }
 
-    public String getPonum() {
-        return ponum;
+    public String getPrnum() {
+        return prnum;
     }
 
-    public void setPonum(String ponum) {
-        this.ponum = ponum;
+    public void setPrnum(String prnum) {
+        this.prnum = prnum;
     }
 
     public String getTax1() {
@@ -132,14 +125,6 @@ public class PRLine extends Entity {
 
     public void setTax1(String tax1) {
         this.tax1 = tax1;
-    }
-
-    public String getTositeid() {
-        return tositeid;
-    }
-
-    public void setTositeid(String tositeid) {
-        this.tositeid = tositeid;
     }
 
     public String getOrderunit() {
@@ -158,14 +143,6 @@ public class PRLine extends Entity {
         this.orderqty = orderqty;
     }
 
-    public String getUnitcosttax() {
-        return unitcosttax;
-    }
-
-    public void setUnitcosttax(String unitcosttax) {
-        this.unitcosttax = unitcosttax;
-    }
-
     public String getUnitcost() {
         return unitcost;
     }
@@ -180,14 +157,6 @@ public class PRLine extends Entity {
 
     public void setLinetype(String linetype) {
         this.linetype = linetype;
-    }
-
-    public String getShiptoattn() {
-        return shiptoattn;
-    }
-
-    public void setShiptoattn(String shiptoattn) {
-        this.shiptoattn = shiptoattn;
     }
 
     public String getRequestedby() {
