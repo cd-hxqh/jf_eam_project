@@ -11,14 +11,14 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
+import com.jf_eam_project.model.PR;
 
 /**
- * 采购订单详情
+ * 采购计划详情
  */
 public class PR_Details_Activity extends BaseActivity {
 
-    private static final String TAG = "PO_Details_Activity";
+    private static final String TAG = "PR_Details_Activity";
 
     /**
      * 标题*
@@ -37,25 +37,22 @@ public class PR_Details_Activity extends BaseActivity {
     /**
      * 界面信息显示*
      */
-    private TextView ponumText; //po编号
+    private TextView prnumText; //pr编号
     private TextView descriptionText; //描述
-    private TextView sitedescText; //地点
+    private TextView siteidText; //地点
     private TextView statusText; //状态
-    private TextView potypeText; //类型
-    private TextView buyercompanyText; //买方公司
-    private TextView purchaseagentText; //买方
-    private TextView priorityText; //优先级
-    private TextView statedateText; //状态日期
-    private TextView orderdateText; //订购日期
-    private TextView requireddateText; //要求日期
-    private TextView vendeliverydateText; //供应商日期
+    private TextView udprtypeText; //采购类型
+    private TextView requestedbyText; //申请人
+    private TextView issuedateText; //申请日期
+    private TextView statusdateText; //状态日期
+    private TextView requireddateText; //要求的日期
     private TextView pretaxtotalText; //税前总计
     private TextView totaltax1Text; //税款总计
     private TextView totalcostText; //成本总计
     private TextView currencycodeText; //货币
 
 
-    private Po po; //采购订单
+    private PR pr; //采购计划
 
     private PopupWindow popupWindow;
 
@@ -64,7 +61,7 @@ public class PR_Details_Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_po__details);
+        setContentView(R.layout.activity_pr_details);
         initData();
         findViewById();
         initView();
@@ -74,7 +71,7 @@ public class PR_Details_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        po = (Po) getIntent().getSerializableExtra("po");
+        pr = (PR) getIntent().getSerializableExtra("pr");
     }
 
     @Override
@@ -83,28 +80,25 @@ public class PR_Details_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        ponumText = (TextView) findViewById(R.id.po_ponum_text);
-        descriptionText = (TextView) findViewById(R.id.po_description_text);
-        sitedescText = (TextView) findViewById(R.id.po_siteid_text);
-        statusText = (TextView) findViewById(R.id.po_status_text);
-        potypeText = (TextView) findViewById(R.id.po_potype_text);
-        buyercompanyText = (TextView) findViewById(R.id.po_buyercompany_text);
-        purchaseagentText = (TextView) findViewById(R.id.po_purchaseagent_text);
-        priorityText = (TextView) findViewById(R.id.po_priority_text);
-        statedateText = (TextView) findViewById(R.id.po_statedate_text);
-        orderdateText = (TextView) findViewById(R.id.po_orderdate_text);
-        requireddateText = (TextView) findViewById(R.id.po_requireddate_text);
-        vendeliverydateText = (TextView) findViewById(R.id.po_vendeliverydate_text);
-        pretaxtotalText = (TextView) findViewById(R.id.po_pretaxtotal_text);
-        totaltax1Text = (TextView) findViewById(R.id.po_totaltax1_text);
-        totalcostText = (TextView) findViewById(R.id.po_totalcost_text);
-        currencycodeText = (TextView) findViewById(R.id.po_currencycode_text);
+        prnumText = (TextView) findViewById(R.id.pr_prnum_text);
+        descriptionText = (TextView) findViewById(R.id.pr_description_text);
+        siteidText = (TextView) findViewById(R.id.pr_siteid_text);
+        statusText = (TextView) findViewById(R.id.pr_status_text);
+        udprtypeText = (TextView) findViewById(R.id.pr_udprtype_text);
+        requestedbyText = (TextView) findViewById(R.id.pr_requestedby_text);
+        issuedateText = (TextView) findViewById(R.id.pr_issuedate_text);
+        statusdateText = (TextView) findViewById(R.id.pr_statusdate_text);
+        requireddateText = (TextView) findViewById(R.id.pr_requireddate_text);
+        pretaxtotalText = (TextView) findViewById(R.id.pr_pretaxtotal_text);
+        totaltax1Text = (TextView) findViewById(R.id.pr_totaltax1_text);
+        totalcostText = (TextView) findViewById(R.id.pr_totalcost_text);
+        currencycodeText = (TextView) findViewById(R.id.pr_currencycode_text);
 
     }
 
     @Override
     protected void initView() {
-        titleView.setText(getResources().getString(R.string.title_activity_po__details_));
+        titleView.setText(getResources().getString(R.string.pr_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
@@ -112,23 +106,20 @@ public class PR_Details_Activity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 
-        if (po != null) {
-            ponumText.setText(po.getPonum() == null ? "" : po.getPonum());
-            descriptionText.setText(po.getDescription() == null ? "" : po.getDescription());
-            sitedescText.setText(po.getSiteid() == null ? "" : po.getSiteid());
-            statusText.setText(po.getStatus() == null ? "" : po.getStatus());
-            potypeText.setText(po.getPotype() == null ? "" : po.getPotype());
-            buyercompanyText.setText(po.getBuyercompany() == null ? "" : po.getBuyercompany());
-            purchaseagentText.setText(po.getPurchaseagent() == null ? "" : po.getPurchaseagent());
-            priorityText.setText(po.getPriority() == null ? "" : po.getPriority());
-            statedateText.setText(po.getStatusdate() == null ? "" : po.getStatusdate());
-            orderdateText.setText(po.getOrderdate() == null ? "" : po.getOrderdate());
-            requireddateText.setText(po.getRequireddate() == null ? "" : po.getRequireddate());
-            vendeliverydateText.setText(po.getVendeliverydate() == null ? "" : po.getVendeliverydate());
-            pretaxtotalText.setText(po.getPretaxtotal() == null ? "" : po.getPretaxtotal());
-            totaltax1Text.setText(po.getTotaltax1() == null ? "" : po.getTotaltax1());
-            totalcostText.setText(po.getTotalcost() == null ? "" : po.getTotalcost());
-            currencycodeText.setText(po.getCurrencycode() == null ? "" : po.getCurrencycode());
+        if (pr != null) {
+            prnumText.setText(pr.getPrnum() == null ? "" : pr.getPrnum());
+            descriptionText.setText(pr.getDescription() == null ? "" : pr.getDescription());
+            siteidText.setText(pr.getSiteid() == null ? "" : pr.getSiteid());
+            statusText.setText(pr.getStatus() == null ? "" : pr.getStatus());
+            udprtypeText.setText(pr.getUdprtype() == null ? "" : pr.getUdprtype());
+            requestedbyText.setText(pr.getRequestedby()== null ? "" : pr.getRequestedby());
+            issuedateText.setText(pr.getIssuedate() == null ? "" : pr.getIssuedate());
+            statusdateText.setText(pr.getStatusdate() == null ? "" : pr.getStatusdate());
+            requireddateText.setText(pr.getRequireddate() == null ? "" : pr.getRequireddate());
+            pretaxtotalText.setText(pr.getPretaxtotal() == null ? "" : pr.getPretaxtotal());
+            totaltax1Text.setText(pr.getTotaltax1() == null ? "" : pr.getTotaltax1());
+            totalcostText.setText(pr.getTotalcost() == null ? "" : pr.getTotalcost());
+            currencycodeText.setText(pr.getCurrencycode() == null ? "" : pr.getCurrencycode());
         }
 
 
@@ -181,8 +172,8 @@ public class PR_Details_Activity extends BaseActivity {
     private View.OnClickListener polineOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(PR_Details_Activity.this, Poline_Activity.class);
-            intent.putExtra("ponum", po.ponum);
+            Intent intent = new Intent(PR_Details_Activity.this, Prline_Activity.class);
+            intent.putExtra("prnum", pr.prnum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }
