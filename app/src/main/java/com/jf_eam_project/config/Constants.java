@@ -1,5 +1,7 @@
 package com.jf_eam_project.config;
 
+import android.content.Context;
+
 /**
  * Created by think on 2015/10/19.
  */
@@ -15,6 +17,11 @@ public class Constants {
      */
 
     public static final String SIGN_IN_URL = HTTP_API_URL + "system/login";
+
+    /**
+     * webserviceURL*
+     */
+    public static String webserviceURL = "http://61.49.28.246:7001/meaweb/services/WOSERVICE";//webservice接口地址
 
 
     /**通用接口查询**/
@@ -98,4 +105,8 @@ public class Constants {
     public static final String PLAN = "PLAN";//计划工单
     public static final String PROJECT = "PROJECT";//项目工单
     public static final String UNPLAN = "UNPLAN";//非计划工单
+
+    public static String getWsUrl(Context context) {
+        return webserviceURL;
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
+import com.jf_eam_project.ui.activity.WoactivityDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +47,11 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("woactivity", woactivity);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("woactivity", woactivity);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

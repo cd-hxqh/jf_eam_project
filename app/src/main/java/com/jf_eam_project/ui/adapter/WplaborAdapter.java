@@ -1,6 +1,8 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.ui.activity.WplaborDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +48,11 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("woactivity", woactivity);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, WplaborDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("wplabor", wplabor);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

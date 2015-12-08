@@ -2,6 +2,9 @@ package com.jf_eam_project.application;
 
 import android.app.Application;
 
+import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.webserviceclient.AndroidClientService;
+
 
 /**
  * Created by think on 2015/8/11.
@@ -31,9 +34,9 @@ public class BaseApplication extends Application {
         return mContext;
     }
 
-//    public AndroidClientService getWsService() {
-//        return new AndroidClientService(Constants.getWsUrl(this));
-//    }
+    public AndroidClientService getWsService() {
+        return new AndroidClientService(Constants.getWsUrl(this));
+    }
 
     @Override
     public void onCreate() {

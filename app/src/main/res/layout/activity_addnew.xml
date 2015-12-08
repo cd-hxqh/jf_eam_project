@@ -33,6 +33,6 @@
             </LinearLayout>
         </ScrollView>
 
-        <include layout="@layout/work_buttom" />
+        <include layout="@layout/work_buttom_add" />
     </RelativeLayout>
 </LinearLayout>

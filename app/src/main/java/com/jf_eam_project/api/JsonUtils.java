@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.WorkOrder;
 
 import org.json.JSONArray;
@@ -42,6 +43,20 @@ public class JsonUtils {
             e.printStackTrace();
             return isSuccess;
         }
+    }
+
+    public static Webservice_result parsingWebservice_result(String data){
+        Log.i(TAG, "data=" + data);
+        Webservice_result webserviceResult = null;
+        try {
+            JSONObject object = new JSONObject(data);
+            webserviceResult.setWoNum(object.getString("woNum"));
+            webserviceResult.setErrorMsg(object.getString("errorMsg"));
+            webserviceResult.setErrorNo(object.getString("errorNo"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return webserviceResult;
     }
 
     /**

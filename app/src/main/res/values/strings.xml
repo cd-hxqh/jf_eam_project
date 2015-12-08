@@ -37,6 +37,8 @@
     <string name="title_activity_work_details">工单详情</string>
     <string name="title_activity_work_addnew">新建工单</string>
     <string name="title_activity_work_plan">工单计划</string>
+    <string name="title_activity_woactivity_details">任务详情</string>
+    <string name="title_activity_wplabor_details">员工详情</string>
     <string name="title_activity_work_assignment">任务分配</string>
     <string name="title_activity_work_realinfo">实际情况</string>
 
@@ -82,6 +84,7 @@
     <string name="exit_dialog_title">提示</string>
     <string name="sure">确定</string>
     <string name="canel">取消</string>
+    <string name="inputing">正在提交数据</string>
 
 
     <!--巡检管理-->
@@ -125,6 +128,7 @@
     <string name="work_worktype">工作类型</string>
     
     <string name="work_revise">修改</string>
+    <string name="work_add">新增</string>
     <string name="work_work_flow">工作流</string>
     <string name="work_plan">工单计划</string>
     <string name="work_task">任务分配</string>
@@ -137,7 +141,25 @@
     <string name="work_wpmaterial">物料</string>
     <string name="work_wpservice">服务</string>
     <string name="work_wptool">工具</string>
-    
+
+    <!--计划任务详情页面-->
+    <string name="woactivity_wosequence">序号</string>
+    <string name="woactivity_wonum">记录</string>
+    <string name="woactivity_woclass">记录类</string>
+    <string name="woactivity_assetnum">资产</string>
+    <string name="woactivity_assetdesc">资产描述</string>
+    <string name="woactivity_location">位置</string>
+    <string name="woactivity_locationdesc">位置描述</string>
+
+    <!--计划员工详情页面-->
+    <string name="wplabor_taskid">任务</string>
+    <string name="wplabor_amcrew">班组</string>
+    <string name="wplabor_amcrewtype">班组类型</string>
+    <string name="wplabor_crewworkgroup">班组工作组</string>
+    <string name="wplabor_craft">工种</string>
+    <string name="wplabor_quantity">数量</string>
+    <string name="wplabor_laborcode">员工</string>
+    <string name="wplabor_laborhrs">常规时数</string>
 
 
     <string name="title_activity_po_order_">采购订单</string>

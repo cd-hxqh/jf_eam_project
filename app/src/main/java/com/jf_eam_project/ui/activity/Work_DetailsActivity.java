@@ -231,12 +231,12 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent = new Intent(Work_DetailsActivity.this,Work_RealinfoActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("workOrder", workOrder);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//            popupWindow.dismiss();
+            Intent intent = new Intent(Work_DetailsActivity.this,Work_RealInfoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workOrder", workOrder);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            popupWindow.dismiss();
         }
     };
 
