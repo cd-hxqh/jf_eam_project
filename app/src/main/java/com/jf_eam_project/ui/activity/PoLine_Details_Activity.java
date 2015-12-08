@@ -80,8 +80,6 @@ public class PoLine_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getResources().getString(R.string.title_activity_po_line_details));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-
-
         if(poLine!=null){
             polinenumText.setText(poLine.getPolinenum()==null?"":poLine.getPolinenum());
             linetypeText.setText(poLine.getLinetype()==null?"":poLine.getLinetype());
