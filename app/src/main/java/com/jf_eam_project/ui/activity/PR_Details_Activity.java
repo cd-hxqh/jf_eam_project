@@ -97,6 +97,7 @@ public class PR_Details_Activity extends BaseActivity {
 
     }
 
+
     @Override
     protected void initView() {
         titleView.setText(getResources().getString(R.string.pr_detail_title));
