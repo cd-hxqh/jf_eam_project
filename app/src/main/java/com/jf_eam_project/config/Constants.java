@@ -43,6 +43,19 @@ public class Constants {
 
 
     /**采购管理**/
+    //采购申请单的appid
+    public static final String PR_APPID="UDPR";
+    //采购申请单的表名
+    public static final String PR_NAME="PR";
+    //采购计划行的appid
+    public static final String PRLINE_APPID="UDPR";
+    //采购计划行的表名
+    public static final String PRLINE_NAME="PRLINE";
+
+
+
+
+
     //采购单的appid
     public static final String PO_APPID="UDPO";
 
