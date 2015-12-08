@@ -12,34 +12,34 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 
-/**²É¹º¶©µ¥ĞĞÏêÇé**/
+/**é‡‡è´­è®¢å•è¡Œè¯¦æƒ…**/
 public class PoLine_Details_Activity extends BaseActivity {
     private static final String TAG = "PoLine_Details_Activity";
 
     /**
-     * ±êÌâ*
+     * æ ‡é¢˜*
      */
     private TextView titleView;
     /**
-     * ·µ»Ø°´Å¥*
+     * è¿”å›æŒ‰é’®*
      */
     private ImageView backImageView;
-    /**½çÃæĞÅÏ¢ÏÔÊ¾**/
-    private TextView polinenumText; //ĞĞ
-    private TextView linetypeText; //ĞĞÀàĞÍ
-    private TextView itemnumText; //ÏîÄ¿
-    private TextView descriptionText; //ÏîÄ¿ÃèÊö
-    private TextView conversionText; //»»ËãÏµÊı
-    private TextView categoryText; //Àà±ğ
-    private TextView orderqtyText; //ÊıÁ¿
-    private TextView orderunitText; //¶©¹ºµ¥Î»
-    private TextView enterbyText; //ÊäÈëÈË
-    private TextView enterdateText; //ÊäÈëÈÕÆÚ
-    private TextView requestedbyText; //ÇëÇóÕß
-    private TextView shiptoattnText; //½ÓÊÕÈË
-    private TextView tositeidText; //½»»õµØµã
+    /**ç•Œé¢ä¿¡æ¯æ˜¾ç¤º**/
+    private TextView polinenumText; //è¡Œ
+    private TextView linetypeText; //è¡Œç±»å‹
+    private TextView itemnumText; //é¡¹ç›®
+    private TextView descriptionText; //é¡¹ç›®æè¿°
+    private TextView conversionText; //æ¢ç®—ç³»æ•°
+    private TextView categoryText; //ç±»åˆ«
+    private TextView orderqtyText; //æ•°é‡
+    private TextView orderunitText; //è®¢è´­å•ä½
+    private TextView enterbyText; //è¾“å…¥äºº
+    private TextView enterdateText; //è¾“å…¥æ—¥æœŸ
+    private TextView requestedbyText; //è¯·æ±‚è€…
+    private TextView shiptoattnText; //æ¥æ”¶äºº
+    private TextView tositeidText; //äº¤è´§åœ°ç‚¹
 
-    /**²É¹º¶©µ¥ĞĞ**/
+    /**é‡‡è´­è®¢å•è¡Œ**/
     private PoLine poLine;
 
     @Override
@@ -85,7 +85,7 @@ public class PoLine_Details_Activity extends BaseActivity {
 
 
     /**
-     * ·µ»Ø°´Å¥*
+     * è¿”å›æŒ‰é’®*
      */
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override
