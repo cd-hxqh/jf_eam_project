@@ -12,7 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
+import com.jf_eam_project.ui.activity.PRLine_Details_Activity;
 import com.jf_eam_project.ui.activity.PoLine_Details_Activity;
 
 import java.util.ArrayList;
@@ -21,11 +23,11 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 采购单行
+ * 采购计划行
  */
 public class PrLineListAdapter extends RecyclerView.Adapter<PrLineListAdapter.ViewHolder> {
     Context mContext;
-    List<PoLine> polineList = new ArrayList<>();
+    List<PRLine> prlineList = new ArrayList<>();
 
     public PrLineListAdapter(Context context) {
         this.mContext = context;
@@ -40,17 +42,17 @@ public class PrLineListAdapter extends RecyclerView.Adapter<PrLineListAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final PoLine poline = polineList.get(position);
+        final PRLine prline = prlineList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.poline_num_text));
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
-        holder.itemNum.setText(poline.getPolinenum());
-        holder.itemDesc.setText(poline.getDescription());
+        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
+        holder.itemNum.setText(prline.getPrlinenum());
+        holder.itemDesc.setText(prline.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PoLine_Details_Activity.class);
+                Intent intent = new Intent(mContext, PRLine_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("poLine", poline);
+                bundle.putSerializable("prLine", prline);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -59,7 +61,7 @@ public class PrLineListAdapter extends RecyclerView.Adapter<PrLineListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return polineList.size();
+        return prlineList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,31 +101,31 @@ public class PrLineListAdapter extends RecyclerView.Adapter<PrLineListAdapter.Vi
         }
     }
 
-    public void update(ArrayList<PoLine> data, boolean merge) {
-        if (merge && polineList.size() > 0) {
-            for (int i = 0; i < polineList.size(); i++) {
-                PoLine po = polineList.get(i);
+    public void update(ArrayList<PRLine> data, boolean merge) {
+        if (merge && prlineList.size() > 0) {
+            for (int i = 0; i < prlineList.size(); i++) {
+                PRLine pr = prlineList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == po) {
+                    if (data.get(j) == pr) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(po);
+                data.add(pr);
             }
         }
-        polineList = data;
+        prlineList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<PoLine> data) {
+    public void adddate(ArrayList<PRLine> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!polineList.contains(data.get(i))) {
-                    polineList.add(data.get(i));
+                if (!prlineList.contains(data.get(i))) {
+                    prlineList.add(data.get(i));
                 }
             }
         }
@@ -132,8 +134,8 @@ public class PrLineListAdapter extends RecyclerView.Adapter<PrLineListAdapter.Vi
 
 
     public void removeAllData() {
-        if (polineList.size() > 0) {
-            polineList.removeAll(polineList);
+        if (prlineList.size() > 0) {
+            prlineList.removeAll(prlineList);
         }
     }
 }

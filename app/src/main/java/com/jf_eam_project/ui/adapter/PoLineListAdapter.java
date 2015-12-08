@@ -12,9 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
-import com.jf_eam_project.ui.activity.PO_Details_Activity;
 import com.jf_eam_project.ui.activity.PoLine_Details_Activity;
 
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class PoLineListAdapter extends RecyclerView.Adapter<PoLineListAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final PoLine poline = polineList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.poline_num_text));
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
+        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
         holder.itemNum.setText(poline.getPolinenum());
         holder.itemDesc.setText(poline.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {

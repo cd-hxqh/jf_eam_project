@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
-import com.jf_eam_project.ui.activity.PO_Details_Activity;
+import com.jf_eam_project.model.PR;
+import com.jf_eam_project.ui.activity.PR_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +21,11 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 采购
+ * 采购计划
  */
 public class PrListAdapter extends RecyclerView.Adapter<PrListAdapter.ViewHolder> {
     Context mContext;
-    List<Po> poList = new ArrayList<>();
+    List<PR> prList = new ArrayList<>();
 
     public PrListAdapter(Context context) {
         this.mContext = context;
@@ -40,17 +40,17 @@ public class PrListAdapter extends RecyclerView.Adapter<PrListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Po po = poList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.po_number_text));
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
-        holder.itemNum.setText(po.getPonum());
-        holder.itemDesc.setText(po.getDescription());
+        final PR pr = prList.get(position);
+        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
+        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
+        holder.itemNum.setText(pr.getPrnum());
+        holder.itemDesc.setText(pr.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PO_Details_Activity.class);
+                Intent intent = new Intent(mContext, PR_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("po", po);
+                bundle.putSerializable("pr", pr);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -59,7 +59,7 @@ public class PrListAdapter extends RecyclerView.Adapter<PrListAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return poList.size();
+        return prList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,34 +99,41 @@ public class PrListAdapter extends RecyclerView.Adapter<PrListAdapter.ViewHolder
         }
     }
 
-    public void update(ArrayList<Po> data, boolean merge) {
-        if (merge && poList.size() > 0) {
-            for (int i = 0; i < poList.size(); i++) {
-                Po po = poList.get(i);
+    public void update(ArrayList<PR> data, boolean merge) {
+        if (merge && prList.size() > 0) {
+            for (int i = 0; i < prList.size(); i++) {
+                PR pr = prList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == po) {
+                    if (data.get(j) == pr) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(po);
+                data.add(pr);
             }
         }
-        poList = data;
+        prList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Po> data) {
+    public void adddate(ArrayList<PR> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!poList.contains(data.get(i))) {
-                    poList.add(data.get(i));
+                if (!prList.contains(data.get(i))) {
+                    prList.add(data.get(i));
                 }
             }
         }
         notifyDataSetChanged();
+    }
+
+
+    public void removeAllData() {
+        if (prList.size() > 0) {
+            prList.removeAll(prList);
+        }
     }
 }
