@@ -6,11 +6,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
 
-/**采购订单行详情**/
+/**
+ * 采购计划行详情*
+ */
 public class PRLine_Details_Activity extends BaseActivity {
-    private static final String TAG = "PoLine_Details_Activity";
 
     /**
      * 标题*
@@ -20,35 +22,41 @@ public class PRLine_Details_Activity extends BaseActivity {
      * 返回按钮*
      */
     private ImageView backImageView;
-    /**界面信息显示**/
-    private TextView polinenumText; //行
+    /**
+     * 界面信息显示*
+     */
+    private TextView prlinenumText; //行
     private TextView linetypeText; //行类型
     private TextView itemnumText; //项目
     private TextView descriptionText; //项目描述
-    private TextView conversionText; //换算系数
+    private TextView storelocText; //库房
     private TextView categoryText; //类别
     private TextView orderqtyText; //数量
     private TextView orderunitText; //订购单位
+    private TextView conversionText; //换算系数
+    private TextView unitcostText; //单位成本
+    private TextView linecostText; //行成本
+    private TextView tax1Text; //税
     private TextView enterbyText; //输入人
     private TextView enterdateText; //输入日期
     private TextView requestedbyText; //请求者
-    private TextView shiptoattnText; //接收人
-    private TextView tositeidText; //交货地点
 
-    /**采购订单行**/
-    private PoLine poLine;
+    /**
+     * 采购订单行*
+     */
+    private PRLine prLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_po_line);
+        setContentView(R.layout.activity_pr_line);
         initData();
         findViewById();
         initView();
     }
 
     private void initData() {
-        poLine = (PoLine) getIntent().getSerializableExtra("poLine");
+        prLine = (PRLine) getIntent().getSerializableExtra("prLine");
     }
 
     @Override
@@ -57,40 +65,48 @@ public class PRLine_Details_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
 
-        polinenumText = (TextView) findViewById(R.id.poline_num_text);
-        linetypeText = (TextView) findViewById(R.id.poline_linetype_text);
-        itemnumText = (TextView) findViewById(R.id.poline_itemnum_text);
-        descriptionText = (TextView) findViewById(R.id.poline_description_text);
-        conversionText = (TextView) findViewById(R.id.poline_conversion_text);
-        categoryText = (TextView) findViewById(R.id.poline_category_text);
-        orderqtyText = (TextView) findViewById(R.id.poline_orderqty_text);
-        orderunitText = (TextView) findViewById(R.id.poline_orderunit_text);
-        enterbyText = (TextView) findViewById(R.id.poline_enterby_text);
-        enterdateText = (TextView) findViewById(R.id.poline_enterdate_text);
-        requestedbyText = (TextView) findViewById(R.id.poline_requestedby_text);
-        shiptoattnText = (TextView) findViewById(R.id.poline_shiptoattn_text);
-        tositeidText = (TextView) findViewById(R.id.po_pretaxtotal_text);
+        prlinenumText = (TextView) findViewById(R.id.prline_num_text);
+        linetypeText = (TextView) findViewById(R.id.prline_linetype_text);
+        itemnumText = (TextView) findViewById(R.id.prline_itemnum_text);
+        descriptionText = (TextView) findViewById(R.id.prline_description_text);
+        storelocText = (TextView) findViewById(R.id.prline_storeloc_text);
+        categoryText = (TextView) findViewById(R.id.prline_category_text);
+        orderqtyText = (TextView) findViewById(R.id.prline_orderqty_text);
+        orderunitText = (TextView) findViewById(R.id.prline_orderunit_text);
+        conversionText = (TextView) findViewById(R.id.prline_conversion_text);
+        unitcostText = (TextView) findViewById(R.id.prline_unitcost_text);
+        linecostText = (TextView) findViewById(R.id.prline_linecost_text);
+        tax1Text = (TextView) findViewById(R.id.prline_tax1_text);
+        enterbyText = (TextView) findViewById(R.id.prline_enterby_text);
+        enterdateText = (TextView) findViewById(R.id.prline_enterdate_text);
+        requestedbyText = (TextView) findViewById(R.id.prline_requestedby_text);
     }
 
     @Override
     protected void initView() {
-        titleView.setText(getResources().getString(R.string.title_activity_po_line_details));
+        titleView.setText(getString(R.string.prline_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
-        if(poLine!=null){
-            polinenumText.setText(poLine.getPolinenum() == null ? "" : poLine.getPolinenum());
-            linetypeText.setText(poLine.getLinetype() == null ? "" : poLine.getLinetype());
-            itemnumText.setText(poLine.getItemnum() == null ? "" : poLine.getItemnum());
-            descriptionText.setText(poLine.getDescription() == null ? "" : poLine.getDescription());
-            conversionText.setText(poLine.getConversion() == null ? "" : poLine.getConversion());
-            categoryText.setText(poLine.getCategory() == null ? "" : poLine.getCategory());
-            orderqtyText.setText(poLine.getOrderqty() == null ? "" : poLine.getOrderqty());
-            orderunitText.setText(poLine.getOrderunit() == null ? "" : poLine.getOrderunit());
-            enterbyText.setText(poLine.getEnterby() == null ? "" : poLine.getEnterby());
-            enterdateText.setText(poLine.getEnterdate()== null ? "" : poLine.getEnterdate());
-            requestedbyText.setText(poLine.getRequestedby()== null ? "" : poLine.getRequestedby());
-            shiptoattnText.setText(poLine.getRequestedby()== null ? "" : poLine.getRequestedby());
-            tositeidText.setText(poLine.getTositeid()== null ? "" : poLine.getTositeid());
+        if (prLine != null) {
+            prlinenumText.setText(prLine.getPrlinenum()== null ? "" : prLine.getPrlinenum());
+            linetypeText.setText(prLine.getLinetype() == null ? "" : prLine.getLinetype());
+            itemnumText.setText(prLine.getItemnum() == null ? "" : prLine.getItemnum());
+            descriptionText.setText(prLine.getDescription() == null ? "" : prLine.getDescription());
+
+            storelocText.setText(prLine.getDescription() == null ? "" : prLine.getDescription()); //
+
+            categoryText.setText(prLine.getCategory() == null ? "" : prLine.getCategory());
+            orderqtyText.setText(prLine.getOrderqty() == null ? "" : prLine.getOrderqty());
+            orderunitText.setText(prLine.getOrderunit() == null ? "" : prLine.getOrderunit());
+            conversionText.setText(prLine.getConversion() == null ? "" : prLine.getConversion());
+            unitcostText.setText(prLine.getUnitcost() == null ? "" : prLine.getUnitcost());
+            linecostText.setText(prLine.getLinecost()== null ? "" : prLine.getLinecost());
+            tax1Text.setText(prLine.getTax1()== null ? "" : prLine.getTax1());
+
+
+            enterbyText.setText(prLine.getEnterby() == null ? "" : prLine.getEnterby());
+            enterdateText.setText(prLine.getEnterdate() == null ? "" : prLine.getEnterdate());
+            requestedbyText.setText(prLine.getRequestedby() == null ? "" : prLine.getRequestedby());
         }
 
     }
