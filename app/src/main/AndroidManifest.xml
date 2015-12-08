@@ -55,10 +55,7 @@
             android:label="@string/title_activity_work_list"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".ui.activity.Po_order_Activity"
-            android:label="@string/title_activity_po_order_" >
-        </activity>
+
         <activity
             android:name=".ui.activity.Work_DetailsActivity"
             android:label="@string/title_activity_work_details"
@@ -120,7 +117,7 @@
             android:label="@string/pr_detail_title" >
         </activity>
         <activity
-            android:name=".ui.activity.PrLine_Activity"
+            android:name=".ui.activity.Prline_Activity"
             android:label="@string/prline_title" >
         </activity>
         <activity
@@ -129,10 +126,17 @@
         </activity>
 
         <!--采购订单-->
+
         <activity
-            android:name=".ui.activity.Po_Details_Activity"
-            android:label="@string/title_activity_po__details_" >
+            android:name=".ui.activity.Po_order_Activity"
+            android:label="@string/title_activity_po_order_" >
         </activity>
+
+        <activity
+            android:name=".ui.activity.PO_Details_Activity"
+            android:label="@string/title_activity_po_details_" >
+        </activity>
+
         <activity
             android:name=".ui.activity.Poline_Activity"
             android:label="@string/title_activity_poline" >

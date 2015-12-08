@@ -172,7 +172,7 @@ public class PR_Details_Activity extends BaseActivity {
     private View.OnClickListener polineOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(PR_Details_Activity.this, PrLine_Activity.class);
+            Intent intent = new Intent(PR_Details_Activity.this, Prline_Activity.class);
             intent.putExtra("prnum", pr.prnum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();

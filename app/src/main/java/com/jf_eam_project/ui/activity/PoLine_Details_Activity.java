@@ -61,7 +61,7 @@ public class PoLine_Details_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
 
-        polinenumText = (TextView) findViewById(R.id.po_ponum_text);
+        polinenumText = (TextView) findViewById(R.id.poline_num_text);
         linetypeText = (TextView) findViewById(R.id.poline_linetype_text);
         itemnumText = (TextView) findViewById(R.id.poline_itemnum_text);
         descriptionText = (TextView) findViewById(R.id.poline_description_text);
@@ -80,6 +80,22 @@ public class PoLine_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getResources().getString(R.string.title_activity_po_line_details));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
+        if(poLine!=null){
+            polinenumText.setText(poLine.getPolinenum()==null?"":poLine.getPolinenum());
+            linetypeText.setText(poLine.getLinetype()==null?"":poLine.getLinetype());
+            itemnumText.setText(poLine.getItemnum()==null?"":poLine.getItemnum());
+            descriptionText.setText(poLine.getDescription() == null ? "" : poLine.getDescription());
+            conversionText.setText(poLine.getConversion() == null ? "" : poLine.getConversion());
+            categoryText.setText(poLine.getCategory()==null?"":poLine.getCategory());
+            orderqtyText.setText(poLine.getOrderqty()==null?"":poLine.getOrderqty());
+            orderunitText.setText(poLine.getOrderunit()==null?"":poLine.getOrderunit());
+            enterbyText.setText(poLine.getEnterby()==null?"":poLine.getEnterby());
+            enterdateText.setText(poLine.getEnterdate()==null?"":poLine.getEnterdate());
+            requestedbyText.setText(poLine.getRequestedby()==null?"":poLine.getRequestedby());
+            shiptoattnText.setText(poLine.getShiptoattn()==null?"":poLine.getShiptoattn());
+            tositeidText.setText(poLine.getTositeid()==null?"":poLine.getTositeid());
+        }
+
 
     }
 
