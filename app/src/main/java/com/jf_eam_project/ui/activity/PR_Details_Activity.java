@@ -57,6 +57,7 @@ public class PR_Details_Activity extends BaseActivity {
     private PopupWindow popupWindow;
 
     private LinearLayout polineLinearLayout; //采购单行
+    private TextView popText; //文本
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +162,12 @@ public class PR_Details_Activity extends BaseActivity {
 
         popupWindow.setBackgroundDrawable(getResources().getDrawable(
                 R.drawable.popup_background_mtrl_mult));
-        popupWindow.showAsDropDown(view,0,-40);
+        popupWindow.showAsDropDown(view, 0, -40);
 
         polineLinearLayout = (LinearLayout) contentView.findViewById(R.id.poline_linearlayout_id);
         polineLinearLayout.setOnClickListener(polineOnClickListener);
+        popText=(TextView)contentView.findViewById(R.id.popup_text_id);
+        popText.setText(getResources().getString(R.string.prline_title));
 
     }
 

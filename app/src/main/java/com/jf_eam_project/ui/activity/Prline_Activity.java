@@ -24,8 +24,10 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.ui.adapter.PoLineListAdapter;
+import com.jf_eam_project.ui.adapter.PrLineListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
  * 采购订单行
  */
 public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-    private static final String TAG = "Poline_Activity";
+    private static final String TAG = "Prline_Activity";
 
     /**
      * 标题
@@ -50,7 +52,7 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
     /**
      * 编号
      */
-    private String ponum;
+    private String prnum;
 
 
     LinearLayoutManager layoutManager;
@@ -62,7 +64,7 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
     private LinearLayout nodatalayout;
     private SwipeRefreshLayout refresh_layout = null;
 
-    private PoLineListAdapter poLineListAdapter;
+    private PrLineListAdapter prLineListAdapter;
     private EditText search;
     private String searchText = "";
     private int page = 1;
@@ -82,8 +84,8 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
      * 初始化数据
      */
     private void initData() {
-        ponum = getIntent().getExtras().getString("ponum");
-        Log.i(TAG, "ponum=" + ponum);
+        prnum = getIntent().getExtras().getString("prnum");
+        Log.i(TAG, "prnum=" + prnum);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.title_activity_poline));
+        titleView.setText(getString(R.string.prline_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         setSearchEdit();
@@ -110,8 +112,8 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        poLineListAdapter = new PoLineListAdapter(this);
-        recyclerView.setAdapter(poLineListAdapter);
+        prLineListAdapter = new PrLineListAdapter(this);
+        recyclerView.setAdapter(prLineListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -126,7 +128,7 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
 
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getPoLineUrl(ponum, search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getPrLineUrl(prnum, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -134,20 +136,20 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<PoLine> items = null;
+                ArrayList<PRLine> items = null;
                 try {
-                    items = Ig_Json_Model.parseFrompolineString(results.getResultlist());
+                    items = Ig_Json_Model.parsePrLineFromString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            poLineListAdapter = new PoLineListAdapter(Prline_Activity.this);
-                            recyclerView.setAdapter(poLineListAdapter);
+                            prLineListAdapter = new PrLineListAdapter(Prline_Activity.this);
+                            recyclerView.setAdapter(prLineListAdapter);
                         }
                         if (totalPages == page) {
-                            poLineListAdapter.adddate(items);
+                            prLineListAdapter.adddate(items);
                         }
                     }
                 } catch (IOException e) {
@@ -184,7 +186,7 @@ public class Prline_Activity extends BaseActivity implements SwipeRefreshLayout.
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    poLineListAdapter.removeAllData();
+                    prLineListAdapter.removeAllData();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
