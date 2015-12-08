@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * Created by think on 2015/12/4.
  * 任务分配
+ *
  */
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
     Context mContext;
