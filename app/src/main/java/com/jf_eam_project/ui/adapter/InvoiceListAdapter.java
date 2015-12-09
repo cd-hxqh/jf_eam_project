@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.ui.activity.PO_Details_Activity;
 
@@ -21,13 +22,13 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 采购
+ * 发票
  */
-public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder> {
+public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.ViewHolder> {
     Context mContext;
-    List<Po> poList = new ArrayList<>();
+    List<Invoice> invoices = new ArrayList<>();
 
-    public PoListAdapter(Context context) {
+    public InvoiceListAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -40,17 +41,17 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Po po = poList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.po_number_text));
+        final Invoice invoice = invoices.get(position);
+        holder.itemNumTitle.setText(mContext.getString(R.string.invoice_title_text));
         holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
-        holder.itemNum.setText(po.getPonum());
-        holder.itemDesc.setText(po.getDescription());
+        holder.itemNum.setText(invoice.getInvoicenum());
+        holder.itemDesc.setText(invoice.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, PO_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("po", po);
+                bundle.putSerializable("invoice", invoice);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -59,7 +60,7 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return poList.size();
+        return invoices.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,31 +100,31 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
         }
     }
 
-    public void update(ArrayList<Po> data, boolean merge) {
-        if (merge && poList.size() > 0) {
-            for (int i = 0; i < poList.size(); i++) {
-                Po po = poList.get(i);
+    public void update(ArrayList<Invoice> data, boolean merge) {
+        if (merge && invoices.size() > 0) {
+            for (int i = 0; i < invoices.size(); i++) {
+                Invoice invoice = invoices.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == po) {
+                    if (data.get(j) == invoice) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(po);
+                data.add(invoice);
             }
         }
-        poList = data;
+        invoices = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Po> data) {
+    public void adddate(ArrayList<Invoice> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!poList.contains(data.get(i))) {
-                    poList.add(data.get(i));
+                if (!invoices.contains(data.get(i))) {
+                    invoices.add(data.get(i));
                 }
             }
         }
@@ -132,8 +133,8 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
 
 
     public void removeAllData() {
-        if (poList.size() > 0) {
-            poList.removeAll(poList);
+        if (invoices.size() > 0) {
+            invoices.removeAll(invoices);
         }
     }
 }

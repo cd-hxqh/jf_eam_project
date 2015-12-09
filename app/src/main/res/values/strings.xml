@@ -228,4 +228,8 @@
     <string name="prline_linecost_title">行成本:</string>
     <string name="prline_tax1_title">税:</string>
     <string name="prline_detail_title">计划单行详情</string>
+
+
+    <!--发票-->
+    <string name="invoice_title_text">发票</string>
 </resources>

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
@@ -19,6 +20,7 @@ import com.jf_eam_project.api.ig.json.impl.Wpmaterial_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
@@ -60,6 +62,16 @@ public class Ig_Json_Model {
     public static ArrayList<PoLine> parseFrompolineString(String input) throws IOException {
         return PoLine_JsonHelper.parseFromJsonList(input);
     }
+
+
+    /**解析发票**/
+    public static ArrayList<Invoice> parseFromInvoiceString(String input) throws IOException {
+        return Invoice_JsonHelper.parseFromJsonList(input);
+    }
+
+
+
+
 
 
     /**解析工单**/

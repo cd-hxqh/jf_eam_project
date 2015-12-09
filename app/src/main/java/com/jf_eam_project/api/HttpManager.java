@@ -81,42 +81,42 @@ public class HttpManager {
      * 设置计划任务接口*
      */
     public static String getwoactivityUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划员工接口*
      */
     public static String getWplaborUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划物料接口*
      */
     public static String getWpmaterialUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划服务接口*
      */
     public static String getWpserviceUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划工具接口*
      */
     public static String getWptoolUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划工具接口*
      */
     public static String getAssignmentUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" + Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
@@ -133,7 +133,7 @@ public class HttpManager {
     /**
      * 设置采购计划行接口*
      */
-    public static String getPrLineUrl(String vlaue,String search, int curpage, int showcount) {
+    public static String getPrLineUrl(String vlaue, String search, int curpage, int showcount) {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" + Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
         } else {
@@ -142,13 +142,16 @@ public class HttpManager {
     }
 
 
-
-
-
-
-
-
-
+    /**
+     * 设置发票数据*
+     */
+    public static String getInvoiceUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.INVOICE_APPID + "','objectname':'" + Constants.INVOICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.INVOICE_APPID + "','objectname':'" + Constants.INVOICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVOICENUM':'" + vlaue + "'}}";
+        }
+    }
 
 
     /**
@@ -163,11 +166,10 @@ public class HttpManager {
     }
 
 
-
     /**
      * 设置采购单行接口*
      */
-    public static String getPoLineUrl(String vlaue,String search, int curpage, int showcount) {
+    public static String getPoLineUrl(String vlaue, String search, int curpage, int showcount) {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" + Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
         } else {

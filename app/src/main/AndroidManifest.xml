@@ -147,6 +147,13 @@
         </activity>
 
 
+        <!--发票-->
+        <activity
+            android:name=".ui.activity.Invoice_Activity"
+            android:label="@string/invoice_title_text" >
+        </activity>
+
+
 
 
 

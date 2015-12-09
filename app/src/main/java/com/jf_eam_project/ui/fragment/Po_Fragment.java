@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.ui.activity.Invoice_Activity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
 import com.jf_eam_project.ui.activity.Work_ListActivity;
@@ -87,7 +88,7 @@ public class Po_Fragment extends BaseFragment {
                     startActivityForResult(intent1, 0);
                     break;
                 case R.id.po_linear_invoice_id: //发票
-                    Intent intent2 = new Intent(getActivity(), Po_order_Activity.class);
+                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
                     startActivityForResult(intent2, 0);
                     break;
 

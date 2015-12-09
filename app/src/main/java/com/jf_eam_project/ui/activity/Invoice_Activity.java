@@ -24,7 +24,9 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Po;
+import com.jf_eam_project.ui.adapter.InvoiceListAdapter;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
@@ -32,11 +34,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * 采购订单Acitivity*
+ * 发票Invoice_Activity*
  */
-public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Invoice_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Po_order_Activity";
+    private static final String TAG = "Invoice_Activity";
 
 
     /**
@@ -72,7 +74,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
     /**
      * 适配器*
      */
-    private PoListAdapter poListAdapter;
+    private InvoiceListAdapter invoiceListAdapter;
     /**
      * 编辑框*
      */
@@ -109,7 +111,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
         setSearchEdit();
 
 
-        titlename.setText(getString(R.string.po_order_title));
+        titlename.setText(getString(R.string.invoice_title_text));
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
@@ -120,8 +122,8 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        poListAdapter = new PoListAdapter(this);
-        recyclerView.setAdapter(poListAdapter);
+        invoiceListAdapter = new InvoiceListAdapter(this);
+        recyclerView.setAdapter(invoiceListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -169,11 +171,11 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Po_order_Activity.this.getCurrentFocus()
+                                    Invoice_Activity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    poListAdapter.removeAllData();
+                    invoiceListAdapter.removeAllData();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -189,7 +191,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getPoUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getInvoiceUrl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -200,20 +202,20 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
 
                 Log.i(TAG, "results=" + results.getResultlist());
 
-                ArrayList<Po> items = null;
+                ArrayList<Invoice> items = null;
                 try {
-                    items = Ig_Json_Model.parseFromString(results.getResultlist());
+                    items = Ig_Json_Model.parseFromInvoiceString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            poListAdapter = new PoListAdapter(Po_order_Activity.this);
-                            recyclerView.setAdapter(poListAdapter);
+                            invoiceListAdapter = new InvoiceListAdapter(Invoice_Activity.this);
+                            recyclerView.setAdapter(invoiceListAdapter);
                         }
                         if (totalPages == page) {
-                            poListAdapter.adddate(items);
+                            invoiceListAdapter.adddate(items);
                         }
                     }
 
