@@ -232,4 +232,16 @@
 
     <!--发票-->
     <string name="invoice_title_text">发票</string>
+    <string name="invoice_invoicenum_title">发票:</string>
+    <string name="invoice_enterby_title">输入人:</string>
+    <string name="invoice_enterdate_title">输入日期:</string>
+    <string name="invoice_invoicedate_title">发票日期:</string>
+    <string name="invoice_glpostdate_title">发布日期:</string>
+    <string name="invoice_duedate_title">到期日:</string>
+    <string name="invoice_paiddate_title">付款日期:</string>
+    <string name="invoice_vendor_title">公司:</string>
+    <string name="invoice_pretaxtotalforui_title">税前总计:</string>
+    <string name="invoice_totaltax1forui_title">税款总计:</string>
+    <string name="invoice_totalcostforui_title">发票总计:</string>
+    <string name="invoice_details_title">发票详情</string>
 </resources>

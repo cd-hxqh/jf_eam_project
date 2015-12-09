@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Po;
+import com.jf_eam_project.ui.activity.Invoice_Details_Activity;
 import com.jf_eam_project.ui.activity.PO_Details_Activity;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PO_Details_Activity.class);
+                Intent intent = new Intent(mContext, Invoice_Details_Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("invoice", invoice);
                 intent.putExtras(bundle);
