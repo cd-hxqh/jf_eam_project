@@ -1,6 +1,8 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Wptool;
+import com.jf_eam_project.ui.activity.WptoolDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +39,19 @@ public class WptoolAdapter extends RecyclerView.Adapter<WptoolAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Wptool wpmaterial = wptoolList.get(position);
+        final Wptool wptool = wptoolList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(wpmaterial.itemnum);
-        holder.itemDesc.setText(wpmaterial.taskid);
+        holder.itemNum.setText(wptool.taskid);
+        holder.itemDesc.setText(wptool.itemnum);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("woactivity", woactivity);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, WptoolDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("wptool", wptool);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

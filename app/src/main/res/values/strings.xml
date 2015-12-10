@@ -39,8 +39,12 @@
     <string name="title_activity_work_plan">工单计划</string>
     <string name="title_activity_woactivity_details">任务详情</string>
     <string name="title_activity_wplabor_details">员工详情</string>
+    <string name="title_activity_wpmaterial_details">物料详情</string>
+    <string name="title_activity_wpservice_details">服务详情</string>
+    <string name="title_activity_wptool_details">工具详情</string>
     <string name="title_activity_work_assignment">任务分配</string>
     <string name="title_activity_work_realinfo">实际情况</string>
+    <string name="title_activity_work_failurereport">故障报告</string>
 
     <!--网络信息提示-->
     <string name="error_title">错误</string>
@@ -161,6 +165,36 @@
     <string name="wplabor_laborcode">员工</string>
     <string name="wplabor_laborhrs">常规时数</string>
 
+    <!--计划物料详情页面-->
+    <string name="wpmaterial_itemnum">项目</string>
+    <string name="wpmaterial_itemqty">数量</string>
+    <string name="wpmaterial_location">库房</string>
+    <string name="wpmaterial_storelocsite">库房地点</string>
+    <string name="wpmaterial_unitcost">单位成本</string>
+    <string name="wpmaterial_restype">预留类型</string>
+    <string name="wpmaterial_requiredate">要求日期</string>
+
+    <!--计划服务详情页面-->
+    <string name="wpservice_taskid">任务</string>
+    <string name="wpservice_linetype">行类型</string>
+    <string name="wpservice_requiredate">要求日期</string>
+    <string name="wpservice_requestby">请求者</string>
+
+    <!--计划工具详情页面-->
+    <string name="wptool_taskid">任务</string>
+    <string name="wptool_itemnum">工具</string>
+    <string name="wptool_itemqty">数量</string>
+    <string name="wptool_rate">费率</string>
+
+    <!--故障报告详情页面-->
+    <string name="failurereport_failurecode">故障类</string>
+    <string name="failurereport_faildate">故障日期</string>
+    <string name="failurereport_remarkdesc">备注</string>
+    <string name="failurereport_remarkenterdate">备注日期</string>
+    <string name="failurereport_failurereport">故障代码</string>
+    <string name="failurereport_problem">问题</string>
+    <string name="failurereport_cause">原因</string>
+    <string name="failurereport_remedy">措施</string>
 
     <string name="title_activity_po_order_">采购订单</string>
 

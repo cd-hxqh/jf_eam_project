@@ -81,42 +81,57 @@ public class HttpManager {
      * 设置计划任务接口*
      */
     public static String getwoactivityUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划员工接口*
      */
     public static String getWplaborUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划物料接口*
      */
     public static String getWpmaterialUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划服务接口*
      */
     public static String getWpserviceUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置计划工具接口*
      */
     public static String getWptoolUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
-     * 设置计划工具接口*
+     * 设置任务分配接口*
      */
     public static String getAssignmentUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置故障报告接口*
+     */
+    public static String getFailurereportUrl(String wonum,int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.FAILUREREPORT_NAME + "','curpage':" + curpage + ",'showcount':" +
+                showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**
@@ -124,9 +139,12 @@ public class HttpManager {
      */
     public static String getPrUrl(String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" + Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" +
+                    Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
-            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" + Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.PR_APPID + "','objectname':'" +
+                    Constants.PR_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
         }
     }
 
@@ -135,9 +153,13 @@ public class HttpManager {
      */
     public static String getPrLineUrl(String vlaue, String search, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" + Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" +
+                    Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "'}}";
         } else {
-            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" + Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "','PRLINENUM':'" + search + "'}}";
+            return "{'appid':'" + Constants.PRLINE_APPID + "','objectname':'" +
+                    Constants.PRLINE_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PRNUM':'" + vlaue + "','PRLINENUM':'" + search + "'}}";
         }
     }
 
@@ -159,9 +181,13 @@ public class HttpManager {
      */
     public static String getPoUrl(String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" +
+                    Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read'}";
         } else {
-            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" +
+                    Constants.PO_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
         }
     }
 
@@ -171,9 +197,13 @@ public class HttpManager {
      */
     public static String getPoLineUrl(String vlaue, String search, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" + Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" +
+                    Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
         } else {
-            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" + Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "','POLINENUM':'" + search + "'}}";
+            return "{'appid':'" + Constants.POLINE_APPID + "','objectname':'" +
+                    Constants.POLNE_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "','POLINENUM':'" + search + "'}}";
         }
     }
 

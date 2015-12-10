@@ -258,12 +258,12 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent = new Intent(Work_DetailsActivity.this,Work_FailurereportActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("workOrder", workOrder);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//            popupWindow.dismiss();
+            Intent intent = new Intent(Work_AddNewActivity.this,Work_FailurereportActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workOrder", workOrder);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            popupWindow.dismiss();
         }
     };
 }
