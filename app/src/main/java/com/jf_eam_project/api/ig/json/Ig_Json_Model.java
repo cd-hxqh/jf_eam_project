@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
@@ -20,6 +21,7 @@ import com.jf_eam_project.api.ig.json.impl.Wpmaterial_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
@@ -113,5 +115,11 @@ public class Ig_Json_Model {
     public static ArrayList<Assignment> parsingAssignment(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Assignment_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析故障汇报**/
+    public static ArrayList<Failurereport> parsingFailurereport(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Failurereport_JsonHelper.parseFromJsonList(input);
     }
 }

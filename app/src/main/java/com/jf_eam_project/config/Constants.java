@@ -46,6 +46,8 @@ public class Constants {
     public static final String WPTOOL_NAME = "WPTOOL";
     //任务分配
     public static final String ASSIGNMENT_NAME = "ASSIGNMENT";
+    //故障报告
+    public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
 
 

@@ -13,11 +13,11 @@ public class Wptool extends Entity{
     private static final long serialVersionUID = 2015050105L;
 
     @JsonField(fieldName = "itemnum")
-    public String itemnum;
+    public String itemnum;//工具
     @JsonField(fieldName = "itemqty")
-    public String itemqty;
+    public String itemqty;//数量
     @JsonField(fieldName = "rate")
-    public String rate;
+    public String rate;//费率
     @JsonField(fieldName = "taskid")
-    public String taskid;
+    public String taskid;//任务
 }

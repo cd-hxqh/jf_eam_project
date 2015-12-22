@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * Created by think on 2015/8/11.
- * webserviceÁ¬½Ó·½·¨
+ * webserviceæ–¹æ³•
  */
 public class AndroidClientService {
     private static final String TAG = "AndroidClientService";
@@ -39,7 +39,7 @@ public class AndroidClientService {
     }
 
     /**
-     * Ìí¼Ó¹¤µ¥·½·¨
+     * ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param string
      * @return
      */
@@ -71,7 +71,7 @@ public class AndroidClientService {
     }
 
 //    /**
-//     * Ô¤ÖÃ¹¤µ¥·½·¨
+//     * Ô¤ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //     * @param string
 //     * @return
 //     */
@@ -101,7 +101,7 @@ public class AndroidClientService {
 //    }
 
     /**
-     * ÐÞ¸Ä¹¤µ¥·½·¨
+     * ï¿½Þ¸Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param string
      * @return
      */
@@ -131,7 +131,7 @@ public class AndroidClientService {
     }
 
 //    /**
-//     * ÐÞ¸ÄÔ¤ÖÃ¹¤µ¥·½·¨
+//     * ï¿½Þ¸ï¿½Ô¤ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //     * @param string
 //     * @return
 //     */

@@ -1,6 +1,8 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.model.Wpservice;
+import com.jf_eam_project.ui.activity.WpserviceDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +40,19 @@ public class WpserviceAdapter extends RecyclerView.Adapter<WpserviceAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Wpservice wpmaterial = wpserviceList.get(position);
+        final Wpservice wpservice = wpserviceList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(wpmaterial.taskid);
-        holder.itemDesc.setText(wpmaterial.linetype);
+        holder.itemNum.setText(wpservice.taskid);
+        holder.itemDesc.setText(wpservice.linetype);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("woactivity", woactivity);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, WpserviceDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("wpservice", wpservice);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }
