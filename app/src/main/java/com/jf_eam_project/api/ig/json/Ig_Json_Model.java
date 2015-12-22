@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
@@ -24,6 +25,7 @@ import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Invoice;
+import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
@@ -122,6 +124,12 @@ public class Ig_Json_Model {
     public static ArrayList<Assignment> parsingAssignment(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Assignment_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析实际员工**/
+    public static ArrayList<Labtrans> parsingLabtrans(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Labtrans_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析故障汇报**/

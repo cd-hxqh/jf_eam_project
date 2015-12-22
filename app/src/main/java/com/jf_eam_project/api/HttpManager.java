@@ -109,9 +109,10 @@ public class HttpManager {
     /**
      * 设置计划员工接口*
      */
-    public static String getWplaborUrl(int curpage, int showcount) {
+    public static String getWplaborUrl(int curpage, int showcount,String wonum) {
         return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
-                Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+                Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'," +
+                "'condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**
@@ -144,6 +145,14 @@ public class HttpManager {
     public static String getAssignmentUrl(int curpage, int showcount) {
         return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
                 Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
+     * 设置实际员工接口*
+     */
+    public static String getLabtransUrl(int curpage, int showcount,String refwo) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.LABTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'refwo':'" + refwo + "'}}";
     }
 
     /**

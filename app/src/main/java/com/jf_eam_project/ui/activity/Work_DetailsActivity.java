@@ -34,7 +34,6 @@ public class Work_DetailsActivity extends BaseActivity {
      * 返回*
      */
     private ImageView backImageView;
-    private RelativeLayout backlayout;
     private PopupWindow popupWindow;
     /**
      * 工作计划*
@@ -54,25 +53,32 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout reportLinearLayout;
 
     private TextView wonum;//工单号
-    private TextView actfinish;//实际完成时间
-    private TextView actstart;//实际开始时间
-    private TextView assetdesc;//设备描述
-    private TextView assetnum;//设备编号
     private TextView description;//描述
-    private TextView estdur; //剩余时间
-    private TextView jpnum; //作业计划
-    private TextView jpnumdesc;//作业计划描述
+    private TextView parent;//父工单
+    private TextView udwotype; //工单类型
+    private TextView udprojectnum; //项目编号
+    private TextView uudprojectnumdesc; //项目编号描述
+    private TextView assetnum;//资产编号
+    private TextView assetdesc;//资产描述
     private TextView location; //位置
     private TextView locationdesc;//位置描述
-    private TextView onbehalfof; //录入人工号
-    private TextView pmdesc;
-    private TextView pmnum;
-    private TextView reportdate; //汇报日期
     private TextView status; //状态
-    private TextView statusdesc; //状态描述
-    private TextView udwotype; //工单类型
-    private TextView udwotypedesc; //工单类型描述
-    private TextView worktype; //工作类型
+    private TextView statusdate; //状态日期
+    private TextView lctype; //风机/电气
+    private TextView woclass; //类
+    private TextView failurecode; //故障类
+    private TextView problemcode; //问题代码
+    private TextView displayname; //创建人
+    private TextView createdate; //创建时间
+
+    private TextView jpnum; //作业计划
+    private TextView targstartdate;//计划开始时间
+    private TextView targcompdate;//计划完成时间
+    private TextView actstart;//实际开始时间
+    private TextView actfinish;//实际完成时间
+
+    private TextView reportedby; //报告人
+    private TextView reportdate; //汇报日期
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,24 +104,32 @@ public class Work_DetailsActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         wonum = (TextView) findViewById(R.id.work_wonum);
-        actfinish = (TextView) findViewById(R.id.work_actfinish);
-        actstart = (TextView) findViewById(R.id.work_acstart);
+        description = (TextView) findViewById(R.id.work_desc);
+        parent = (TextView) findViewById(R.id.work_parent);
+        udwotype = (TextView) findViewById(R.id.work_udwotype);
+        udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
+        uudprojectnumdesc = (TextView) findViewById(R.id.work_uudprojectnumdesc);
         assetnum = (TextView) findViewById(R.id.work_assetnum);
         assetdesc = (TextView) findViewById(R.id.work_assetdesc);
-        description = (TextView) findViewById(R.id.work_desc);
-        estdur = (TextView) findViewById(R.id.work_estdur);
-        jpnum = (TextView) findViewById(R.id.work_jpnum);
-        jpnumdesc = (TextView) findViewById(R.id.work_jpnumdesc);
         location = (TextView) findViewById(R.id.work_location);
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
-        onbehalfof = (TextView) findViewById(R.id.work_onbehalfof);
-        pmnum = (TextView) findViewById(R.id.work_pmnum);
-        pmdesc = (TextView) findViewById(R.id.work_pmdesc);
-        reportdate = (TextView) findViewById(R.id.work_reportdate);
         status = (TextView) findViewById(R.id.work_status);
-        statusdesc = (TextView) findViewById(R.id.work_statusdesc);
-        udwotype = (TextView) findViewById(R.id.work_udwotype);
-        worktype = (TextView) findViewById(R.id.work_worktype);
+        statusdate = (TextView) findViewById(R.id.work_statusdate);
+        lctype = (TextView) findViewById(R.id.work_lctype);
+        woclass = (TextView) findViewById(R.id.work_woclass);
+        failurecode = (TextView) findViewById(R.id.work_failurecode);
+        problemcode = (TextView) findViewById(R.id.work_problemcode);
+        displayname = (TextView) findViewById(R.id.work_displayname);
+        createdate = (TextView) findViewById(R.id.work_createdate);
+        jpnum = (TextView) findViewById(R.id.work_jpnum);
+        targstartdate = (TextView) findViewById(R.id.work_targstartdate);
+        targcompdate = (TextView) findViewById(R.id.work_targcompdate);
+        actstart = (TextView) findViewById(R.id.work_acstart);
+        actfinish = (TextView) findViewById(R.id.work_actfinish);
+
+        reportedby = (TextView) findViewById(R.id.work_reportedby);
+        reportdate = (TextView) findViewById(R.id.work_reportdate);
+
     }
 
     @Override
@@ -132,25 +146,31 @@ public class Work_DetailsActivity extends BaseActivity {
             }
         });
 
-        wonum.setText(workOrder.getWonum());
-        actstart.setText(workOrder.getActstart());
-        actfinish.setText(workOrder.getActfinish());
-        assetnum.setText(workOrder.getAssetnum());
-        assetdesc.setText(workOrder.getAssetdesc());
-        description.setText(workOrder.getDescription());
-        estdur.setText(workOrder.getEstdur());
-        jpnum.setText(workOrder.getJpnum());
-        jpnumdesc.setText(workOrder.getJpnumdesc());
-        location.setText(workOrder.getLocation());
-        locationdesc.setText(workOrder.getLocationdesc());
-        onbehalfof.setText(workOrder.getOnbehalfof());
-        pmnum.setText(workOrder.getPmnum());
-        pmdesc.setText(workOrder.getPmdesc());
-        reportdate.setText(workOrder.getReportdate());
-        status.setText(workOrder.getStatus());
-        statusdesc.setText(workOrder.getStatusdesc());
-        udwotype.setText(workOrder.getUdwotype());
-        worktype.setText(workOrder.getWorktype());
+        wonum.setText(workOrder.wonum);
+        description.setText(workOrder.description);
+        parent.setText(workOrder.parent);
+        udwotype.setText(workOrder.udwotype);
+        udprojectnum.setText(workOrder.udprojectnum);
+        uudprojectnumdesc.setText(workOrder.udprojectnumdesc);
+        assetnum.setText(workOrder.assetnum);
+        assetdesc.setText(workOrder.assetdesc);
+        location.setText(workOrder.location);
+        locationdesc.setText(workOrder.locationdesc);
+        status.setText(workOrder.status);
+        statusdate.setText(workOrder.statusdate);
+        lctype.setText(workOrder.lctype);
+        woclass.setText(workOrder.woclass);
+        failurecode.setText(workOrder.failurecode);
+        problemcode.setText(workOrder.problemcode);
+        displayname.setText(workOrder.displayname);
+        createdate.setText(workOrder.createdate);
+        jpnum.setText(workOrder.jpnum);
+        targstartdate.setText(workOrder.targstartdate);
+        targcompdate.setText(workOrder.targcompdate);
+        actstart.setText(workOrder.actstart);
+        actfinish.setText(workOrder.actfinish);
+        reportedby.setText(workOrder.reportedby);
+        reportdate.setText(workOrder.reportdate);
     }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
@@ -193,21 +213,21 @@ public class Work_DetailsActivity extends BaseActivity {
         // 设置好参数之后再show
         popupWindow.showAsDropDown(view);
 
-        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
+        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_wplabor_id);
         taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
-        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
+        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_labtrans_id);
+//        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
-        reportLinearLayout.setOnClickListener(reportOnClickListener);
+//        reportLinearLayout.setOnClickListener(reportOnClickListener);
 
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_PlanActivity.class);
+            Intent intent = new Intent(Work_DetailsActivity.this,Work_WplaborActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             intent.putExtras(bundle);
@@ -231,7 +251,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_RealInfoActivity.class);
+            Intent intent = new Intent(Work_DetailsActivity.this,Work_LabtransActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             intent.putExtras(bundle);
@@ -240,15 +260,15 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     };
 
-    private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_FailurereportActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workOrder", workOrder);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            popupWindow.dismiss();
-        }
-    };
+//    private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Intent intent = new Intent(Work_DetailsActivity.this,Work_FailurereportActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("workOrder", workOrder);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//            popupWindow.dismiss();
+//        }
+//    };
 }

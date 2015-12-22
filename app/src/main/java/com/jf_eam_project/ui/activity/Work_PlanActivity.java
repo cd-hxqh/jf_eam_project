@@ -37,9 +37,9 @@ public class Work_PlanActivity extends BaseActivity {
     private ImageView backimg;
     private Button woactivity;//任务
     private Button wplabor;//员工
-    private Button wpservice;//物料
-    private Button wpmaterial;//服务
-    private Button wptool;//工具
+//    private Button wpservice;//服务
+    private Button wpmaterial;//物料
+//    private Button wptool;//工具
     private ViewPager mViewPager;
     private int currentIndex = 0;
     private List<Fragment> fragmentlist = new ArrayList<>();
@@ -72,9 +72,9 @@ public class Work_PlanActivity extends BaseActivity {
         backimg = (ImageView) findViewById(R.id.title_back_id);
         woactivity = (Button) findViewById(R.id.work_woactivity);
         wplabor = (Button) findViewById(R.id.work_wplabor);
-        wpservice = (Button) findViewById(R.id.work_wpservice);
+//        wpservice = (Button) findViewById(R.id.work_wpservice);
         wpmaterial = (Button) findViewById(R.id.work_wpmaterial);
-        wptool = (Button) findViewById(R.id.work_wptool);
+//        wptool = (Button) findViewById(R.id.work_wptool);
         mViewPager = (ViewPager) findViewById(R.id.pager);
     }
 
@@ -96,9 +96,9 @@ public class Work_PlanActivity extends BaseActivity {
         woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
         woactivity.setOnClickListener(new Buttonlistener());
         wplabor.setOnClickListener(new Buttonlistener());
-        wpservice.setOnClickListener(new Buttonlistener());
+//        wpservice.setOnClickListener(new Buttonlistener());
         wpmaterial.setOnClickListener(new Buttonlistener());
-        wptool.setOnClickListener(new Buttonlistener());
+//        wptool.setOnClickListener(new Buttonlistener());
         fragmentlist = new ArrayList<>();
         woactivityFragment = new WoactivityFragment(workOrder);
         wplaborFragment = new WplaborFragment(workOrder);
@@ -151,15 +151,16 @@ public class Work_PlanActivity extends BaseActivity {
                 view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
                 wpmaterial.setTextColor(getResources().getColor(R.color.white));
                 currentIndex = 2;
-            } else if (view.getId() == wpservice.getId()) {
-                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-                wpservice.setTextColor(getResources().getColor(R.color.white));
-                currentIndex = 3;
-            }else if (view.getId() == wptool.getId()) {
-                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-                wptool.setTextColor(getResources().getColor(R.color.white));
-                currentIndex = 4;
             }
+//            else if (view.getId() == wpservice.getId()) {
+//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+//                wpservice.setTextColor(getResources().getColor(R.color.white));
+//                currentIndex = 3;
+//            }else if (view.getId() == wptool.getId()) {
+//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+//                wptool.setTextColor(getResources().getColor(R.color.white));
+//                currentIndex = 4;
+//            }
             mViewPager.setCurrentItem(currentIndex);
         }
     }
@@ -216,12 +217,12 @@ public class Work_PlanActivity extends BaseActivity {
                 case 2:
                     wpmaterial.performClick();
                     break;
-                case 3:
-                    wpservice.performClick();
-                    break;
-                case 4:
-                    wptool.performClick();
-                    break;
+//                case 3:
+//                    wpservice.performClick();
+//                    break;
+//                case 4:
+//                    wptool.performClick();
+//                    break;
             }
             currentIndex = position;
         }
@@ -236,11 +237,11 @@ public class Work_PlanActivity extends BaseActivity {
         woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
         wplabor.setTextColor(getResources().getColor(R.color.black));
         wplabor.setBackground(getResources().getDrawable(R.color.light_gray));
-        wpservice.setTextColor(getResources().getColor(R.color.black));
-        wpservice.setBackground(getResources().getDrawable(R.color.light_gray));
+//        wpservice.setTextColor(getResources().getColor(R.color.black));
+//        wpservice.setBackground(getResources().getDrawable(R.color.light_gray));
         wpmaterial.setTextColor(getResources().getColor(R.color.black));
         wpmaterial.setBackground(getResources().getDrawable(R.color.light_gray));
-        wptool.setTextColor(getResources().getColor(R.color.black));
-        wptool.setBackground(getResources().getDrawable(R.color.light_gray));
+//        wptool.setTextColor(getResources().getColor(R.color.black));
+//        wptool.setBackground(getResources().getDrawable(R.color.light_gray));
     }
 }

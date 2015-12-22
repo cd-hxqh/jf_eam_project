@@ -66,7 +66,14 @@ public final class Woactivity_JsonHelper
 
     public static boolean processSingleField(Woactivity instance, String fieldName, JsonParser jp)
             throws IOException {
-        if ("ASSETNUM".equals(fieldName)) {
+
+        if ("TASKID".equals(fieldName)) {
+            instance.taskid = jp.getValueAsString();
+            return true;
+        }else if ("DESCRIPTION".equals(fieldName)) {
+            instance.description = jp.getValueAsString();
+            return true;
+        }else if ("ASSETNUM".equals(fieldName)) {
             instance.assetnum = jp.getValueAsString();
             return true;
         } else if ("ASSETDESC".equals(fieldName)) {
@@ -85,6 +92,18 @@ public final class Woactivity_JsonHelper
             return true;
         } else if ("WONUM".equals(fieldName)) {
             instance.wonum = jp.getValueAsString();
+            return true;
+        }else if ("ESTDUR".equals(fieldName)) {
+            instance.estdur = jp.getValueAsString();
+            return true;
+        }else if ("STATUS".equals(fieldName)) {
+            instance.status = jp.getValueAsString();
+            return true;
+        }else if ("OWNER".equals(fieldName)) {
+            instance.owner = jp.getValueAsString();
+            return true;
+        }else if ("OWNERGROUP".equals(fieldName)) {
+            instance.ownergroup = jp.getValueAsString();
             return true;
         }
 

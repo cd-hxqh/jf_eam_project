@@ -21,7 +21,7 @@ public class Constants {
     /**
      * webserviceURL*
      */
-    public static String webserviceURL = "http://61.49.28.246:7001/meaweb/services/WOSERVICE";//webservice接口地址
+    public static String webserviceURL = "http://61.49.28.246:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
 
 
     /**通用接口查询**/
@@ -40,16 +40,24 @@ public class Constants {
     public static final String WORKORDER_NAME = "WORKORDER";
     //工单任务
     public static final String WOACTIVITY_NAME = "WOACTIVITY";
-    //工单员工
+    //工单计划员工
     public static final String WPLABOR_NAME = "WPLABOR";
-    //工单物料
+    //工单计划物料
     public static final String WPMATERIAL_NAME = "WPMATERIAL";
-    //工单服务
+    //工单计划服务
     public static final String WPSERVICE_NAME = "WPSERVICE";
-    //工单工具
+    //工单计划工具
     public static final String WPTOOL_NAME = "WPTOOL";
     //任务分配
     public static final String ASSIGNMENT_NAME = "ASSIGNMENT";
+    //工单实际员工
+    public static final String LABTRANS_NAME = "LABTRANS";
+    //工单实际物料
+    public static final String MATUSETRANS_NAME = "MATUSETRANS";
+    //工单实际服务
+    public static final String SERVRECTRANS_NAME = "SERVRECTRANS";
+    //工单实际工具
+    public static final String TOOLTRANS_NAME = "TOOLTRANS";
     //故障报告
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
@@ -119,6 +127,9 @@ public class Constants {
     public static final String PLAN = "PLAN";//计划工单
     public static final String PROJECT = "PROJECT";//项目工单
     public static final String UNPLAN = "UNPLAN";//非计划工单
+
+    public static final String WAIT_APPROVAL = "等待核准";
+    public static final String APPROVALED = "已核准";
 
     public static String getWsUrl(Context context) {
         return webserviceURL;

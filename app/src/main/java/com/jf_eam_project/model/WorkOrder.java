@@ -18,9 +18,9 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "actstart")
     public String actstart;//实际开始时间
     @JsonField(fieldName = "assetdesc")
-    public String assetdesc;//设备描述
+    public String assetdesc;//资产描述
     @JsonField(fieldName = "assetnum")
-    public String assetnum;//设备编号
+    public String assetnum;//资产
     @JsonField(fieldName = "description")
     public String description;//描述
     @JsonField(fieldName = "estdur")
@@ -34,11 +34,11 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "locationdesc")
     public String locationdesc;//位置描述
     @JsonField(fieldName = "onbehalfof")
-    public String onbehalfof; //录入人工号
+    public String onbehalfof; //代表
     @JsonField(fieldName = "pmdesc")
-    public String pmdesc;
+    public String pmdesc;//PM描述
     @JsonField(fieldName = "pmnum")
-    public String pmnum;
+    public String pmnum;//PM
     @JsonField(fieldName = "reportdate")
     public String reportdate; //汇报日期
     @JsonField(fieldName = "status")
@@ -51,6 +51,32 @@ public class WorkOrder extends Entity {
     public String udwotypedesc; //工单类型描述
     @JsonField(fieldName = "worktype")
     public String worktype; //工作类型
+    @JsonField(fieldName = "parent")
+    public String parent; //父工单
+    @JsonField(fieldName = "udprojectnum")
+    public String udprojectnum; //项目编号
+    @JsonField(fieldName = "uudprojectnumdesc")
+    public String udprojectnumdesc; //项目编号描述
+    @JsonField(fieldName = "statusdate")
+    public String statusdate; //状态日期
+    @JsonField(fieldName = "lctype")
+    public String lctype; //风机/电气
+    @JsonField(fieldName = "woclass")
+    public String woclass; //类
+    @JsonField(fieldName = "failurecode")
+    public String failurecode; //故障类
+    @JsonField(fieldName = "problemcode")
+    public String problemcode; //问题代码
+    @JsonField(fieldName = "displayname")
+    public String displayname; //创建人CREATEBY.DISPLAYNAME
+    @JsonField(fieldName = "createdate")
+    public String createdate; //创建日期
+    @JsonField(fieldName = "targstartdate")
+    public String targstartdate; //目标开始时间
+    @JsonField(fieldName = "targcompdate")
+    public String targcompdate; //目标结束时间
+    @JsonField(fieldName = "reportedby")
+    public String reportedby; //报告人
 
 
     public String getWonum() {

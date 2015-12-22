@@ -208,21 +208,19 @@ public class Work_AddNewActivity extends BaseActivity {
         // 设置好参数之后再show
         popupWindow.showAsDropDown(view);
 
-        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
+        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_wplabor_id);
         taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
-        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
+        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_labtrans_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
-        reportLinearLayout.setOnClickListener(reportOnClickListener);
 
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this, Work_PlanActivity.class);
+            Intent intent = new Intent(Work_AddNewActivity.this, Work_WplaborActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             intent.putExtras(bundle);
@@ -246,7 +244,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this, Work_RealInfoActivity.class);
+            Intent intent = new Intent(Work_AddNewActivity.this, Work_LabtransActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             intent.putExtras(bundle);
@@ -255,15 +253,4 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
-    private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this,Work_FailurereportActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workOrder", workOrder);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            popupWindow.dismiss();
-        }
-    };
 }

@@ -45,7 +45,6 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     /**菜单按钮**/
     private ImageView addimg;
-    private RelativeLayout backlayout;
     private String worktype;
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;

@@ -36,6 +36,9 @@
     <string name="title_activity_work_list">工单管理</string>
     <string name="title_activity_work_details">工单详情</string>
     <string name="title_activity_work_addnew">新建工单</string>
+    <string name="title_activity_work_wplabor">计划员工</string>
+    <string name="title_activity_work_labtrans">实际员工</string>
+    <string name="title_activity_labtrans_details">员工详情</string>
     <string name="title_activity_work_plan">工单计划</string>
     <string name="title_activity_woactivity_details">任务详情</string>
     <string name="title_activity_wplabor_details">员工详情</string>
@@ -44,6 +47,7 @@
     <string name="title_activity_wptool_details">工具详情</string>
     <string name="title_activity_work_assignment">任务分配</string>
     <string name="title_activity_work_realinfo">实际情况</string>
+    <string name="title_activity_work_assignment_details">任务分配详情</string>
     <string name="title_activity_work_failurereport">故障报告</string>
 
     <!--网络信息提示-->
@@ -128,8 +132,20 @@
     <string name="work_faststarttime">最早开始时间</string>
     <string name="work_lastfinishtime">最晚完成时间</string>
     <string name="work_estdur">剩余时间</string>
-    <string name="work_reportdate">汇报日期</string>
+    <string name="work_reportdate">报告日期</string>
     <string name="work_worktype">工作类型</string>
+    <string name="work_parent">父工单</string>
+    <string name="work_udprojectnum">项目编号</string>
+    <string name="work_uudprojectnumdesc">项目编号描述</string>
+    <string name="work_statusdate">状态日期</string>
+    <string name="work_lctype">风机/电气</string>
+    <string name="work_woclass">类</string>
+    <string name="work_failurecode">故障类</string>
+    <string name="work_problemcode">问题代码</string>
+    <string name="work_displayname">创建人</string>
+    <string name="work_createdate">创建时间</string>
+    <string name="work_reportedby">报告人</string>
+
     
     <string name="work_revise">修改</string>
     <string name="work_add">新增</string>
@@ -148,6 +164,12 @@
 
     <!--计划任务详情页面-->
     <string name="woactivity_wosequence">序号</string>
+    <string name="woactivity_taskid">任务</string>
+    <string name="woactivity_description">摘要</string>
+    <string name="woactivity_estdur">持续时间</string>
+    <string name="woactivity_status">状态</string>
+    <string name="woactivity_owner">所有者</string>
+    <string name="woactivity_ownergroup">所有者组</string>
     <string name="woactivity_wonum">记录</string>
     <string name="woactivity_woclass">记录类</string>
     <string name="woactivity_assetnum">资产</string>
@@ -164,6 +186,14 @@
     <string name="wplabor_quantity">数量</string>
     <string name="wplabor_laborcode">员工</string>
     <string name="wplabor_laborhrs">常规时数</string>
+
+    <!--实际员工详情页面-->
+    <string name="labtrans_laborcode">员工</string>
+    <string name="labtrans_craft">工种</string>
+    <string name="labtrans_payrate">费率</string>
+    <string name="labtrans_transtype">类型</string>
+    <string name="labtrans_startdate">开始日期</string>
+    <string name="labtrans_regularhrs">常规时数</string>
 
     <!--计划物料详情页面-->
     <string name="wpmaterial_itemnum">项目</string>
@@ -185,6 +215,20 @@
     <string name="wptool_itemnum">工具</string>
     <string name="wptool_itemqty">数量</string>
     <string name="wptool_rate">费率</string>
+
+    <!--任务分配详情页面-->
+    <string name="assignment_taskid">任务</string>
+    <string name="assignment_laborcode">员工</string>
+    <string name="assignment_craft">工种</string>
+    <string name="assignment_amcrewtype">班组类型</string>
+    <string name="assignment_amcrew">班组</string>
+    <string name="assignment_skilllevel">技能级别</string>
+    <string name="assignment_vendor">供应商</string>
+    <string name="assignment_contractnum">合同</string>
+    <string name="assignment_crewworkgroup">班组工作组</string>
+    <string name="assignment_scheduledate">调度开始时间</string>
+    <string name="assignment_laborhrs">时数</string>
+    <string name="assignment_status">状态</string>
 
     <!--故障报告详情页面-->
     <string name="failurereport_failurecode">故障类</string>

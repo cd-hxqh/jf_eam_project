@@ -17,9 +17,9 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.model.Wplabor;
-import com.jf_eam_project.ui.adapter.WplaborAdapter;
+import com.jf_eam_project.ui.adapter.LabtransAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
@@ -27,24 +27,24 @@ import java.util.ArrayList;
 
 
 /**
- * 工单计划员工的fragment
+ * 工单实际员工的fragment
  */
 @SuppressLint("ValidFragment")
-public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-    private static String TAG = "WplaborFragment";
+public class LabtransFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+    private static String TAG = "LabtransFragment";
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private WplaborAdapter wplaborAdapter;
+    private LabtransAdapter labtransAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;
 
-    public WplaborFragment() {
+    public LabtransFragment() {
     }
 
-    public WplaborFragment(WorkOrder workOrder) {
+    public LabtransFragment(WorkOrder workOrder) {
         this.workOrder = workOrder;
     }
 
@@ -79,8 +79,8 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        wplaborAdapter = new WplaborAdapter(getActivity());
-        recyclerView.setAdapter(wplaborAdapter);
+        labtransAdapter = new LabtransAdapter(getActivity());
+        recyclerView.setAdapter(labtransAdapter);
 
         refresh_layout.setColor(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -94,7 +94,7 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWplaborUrl(page, 20,""), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getLabtransUrl(page, 20,workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -102,15 +102,15 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onSuccess(Results results, int currentPage, int showcount) {
-                ArrayList<Wplabor> wplabors = null;
+                ArrayList<Labtrans> labtranses = null;
                 if (currentPage == page) {
                     try {
-                        wplabors = Ig_Json_Model.parsingWplabor(results.getResultlist());
+                        labtranses = Ig_Json_Model.parsingLabtrans(results.getResultlist());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                addListData(wplabors);
+                addListData(labtranses);
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
             }
@@ -126,18 +126,18 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
     }
 
-    private void addListData(ArrayList<Wplabor> list) {
+    private void addListData(ArrayList<Labtrans> list) {
         if (nodatalayout.getVisibility() == View.VISIBLE) {
             nodatalayout.setVisibility(View.GONE);
         }
-        if (page == 1 && wplaborAdapter.getItemCount() != 0) {
-            wplaborAdapter = new WplaborAdapter(getActivity());
-            recyclerView.setAdapter(wplaborAdapter);
+        if (page == 1 && labtransAdapter.getItemCount() != 0) {
+            labtransAdapter = new LabtransAdapter(getActivity());
+            recyclerView.setAdapter(labtransAdapter);
         }
         if ((list == null || list.size() == 0) && page == 1) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
-            wplaborAdapter.adddate(list);
+            labtransAdapter.adddate(list);
         }
     }
 

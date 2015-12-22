@@ -12,23 +12,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Assignment;
-import com.jf_eam_project.model.Wptool;
-import com.jf_eam_project.ui.activity.AssignmentDetailsActivity;
+import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.ui.activity.LabtransDetailsActivity;
+import com.jf_eam_project.ui.activity.WplaborDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Created by think on 2015/12/4.
- * 任务分配
- *
+ * Created by think on 2015/12/18.
+ * 实际员工
  */
-public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
+public class LabtransAdapter extends RecyclerView.Adapter<LabtransAdapter.ViewHolder> {
     Context mContext;
-    List<Assignment> assignmentList = new ArrayList<>();
-    public AssignmentAdapter(Context context) {
+    List<Labtrans> labtransList = new ArrayList<>();
+    public LabtransAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -41,17 +40,17 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Assignment assignment = assignmentList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(assignment.taskid);
-        holder.itemDesc.setText(assignment.laborcode);
+        final Labtrans labtrans = labtransList.get(position);
+        holder.itemNumTitle.setText("员工:");
+        holder.itemDescTitle.setText("开始日期:");
+        holder.itemNum.setText(labtrans.laborcode);
+        holder.itemDesc.setText(labtrans.startdate);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AssignmentDetailsActivity.class);
+                Intent intent = new Intent(mContext, LabtransDetailsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("assignment", assignment);
+                bundle.putSerializable("labtrans", labtrans);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -60,7 +59,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return assignmentList.size();
+        return labtransList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,29 +99,29 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         }
     }
 
-    public void update(ArrayList<Assignment> data, boolean merge) {
-        if (merge && assignmentList.size() > 0) {
-            for (int i = 0; i < assignmentList.size(); i++) {
-                Assignment wptool = assignmentList.get(i);
+    public void update(ArrayList<Labtrans> data, boolean merge) {
+        if (merge && labtransList.size() > 0) {
+            for (int i = 0; i < labtransList.size(); i++) {
+                Labtrans labtrans = labtransList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == wptool) {
+                    if (data.get(j) == labtrans) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(wptool);
+                data.add(labtrans);
             }
         }
-        assignmentList = data;
+        labtransList = data;
         notifyDataSetChanged();
     }
 //
-    public void adddate(ArrayList<Assignment> data){
+    public void adddate(ArrayList<Labtrans> data){
         if(data.size()>0){
             for(int i = 0;i < data.size();i++){
-                assignmentList.add(data.get(i));
+                labtransList.add(data.get(i));
             }
         }
         notifyDataSetChanged();

@@ -24,6 +24,12 @@ public class WoactivityDetailsActivity extends BaseActivity{
      */
     private ImageView backImageView;
 
+    private TextView taskid;//任务
+    private TextView description;//摘要
+    private TextView estdur;//估计持续时间
+    private TextView status;//状态
+    private TextView owner;//所有者
+    private TextView ownergroup;//所有者组
     private TextView wosequence;//序号
     private TextView wonum;//记录
     private TextView woclass;//记录类
@@ -53,6 +59,12 @@ public class WoactivityDetailsActivity extends BaseActivity{
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
+        taskid = (TextView) findViewById(R.id.woactivity_taskid);
+        description = (TextView) findViewById(R.id.woactivity_description);
+        estdur = (TextView) findViewById(R.id.woactivity_estdur);
+        status = (TextView) findViewById(R.id.woactivity_status);
+        owner = (TextView) findViewById(R.id.woactivity_owner);
+        ownergroup = (TextView) findViewById(R.id.woactivity_ownergroup);
         wosequence = (TextView) findViewById(R.id.woactivity_wosequence);
         wonum = (TextView) findViewById(R.id.woactivity_wonum);
         woclass = (TextView) findViewById(R.id.woactivity_woclass);
@@ -72,6 +84,12 @@ public class WoactivityDetailsActivity extends BaseActivity{
             }
         });
 
+        taskid.setText(woactivity.taskid);
+        description.setText(woactivity.description);
+        status.setText(woactivity.status);
+        estdur.setText(woactivity.estdur);
+        owner.setText(woactivity.owner);
+        ownergroup.setText(woactivity.ownergroup);
         wosequence.setText(woactivity.wosequence);
         wonum.setText(woactivity.wonum);
         woclass.setText(woactivity.woclass);

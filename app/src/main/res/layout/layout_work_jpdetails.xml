@@ -57,11 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimens_10"
             android:layout_centerVertical="true"
-            android:text="@string/work_jpnumdesc"
+            android:text="@string/work_targstartdate"
             android:textSize="@dimen/dimens_16dp"
             android:textColor="@color/light_black"/>
         <TextView
-            android:id="@+id/work_jpnumdesc"
+            android:id="@+id/work_targstartdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="35dp"
@@ -90,11 +90,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimens_10"
             android:layout_centerVertical="true"
-            android:text="@string/work_pmnum"
+            android:text="@string/work_targcompdate"
             android:textSize="@dimen/dimens_16dp"
             android:textColor="@color/light_black"/>
         <TextView
-            android:id="@+id/work_pmnum"
+            android:id="@+id/work_targcompdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="35dp"
@@ -115,39 +115,39 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/line"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimens_10"
-            android:layout_centerVertical="true"
-            android:text="@string/work_pmdesc"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <TextView
-            android:id="@+id/work_pmdesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimens_10"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/item_more"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_40dp">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimens_10"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/work_pmdesc"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/work_pmdesc"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="35dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/dimens_10"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@drawable/item_more"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@drawable/line"/>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
@@ -214,6 +214,72 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/line"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_40dp">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimens_10"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/work_estdur"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/work_estdur"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="35dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/dimens_10"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@drawable/item_more"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@drawable/line"/>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_40dp">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimens_10"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/work_worktype"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/work_worktype"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="35dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="@dimen/dimens_16dp"-->
+            <!--android:textColor="@color/light_black"/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/dimens_10"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@drawable/item_more"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@drawable/line"/>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
@@ -222,44 +288,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimens_10"
             android:layout_centerVertical="true"
-            android:text="@string/work_estdur"
+            android:text="@string/work_reportedby"
             android:textSize="@dimen/dimens_16dp"
             android:textColor="@color/light_black"/>
         <TextView
-            android:id="@+id/work_estdur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimens_10"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/item_more"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimens_10"
-            android:layout_centerVertical="true"
-            android:text="@string/work_worktype"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <TextView
-            android:id="@+id/work_worktype"
+            android:id="@+id/work_reportedby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="35dp"
@@ -293,39 +326,6 @@
             android:textColor="@color/light_black"/>
         <TextView
             android:id="@+id/work_reportdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimens_10"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/item_more"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimens_10"
-            android:layout_centerVertical="true"
-            android:text="@string/work_onbehalfof"
-            android:textSize="@dimen/dimens_16dp"
-            android:textColor="@color/light_black"/>
-        <TextView
-            android:id="@+id/work_onbehalfof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="35dp"

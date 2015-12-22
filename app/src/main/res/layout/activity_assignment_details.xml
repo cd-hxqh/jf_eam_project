@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="cdhxqh.shekou.ui.activity.Wfassig_DetailsActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/title_main"></include>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_relativelayout_id">
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="vertical"
         android:padding="@dimen/dimens_10">
 
@@ -29,12 +29,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_wosequence"
+                android:text="@string/assignment_taskid"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_wosequence"
+                android:id="@+id/assignment_taskid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -52,185 +52,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_taskid"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_taskid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_description"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_estdur"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_estdur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_status"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_owner"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_ownergroup"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_ownergroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/num_linearlayout_id"
-            android:background="@drawable/line"></View>
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
             android:gravity="center_vertical"
@@ -240,12 +61,12 @@
                 android:layout_width="100dp"
                 android:layout_height="@dimen/dimen_40dp"
                 android:gravity="center_vertical"
-                android:text="@string/woactivity_wonum"
+                android:text="@string/assignment_laborcode"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_wonum"
+                android:id="@+id/assignment_laborcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -269,12 +90,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_woclass"
+                android:text="@string/assignment_craft"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_woclass"
+                android:id="@+id/assignment_craft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -298,12 +119,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_assetnum"
+                android:text="@string/assignment_amcrewtype"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_assetnum"
+                android:id="@+id/assignment_amcrewtype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -327,12 +148,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_assetdesc"
+                android:text="@string/assignment_amcrew"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_assetdesc"
+                android:id="@+id/assignment_amcrew"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -356,12 +177,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_location"
+                android:text="@string/assignment_skilllevel"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_location"
+                android:id="@+id/assignment_skilllevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -385,12 +206,152 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_locationdesc"
+                android:text="@string/assignment_vendor"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/woactivity_locationdesc"
+                android:id="@+id/assignment_vendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/assignment_contractnum"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/assignment_contractnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/assignment_crewworkgroup"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/assignment_crewworkgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/assignment_scheduledate"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/assignment_scheduledate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/assignment_laborhrs"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/assignment_laborhrs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/assignment_status"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/assignment_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -404,6 +365,6 @@
             android:layout_height="1dp"
             android:background="@drawable/line"></View>
     </LinearLayout>
-    </ScrollView>
 
+    </ScrollView>
 </RelativeLayout>

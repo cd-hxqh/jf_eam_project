@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="cdhxqh.shekou.ui.activity.Wfassig_DetailsActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/title_main"></include>
 
@@ -26,12 +25,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/wplabor_taskid"
+                android:text="@string/labtrans_laborcode"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/wplabor_taskid"
+                android:id="@+id/labtrans_laborcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -145,12 +144,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/wplabor_craft"
+                android:text="@string/labtrans_craft"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/wplabor_craft"
+                android:id="@+id/labtrans_craft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -174,12 +173,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/wplabor_quantity"
+                android:text="@string/labtrans_payrate"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/wplabor_quantity"
+                android:id="@+id/labtrans_payrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -232,12 +231,68 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/wplabor_laborhrs"
+                android:text="@string/labtrans_transtype"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/wplabor_laborhrs"
+                android:id="@+id/labtrans_transtype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/labtrans_startdate"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/labtrans_startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/labtrans_regularhrs"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/labtrans_regularhrs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"

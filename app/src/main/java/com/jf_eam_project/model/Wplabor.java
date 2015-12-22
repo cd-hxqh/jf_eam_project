@@ -5,7 +5,7 @@ import com.instagram.common.json.annotation.JsonType;
 
 /**
  * Created by think on 2015/12/4.
- * 员工
+ * 计划员工
  */
 @JsonType
 public class Wplabor extends Entity{

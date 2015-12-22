@@ -12,6 +12,10 @@ public class Woactivity extends Entity{
     private static final String TAG = "Woactivity";
     private static final long serialVersionUID = 2015050105L;
 
+    @JsonField(fieldName = "taskid")
+    public String taskid;//任务
+    @JsonField(fieldName = "description")
+    public String description;//摘要
     @JsonField(fieldName = "assetnum")
     public String assetnum;//资产
     @JsonField(fieldName = "assetdesc")
@@ -25,6 +29,14 @@ public class Woactivity extends Entity{
     @JsonField(fieldName = "wosequence")
     public String wosequence;//序号
     @JsonField(fieldName = "wonum")
-    public String wonum;//记录
+    public String wonum;//工单号
+    @JsonField(fieldName = "estdur")
+    public String estdur;//估计持续时间
+    @JsonField(fieldName = "status")
+    public String status;//状态
+    @JsonField(fieldName = "owner")
+    public String owner;//所有者
+    @JsonField(fieldName = "ownergroup")
+    public String ownergroup;//所有者组
 
 }

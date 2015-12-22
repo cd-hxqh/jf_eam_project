@@ -40,10 +40,10 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Woactivity woactivity = woactivityList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(woactivity.wosequence);
-        holder.itemDesc.setText(woactivity.woclass);
+        holder.itemNumTitle.setText("任务:");
+        holder.itemDescTitle.setText("摘要:");
+        holder.itemNum.setText(woactivity.taskid);
+        holder.itemDesc.setText(woactivity.description);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
