@@ -278,5 +278,19 @@
     <string name="invoice_totaltax1forui_title">税款总计:</string>
     <string name="invoice_totalcostforui_title">发票总计:</string>
     <string name="invoice_details_title">发票详情</string>
-    <string name="wfm_name_text">应用程序名:</string>
+
+
+    <!--流程审批-->
+
+
+
+    <string name="title_activity_wfm"> 流程审批</string>
+    <string name="wfm_ownertable_title">应用程序名:</string>
+    <string name="wfm_assigncode_title">任务分配人:</string>
+    <string name="wfm_duedate_title">到期日期:</string>
+    <string name="wfm_processname_title">过程名称:</string>
+    <string name="wfm_roleid_title">任务角色:</string>
+    <string name="wfm_startdate_title">当前日期:</string>
+    <string name="wfm_approve_text">审批</string>
+    <string name="wfm_detail_title">流程审批详情</string>
 </resources>

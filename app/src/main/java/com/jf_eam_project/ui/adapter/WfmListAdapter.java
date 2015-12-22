@@ -15,6 +15,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.ui.activity.PO_Details_Activity;
+import com.jf_eam_project.ui.activity.Wfm_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,18 +42,18 @@ public class WfmListAdapter extends RecyclerView.Adapter<WfmListAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Wfassignment wfm = wfmList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.wfm_name_text));
+        holder.itemNumTitle.setText(mContext.getString(R.string.wfm_ownertable_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
         holder.itemNum.setText(wfm.ownertable);
         holder.itemDesc.setText(wfm.description);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, PO_Details_Activity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("po", po);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, Wfm_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("wfassignment", wfm);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

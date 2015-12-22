@@ -49,6 +49,14 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <!--流程审批-->
+        <activity
+            android:name=".ui.activity.Wfm_Details_Activity"
+            android:label="@string/title_activity_wfm"
+            android:screenOrientation="portrait" >
+        </activity>
+
+
         <!--工单管理-->
         <activity
             android:name=".ui.activity.Work_ListActivity"

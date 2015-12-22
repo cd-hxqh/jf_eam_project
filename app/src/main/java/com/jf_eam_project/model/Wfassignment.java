@@ -33,7 +33,7 @@ public class Wfassignment extends Entity {
     @JsonField(fieldName = "roleid")
     public String roleid;//任务角色
     @JsonField(fieldName = "startdate")
-    public String startdate;//当前任务
+    public String startdate;//当前日期
     @JsonField(fieldName = "wfassignmentid ")
     public String wfassignmentid ;//编号
 
