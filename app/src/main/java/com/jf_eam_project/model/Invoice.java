@@ -8,6 +8,7 @@ import com.instagram.common.json.annotation.JsonType;
 /**
  * Created by think on 2015/12/10
  * 发票表
+ *
  */
 @JsonType
 public class Invoice extends Entity {

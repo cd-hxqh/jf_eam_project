@@ -14,6 +14,7 @@ import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wplabor_JsonHelper;
@@ -27,6 +28,7 @@ import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
+import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -42,6 +44,11 @@ public class Ig_Json_Model {
 
     private static final String TAG = "Ig_Json_Model";
 
+
+    /**流程审批表解析**/
+    public static ArrayList<Wfassignment> parseWfmFromString(String input) throws IOException {
+        return Wfm_JsonHelper.parseFromJsonList(input);
+    }
 
     /**采购计划单解析**/
     public static ArrayList<PR> parsePrFromString(String input) throws IOException {

@@ -278,4 +278,5 @@
     <string name="invoice_totaltax1forui_title">税款总计:</string>
     <string name="invoice_totalcostforui_title">发票总计:</string>
     <string name="invoice_details_title">发票详情</string>
+    <string name="wfm_name_text">应用程序名:</string>
 </resources>

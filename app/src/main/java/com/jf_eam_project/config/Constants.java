@@ -28,7 +28,11 @@ public class Constants {
     public static final String BASE_URL = HTTP_API_URL + "common/api";
 
     /**------------------数据库表名配置－－开始**/
-
+    /**流程审批**/
+    //流程审批的appid
+    public static final String WFM_APPID="WFDESIGN";
+    //流程审批表名
+    public static final String WFM_NAME = "WFASSIGNMENT";
     /**工单管理**/
     //工单查询的appid
     public static final String UDWOCM_APPID="UDWOTRACK";

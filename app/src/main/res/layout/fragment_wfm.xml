@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context="com.jf_eam_project.ui.activity.Work_ListActivity">
 
-    <include layout="@layout/title_main"></include>
 
     <RelativeLayout
         android:layout_width="match_parent"

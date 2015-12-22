@@ -24,6 +24,7 @@ import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
+import com.jf_eam_project.ui.fragment.Wfment_fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
 
@@ -47,7 +48,8 @@ public class MainActivity extends BaseActivity
     private String[] mMainTitles;
 
     private TextView titleText;
-
+    /**流程管理**/
+    private Wfment_fragment wfment_fragment;
     /**
      * 工单管理*
      */
@@ -105,7 +107,14 @@ public class MainActivity extends BaseActivity
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         switch (position) {
-            case 0:
+            case 0: //流程管理
+                if (wfment_fragment == null) {
+                    wfment_fragment = new Wfment_fragment();
+                    Bundle bundle = new Bundle();
+                    wfment_fragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, wfment_fragment).commit();
+
                 break;
             case 1: //工单管理
                 if (mWorkFragment == null) {

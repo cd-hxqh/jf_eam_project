@@ -54,7 +54,6 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.i(TAG, "SstatusCode=" + statusCode + "responseString=" + responseString);
                 if (statusCode == 200) {
                     String errmsg = JsonUtils.parsingAuthStr(cxt, responseString);
                     SafeHandler.onSuccess(handler, errmsg);
@@ -62,6 +61,28 @@ public class HttpManager {
             }
         });
     }
+
+
+
+
+    /**
+     * 设置流程审批*
+     */
+    public static String getWfmUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "'}}";
+        }
+    }
+
+
+
+
+
+
+
+
 
     /**
      * 设置工单接口*
