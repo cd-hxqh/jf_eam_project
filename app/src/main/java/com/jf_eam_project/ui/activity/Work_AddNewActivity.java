@@ -21,11 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.utils.GetNowTime;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by think on 2015/11/30.
@@ -40,11 +48,42 @@ public class Work_AddNewActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private ProgressDialog mProgressDialog;
 
+    private TextView wonum;//工单号
+    private TextView description;//描述
+    private TextView parent;//父工单
+    private TextView udwotype; //工单类型
+    private TextView udprojectnum; //项目编号
+    private TextView uudprojectnumdesc; //项目编号描述
+    private TextView assetnum;//资产编号
+    private TextView assetdesc;//资产描述
+    private TextView location; //位置
+    private TextView locationdesc;//位置描述
+    private TextView status; //状态
+    private TextView statusdate; //状态日期
+    private TextView lctype; //风机/电气
+    private TextView woclass; //类
+    private TextView failurecode; //故障类
+    private TextView problemcode; //问题代码
+    private TextView displayname; //创建人
+    private TextView createdate; //创建时间
+
+    private TextView jpnum; //作业计划
+    private TextView targstartdate;//计划开始时间
+    private TextView targcompdate;//计划完成时间
+    private TextView actstart;//实际开始时间
+    private TextView actfinish;//实际完成时间
+
+    private TextView reportedby; //报告人
+    private TextView reportdate; //汇报日期
+
+    private RelativeLayout lctypelayout;//风机/电气
+
     private Button addnew;
     /**
-     * 工作计划*
+     * 计划员工*
      */
     private LinearLayout planLinearlayout;
+    private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     /**
      * 任务分配*
      */
@@ -53,10 +92,6 @@ public class Work_AddNewActivity extends BaseActivity {
      * 实际情况
      */
     private LinearLayout realinfoLinearLayout;
-    /**
-     * 故障汇报*
-     */
-    private LinearLayout reportLinearLayout;
 
     private Webservice_result result;
     protected static final int S = 0;
@@ -105,6 +140,33 @@ public class Work_AddNewActivity extends BaseActivity {
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (ImageView) findViewById(R.id.title_back_id);
+        wonum = (TextView) findViewById(R.id.work_wonum);
+        description = (TextView) findViewById(R.id.work_desc);
+        parent = (TextView) findViewById(R.id.work_parent);
+        udwotype = (TextView) findViewById(R.id.work_udwotype);
+        udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
+        uudprojectnumdesc = (TextView) findViewById(R.id.work_uudprojectnumdesc);
+        assetnum = (TextView) findViewById(R.id.work_assetnum);
+        assetdesc = (TextView) findViewById(R.id.work_assetdesc);
+        location = (TextView) findViewById(R.id.work_location);
+        locationdesc = (TextView) findViewById(R.id.work_locationdesc);
+        status = (TextView) findViewById(R.id.work_status);
+        statusdate = (TextView) findViewById(R.id.work_statusdate);
+        lctype = (TextView) findViewById(R.id.work_lctype);
+        woclass = (TextView) findViewById(R.id.work_woclass);
+        failurecode = (TextView) findViewById(R.id.work_failurecode);
+        problemcode = (TextView) findViewById(R.id.work_problemcode);
+        displayname = (TextView) findViewById(R.id.work_displayname);
+        createdate = (TextView) findViewById(R.id.work_createdate);
+        jpnum = (TextView) findViewById(R.id.work_jpnum);
+        targstartdate = (TextView) findViewById(R.id.work_targstartdate);
+        targcompdate = (TextView) findViewById(R.id.work_targcompdate);
+        actstart = (TextView) findViewById(R.id.work_acstart);
+        actfinish = (TextView) findViewById(R.id.work_actfinish);
+        reportedby = (TextView) findViewById(R.id.work_reportedby);
+        reportdate = (TextView) findViewById(R.id.work_reportdate);
+
+        lctypelayout = (RelativeLayout) findViewById(R.id.work_lctype_layout);
 
         addnew = (Button) findViewById(R.id.work_add);
     }
@@ -115,6 +177,37 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+
+        status.setText("等待核准");
+        statusdate.setText(GetNowTime.getTime());
+        woclass.setText("工单");
+        displayname.setText(getBaseApplication().getUsername());
+        createdate.setText(GetNowTime.getTime());
+        reportedby.setText(getBaseApplication().getUsername());
+        reportdate.setText(GetNowTime.getTime());
+
+        lctypelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int checked = 0;
+                if (lctype.getText().equals("电气")) {
+                    checked = 1;
+                }
+                new AlertDialog.Builder(Work_AddNewActivity.this).setTitle("单选框").setIcon(
+                        android.R.drawable.ic_dialog_info).setSingleChoiceItems(
+                        new String[]{"风机", "电气"}, checked,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    lctype.setText("风机");
+                                } else {
+                                    lctype.setText("电气");
+                                }
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("取消", null).show();
+            }
+        });
 
         addnew.setOnClickListener(addnewlistener);
 
@@ -215,6 +308,8 @@ public class Work_AddNewActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
+
+        realinfoLinearLayout.setVisibility(View.GONE);
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
@@ -223,8 +318,9 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_WplaborActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("wplaborList", (Serializable) wplaborList);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }
     };
@@ -253,4 +349,16 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 1000:
+                Bundle b=data.getExtras(); //data为B中回传的Intent
+                ArrayList<Wplabor>wplabors = (ArrayList<Wplabor>) b.getSerializable("wplaborList");
+                int i = wplabors.size();
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -131,6 +131,20 @@ public class Constants {
     public static final String WAIT_APPROVAL = "等待核准";
     public static final String APPROVALED = "已核准";
 
+    /**设置数据库参数-开始**/
+    /**
+     * 数据库路径
+     */
+    public static final String PATH_DB = android.os.Environment
+            .getExternalStorageDirectory().getAbsolutePath()
+            + "/Android/data/";
+    /**
+     * 无SD卡的数据库路径
+     */
+    public static final String NOT_SDCARD_PATH_DB = "/data/data/";
+    /** 数据库名称 **/
+    public static final String TB_NAME = "sqlite-bowei.db";
+
     public static String getWsUrl(Context context) {
         return webserviceURL;
     }

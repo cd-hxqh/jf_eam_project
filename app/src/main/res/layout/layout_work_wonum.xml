@@ -398,6 +398,7 @@
         android:layout_height="1dp"
         android:background="@drawable/line"/>
     <RelativeLayout
+        android:id="@+id/work_lctype_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView

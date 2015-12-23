@@ -20,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.jf_eam_project.Dao.WorkOrderDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -136,6 +138,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                     if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
+                        SaveData(items);
                         if(page==1){
                             workListAdapter = new WorkListAdapter(Work_ListActivity.this);
                             recyclerView.setAdapter(workListAdapter);
@@ -144,6 +147,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                             workListAdapter.adddate(items);
                         }
                     }
+                    Toast.makeText(Work_ListActivity.this,new WorkOrderDao(Work_ListActivity.this).queryForAll().size()+"",Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -184,17 +188,25 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         });
     }
 
+    //保存工单数据到本地
+    private void SaveData(ArrayList<WorkOrder> workOrders){
+        WorkOrderDao workOrderDao = new WorkOrderDao(Work_ListActivity.this);
+        for(int i = 0;i < workOrders.size();i ++){
+            workOrderDao.create(workOrders.get(i));
+        }
+    }
+
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
         page = 1;
-//        getData(search.getText().toString());
+        getData(search.getText().toString());
     }
 
     //上拉加载
     @Override
     public void onLoad() {
         page++;
-//        getData(searchText);
+        getData(searchText);
     }
 }

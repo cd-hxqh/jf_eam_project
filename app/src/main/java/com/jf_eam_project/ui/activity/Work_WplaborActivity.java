@@ -35,6 +35,7 @@ import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by think on 2015/12/22.
@@ -55,6 +56,7 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
      */
     private ImageView addimg;
     private WorkOrder workOrder;
+    private ArrayList<Wplabor> wplaborList;
 
     private TextView wonum;
     private TextView status;
@@ -78,6 +80,7 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
 
     private void getIntentData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        wplaborList = (ArrayList<Wplabor>) getIntent().getSerializableExtra("wplaborList");
     }
 
     @Override
@@ -115,7 +118,7 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                setResult();
             }
         });
         layoutManager = new LinearLayoutManager(this);
@@ -129,8 +132,11 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
-        refresh_layout.setRefreshing(true);
-        getdata();
+
+        if(wplaborList.size() == 0){
+            refresh_layout.setRefreshing(true);
+            getdata();
+        }
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
@@ -145,15 +151,14 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
 
             @Override
             public void onSuccess(Results results, int currentPage, int showcount) {
-                ArrayList<Wplabor> wplabors = null;
                 if (currentPage == page) {
                     try {
-                        wplabors = Ig_Json_Model.parsingWplabor(results.getResultlist());
+                        wplaborList = Ig_Json_Model.parsingWplabor(results.getResultlist());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                addListData(wplabors);
+                addListData(wplaborList);
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
             }
@@ -182,6 +187,15 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
         } else {
             wplaborAdapter.adddate(list);
         }
+    }
+
+    private void setResult(){
+        Intent intent = getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("wplaborList",wplaborList);
+        intent.putExtras(bundle);
+        setResult(1000, intent);
+        finish();
     }
 
 
