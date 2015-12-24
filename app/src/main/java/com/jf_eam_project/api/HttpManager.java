@@ -220,6 +220,20 @@ public class HttpManager {
                     showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
         }
     }
+    /**
+     * 设置库存接口*
+     */
+    public static String getInventoryUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" +
+                    Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" +
+                    Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'ITEMNUM':'" + vlaue + "'}}";
+        }
+    }
 
 
     /**

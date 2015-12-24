@@ -30,10 +30,7 @@ public class WorkOrderDao {
         }
     }
 
-    /**
-     * ÐÂÔö¹¤µ¥
-     * @param workOrder
-     */
+
     public void create(WorkOrder workOrder) {
         try
         {
@@ -47,7 +44,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ÐÞ¸Ä¹¤µ¥
+     * ï¿½Þ¸Ä¹ï¿½ï¿½ï¿½
      * @param workOrder
      */
     public void Update(WorkOrder workOrder) {
@@ -65,7 +62,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ²éÑ¯ËùÓÐ¹¤µ¥
+     * ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½
      * @return
      */
     public List<WorkOrder> queryForAll(){
@@ -78,7 +75,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * °´¹¤µ¥ÀàÐÍ²éÑ¯¹¤µ¥
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
      * @param udwotype
      */
     public List<WorkOrder> queryByUdwotype(String udwotype){
@@ -93,7 +90,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * É¾³ýËùÓÐÐÅÏ¢
+     * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public void deleteall(){
         try {
@@ -104,7 +101,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ¸ù¾Ý¹¤µ¥ºÅÉ¾³ýÐÅÏ¢
+     * ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public void deleteByWonum(int wonum){
         try {
@@ -115,7 +112,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * °´ÕÕ¹¤µ¥id²éÑ¯¹¤µ¥
+     * ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½idï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
      * @param id
      * @return
      */
@@ -129,7 +126,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * °´ÕÕ¹¤µ¥±àºÅ²éÑ¯±¾µØÊÇ·ñ´æÔÚ´Ë¹¤µ¥
+     * ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú´Ë¹ï¿½ï¿½ï¿½
      * @param wonum
      * @return
      */

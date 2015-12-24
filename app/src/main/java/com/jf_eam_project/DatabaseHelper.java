@@ -58,12 +58,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static DatabaseHelper instance;
 
-    /**
-     * 单例获取该Helper
-     *
-     * @param context
-     * @return
-     */
+
     public static synchronized DatabaseHelper getHelper(Context context) {
         context = context.getApplicationContext();
         if (instance == null) {
@@ -95,7 +90,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     /**
-     * 释放资源
+     * 锟酵凤拷锟斤拷源
      */
     @Override
     public void close() {

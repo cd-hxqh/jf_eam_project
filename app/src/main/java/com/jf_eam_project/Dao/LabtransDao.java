@@ -10,10 +10,7 @@ import com.jf_eam_project.model.WorkOrder;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by think on 2015/12/23.
- * Êµ¼ÊÔ±¹¤
- */
+
 public class LabtransDao {
     private Context context;
     private Dao<Labtrans, Integer> LabtransDaoOpe;
@@ -32,10 +29,7 @@ public class LabtransDao {
         }
     }
 
-    /**
-     * ÐÂÔöÔ±¹¤
-     * @param labtrans
-     */
+
     public void create(Labtrans labtrans) {
         try
         {
@@ -49,7 +43,7 @@ public class LabtransDao {
     }
 
     /**
-     * ÐÞ¸ÄÔ±¹¤ÐÅÏ¢
+     * ï¿½Þ¸ï¿½Ô±ï¿½ï¿½ï¿½ï¿½Ï¢
      * @param labtrans
      */
     public void Update(Labtrans labtrans) {
@@ -68,7 +62,7 @@ public class LabtransDao {
     }
 
     /**
-     * ²éÑ¯ËùÓÐ¹¤µ¥
+     * ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½
      * @return
      */
     public List<Labtrans> queryForAll(){
@@ -81,7 +75,7 @@ public class LabtransDao {
     }
 
     /**
-     * É¾³ýËùÓÐÐÅÏ¢
+     * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public void deleteall(){
         try {
@@ -92,7 +86,7 @@ public class LabtransDao {
     }
 
     /**
-     * ¸ù¾Ý¹¤µ¥ºÅÉ¾³ýÐÅÏ¢
+     * ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public void deleteByWonum(int wonum){
         try {
@@ -103,7 +97,7 @@ public class LabtransDao {
     }
 
     /**
-     * °´ÕÕid²éÑ¯¹¤µ¥
+     * ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
      * @param id
      * @return
      */
@@ -117,7 +111,7 @@ public class LabtransDao {
     }
 
     /**
-     * ²éÑ¯±¾µØÊÇ·ñ´æÔÚ
+     * ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
      * @param labtrans
      * @return
      */

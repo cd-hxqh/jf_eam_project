@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
@@ -48,18 +49,27 @@ public class MainActivity extends BaseActivity
     private String[] mMainTitles;
 
     private TextView titleText;
-    /**流程管理**/
+    /**
+     * 流程管理*
+     */
     private Wfment_fragment wfment_fragment;
     /**
      * 工单管理*
      */
     private WorkFragment mWorkFragment;
 
-    /**巡检管理**/
+    /**
+     * 巡检管理*
+     */
     private Polling_Fragment pollingFragment;
-    /**采购管理**/
+    /**
+     * 库存管理*
+     */
+    private Inventory_fragment newInventory_fragment;
+    /**
+     * 采购管理*
+     */
     private Po_Fragment po_fragment;
-
 
 
     @Override
@@ -77,7 +87,7 @@ public class MainActivity extends BaseActivity
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        titleText=(TextView)findViewById(R.id.title_id);
+        titleText = (TextView) findViewById(R.id.title_id);
 
         mDrawerLayout = (ViewGroup) findViewById(R.id.drawer_layout);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -135,6 +145,12 @@ public class MainActivity extends BaseActivity
 
                 break;
             case 3:
+                if (newInventory_fragment == null) {
+                    newInventory_fragment = new Inventory_fragment();
+                    Bundle bundle = new Bundle();
+                    newInventory_fragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, newInventory_fragment).commit();
 
                 break;
             case 4:
@@ -179,7 +195,6 @@ public class MainActivity extends BaseActivity
         builder.create().show();
 
     }
-
 
 
     public void restoreActionBar() {

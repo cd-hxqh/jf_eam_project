@@ -11,10 +11,6 @@ import com.jf_eam_project.model.Wplabor;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by think on 2015/12/23.
- * 计划员工
- */
 public class WplaborDao {
     private Context context;
     private Dao<Wplabor, Integer> WplaborDaoOpe;
@@ -33,10 +29,7 @@ public class WplaborDao {
         }
     }
 
-    /**
-     * 新增员工
-     * @param labtrans
-     */
+
     public void create(Wplabor labtrans) {
         try
         {
@@ -49,10 +42,7 @@ public class WplaborDao {
         }
     }
 
-    /**
-     * 修改员工信息
-     * @param wplabor
-     */
+   
     public void Update(Wplabor wplabor) {
         try
         {
@@ -68,10 +58,7 @@ public class WplaborDao {
         }
     }
 
-    /**
-     * 查询所有工单
-     * @return
-     */
+
     public List<Wplabor> queryForAll(){
         try {
             return WplaborDaoOpe.queryForAll();
@@ -81,9 +68,7 @@ public class WplaborDao {
         return null;
     }
 
-    /**
-     * 删除所有信息
-     */
+
     public void deleteall(){
         try {
             WplaborDaoOpe.delete(WplaborDaoOpe.queryForAll());
@@ -92,9 +77,7 @@ public class WplaborDao {
         }
     }
 
-    /**
-     * 根据工单号删除信息
-     */
+
     public void deleteByWonum(int wonum){
         try {
             WplaborDaoOpe.delete(WplaborDaoOpe.queryBuilder().where().eq("wonum",wonum).query());
@@ -103,11 +86,7 @@ public class WplaborDao {
         }
     }
 
-    /**
-     * 按照id查询工单
-     * @param id
-     * @return
-     */
+
     public Wplabor SearchByNum(int id){
         try {
             return WplaborDaoOpe.queryBuilder().where().eq("id",id).queryForFirst();
@@ -117,11 +96,7 @@ public class WplaborDao {
         return null;
     }
 
-    /**
-     * 查询本地是否存在
-     * @param wplabor
-     * @return
-     */
+
     public boolean isexit(Wplabor wplabor){
         try {
             List<Wplabor>workOrderList = WplaborDaoOpe.queryBuilder().where().eq("wonum",wplabor.wonum)

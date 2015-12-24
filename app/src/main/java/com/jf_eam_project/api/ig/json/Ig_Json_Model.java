@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
@@ -24,6 +25,7 @@ import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Failurereport;
+import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.PR;
@@ -40,99 +42,130 @@ import com.jf_eam_project.model.Wptool;
 
 /**
  * Helper class to parse the model.
- *
  */
 public class Ig_Json_Model {
 
     private static final String TAG = "Ig_Json_Model";
 
 
-    /**流程审批表解析**/
+    /**
+     * 流程审批表解析*
+     */
     public static ArrayList<Wfassignment> parseWfmFromString(String input) throws IOException {
         return Wfm_JsonHelper.parseFromJsonList(input);
     }
 
-    /**采购计划单解析**/
+    /**
+     * 采购计划单解析*
+     */
     public static ArrayList<PR> parsePrFromString(String input) throws IOException {
         return PR_JsonHelper.parseFromJsonList(input);
     }
 
-    /**采购计划行解析**/
+    /**
+     * 采购计划行解析*
+     */
     public static ArrayList<PRLine> parsePrLineFromString(String input) throws IOException {
         return PRLine_JsonHelper.parseFromJsonList(input);
     }
 
 
-
-
-    /**采购单解析**/
+    /**
+     * 采购单解析*
+     */
     public static ArrayList<Po> parseFromString(String input) throws IOException {
         return PO_JsonHelper.parseFromJsonList(input);
     }
-    /**采购单行解析**/
+
+    /**
+     * 采购单行解析*
+     */
     public static ArrayList<PoLine> parseFrompolineString(String input) throws IOException {
         return PoLine_JsonHelper.parseFromJsonList(input);
     }
 
 
-    /**解析发票**/
+    /**
+     * 解析发票*
+     */
     public static ArrayList<Invoice> parseFromInvoiceString(String input) throws IOException {
         return Invoice_JsonHelper.parseFromJsonList(input);
     }
 
+    /**
+     * 解析库存*
+     */
+    public static ArrayList<Inventory> parseFromInventoryString(String input) throws IOException {
+        return Inventory_JsonHelper.parseFromJsonList(input);
+    }
 
 
-
-
-
-    /**解析工单**/
+    /**
+     * 解析工单*
+     */
     public static ArrayList<WorkOrder> parsingWorkOrder(String input) throws IOException {
         return WorkOrder_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析计划任务**/
+    /**
+     * 解析计划任务*
+     */
     public static ArrayList<Woactivity> parsingWoactivity(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Woactivity_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析计划员工**/
+    /**
+     * 解析计划员工*
+     */
     public static ArrayList<Wplabor> parsingWplabor(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Wplabor_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析计划物料**/
+    /**
+     * 解析计划物料*
+     */
     public static ArrayList<Wpmaterial> parsingWpmaterial(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Wpmaterial_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析计划服务**/
+    /**
+     * 解析计划服务*
+     */
     public static ArrayList<Wpservice> parsingWpservice(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Wpservice_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析计划工具**/
+    /**
+     * 解析计划工具*
+     */
     public static ArrayList<Wptool> parsingWptool(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Wptool_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析任务分配**/
+    /**
+     * 解析任务分配*
+     */
     public static ArrayList<Assignment> parsingAssignment(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Assignment_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析实际员工**/
+    /**
+     * 解析实际员工*
+     */
     public static ArrayList<Labtrans> parsingLabtrans(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Labtrans_JsonHelper.parseFromJsonList(input);
     }
 
-    /**解析故障汇报**/
+    /**
+     * 解析故障汇报*
+     */
     public static ArrayList<Failurereport> parsingFailurereport(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Failurereport_JsonHelper.parseFromJsonList(input);

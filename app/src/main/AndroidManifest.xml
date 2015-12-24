@@ -215,8 +215,15 @@
             android:label="@string/invoice_details_title" >
         </activity>
 
-
-
+        <!--入库-->
+        <activity
+            android:name=".ui.activity.Inventory_Activity"
+            android:label="@string/inventory_title" >
+        </activity>
+        <activity
+            android:name=".ui.activity.Inventory_Details_Activity"
+            android:label="@string/inventory_detail_title" >
+        </activity>
 
 
     </application>

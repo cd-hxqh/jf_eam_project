@@ -24,18 +24,24 @@ public class Constants {
     public static String webserviceURL = "http://61.49.28.246:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
 
 
-    /**通用接口查询**/
+    /**
+     * 通用接口查询*
+     */
     public static final String BASE_URL = HTTP_API_URL + "common/api";
 
     /**------------------数据库表名配置－－开始**/
-    /**流程审批**/
+    /**
+     * 流程审批*
+     */
     //流程审批的appid
-    public static final String WFM_APPID="WFDESIGN";
+    public static final String WFM_APPID = "WFDESIGN";
     //流程审批表名
     public static final String WFM_NAME = "WFASSIGNMENT";
-    /**工单管理**/
+    /**
+     * 工单管理*
+     */
     //工单查询的appid
-    public static final String UDWOCM_APPID="UDWOTRACK";
+    public static final String UDWOCM_APPID = "UDWOTRACK";
     //工单表名
     public static final String WORKORDER_NAME = "WORKORDER";
     //工单任务
@@ -62,45 +68,49 @@ public class Constants {
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
 
-
-    /**采购管理**/
+    /**
+     * 采购管理*
+     */
     //采购申请单的appid
-    public static final String PR_APPID="UDPR";
+    public static final String PR_APPID = "UDPR";
     //采购申请单的表名
-    public static final String PR_NAME="PR";
+    public static final String PR_NAME = "PR";
     //采购计划行的appid
-    public static final String PRLINE_APPID="UDPR";
+    public static final String PRLINE_APPID = "UDPR";
     //采购计划行的表名
-    public static final String PRLINE_NAME="PRLINE";
-
-
-
+    public static final String PRLINE_NAME = "PRLINE";
 
 
     //采购单的appid
-    public static final String PO_APPID="UDPO";
+    public static final String PO_APPID = "UDPO";
 
     //采购单的表名
-    public static final String PO_NAME="PO";
+    public static final String PO_NAME = "PO";
 
     //采购单行的appid
-    public static final String POLINE_APPID="UDPO";
+    public static final String POLINE_APPID = "UDPO";
     //采购单行的表名
-    public static final String POLNE_NAME="POLINE";
+    public static final String POLNE_NAME = "POLINE";
 
 
     //发票的appid
-    public static final String INVOICE_APPID="UDINVOICE";
+    public static final String INVOICE_APPID = "UDINVOICE";
 
     //发票的表名
-    public static final String INVOICE_NAME="INVOICE";
-
-    /**-----------表名配置--结束**/
+    public static final String INVOICE_NAME = "INVOICE";
 
 
+    /**
+     * 库存管理*
+     */
+    //库存查询的appid
+    public static final String INVENTORY_APPID = "UDINVEN";
 
-
-
+    //库存查询的表名
+    public static final String INVENTORY_NAME = "INVENTORY";
+    /**
+     * -----------表名配置--结束*
+     */
 
 
     public static final String USER_INFO = "userinfo";
