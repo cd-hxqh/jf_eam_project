@@ -215,6 +215,11 @@
             android:label="@string/invoice_details_title" >
         </activity>
 
+        <!--下载-->
+        <activity
+            android:name=".ui.activity.DownloadActivity"
+            android:label="@string/data_download" >
+        </activity>
         <!--入库-->
         <activity
             android:name=".ui.activity.Inventory_Activity"

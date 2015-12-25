@@ -3,7 +3,7 @@ package com.jf_eam_project.Dao;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
-import com.jf_eam_project.DatabaseHelper;
+import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
 import com.jf_eam_project.model.WorkOrder;
 
 import java.sql.SQLException;
@@ -44,7 +44,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * �޸Ĺ���
+     *
      * @param workOrder
      */
     public void Update(WorkOrder workOrder) {
@@ -62,7 +62,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ��ѯ���й���
+     *
      * @return
      */
     public List<WorkOrder> queryForAll(){
@@ -75,7 +75,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ���������Ͳ�ѯ����
+     *
      * @param udwotype
      */
     public List<WorkOrder> queryByUdwotype(String udwotype){
@@ -90,7 +90,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ɾ��������Ϣ
+     *
      */
     public void deleteall(){
         try {
@@ -101,7 +101,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ��ݹ�����ɾ����Ϣ
+     *
      */
     public void deleteByWonum(int wonum){
         try {
@@ -112,7 +112,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ���չ���id��ѯ����
+     *
      * @param id
      * @return
      */
@@ -126,7 +126,7 @@ public class WorkOrderDao {
     }
 
     /**
-     * ���չ�����Ų�ѯ�����Ƿ���ڴ˹���
+     *
      * @param wonum
      * @return
      */

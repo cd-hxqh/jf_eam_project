@@ -3,7 +3,7 @@ package com.jf_eam_project.Dao;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
-import com.jf_eam_project.DatabaseHelper;
+import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.WorkOrder;
 
@@ -43,7 +43,7 @@ public class LabtransDao {
     }
 
     /**
-     * �޸�Ա����Ϣ
+     *
      * @param labtrans
      */
     public void Update(Labtrans labtrans) {
@@ -62,7 +62,7 @@ public class LabtransDao {
     }
 
     /**
-     * ��ѯ���й���
+     *
      * @return
      */
     public List<Labtrans> queryForAll(){
@@ -75,7 +75,7 @@ public class LabtransDao {
     }
 
     /**
-     * ɾ��������Ϣ
+     *
      */
     public void deleteall(){
         try {
@@ -86,7 +86,7 @@ public class LabtransDao {
     }
 
     /**
-     * ��ݹ�����ɾ����Ϣ
+     *
      */
     public void deleteByWonum(int wonum){
         try {
@@ -97,7 +97,7 @@ public class LabtransDao {
     }
 
     /**
-     * ����id��ѯ����
+     *
      * @param id
      * @return
      */
@@ -111,7 +111,7 @@ public class LabtransDao {
     }
 
     /**
-     * ��ѯ�����Ƿ����
+     *
      * @param labtrans
      * @return
      */

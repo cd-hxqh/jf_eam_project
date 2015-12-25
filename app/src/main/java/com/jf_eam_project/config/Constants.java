@@ -74,6 +74,15 @@ public class Constants {
     public static final String UDINSPO_NAME = "UDINSPO";
     //设备备件
     public static final String UDINSPOASSET_NAME = "UDINSPOASSET";
+    /**
+     * 基本信息配置
+     */
+    //位置
+    public static final String LOCATION_APPID = "LOCATION";
+    public static final String LOCATION_NAME = "LOCATIONS";
+    //资产
+    public static final String ASSET_APPID = "ASSET";
+    public static final String ASSET_NAME = "ASSET";
 
     /**
      * 采购管理*

@@ -363,4 +363,10 @@
     <string name="udinspojxxm_title">巡检项目标准</string>
     <string name="udinspoasset_udinspoassetlinenum_title">序号</string>
     <string name="udinspoasset_location_title">位置:</string>
+
+    <string name="setting_download">数据下载</string>
+    <string name="setting_data_clear">清除缓存</string>
+    <string name="data_download">数据下载</string>
+    <string name="download_all">全部下载</string>
+    <string name="download">下载</string>
 </resources>

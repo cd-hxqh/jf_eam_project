@@ -270,32 +270,36 @@ public class HttpManager {
         }
     }
 
+    /**
+     * 设置基础数据接口
+     */
+    public static String getUrl(String appid,String objectname){
+        return "{'appid':'" + appid + "','objectname':'" + objectname + "','option':'read'}";
+    }
 
-//    /**
-//     * 不分页获取信息方法*
-//     */
-//    public static void getData(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams params = new RequestParams();
-//        params.put("data", data);
-//        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//
-//                Results result = JsonUtils.parsingResults1(cxt, responseString);
-//
-//                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
-//
-//            }
-//        });
-//    }
-//
-//
+    /**
+     * 不分页获取信息方法*
+     */
+    public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("data", data);
+        client.setTimeout(600000);
+        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                SafeHandler.onFailure(handler, "查询失败");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                String result = JsonUtils.parsingResults1(cxt,responseString);
+                SafeHandler.onSuccess(handler, result);
+            }
+        });
+    }
+
+
 
     /**
      * 解析返回的结果--分页*

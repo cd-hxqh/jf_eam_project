@@ -50,7 +50,7 @@ public class Work_AddNewActivity extends BaseActivity {
 
     private TextView wonum;//工单号
     private TextView description;//描述
-    private TextView parent;//父工单
+//    private TextView parent;//父工单
     private TextView udwotype; //工单类型
     private TextView udprojectnum; //项目编号
     private TextView uudprojectnumdesc; //项目编号描述
@@ -142,7 +142,7 @@ public class Work_AddNewActivity extends BaseActivity {
         backlayout = (ImageView) findViewById(R.id.title_back_id);
         wonum = (TextView) findViewById(R.id.work_wonum);
         description = (TextView) findViewById(R.id.work_desc);
-        parent = (TextView) findViewById(R.id.work_parent);
+//        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
         uudprojectnumdesc = (TextView) findViewById(R.id.work_uudprojectnumdesc);
@@ -315,7 +315,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this, Work_WplaborActivity.class);
+            Intent intent = new Intent(Work_AddNewActivity.this, Work_PlanActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             bundle.putSerializable("wplaborList", (Serializable) wplaborList);

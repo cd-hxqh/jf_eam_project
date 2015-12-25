@@ -147,7 +147,6 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                             workListAdapter.adddate(items);
                         }
                     }
-                    Toast.makeText(Work_ListActivity.this,new WorkOrderDao(Work_ListActivity.this).queryForAll().size()+"",Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
