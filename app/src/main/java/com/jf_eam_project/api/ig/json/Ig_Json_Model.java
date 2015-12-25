@@ -4,9 +4,6 @@ package com.jf_eam_project.api.ig.json;
 
 import android.util.Log;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
@@ -17,6 +14,7 @@ import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Udinspoasset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -34,6 +32,7 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.model.Udinspo;
+import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -41,6 +40,9 @@ import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.model.Wpservice;
 import com.jf_eam_project.model.Wptool;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Helper class to parse the model.
@@ -61,6 +63,12 @@ public class Ig_Json_Model {
      */
     public static ArrayList<Udinspo> parseUdinspoString(String input) throws IOException {
         return Udinspo_JsonHelper.parseFromJsonList(input);
+    }
+    /**
+     * 设备备件
+     */
+    public static ArrayList<Udinspoasset> parseUdinspoassetString(String input) throws IOException {
+        return Udinspoasset_JsonHelper.parseFromJsonList(input);
     }
 
     /**

@@ -87,7 +87,16 @@ public class HttpManager {
     }
 
 
-
+    /**
+     * 设置设备备件*
+     */
+    public static String getUdinspoasseturl(String insponum,String vlaue , int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum+"','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
+        }
+    }
 
 
 

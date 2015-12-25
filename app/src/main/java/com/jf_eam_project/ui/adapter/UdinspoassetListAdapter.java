@@ -12,22 +12,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.ui.activity.Udinspo_Details_activity;
+import com.jf_eam_project.model.PRLine;
+import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.ui.activity.PRLine_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Created by think on 2015/11/26.
- * 巡检单
+ * 设备备件
  */
-public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.ViewHolder> {
+public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetListAdapter.ViewHolder> {
     Context mContext;
-    List<Udinspo> udinspoList = new ArrayList<>();
+    List<Udinspoasset> udinspoassetList = new ArrayList<>();
 
-    public UdinspoListadapter(Context context) {
+    public UdinspoassetListAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -40,26 +40,26 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Udinspo udinspo = udinspoList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.udinspo_insponum_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
-        holder.itemNum.setText(udinspo.insponum);
-        holder.itemDesc.setText(udinspo.description);
+        final Udinspoasset udinspoasset = udinspoassetList.get(position);
+        holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
+        holder.itemDescTitle.setText(mContext.getString(R.string.udinspoasset_location_title));
+        holder.itemNum.setText(udinspoasset.udinspoassetlinenum);
+        holder.itemDesc.setText(udinspoasset.location);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udinspo_Details_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("udinspo", udinspo);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, PRLine_Details_Activity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("prLine", prline);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return udinspoList.size();
+        return udinspoassetList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,31 +99,31 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
         }
     }
 
-    public void update(ArrayList<Udinspo> data, boolean merge) {
-        if (merge && udinspoList.size() > 0) {
-            for (int i = 0; i < udinspoList.size(); i++) {
-                Udinspo udinspo = udinspoList.get(i);
+    public void update(ArrayList<Udinspoasset> data, boolean merge) {
+        if (merge && udinspoassetList.size() > 0) {
+            for (int i = 0; i < udinspoassetList.size(); i++) {
+                Udinspoasset udinspoasset = udinspoassetList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).insponum == udinspo.insponum) {
+                    if (data.get(j).udinspoassetlinenum == udinspoasset.udinspoassetlinenum) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(udinspo);
+                data.add(udinspoasset);
             }
         }
-        udinspoList = data;
+        udinspoassetList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Udinspo> data) {
+    public void adddate(ArrayList<Udinspoasset> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!udinspoList.contains(data.get(i))) {
-                    udinspoList.add(data.get(i));
+                if (!udinspoassetList.contains(data.get(i))) {
+                    udinspoassetList.add(data.get(i));
                 }
             }
         }
@@ -132,8 +132,8 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
 
 
     public void removeAllData() {
-        if (udinspoList.size() > 0) {
-            udinspoList.removeAll(udinspoList);
+        if (udinspoassetList.size() > 0) {
+            udinspoassetList.removeAll(udinspoassetList);
         }
     }
 }

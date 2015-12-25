@@ -1,17 +1,17 @@
 package com.jf_eam_project.ui.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Udinspo;
 
 /**
@@ -51,6 +51,13 @@ public class Udinspo_Details_activity extends BaseActivity {
 
 
     private Udinspo udinspo;
+
+
+    private PopupWindow popupWindow;
+
+
+    private TextView udinspoasset; //设备部件
+    private TextView udinspojxxm; //检修项目标准
 
 
     @Override
@@ -95,13 +102,13 @@ public class Udinspo_Details_activity extends BaseActivity {
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
-//        menuImageView.setOnClickListener(menuImageViewOnClickListener);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
             descriptionText.setText(udinspo.getDescription() == null ? "" : udinspo.getDescription());
-            inspplannumText.setText(udinspo.getInspplannum()== null ? "" : udinspo.getInspplannum());
+            inspplannumText.setText(udinspo.getInspplannum() == null ? "" : udinspo.getInspplannum());
             inspotypeText.setText(udinspo.getInspotype() == null ? "" : udinspo.getInspotype());
             createbyText.setText(udinspo.getCreateby() == null ? "" : udinspo.getCreateby());
             createdateText.setText(udinspo.getCreatedate() == null ? "" : udinspo.getCreatedate());
@@ -124,48 +131,50 @@ public class Udinspo_Details_activity extends BaseActivity {
         }
     };
 
-//    /**
-//     * 菜单按钮*
-//     */
-//    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            showPopupWindow(menuImageView);
-//        }
-//    };
-//
-//    /**
-//     * 显示PopupWindow*
-//     */
-//    private void showPopupWindow(View view) {
-//
-//        View contentView = LayoutInflater.from(Udinspo_Details_activity.this).inflate(
-//                R.layout.popup_window, null);
-//
-//
-//        popupWindow = new PopupWindow(contentView,
-//                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//        popupWindow.setTouchable(true);
-//        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-//                R.drawable.popup_background_mtrl_mult));
-//        popupWindow.showAsDropDown(view,0,-40);
-//
-//        polineLinearLayout = (LinearLayout) contentView.findViewById(R.id.poline_linearlayout_id);
-//        polineLinearLayout.setOnClickListener(polineOnClickListener);
-//
-//    }
-//
-//
-//    private View.OnClickListener polineOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            Intent intent = new Intent(Udinspo_Details_activity.this, Poline_Activity.class);
-//            intent.putExtra("ponum", po.ponum);
-//            startActivityForResult(intent, 0);
-//            popupWindow.dismiss();
-//        }
-//    };
+    /**
+     * 菜单按钮*
+     */
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
+    /**
+     * 显示PopupWindow*
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udinspo_Details_activity.this).inflate(
+                R.layout.udinspo_popup_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.drawable.abc_popup_background_mtrl_mult));
+        popupWindow.showAsDropDown(view, 0, 20);
+
+        udinspoasset = (TextView) contentView.findViewById(R.id.udinspoasset_text_id);
+        udinspojxxm = (TextView) contentView.findViewById(R.id.popup_text_id);
+        udinspoasset.setOnClickListener(udinspoassetOnClickListener);
+
+    }
+
+
+    private View.OnClickListener udinspoassetOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udinspo_Details_activity.this, Udinspoasset_Activity.class);
+            intent.putExtra("insponum", udinspo.insponum);
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+        }
+    };
 
 }

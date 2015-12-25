@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/poline_linearlayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/udinspoasset_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dimens_10_dip"
+            android:text="@string/udinspoasset_title"
+            android:textSize="@dimen/dimens_16dp" />
+
+        <View
+            android:id="@+id/view_1_id"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/num_linearlayout_id"
+            android:background="@drawable/line"></View>
+
+        <TextView
+            android:id="@+id/udinspojxxm_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dimens_10_dip"
+            android:text="@string/udinspojxxm_title"
+            android:textSize="@dimen/dimens_16dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

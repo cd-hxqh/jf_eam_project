@@ -72,6 +72,9 @@ public class Constants {
     public static final String UDINSPO_APPID = "UDINSPOA";
     //巡检单的表名
     public static final String UDINSPO_NAME = "UDINSPO";
+    //设备备件
+    public static final String UDINSPOASSET_NAME = "UDINSPOASSET";
+
     /**
      * 采购管理*
      */

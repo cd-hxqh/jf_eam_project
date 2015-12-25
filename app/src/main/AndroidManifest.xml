@@ -230,6 +230,11 @@
             android:name=".ui.activity.Udinspo_Details_activity"
             android:label="@string/udinspo_detail_title" >
         </activity>
+        <!--设备备件-->
+        <activity
+            android:name=".ui.activity.Udinspoasset_Activity"
+            android:label="@string/udinspoasset_title" >
+        </activity>
 
 
     </application>
