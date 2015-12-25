@@ -225,6 +225,12 @@
             android:label="@string/inventory_detail_title" >
         </activity>
 
+        <!--巡检管理-->
+        <activity
+            android:name=".ui.activity.Udinspo_Details_activity"
+            android:label="@string/udinspo_detail_title" >
+        </activity>
+
 
     </application>
 

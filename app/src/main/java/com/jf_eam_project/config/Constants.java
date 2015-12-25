@@ -67,7 +67,11 @@ public class Constants {
     //故障报告
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
-
+    /**巡检管理**/
+    //巡检单的appid
+    public static final String UDINSPO_APPID = "UDINSPOA";
+    //巡检单的表名
+    public static final String UDINSPO_NAME = "UDINSPO";
     /**
      * 采购管理*
      */

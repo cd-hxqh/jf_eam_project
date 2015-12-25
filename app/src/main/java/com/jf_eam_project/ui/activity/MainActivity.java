@@ -25,6 +25,7 @@ import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
+import com.jf_eam_project.ui.fragment.Udinspo_fragment;
 import com.jf_eam_project.ui.fragment.Wfment_fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity
     /**
      * 巡检管理*
      */
-    private Polling_Fragment pollingFragment;
+    private Udinspo_fragment udinspo_fragment;
     /**
      * 库存管理*
      */
@@ -136,12 +137,12 @@ public class MainActivity extends BaseActivity
                 break;
             case 2: //巡检管理
 
-                if (pollingFragment == null) {
-                    pollingFragment = new Polling_Fragment();
+                if (udinspo_fragment == null) {
+                    udinspo_fragment = new Udinspo_fragment();
                     Bundle bundle = new Bundle();
-                    pollingFragment.setArguments(bundle);
+                    udinspo_fragment.setArguments(bundle);
                 }
-                fragmentTransaction.replace(R.id.container, pollingFragment).commit();
+                fragmentTransaction.replace(R.id.container, udinspo_fragment).commit();
 
                 break;
             case 3:

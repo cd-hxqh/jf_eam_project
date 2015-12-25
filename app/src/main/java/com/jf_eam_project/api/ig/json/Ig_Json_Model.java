@@ -16,6 +16,7 @@ import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -32,6 +33,7 @@ import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -53,6 +55,12 @@ public class Ig_Json_Model {
      */
     public static ArrayList<Wfassignment> parseWfmFromString(String input) throws IOException {
         return Wfm_JsonHelper.parseFromJsonList(input);
+    }
+    /**
+     * 巡检单解析
+     */
+    public static ArrayList<Udinspo> parseUdinspoString(String input) throws IOException {
+        return Udinspo_JsonHelper.parseFromJsonList(input);
     }
 
     /**

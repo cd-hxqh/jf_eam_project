@@ -347,4 +347,16 @@
     <string name="inventory_siteid_title">地点:</string>
     <string name="inventory_issueunit_title">发放单位:</string>
     <string name="inventory_detail_title">库存详情</string>
+
+    <!--巡检管理-->
+    <string name="udinspo_insponum_title">巡检单:</string>
+    <string name="udinspo_inspplannum_title">计划编号:</string>
+    <string name="udinspo_inspotype_title">巡检单类型:</string>
+    <string name="udinspo_createby_title">创建人:</string>
+    <string name="udinspo_createdate_title">创建时间:</string>
+    <string name="udinspo_inspoby_title">巡检人:</string>
+    <string name="udinspo_inspodate_title">巡检日期:</string>
+    <string name="udinspo_lastrundate_title">本次生成日期:</string>
+    <string name="udinspo_nextrundate_title">下次运行时间:</string>
+    <string name="udinspo_detail_title">巡检单详情</string>
 </resources>
