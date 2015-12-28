@@ -11,12 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jf_eam_project.Dao.AssetDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Location;
 
 import java.io.IOException;
@@ -88,7 +90,7 @@ public class DownloadActivity extends BaseActivity{
         childArray.add(tempArray02);
 
         expandableListView.setAdapter(new MyExpandableListViewAdapter(this));
-        Toast.makeText(DownloadActivity.this,new LocationDao(DownloadActivity.this).queryForAll().size()+"",Toast.LENGTH_SHORT).show();
+        Toast.makeText(DownloadActivity.this,new AssetDao(DownloadActivity.this).queryForAll().size()+"",Toast.LENGTH_SHORT).show();
     }
 
     class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
@@ -169,7 +171,7 @@ public class DownloadActivity extends BaseActivity{
             }
             itemHolder.childText.setText(childArray.get(groupPosition).get(
                     childPosition));
-            itemHolder.down.setOnClickListener(new DownloadOnclickListener(groupPosition,childPosition));
+            itemHolder.down.setOnClickListener(new DownloadOnclickListener(groupPosition,childPosition,itemHolder.down));
             return convertView;
         }
 
@@ -193,20 +195,24 @@ public class DownloadActivity extends BaseActivity{
     private class DownloadOnclickListener implements View.OnClickListener {
         int group;
         int child;
-        private DownloadOnclickListener(int group,int child){
+        Button button;
+        private DownloadOnclickListener(int group,int child,Button button){
             this.group = group;
             this.child = child;
+            this.button = button;
         }
         @Override
         public void onClick(View view) {
             String buttonText = childArray.get(group).get(child);
             if(buttonText.equals(childArray.get(0).get(0))){
-                downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID,Constants.LOCATION_NAME),buttonText);
+                downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID,Constants.LOCATION_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(1))){
+                downloaddata(HttpManager.getUrl(Constants.ASSET_APPID,Constants.ASSET_NAME),buttonText,button);
             }
         }
     }
 
-    private void downloaddata(String url, final String buttonText){
+    private void downloaddata(String url, final String buttonText, final Button button){
         HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
@@ -215,10 +221,16 @@ public class DownloadActivity extends BaseActivity{
                         if(buttonText.equals(childArray.get(0).get(0))) {
                             List<Location> locations = Ig_Json_Model.parsingLocation(data);
                             new LocationDao(DownloadActivity.this).create(locations);
+                        }else if(buttonText.equals(childArray.get(0).get(1))){
+                            List<Assets> assets = Ig_Json_Model.parsingAsset(data);
+                            new AssetDao(DownloadActivity.this).create(assets);
                         }
+                        button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else {
+                    Toast.makeText(DownloadActivity.this,"下载数据出现问题",Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -229,8 +241,9 @@ public class DownloadActivity extends BaseActivity{
 
             @Override
             public void onFailure(String error) {
-
+                Toast.makeText(DownloadActivity.this,"下载失败",Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

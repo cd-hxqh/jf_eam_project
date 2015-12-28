@@ -20,8 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -52,9 +55,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView description;//描述
 //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
-    private TextView udprojectnum; //项目编号
-    private TextView uudprojectnumdesc; //项目编号描述
     private TextView assetnum;//资产编号
+    private RelativeLayout assetnumlayout;
     private TextView assetdesc;//资产描述
     private TextView location; //位置
     private TextView locationdesc;//位置描述
@@ -144,9 +146,8 @@ public class Work_AddNewActivity extends BaseActivity {
         description = (TextView) findViewById(R.id.work_desc);
 //        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
-        udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
-        uudprojectnumdesc = (TextView) findViewById(R.id.work_uudprojectnumdesc);
         assetnum = (TextView) findViewById(R.id.work_assetnum);
+        assetnumlayout = (RelativeLayout) findViewById(R.id.work_assetnum_layout);
         assetdesc = (TextView) findViewById(R.id.work_assetdesc);
         location = (TextView) findViewById(R.id.work_location);
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
@@ -217,6 +218,8 @@ public class Work_AddNewActivity extends BaseActivity {
                 finish();
             }
         });
+
+        assetnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.ASSETCODE));
     }
 
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
@@ -349,11 +352,34 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
+    private class LayoutOnClickListener implements View.OnClickListener{
+        int requestCode;
+        private LayoutOnClickListener(int requestCode){
+            this.requestCode = requestCode;
+        }
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Work_AddNewActivity.this,OptionActivity.class);
+            intent.putExtra("requestCode",requestCode);
+            startActivityForResult(intent, requestCode);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
         switch (resultCode) {
+            case Constants.ASSETCODE:
+                option = (Option) data.getSerializableExtra("option");
+                assetnum.setText(option.getName());
+                assetdesc.setText(option.getDescription());
+                location.setText(option.getValue());
+                locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryByLocation(option.getValue()).description);
+                break;
+            case Constants.LOCATIONCODE:
+                break;
             case 1000:
-                Bundle b=data.getExtras(); //data为B中回传的Intent
+                Bundle b=data.getExtras();
                 ArrayList<Wplabor>wplabors = (ArrayList<Wplabor>) b.getSerializable("wplaborList");
                 int i = wplabors.size();
                 break;

@@ -75,8 +75,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="item_serve_work">项目维修</string>
-    <string name="plan_serve_work">计划维修</string>
-    <string name="not_plan_serve_work">非项目维修</string>
+    <string name="plan_serve_work">计划工单</string>
+    <string name="not_plan_serve_work">非计划工单</string>
     <string name="item_num_title">编号:</string>
     <string name="item_desc_title">描述:</string>
     <!-- hint -->
@@ -369,4 +369,7 @@
     <string name="data_download">数据下载</string>
     <string name="download_all">全部下载</string>
     <string name="download">下载</string>
+    <string name="downloaded">已下载</string>
+
+    <string name="activity_option_title">选项界面</string>
 </resources>

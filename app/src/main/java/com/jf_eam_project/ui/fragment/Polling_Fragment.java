@@ -54,7 +54,7 @@ public class Polling_Fragment extends BaseFragment {
      * 初始化界面组件*
      */
     private void findByIdView(View view) {
-        plan_layout = (LinearLayout) view.findViewById(R.id.work_linear_item_id);
+        plan_layout = (LinearLayout) view.findViewById(R.id.polling_linear_pm_id);
         way_layout = (LinearLayout) view.findViewById(R.id.polling_linear_way_id);
         work_layout = (LinearLayout) view.findViewById(R.id.polling_linear_order_id);
     }

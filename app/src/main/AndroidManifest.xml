@@ -240,7 +240,11 @@
             android:name=".ui.activity.Udinspoasset_Activity"
             android:label="@string/udinspoasset_title" >
         </activity>
-
+        <!--通用选项页面-->
+        <activity
+            android:name=".ui.activity.OptionActivity"
+            android:label="@string/activity_option_title" >
+        </activity>
 
     </application>
 

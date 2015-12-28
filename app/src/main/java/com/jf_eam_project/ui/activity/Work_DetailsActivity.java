@@ -63,8 +63,6 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView description;//描述
 //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
-    private TextView udprojectnum; //项目编号
-    private TextView uudprojectnumdesc; //项目编号描述
     private TextView assetnum;//资产编号
     private TextView assetdesc;//资产描述
     private TextView location; //位置
@@ -114,8 +112,6 @@ public class Work_DetailsActivity extends BaseActivity {
         description = (TextView) findViewById(R.id.work_desc);
 //        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
-        udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
-        uudprojectnumdesc = (TextView) findViewById(R.id.work_uudprojectnumdesc);
         assetnum = (TextView) findViewById(R.id.work_assetnum);
         assetdesc = (TextView) findViewById(R.id.work_assetdesc);
         location = (TextView) findViewById(R.id.work_location);
@@ -157,8 +153,6 @@ public class Work_DetailsActivity extends BaseActivity {
         description.setText(workOrder.description);
 //        parent.setText(workOrder.parent);
         udwotype.setText(workOrder.udwotype);
-        udprojectnum.setText(workOrder.udprojectnum);
-        uudprojectnumdesc.setText(workOrder.udprojectnumdesc);
         assetnum.setText(workOrder.assetnum);
         assetdesc.setText(workOrder.assetdesc);
         location.setText(workOrder.location);

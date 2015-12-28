@@ -2,7 +2,6 @@ package com.jf_eam_project.api;
 
 
 import android.content.Context;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 
 import com.jf_eam_project.R;
@@ -278,7 +277,7 @@ public class HttpManager {
     }
 
     /**
-     * 不分页获取信息方法*
+     * 不分页获取信息方法--带进度*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
         AsyncHttpClient client = new AsyncHttpClient();

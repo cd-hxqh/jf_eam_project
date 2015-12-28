@@ -18,7 +18,7 @@ import com.jf_eam_project.ui.activity.Work_ListActivity;
  */
 public class WorkFragment extends BaseFragment {
 
-    private LinearLayout item_layout,plan_layout,not_plan_layout;
+    private LinearLayout plan_layout,not_plan_layout;
 
     public WorkFragment() {
     }
@@ -42,7 +42,7 @@ public class WorkFragment extends BaseFragment {
      * 初始化界面组件*
      */
     private void findByIdView(View view) {
-        item_layout = (LinearLayout) view.findViewById(R.id.work_linear_item_id);
+//        item_layout = (LinearLayout) view.findViewById(R.id.work_linear_item_id);
         plan_layout = (LinearLayout) view.findViewById(R.id.work_linear_plan_id);
         not_plan_layout = (LinearLayout) view.findViewById(R.id.work_linear_not_plan_id);
     }
@@ -51,7 +51,7 @@ public class WorkFragment extends BaseFragment {
      * 设置跳转监听
      */
     private void setlistener(){
-        item_layout.setOnClickListener(new intentOnclicklistener(Constants.PROJECT));
+//        item_layout.setOnClickListener(new intentOnclicklistener(Constants.PROJECT));
         plan_layout.setOnClickListener(new intentOnclicklistener(Constants.PLAN));
         not_plan_layout.setOnClickListener(new intentOnclicklistener(Constants.UNPLAN));
     }

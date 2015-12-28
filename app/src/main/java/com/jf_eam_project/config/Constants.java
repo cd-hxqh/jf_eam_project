@@ -151,8 +151,15 @@ public class Constants {
      * 工单跳转类型标识
      */
     public static final String PLAN = "PLAN";//计划工单
-    public static final String PROJECT = "PROJECT";//项目工单
+//    public static final String PROJECT = "PROJECT";//项目工单
     public static final String UNPLAN = "UNPLAN";//非计划工单
+
+    /**
+     * 选项跳转请求值
+     */
+    public static final int ASSETCODE = 100;
+    public static final int LOCATIONCODE = 110;
+
 
     public static final String WAIT_APPROVAL = "等待核准";
     public static final String APPROVALED = "已核准";

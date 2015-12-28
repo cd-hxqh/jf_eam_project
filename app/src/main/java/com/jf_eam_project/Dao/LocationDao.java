@@ -91,12 +91,12 @@ public class LocationDao {
 
     /**
      *
-     * @param id
+     * @param location
      * @return
      */
-    public Location SearchByNum(int id){
+    public Location queryByLocation(String location){
         try {
-            return LocationDaoOpe.queryBuilder().where().eq("id",id).queryForFirst();
+            return LocationDaoOpe.queryBuilder().where().eq("location",location).queryForFirst();
         } catch (SQLException e) {
             e.printStackTrace();
         }
