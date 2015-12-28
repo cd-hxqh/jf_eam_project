@@ -16,9 +16,6 @@ import java.util.ArrayList;
 public final class Udinspoasset_Jsonhelper
         implements JsonHelper<Udinspoasset> {
     private static final String TAG = "Udinspoasset_Jsonhelper";
-
-
-
     /**
      * 解析List*
      */
