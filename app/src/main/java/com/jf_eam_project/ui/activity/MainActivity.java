@@ -25,6 +25,7 @@ import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
+import com.jf_eam_project.ui.fragment.Setting_Fragment;
 import com.jf_eam_project.ui.fragment.Udinspo_fragment;
 import com.jf_eam_project.ui.fragment.Wfment_fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
@@ -71,6 +72,8 @@ public class MainActivity extends BaseActivity
      * 采购管理*
      */
     private Po_Fragment po_fragment;
+    /**关于**/
+    private Setting_Fragment settingFragment;
 
 
     @Override
@@ -161,6 +164,14 @@ public class MainActivity extends BaseActivity
                     po_fragment.setArguments(bundle);
                 }
                 fragmentTransaction.replace(R.id.container, po_fragment).commit();
+                break;
+            case 5:
+                if (settingFragment == null) {
+                    settingFragment = new Setting_Fragment();
+                    Bundle bundle = new Bundle();
+                    settingFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, settingFragment).commit();
                 break;
             case 6:
                 mNavigationDrawerFragment.closeDrawer();

@@ -9,6 +9,7 @@ import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Location_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
@@ -26,6 +27,7 @@ import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Po;
@@ -185,5 +187,12 @@ public class Ig_Json_Model {
     public static ArrayList<Failurereport> parsingFailurereport(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Failurereport_JsonHelper.parseFromJsonList(input);
+    }
+
+
+    /**解析位置**/
+    public static ArrayList<Location> parsingLocation(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Location_JsonHelper.parseFromJsonList(input);
     }
 }

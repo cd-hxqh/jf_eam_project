@@ -3,14 +3,17 @@ package com.jf_eam_project.Dao;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
-import com.jf_eam_project.DatabaseHelper;
-import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Created by think on 2015/12/23.
+ *
+ */
 public class WplaborDao {
     private Context context;
     private Dao<Wplabor, Integer> WplaborDaoOpe;

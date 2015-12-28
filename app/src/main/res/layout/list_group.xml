@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_gray">
+    <TextView
+        android:id="@+id/group_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:textSize="24sp"
+        android:text="无"/>
+    <Button
+        android:id="@+id/download_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dimens_10_dp"
+        android:layout_marginBottom="@dimen/dimens_10_dp"
+        android:layout_marginRight="@dimen/dimens_10_dp"
+        android:text="@string/download_all"
+        android:background="@drawable/btn_selector"
+        android:textColor="@color/white"
+        android:focusable="false"
+        android:clickable="true"/>
+</RelativeLayout>

@@ -36,7 +36,7 @@ public class Work_RealInfoActivity extends BaseActivity {
     private TextView titlename;
     private ImageView menuImageView;
     private ImageView backimg;
-    private Button woactivity;//任务
+//    private Button woactivity;//任务
     private Button wplabor;//员工
 //    private Button wpservice;//服务
     private Button wpmaterial;//物料
@@ -44,7 +44,7 @@ public class Work_RealInfoActivity extends BaseActivity {
     private ViewPager mViewPager;
     private int currentIndex = 0;
     private List<Fragment> fragmentlist = new ArrayList<>();
-    private WoactivityFragment woactivityFragment;
+//    private WoactivityFragment woactivityFragment;
     private LabtransFragment labtransFragment;
     private WpmaterialFragment wpmaterialFragment;
 //    private WpserviceFragment wpserviceFragment;
@@ -71,7 +71,7 @@ public class Work_RealInfoActivity extends BaseActivity {
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backimg = (ImageView) findViewById(R.id.title_back_id);
-        woactivity = (Button) findViewById(R.id.work_woactivity);
+//        woactivity = (Button) findViewById(R.id.work_woactivity);
         wplabor = (Button) findViewById(R.id.work_wplabor);
 //        wpservice = (Button) findViewById(R.id.work_wpservice);
         wpmaterial = (Button) findViewById(R.id.work_wpmaterial);
@@ -93,27 +93,27 @@ public class Work_RealInfoActivity extends BaseActivity {
         });
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
-        menuImageView.setOnClickListener(menuImageViewOnClickListener);
-        woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-        woactivity.setOnClickListener(new Buttonlistener());
+//        menuImageView.setOnClickListener(menuImageViewOnClickListener);
+//        woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+//        woactivity.setOnClickListener(new Buttonlistener());
         wplabor.setOnClickListener(new Buttonlistener());
 //        wpservice.setOnClickListener(new Buttonlistener());
         wpmaterial.setOnClickListener(new Buttonlistener());
 //        wptool.setOnClickListener(new Buttonlistener());
         fragmentlist = new ArrayList<>();
-        woactivityFragment = new WoactivityFragment(workOrder);
+//        woactivityFragment = new WoactivityFragment(workOrder);
         labtransFragment = new LabtransFragment(workOrder);
         wpmaterialFragment = new WpmaterialFragment(workOrder);
 //        wpserviceFragment = new WpserviceFragment(workOrder);
 //        wptoolFragment = new WptoolFragment(workOrder);
-        fragmentlist.add(woactivityFragment);
+//        fragmentlist.add(woactivityFragment);
         fragmentlist.add(labtransFragment);
         fragmentlist.add(wpmaterialFragment);
 //        fragmentlist.add(wpserviceFragment);
 //        fragmentlist.add(wptoolFragment);
         mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));//设置ViewPager的适配器
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
-        woactivity.performClick();
+//        woactivity.performClick();
     }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
@@ -140,11 +140,12 @@ public class Work_RealInfoActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             resetTextView();
-            if (view.getId() == woactivity.getId()) {
-                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-                woactivity.setTextColor(getResources().getColor(R.color.white));
-                currentIndex = 0;
-            } else if (view.getId() == wplabor.getId()) {
+//            if (view.getId() == woactivity.getId()) {
+//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+//                woactivity.setTextColor(getResources().getColor(R.color.white));
+//                currentIndex = 0;
+//            } else
+            if (view.getId() == wplabor.getId()) {
                 view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
                 wplabor.setTextColor(getResources().getColor(R.color.white));
                 currentIndex = 1;
@@ -210,7 +211,7 @@ public class Work_RealInfoActivity extends BaseActivity {
             resetTextView();
             switch (position) {
                 case 0:
-                    woactivity.performClick();
+//                    woactivity.performClick();
                     break;
                 case 1:
                     wplabor.performClick();
@@ -234,8 +235,8 @@ public class Work_RealInfoActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void resetTextView() {
-        woactivity.setTextColor(getResources().getColor(R.color.black));
-        woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
+//        woactivity.setTextColor(getResources().getColor(R.color.black));
+//        woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
         wplabor.setTextColor(getResources().getColor(R.color.black));
         wplabor.setBackground(getResources().getDrawable(R.color.light_gray));
 //        wpservice.setTextColor(getResources().getColor(R.color.black));

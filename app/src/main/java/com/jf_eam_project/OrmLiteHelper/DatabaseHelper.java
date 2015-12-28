@@ -1,4 +1,4 @@
-package com.jf_eam_project;
+package com.jf_eam_project.OrmLiteHelper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.utils.DataUtils;
@@ -20,7 +21,7 @@ import java.util.Map;
  * Created by think on 2015/12/23.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
@@ -35,6 +36,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, WorkOrder.class);
             TableUtils.createTable(connectionSource, Wplabor.class);
             TableUtils.createTable(connectionSource, Labtrans.class);
+            TableUtils.createTable(connectionSource, Location.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,6 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, WorkOrder.class, true);
             TableUtils.dropTable(connectionSource, Wplabor.class, true);
             TableUtils.dropTable(connectionSource, Labtrans.class, true);
+            TableUtils.dropTable(connectionSource, Location.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,6 +62,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static DatabaseHelper instance;
 
 
+    /**
+     *
+     *
+     * @param context
+     * @return
+     */
     public static synchronized DatabaseHelper getHelper(Context context) {
         context = context.getApplicationContext();
         if (instance == null) {
@@ -90,7 +99,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     /**
-     * �ͷ���Դ
+     *
      */
     @Override
     public void close() {

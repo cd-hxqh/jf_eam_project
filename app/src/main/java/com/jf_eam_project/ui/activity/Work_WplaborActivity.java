@@ -133,7 +133,7 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
 
-        if(wplaborList.size() == 0){
+        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")&&wplaborList.size() == 0){
             refresh_layout.setRefreshing(true);
             getdata();
         }
