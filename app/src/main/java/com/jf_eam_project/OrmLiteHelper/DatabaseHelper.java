@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.WorkOrder;
@@ -37,6 +38,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Wplabor.class);
             TableUtils.createTable(connectionSource, Labtrans.class);
             TableUtils.createTable(connectionSource, Location.class);
+            TableUtils.createTable(connectionSource, Assets.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,6 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Wplabor.class, true);
             TableUtils.dropTable(connectionSource, Labtrans.class, true);
             TableUtils.dropTable(connectionSource, Location.class, true);
+            TableUtils.dropTable(connectionSource, Assets.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

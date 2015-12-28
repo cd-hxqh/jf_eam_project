@@ -4,6 +4,7 @@ package com.jf_eam_project.api.ig.json;
 
 import android.util.Log;
 
+import com.jf_eam_project.api.ig.json.impl.Asset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
@@ -22,6 +23,7 @@ import com.jf_eam_project.api.ig.json.impl.Wplabor_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wpmaterial_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
+import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
@@ -194,5 +196,11 @@ public class Ig_Json_Model {
     public static ArrayList<Location> parsingLocation(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Location_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析资产**/
+    public static ArrayList<Assets> parsingAsset(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Asset_JsonHelper.parseFromJsonList(input);
     }
 }
