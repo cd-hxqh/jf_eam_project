@@ -10,39 +10,39 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.PoLine;
 
 /**
- * �ɹ��ƻ�������*
+ * 采购单行
  */
 public class PRLine_Details_Activity extends BaseActivity {
 
     /**
-     * ����*
+     * 标题
      */
     private TextView titleView;
     /**
-     * ���ذ�ť*
+     *返回
      */
     private ImageView backImageView;
     /**
-     * ������Ϣ��ʾ*
+     *界面说明
      */
-    private TextView prlinenumText; //��
-    private TextView linetypeText; //������
-    private TextView itemnumText; //��Ŀ
-    private TextView descriptionText; //��Ŀ����
-    private TextView storelocText; //�ⷿ
-    private TextView categoryText; //���
-    private TextView orderqtyText; //����
-    private TextView orderunitText; //������λ
-    private TextView conversionText; //����ϵ��
-    private TextView unitcostText; //��λ�ɱ�
-    private TextView linecostText; //�гɱ�
-    private TextView tax1Text; //˰
-    private TextView enterbyText; //������
-    private TextView enterdateText; //��������
-    private TextView requestedbyText; //������
+    private TextView prlinenumText; //行编号
+    private TextView linetypeText; //行类型
+    private TextView itemnumText; //项目编号
+    private TextView descriptionText; //描述
+    private TextView storelocText; //仓库位置
+    private TextView categoryText; //
+    private TextView orderqtyText; //
+    private TextView orderunitText; //
+    private TextView conversionText; //
+    private TextView unitcostText; //
+    private TextView linecostText; //
+    private TextView tax1Text; //
+    private TextView enterbyText; //
+    private TextView enterdateText; //
+    private TextView requestedbyText; //
 
     /**
-     * �ɹ�������*
+     * PRLine
      */
     private PRLine prLine;
 
@@ -113,7 +113,7 @@ public class PRLine_Details_Activity extends BaseActivity {
 
 
     /**
-     * ���ذ�ť*
+     * 返回事件监听
      */
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override

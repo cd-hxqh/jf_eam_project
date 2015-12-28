@@ -361,12 +361,24 @@
     <string name="udinspo_detail_title">巡检单详情</string>
     <string name="udinspoasset_title">设备及部件</string>
     <string name="udinspojxxm_title">巡检项目标准</string>
-    <string name="udinspoasset_udinspoassetlinenum_title">序号</string>
+    <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
 
+
+    <string name="udinspoasset_location_description_title">位置描述:</string>
+
+    <string name="udinspoasset_assetnum_title">设备:</string>
+    <string name="udinspoasset_assetnum_desc_title">设备描述:</string>
+    <string name="udinspoasset_childassetnum_title">设备部件:</string>
+    <string name="udinspoasset_detail_title">备件详情</string>
+
+
+
+    <!--数据下载-->
     <string name="setting_download">数据下载</string>
     <string name="setting_data_clear">清除缓存</string>
     <string name="data_download">数据下载</string>
     <string name="download_all">全部下载</string>
     <string name="download">下载</string>
+
 </resources>

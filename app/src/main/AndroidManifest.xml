@@ -241,6 +241,11 @@
             android:label="@string/udinspoasset_title" >
         </activity>
 
+        <activity
+            android:name=".ui.activity.Udinspoasset_Details_Activity"
+            android:label="@string/udinspoasset_detail_title" >
+        </activity>
+
 
     </application>
 

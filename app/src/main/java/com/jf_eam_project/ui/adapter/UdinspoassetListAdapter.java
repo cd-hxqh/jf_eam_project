@@ -15,6 +15,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.ui.activity.PRLine_Details_Activity;
+import com.jf_eam_project.ui.activity.Udinspoasset_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +49,11 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, PRLine_Details_Activity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("prLine", prline);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, Udinspoasset_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Udinspoasset", udinspoasset);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }
