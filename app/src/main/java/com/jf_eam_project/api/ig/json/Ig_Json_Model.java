@@ -16,6 +16,7 @@ import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -71,8 +72,7 @@ public class Ig_Json_Model {
      * 设备备件
      */
     public static ArrayList<Udinspoasset> parseUdinspoassetString(String input) throws IOException {
-//        return Udinspoasset_JsonHelper.parseFromJsonList(input);
-        return null;
+        return Udinspoasset_Jsonhelper.parseFromJsonList(input);
     }
 
     /**
