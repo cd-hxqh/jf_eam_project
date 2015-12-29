@@ -83,6 +83,8 @@ public class JsonUtils {
                 results.setResultlist(resultlist);
                 results.setTotalpage(totalpage);
                 results.setShowcount(Integer.valueOf(showcount));
+            }else {
+                results = new Results();
             }
 
             return results;

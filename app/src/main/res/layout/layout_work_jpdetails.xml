@@ -17,6 +17,7 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/work_jpnum_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView
@@ -50,6 +51,7 @@
         android:layout_height="1dp"
         android:background="@drawable/line"/>
     <RelativeLayout
+        android:id="@+id/work_targstartdate_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView
@@ -83,6 +85,7 @@
         android:layout_height="1dp"
         android:background="@drawable/line"/>
     <RelativeLayout
+        android:id="@+id/work_targcompdate_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView
@@ -149,6 +152,7 @@
         <!--android:layout_height="1dp"-->
         <!--android:background="@drawable/line"/>-->
     <RelativeLayout
+        android:id="@+id/work_acstart_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView
@@ -182,6 +186,7 @@
         android:layout_height="1dp"
         android:background="@drawable/line"/>
     <RelativeLayout
+        android:id="@+id/work_actfinish_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40dp">
         <TextView

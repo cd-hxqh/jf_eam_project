@@ -21,9 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.FailurecodeDao;
+import com.jf_eam_project.Dao.FailurelistDao;
+import com.jf_eam_project.Dao.JobplanDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Failurecode;
+import com.jf_eam_project.model.Failurelist;
+import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.ui.adapter.OptionAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
@@ -34,6 +40,7 @@ import java.util.List;
 /**
  * Created by think on 2015/12/28.
  *通用选项查询界面
+ *
  */
 public class OptionActivity extends BaseActivity {
     /**标题**/
@@ -136,6 +143,48 @@ public class OptionActivity extends BaseActivity {
                     option.setName(assets.get(i).assetnum);
                     option.setDescription(assets.get(i).description);
                     option.setValue(assets.get(i).location);
+                    list.add(option);
+                }
+                break;
+            case Constants.FAILURECODE:
+                List<Failurecode>failurecodes;
+                if(searchText.equals("")){
+                    failurecodes = new FailurecodeDao(OptionActivity.this).queryForAll();
+                }else {
+                    failurecodes = new FailurecodeDao(OptionActivity.this).queryByFailurecode(searchText);
+                }
+                for (int i = 0;i < failurecodes.size();i ++){
+                    option = new Option();
+                    option.setName(failurecodes.get(i).failurecode);
+                    option.setDescription(failurecodes.get(i).description);
+                    list.add(option);
+                }
+                break;
+            case Constants.FAILURELIST:
+                List<Failurelist> failurelists;
+                if(searchText.equals("")){
+                    failurelists = new FailurelistDao(OptionActivity.this).queryForAll();
+                }else {
+                    failurelists = new FailurelistDao(OptionActivity.this).queryByFailurecode(searchText);
+                }
+                for (int i = 0;i < failurelists.size();i ++){
+                    option = new Option();
+                    option.setName(failurelists.get(i).failurecode);
+                    option.setDescription(failurelists.get(i).flcdescription);
+                    list.add(option);
+                }
+                break;
+            case Constants.JOBPLAN:
+                List<Jobplan> jobplans;
+                if(searchText.equals("")){
+                    jobplans = new JobplanDao(OptionActivity.this).queryForAll();
+                }else {
+                    jobplans = new JobplanDao(OptionActivity.this).queryByJobplan(searchText);
+                }
+                for (int i = 0;i < jobplans.size();i ++){
+                    option = new Option();
+                    option.setName(jobplans.get(i).jpnum);
+                    option.setDescription(jobplans.get(i).description);
                     list.add(option);
                 }
                 break;

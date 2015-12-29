@@ -1,7 +1,9 @@
 package com.jf_eam_project.ui.activity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,11 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.jf_eam_project.Dao.LocationDao;
@@ -28,6 +32,7 @@ import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.GetNowTime;
 
 import org.json.JSONException;
@@ -35,6 +40,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +55,9 @@ public class Work_AddNewActivity extends BaseActivity {
     private ImageView menuImageView;
     private ImageView backlayout;
     private PopupWindow popupWindow;
-    private ProgressDialog mProgressDialog;
 
     private TextView wonum;//工单号
+    private RelativeLayout wonumlayout;
     private TextView description;//描述
 //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
@@ -63,17 +69,24 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView status; //状态
     private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
-    private TextView woclass; //类
+//    private TextView woclass; //类
     private TextView failurecode; //故障类
+    private RelativeLayout failurecodelayout;
     private TextView problemcode; //问题代码
+    private RelativeLayout problemcodelayout;
     private TextView displayname; //创建人
     private TextView createdate; //创建时间
 
     private TextView jpnum; //作业计划
+    private RelativeLayout jpnumlayout;
     private TextView targstartdate;//计划开始时间
+    private RelativeLayout targstartdatelayout;
     private TextView targcompdate;//计划完成时间
+    private RelativeLayout targcompdatelayout;
     private TextView actstart;//实际开始时间
+    private RelativeLayout actstartlayout;
     private TextView actfinish;//实际完成时间
+    private RelativeLayout actfinishlayout;
 
     private TextView reportedby; //报告人
     private TextView reportdate; //汇报日期
@@ -81,6 +94,12 @@ public class Work_AddNewActivity extends BaseActivity {
     private RelativeLayout lctypelayout;//风机/电气
 
     private Button addnew;
+
+    private DatePickerDialog datePickerDialog;
+    private CumTimePickerDialog timePickerDialog;
+    StringBuffer sb;
+    private int layoutnum;
+    private ProgressDialog mProgressDialog;
     /**
      * 计划员工*
      */
@@ -143,6 +162,7 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (ImageView) findViewById(R.id.title_back_id);
         wonum = (TextView) findViewById(R.id.work_wonum);
+        wonumlayout = (RelativeLayout) findViewById(R.id.work_wonum_layout);
         description = (TextView) findViewById(R.id.work_desc);
 //        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
@@ -154,16 +174,23 @@ public class Work_AddNewActivity extends BaseActivity {
         status = (TextView) findViewById(R.id.work_status);
         statusdate = (TextView) findViewById(R.id.work_statusdate);
         lctype = (TextView) findViewById(R.id.work_lctype);
-        woclass = (TextView) findViewById(R.id.work_woclass);
+//        woclass = (TextView) findViewById(R.id.work_woclass);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
+        failurecodelayout = (RelativeLayout) findViewById(R.id.work_failurecode_layout);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
+        problemcodelayout = (RelativeLayout) findViewById(R.id.work_problemcode_layout);
         displayname = (TextView) findViewById(R.id.work_displayname);
         createdate = (TextView) findViewById(R.id.work_createdate);
         jpnum = (TextView) findViewById(R.id.work_jpnum);
+        jpnumlayout = (RelativeLayout) findViewById(R.id.work_jpnum_layout);
         targstartdate = (TextView) findViewById(R.id.work_targstartdate);
+        targstartdatelayout = (RelativeLayout) findViewById(R.id.work_targstartdate_layout);
         targcompdate = (TextView) findViewById(R.id.work_targcompdate);
+        targcompdatelayout = (RelativeLayout) findViewById(R.id.work_targcompdate_layout);
         actstart = (TextView) findViewById(R.id.work_acstart);
+        actstartlayout = (RelativeLayout) findViewById(R.id.work_acstart_layout);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
+        actfinishlayout = (RelativeLayout) findViewById(R.id.work_actfinish_layout);
         reportedby = (TextView) findViewById(R.id.work_reportedby);
         reportdate = (TextView) findViewById(R.id.work_reportdate);
 
@@ -179,9 +206,10 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
+        wonumlayout.setVisibility(View.GONE);
+        udwotype.setText(workOrder.worktype);
         status.setText("等待核准");
         statusdate.setText(GetNowTime.getTime());
-        woclass.setText("工单");
         displayname.setText(getBaseApplication().getUsername());
         createdate.setText(GetNowTime.getTime());
         reportedby.setText(getBaseApplication().getUsername());
@@ -219,7 +247,16 @@ public class Work_AddNewActivity extends BaseActivity {
             }
         });
 
+        setDataListener();
+        targstartdatelayout.setOnClickListener(new MydateListener());
+        targcompdatelayout.setOnClickListener(new MydateListener());
+        actstartlayout.setOnClickListener(new MydateListener());
+        actfinishlayout.setOnClickListener(new MydateListener());
+
         assetnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.ASSETCODE));
+        failurecodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
+        problemcodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
+        jpnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
     }
 
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
@@ -365,6 +402,74 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 设置时间选择器*
+     */
+    private void setDataListener() {
+
+        final Calendar objTime = Calendar.getInstance();
+        int iYear = objTime.get(Calendar.YEAR);
+        int iMonth = objTime.get(Calendar.MONTH);
+        int iDay = objTime.get(Calendar.DAY_OF_MONTH);
+        int hour = objTime.get(Calendar.HOUR_OF_DAY);
+
+        int minute = objTime.get(Calendar.MINUTE);
+
+
+        datePickerDialog = new DatePickerDialog(this, new datelistener(), iYear, iMonth, iDay);
+        timePickerDialog = new CumTimePickerDialog(this, new timelistener(), hour, minute, true);
+    }
+
+    public class MydateListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            layoutnum = 0;
+            sb = new StringBuffer();
+            layoutnum = view.getId();
+            datePickerDialog.show();
+        }
+    }
+
+    private class datelistener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            sb = new StringBuffer();
+            monthOfYear = monthOfYear + 1;
+            if (dayOfMonth < 10) {
+                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+            } else {
+                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
+            }
+            timePickerDialog.show();
+        }
+    }
+
+    private class timelistener implements TimePickerDialog.OnTimeSetListener {
+        @Override
+        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+            sb.append(" ");
+            if (i1 < 10) {
+                sb.append(i + ":" + "0" + i1 + ":00");
+            } else {
+                sb.append(i + ":" + i1 + ":00");
+            }
+
+//            Log.i(TAG,"sb="+sb);
+            if (layoutnum == targstartdatelayout.getId()) {
+                targstartdate.setText(sb);
+            } else if (layoutnum == targcompdatelayout.getId()) {
+                targcompdate.setText(sb);
+            } else if (layoutnum == actstartlayout.getId()) {
+                actstart.setText(sb);
+            } else if(layoutnum == actfinishlayout.getId()){
+                actfinish.setText(sb);
+            }
+
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
@@ -377,6 +482,18 @@ public class Work_AddNewActivity extends BaseActivity {
                 locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryByLocation(option.getValue()).description);
                 break;
             case Constants.LOCATIONCODE:
+                break;
+            case Constants.FAILURECODE:
+                option = (Option) data.getSerializableExtra("option");
+                failurecode.setText(option.getName());
+                break;
+            case Constants.FAILURELIST:
+                option = (Option) data.getSerializableExtra("option");
+                problemcode.setText(option.getName());
+                break;
+            case Constants.JOBPLAN:
+                option = (Option) data.getSerializableExtra("option");
+                jpnum.setText(option.getName());
                 break;
             case 1000:
                 Bundle b=data.getExtras();

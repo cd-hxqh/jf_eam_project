@@ -40,12 +40,18 @@ import java.util.ArrayList;
  * 工单列表界面
  */
 public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-    /**标题**/
+    /**
+     * 标题*
+     */
     private TextView titlename;
-    /**返回**/
+    /**
+     * 返回*
+     */
     private ImageView backImage;
 
-    /**菜单按钮**/
+    /**
+     * 菜单按钮*
+     */
     private ImageView addimg;
     private String worktype;
     LinearLayoutManager layoutManager;
@@ -91,8 +97,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
-                intent.putExtra("worktype",worktype);
+                Intent intent = new Intent(Work_ListActivity.this, Work_AddNewActivity.class);
+                intent.putExtra("worktype", worktype);
                 startActivity(intent);
             }
         });
@@ -121,8 +127,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-    private void getData(String search){
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,search,page, 20), new HttpRequestHandler<Results>() {
+    private void getData(String search) {
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -131,24 +137,29 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<WorkOrder> items = null;
-                try {
-                    items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (items == null || items.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
-                    } else {
-                        SaveData(items);
-                        if(page==1){
-                            workListAdapter = new WorkListAdapter(Work_ListActivity.this);
-                            recyclerView.setAdapter(workListAdapter);
+                if (totalPages != 0 && currentPage != 0) {
+                    try {
+                        items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
+                        refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
+                        if (items == null || items.isEmpty()) {
+                            nodatalayout.setVisibility(View.VISIBLE);
+                        } else {
+                            SaveData(items);
+                            if (page == 1) {
+                                workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                                recyclerView.setAdapter(workListAdapter);
+                            }
+                            if (totalPages == page) {
+                                workListAdapter.adddate(items);
+                            }
                         }
-                        if(totalPages==page){
-                            workListAdapter.adddate(items);
-                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    refresh_layout.setRefreshing(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -159,7 +170,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             }
         });
     }
-    private void setSearchEdit(){
+
+    private void setSearchEdit() {
         SpannableString msp = new SpannableString("XX搜索");
         Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
         msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -188,9 +200,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     //保存工单数据到本地
-    private void SaveData(ArrayList<WorkOrder> workOrders){
+    private void SaveData(ArrayList<WorkOrder> workOrders) {
         WorkOrderDao workOrderDao = new WorkOrderDao(Work_ListActivity.this);
-        for(int i = 0;i < workOrders.size();i ++){
+        for (int i = 0; i < workOrders.size(); i++) {
             workOrderDao.create(workOrders.get(i));
         }
     }

@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.FailurecodeDao;
+import com.jf_eam_project.Dao.FailurelistDao;
+import com.jf_eam_project.Dao.JobplanDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
@@ -19,6 +22,9 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Failurecode;
+import com.jf_eam_project.model.Failurelist;
+import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Location;
 
 import java.io.IOException;
@@ -204,10 +210,16 @@ public class DownloadActivity extends BaseActivity{
         @Override
         public void onClick(View view) {
             String buttonText = childArray.get(group).get(child);
-            if(buttonText.equals(childArray.get(0).get(0))){
+            if(buttonText.equals(childArray.get(0).get(0))){//位置
                 downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID,Constants.LOCATION_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(1))){
+            }else if(buttonText.equals(childArray.get(0).get(1))){//资产
                 downloaddata(HttpManager.getUrl(Constants.ASSET_APPID,Constants.ASSET_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(2))){//故障类
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.FAILURECODE_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(3))){//问题代码
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.FAILURELIST_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.JOBPLAN_NAME),buttonText,button);
             }
         }
     }
@@ -218,12 +230,21 @@ public class DownloadActivity extends BaseActivity{
             public void onSuccess(String data) {
                 if(data != null) {
                     try {
-                        if(buttonText.equals(childArray.get(0).get(0))) {
+                        if(buttonText.equals(childArray.get(0).get(0))) {//位置
                             List<Location> locations = Ig_Json_Model.parsingLocation(data);
                             new LocationDao(DownloadActivity.this).create(locations);
-                        }else if(buttonText.equals(childArray.get(0).get(1))){
+                        }else if(buttonText.equals(childArray.get(0).get(1))){//资产
                             List<Assets> assets = Ig_Json_Model.parsingAsset(data);
                             new AssetDao(DownloadActivity.this).create(assets);
+                        }else if(buttonText.equals(childArray.get(0).get(2))){//故障类
+                            List<Failurecode> failurecodes = Ig_Json_Model.parsingFailurecode(data);
+                            new FailurecodeDao(DownloadActivity.this).create(failurecodes);
+                        }else if(buttonText.equals(childArray.get(0).get(3))){//问题代码
+                            List<Failurelist> failurelists = Ig_Json_Model.parsingFailurelist(data);
+                            new FailurelistDao(DownloadActivity.this).create(failurelists);
+                        }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
+                            List<Jobplan> jobplans = Ig_Json_Model.parsingJobplan(data);
+                            new JobplanDao(DownloadActivity.this).create(jobplans);
                         }
                         button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {

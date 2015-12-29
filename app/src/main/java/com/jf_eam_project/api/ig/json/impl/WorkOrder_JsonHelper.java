@@ -125,55 +125,43 @@ public final class WorkOrder_JsonHelper
         } else if ("WORKTYPE".equals(fieldName)) {
             instance.setWorktype(jp.getValueAsString());
             return true;
-        }else if ("WORKTYPE".equals(fieldName)) {
+        } else if ("WORKTYPE".equals(fieldName)) {
             instance.setWorktype(jp.getValueAsString());
             return true;
-        }
-        else if ("PARENT".equals(fieldName)) {
+        } else if ("PARENT".equals(fieldName)) {
             instance.parent = jp.getValueAsString();
             return true;
-        }
-        else if ("UDPROJECTNUM.DESCRIPTION".equals(fieldName)) {
+        } else if ("UDPROJECTNUM".equals(fieldName)) {
             instance.udprojectnum = jp.getValueAsString();
             return true;
-        }
-        else if ("STATUSDATE".equals(fieldName)) {
+        } else if ("STATUSDATE".equals(fieldName)) {
             instance.statusdate = jp.getValueAsString();
             return true;
-        }
-        else if ("LCTYPE".equals(fieldName)) {
+        } else if ("LCTYPE".equals(fieldName)) {
             instance.lctype = jp.getValueAsString();
             return true;
-        }
-        else if ("WOCLASS".equals(fieldName)) {
+        } else if ("WOCLASS".equals(fieldName)) {
             instance.woclass = jp.getValueAsString();
             return true;
-        }
-        else if ("FAILURECODE".equals(fieldName)) {
+        } else if ("FAILURECODE".equals(fieldName)) {
             instance.failurecode = jp.getValueAsString();
             return true;
-        }
-        else if ("PROBLEMCODE".equals(fieldName)) {
+        } else if ("PROBLEMCODE".equals(fieldName)) {
             instance.problemcode = jp.getValueAsString();
             return true;
-        }
-        else if ("CREATEBY.DISPLAYNAME".equals(fieldName)) {
+        } else if ("CREATEBY.DISPLAYNAME".equals(fieldName)) {
             instance.displayname = jp.getValueAsString();
             return true;
-        }
-        else if ("CREATEDATE".equals(fieldName)) {
+        } else if ("CREATEDATE".equals(fieldName)) {
             instance.createdate = jp.getValueAsString();
             return true;
-        }
-        else if ("TARGSTARTDATE".equals(fieldName)) {
+        } else if ("TARGSTARTDATE".equals(fieldName)) {
             instance.targstartdate = jp.getValueAsString();
             return true;
-        }
-        else if ("TARGCOMPDATE".equals(fieldName)) {
+        } else if ("TARGCOMPDATE".equals(fieldName)) {
             instance.targcompdate = jp.getValueAsString();
             return true;
-        }
-        else if ("REPORTEDBY".equals(fieldName)) {
+        } else if ("REPORTEDBY".equals(fieldName)) {
             instance.reportedby = jp.getValueAsString();
             return true;
         }

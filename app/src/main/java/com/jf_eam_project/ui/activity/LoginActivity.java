@@ -120,6 +120,7 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
                             AccountUtils.setChecked(LoginActivity.this, isRemember);
                             AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
                         }
+                        getBaseApplication().setUsername(mUsername.getText().toString());
                         startIntent();
 
                     }

@@ -6,9 +6,12 @@ import android.util.Log;
 
 import com.jf_eam_project.api.ig.json.impl.Asset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Location_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
@@ -26,9 +29,12 @@ import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Failurecode;
+import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
+import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.PR;
@@ -202,5 +208,23 @@ public class Ig_Json_Model {
     public static ArrayList<Assets> parsingAsset(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Asset_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析故障类**/
+    public static ArrayList<Failurecode> parsingFailurecode(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Failurecode_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析问题代码**/
+    public static ArrayList<Failurelist> parsingFailurelist(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Failurelist_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析作业计划**/
+    public static ArrayList<Jobplan> parsingJobplan(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Jobplan_JsonHelper.parseFromJsonList(input);
     }
 }

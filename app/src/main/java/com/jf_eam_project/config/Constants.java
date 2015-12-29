@@ -83,6 +83,12 @@ public class Constants {
     //资产
     public static final String ASSET_APPID = "ASSET";
     public static final String ASSET_NAME = "ASSET";
+    //故障类
+    public static final String FAILURECODE_NAME = "FAILURECODE";
+    //问题代码
+    public static final String FAILURELIST_NAME = "FAILURELIST";
+    //作业计划
+    public static final String JOBPLAN_NAME = "JOBPLAN";
 
     /**
      * 采购管理*
@@ -159,6 +165,9 @@ public class Constants {
      */
     public static final int ASSETCODE = 100;
     public static final int LOCATIONCODE = 110;
+    public static final int FAILURECODE = 120;
+    public static final int FAILURELIST = 130;
+    public static final int JOBPLAN = 140;
 
 
     public static final String WAIT_APPROVAL = "等待核准";
