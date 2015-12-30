@@ -27,7 +27,16 @@ public class Udinspoasset extends Entity {
     public String udinspoassetlinenum;//序号
     @JsonField(fieldName = "locationsdesc")
     public String locationsdesc;//位置描述
+    @JsonField(fieldName = "udinspoassetnum")
+    public String udinspoassetnum;//设备编号
 
+    public String getUdinspoassetnum() {
+        return udinspoassetnum;
+    }
+
+    public void setUdinspoassetnum(String udinspoassetnum) {
+        this.udinspoassetnum = udinspoassetnum;
+    }
 
     public String getAssetdesc() {
         return assetdesc;

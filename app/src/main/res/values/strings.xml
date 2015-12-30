@@ -360,7 +360,6 @@
     <string name="udinspo_nextrundate_title">下次运行时间:</string>
     <string name="udinspo_detail_title">巡检单详情</string>
     <string name="udinspoasset_title">设备及部件</string>
-    <string name="udinspojxxm_title">巡检项目标准</string>
     <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
 
@@ -373,6 +372,18 @@
     <string name="udinspoasset_detail_title">备件详情</string>
 
 
+    <string name="title_activity_add_udinspo">AddUdinspoActivity</string>
+    <string name="ud_udinspoassetnum_title">设备编号:</string>
+    <string name="udinspojxxm_title">检修项目标准</string>
+
+
+    <string name="ud_description_title">巡检项目标准:</string>
+    <string name="udinspojxxm_udinspojxxm2_title">数值A:</string>
+    <string name="udinspojxxm_udinspojxxm3_title">数值B:</string>
+    <string name="udinspojxxm_udinspojxxm4_title">数值C:</string>
+    <string name="udinspojxxm_fillmethod_title">计量单位:</string>
+    <string name="udinspojxxm_execution_title">巡检情况描述:</string>
+    <string name="ud_udinspojxxm4_title">巡检人员:</string>
 
     <!--数据下载-->
     <string name="setting_download">数据下载</string>
@@ -383,5 +394,7 @@
     <string name="downloaded">已下载</string>
 
     <string name="activity_option_title">选项界面</string>
+    <string name="udinspojxxm_detail_title">检修项目详情</string>
+
 
 </resources>

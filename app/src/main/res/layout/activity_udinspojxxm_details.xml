@@ -64,12 +64,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/ud_udinspoassetnum_title"
+                    android:text="@string/ud_description_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/ud_udinspoassetnum_text"
+                    android:id="@+id/udinspojxxm_description_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -94,12 +94,12 @@
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/udinspoasset_location_title"
+                    android:text="@string/udinspojxxm_udinspojxxm2_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/udinspoasset_location_text"
+                    android:id="@+id/udinspojxxm_udinspojxxm2_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -126,12 +126,12 @@
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/udinspoasset_location_description_title"
+                    android:text="@string/udinspojxxm_udinspojxxm3_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/udinspoasset_location_description_text"
+                    android:id="@+id/udinspojxxm_udinspojxxm3_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -158,12 +158,12 @@
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/udinspoasset_assetnum_title"
+                    android:text="@string/udinspojxxm_udinspojxxm4_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/udinspoasset_assetnum_text"
+                    android:id="@+id/udinspojxxm_udinspojxxm4_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -187,12 +187,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/udinspoasset_assetnum_desc_title"
+                    android:text="@string/udinspojxxm_fillmethod_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/udinspoasset_assetnum_desc_text"
+                    android:id="@+id/udinspojxxm_fillmethod_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -216,12 +216,40 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/udinspoasset_childassetnum_title"
+                    android:text="@string/udinspojxxm_execution_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/udinspoasset_childassetnum_text"
+                    android:id="@+id/udinspojxxm_execution_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line"></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ud_udinspojxxm4_title"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/ud_udinspojxxm4_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"

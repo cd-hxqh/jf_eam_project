@@ -96,6 +96,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum+"','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
         }
     }
+    /**
+     * 项目检修标准*
+     */
+    public static String getUdinspojxxmUrl(String insponum,String vlaue , int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum+"','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
+        }
+    }
 
 
 

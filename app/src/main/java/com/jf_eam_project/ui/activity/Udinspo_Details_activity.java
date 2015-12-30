@@ -57,7 +57,7 @@ public class Udinspo_Details_activity extends BaseActivity {
 
 
     private TextView udinspoasset; //设备部件
-    private TextView udinspojxxm; //检修项目标准
+
 
 
     @Override
@@ -161,7 +161,6 @@ public class Udinspo_Details_activity extends BaseActivity {
         popupWindow.showAsDropDown(view, 0, 20);
 
         udinspoasset = (TextView) contentView.findViewById(R.id.udinspoasset_text_id);
-        udinspojxxm = (TextView) contentView.findViewById(R.id.popup_text_id);
         udinspoasset.setOnClickListener(udinspoassetOnClickListener);
 
     }

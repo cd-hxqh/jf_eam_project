@@ -7,7 +7,7 @@ import com.instagram.common.json.annotation.JsonType;
 
 /**
  * Created by think on 2015/12/10
- * 发票表
+ * 发票表1
  *
  */
 @JsonType

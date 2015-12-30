@@ -1,34 +1,33 @@
 package com.jf_eam_project.api.ig.json.impl;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.model.Udinspojxxm;
 
 import java.io.IOException;
 import java.util.ArrayList;
-/**设备备件**/
 
-public final class Udinspoasset_Jsonhelper
-        implements JsonHelper<Udinspoasset> {
-    private static final String TAG = "Udinspoasset_Jsonhelper";
+/**检修项目标准**/
+
+public final class Udinspojxxm_Jsonhelper
+        implements JsonHelper<Udinspojxxm> {
+    private static final String TAG = "Udinspojxxm_Jsonhelper";
     /**
      * 解析List*
      */
-    public static ArrayList<Udinspoasset> parseFromJsonList(JsonParser jp)
+    public static ArrayList<Udinspojxxm> parseFromJsonList(JsonParser jp)
             throws IOException {
 
-        ArrayList<Udinspoasset> results = null;
+        ArrayList<Udinspojxxm> results = null;
 
         // validate that we're on the right token
         if (jp.getCurrentToken() == JsonToken.START_ARRAY) {
-            results = new ArrayList<Udinspoasset>();
+            results = new ArrayList<Udinspojxxm>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
-                Udinspoasset parsed = parseFromJson(jp);
+                Udinspojxxm parsed = parseFromJson(jp);
                 if (parsed != null) {
                     results.add(parsed);
                 }
@@ -41,11 +40,11 @@ public final class Udinspoasset_Jsonhelper
 
 
     /**
-     * 解析Udinspoasset
+     * 解析Udinspojxxm
      */
-    public static Udinspoasset parseFromJson(JsonParser jp)
+    public static Udinspojxxm parseFromJson(JsonParser jp)
             throws IOException {
-        Udinspoasset instance = new Udinspoasset();
+        Udinspojxxm instance = new Udinspojxxm();
 
         // validate that we're on the right token
         if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
@@ -63,30 +62,30 @@ public final class Udinspoasset_Jsonhelper
         return instance;
     }
 
-    public static boolean processSingleField(Udinspoasset instance, String fieldName, JsonParser jp)
+    public static boolean processSingleField(Udinspojxxm instance, String fieldName, JsonParser jp)
             throws IOException {
-        if ("ASSETDESC".equals(fieldName)) {
-            instance.assetdesc = jp.getValueAsString();
+        if ("UDINSPOJXXMLINENUM".equals(fieldName)) {
+            instance.udinspojxxmlinenum = jp.getValueAsString();
             return true;
-        } else if ("ASSETNUM".equals(fieldName)) {
-            instance.assetnum = jp.getValueAsString();
+        } else if ("UDINSPOJXXM4".equals(fieldName)) {
+            instance.udinspojxxm4 = jp.getValueAsString();
             return true;
-        } else if ("CHILDASSETNUM".equals(fieldName)) {
-            instance.childassetnum = jp.getValueAsString();
-        } else if ("INSPONUM".equals(fieldName)) {
-            instance.insponum = jp.getValueAsString();
-            return true;
-        } else if ("LOCATION".equals(fieldName)) {
-            instance.location = jp.getValueAsString();
-            return true;
-        } else if ("UDINSPOASSETLINENUM".equals(fieldName)) {
-            instance.udinspoassetlinenum = jp.getValueAsString();
-            return true;
-        } else if ("LOCATIONSDESC".equals(fieldName)) {
-            instance.locationsdesc = jp.getValueAsString();
+        } else if ("UDINSPOJXXM3".equals(fieldName)) {
+            instance.udinspojxxm3 = jp.getValueAsString();
+        } else if ("UDINSPOJXXM2".equals(fieldName)) {
+            instance.udinspojxxm2 = jp.getValueAsString();
             return true;
         } else if ("UDINSPOASSETNUM".equals(fieldName)) {
             instance.udinspoassetnum = jp.getValueAsString();
+            return true;
+        } else if ("FILLMETHOD".equals(fieldName)) {
+            instance.fillmethod = jp.getValueAsString();
+            return true;
+        } else if ("EXECUTION".equals(fieldName)) {
+            instance.execution = jp.getValueAsString();
+            return true;
+        } else if ("DESCRIPTION".equals(fieldName)) {
+            instance.description = jp.getValueAsString();
             return true;
         }
 
@@ -94,9 +93,9 @@ public final class Udinspoasset_Jsonhelper
     }
 
     /**
-     * 解析Udinspoasset_List*
+     * 解析Udinspojxxm_List*
      */
-    public static ArrayList<Udinspoasset> parseFromJsonList(String inputString)
+    public static ArrayList<Udinspojxxm> parseFromJsonList(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
@@ -104,9 +103,9 @@ public final class Udinspoasset_Jsonhelper
     }
 
     /**
-     * 解析Udinspoasset*
+     * 解析Udinspojxxm*
      */
-    public static Udinspoasset parseFromJson(String inputString)
+    public static Udinspojxxm parseFromJson(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();

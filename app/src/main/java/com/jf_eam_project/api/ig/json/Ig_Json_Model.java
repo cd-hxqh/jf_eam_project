@@ -20,6 +20,7 @@ import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Udinspojxxm_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -43,6 +44,7 @@ import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -79,6 +81,12 @@ public class Ig_Json_Model {
      */
     public static ArrayList<Udinspoasset> parseUdinspoassetString(String input) throws IOException {
         return Udinspoasset_Jsonhelper.parseFromJsonList(input);
+    }
+    /**
+     * 检修项目标准
+     */
+    public static ArrayList<Udinspojxxm> parseUdinspojxxmString(String input) throws IOException {
+        return Udinspojxxm_Jsonhelper.parseFromJsonList(input);
     }
 
     /**
