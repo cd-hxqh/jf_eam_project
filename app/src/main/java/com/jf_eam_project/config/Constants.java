@@ -168,6 +168,7 @@ public class Constants {
     public static final int FAILURECODE = 120;
     public static final int FAILURELIST = 130;
     public static final int JOBPLAN = 140;
+    public static final int WOACTIVITY = 150;
 
 
     public static final String WAIT_APPROVAL = "等待核准";
