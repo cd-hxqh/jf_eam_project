@@ -10,7 +10,8 @@ public class Constants {
     /**
      * 基础接口*
      */
-    public static final String HTTP_API_URL = "http://61.49.28.246:7001/maximo/mobile/";
+//    public static final String HTTP_API_URL = "http://61.49.28.246:7001/maximo/mobile/";
+    public static final String HTTP_API_URL = "http://1.202.243.112:7001/maximo/mobile/";
 
     /**
      * 登陆URL*
