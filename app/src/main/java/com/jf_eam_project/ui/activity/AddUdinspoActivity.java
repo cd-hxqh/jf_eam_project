@@ -4,18 +4,27 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
+import com.jf_eam_project.utils.MessageUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,6 +59,10 @@ public class AddUdinspoActivity extends BaseActivity {
 
     StringBuffer sb;
 
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private String[] mStringItems = {"收藏", "下载", "分享", "删除", "歌手", "专辑"};
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +70,17 @@ public class AddUdinspoActivity extends BaseActivity {
         setContentView(R.layout.activity_add_udinspo);
         findViewById();
         initView();
+
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+        addInspotypeData();
     }
 
     @Override
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-
-
         descEditText = (EditText) findViewById(R.id.udinspo_description_text);
         inspotypeText = (TextView) findViewById(R.id.udinspo_inspotype_text);
         createbyText = (TextView) findViewById(R.id.udinspo_createby_text);
@@ -83,6 +99,9 @@ public class AddUdinspoActivity extends BaseActivity {
         createdateText.setText(GetNowTime.getTime());
         setDataListener();
         inspodateText.setOnClickListener(inspodateOnClickListener);
+
+        inspotypeText.setOnClickListener(inspotypeOnClickListener);
+
     }
 
 
@@ -151,6 +170,40 @@ public class AddUdinspoActivity extends BaseActivity {
 
             inspodateText.setText(sb);
         }
+    }
+
+
+    private View.OnClickListener inspotypeOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NormalListDialog();
+        }
+    };
+
+    private void NormalListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(AddUdinspoActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                inspotypeText.setText(mMenuItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    /**
+     * 添加巡检数据*
+     */
+    private void addInspotypeData() {
+        String[] inspotypes = getResources().getStringArray(R.array.inspotype_tab_titles);
+        for (int i = 0; i < inspotypes.length; i++)
+            mMenuItems.add(new DialogMenuItem(inspotypes[i], 0));
     }
 
 }
