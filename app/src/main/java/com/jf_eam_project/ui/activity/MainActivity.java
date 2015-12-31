@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +51,14 @@ public class MainActivity extends BaseActivity
     private String[] mFavoriteTabPaths;
     private String[] mMainTitles;
 
+    /**
+     * 标题*
+     */
     private TextView titleText;
+    /**
+     * 新增*
+     */
+    private ImageView addImageView;
     /**
      * 流程管理*
      */
@@ -72,7 +80,9 @@ public class MainActivity extends BaseActivity
      * 采购管理*
      */
     private Po_Fragment po_fragment;
-    /**关于**/
+    /**
+     * 关于*
+     */
     private Setting_Fragment settingFragment;
 
 
@@ -82,6 +92,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         findViewById();
 
+        initView();
 
     }
 
@@ -92,6 +103,7 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         titleText = (TextView) findViewById(R.id.title_id);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         mDrawerLayout = (ViewGroup) findViewById(R.id.drawer_layout);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -109,7 +121,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initView() {
-
+        addImageView.setOnClickListener(addOnClickListner);
     }
 
     int mSelectPos = 0;
@@ -117,9 +129,9 @@ public class MainActivity extends BaseActivity
     @Override
     public void onNavigationDrawerItemSelected(final int position) {
         mSelectPos = position;
-
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+
         switch (position) {
             case 0: //流程管理
                 if (wfment_fragment == null) {
@@ -216,6 +228,11 @@ public class MainActivity extends BaseActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("");
         titleText.setText(mTitle);
+        if (mSelectPos == 2) {
+            addImageView.setVisibility(View.VISIBLE);
+        } else {
+            addImageView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -261,5 +278,16 @@ public class MainActivity extends BaseActivity
             AppManager.AppExit(MainActivity.this);
         }
     }
+
+
+    private View.OnClickListener addOnClickListner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, AddUdinspoActivity.class);
+            startActivityForResult(intent, 0);
+        }
+    };
+
 
 }

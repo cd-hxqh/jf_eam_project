@@ -372,7 +372,7 @@
     <string name="udinspoasset_detail_title">备件详情</string>
 
 
-    <string name="title_activity_add_udinspo">AddUdinspoActivity</string>
+    <string name="title_activity_add_udinspo">新增巡检单</string>
     <string name="ud_udinspoassetnum_title">设备编号:</string>
     <string name="udinspojxxm_title">检修项目标准</string>
 

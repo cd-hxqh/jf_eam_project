@@ -43,7 +43,6 @@ public class DataUtils {
 
     public static double getDirSize(File file) {
 
-        Log.i(TAG,"asdsss");
         if (file.exists()) {
             if (file.isDirectory()) {
                 File[] children = file.listFiles();
