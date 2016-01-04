@@ -38,5 +38,13 @@ public class Woactivity extends Entity{
     public String owner;//所有者
     @JsonField(fieldName = "ownergroup")
     public String ownergroup;//所有者组
+    @JsonField(fieldName = "targstartdate")
+    public String targstartdate;//目标开始时间
+    @JsonField(fieldName = "targcompdate")
+    public String targcompdate;//目标完成时间
+    @JsonField(fieldName = "actstart")
+    public String actstart;//实际开始时间
+    @JsonField(fieldName = "actfinish")
+    public String actfinish;//实际完成时间
 
 }

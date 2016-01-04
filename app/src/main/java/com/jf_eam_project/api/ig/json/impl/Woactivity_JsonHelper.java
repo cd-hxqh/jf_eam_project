@@ -70,10 +70,10 @@ public final class Woactivity_JsonHelper
         if ("TASKID".equals(fieldName)) {
             instance.taskid = jp.getValueAsString();
             return true;
-        }else if ("DESCRIPTION".equals(fieldName)) {
+        } else if ("DESCRIPTION".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
-        }else if ("ASSETNUM".equals(fieldName)) {
+        } else if ("ASSETNUM".equals(fieldName)) {
             instance.assetnum = jp.getValueAsString();
             return true;
         } else if ("ASSETDESC".equals(fieldName)) {
@@ -93,17 +93,29 @@ public final class Woactivity_JsonHelper
         } else if ("WONUM".equals(fieldName)) {
             instance.wonum = jp.getValueAsString();
             return true;
-        }else if ("ESTDUR".equals(fieldName)) {
+        } else if ("ESTDUR".equals(fieldName)) {
             instance.estdur = jp.getValueAsString();
             return true;
-        }else if ("STATUS".equals(fieldName)) {
+        } else if ("STATUS".equals(fieldName)) {
             instance.status = jp.getValueAsString();
             return true;
-        }else if ("OWNER".equals(fieldName)) {
+        } else if ("OWNER".equals(fieldName)) {
             instance.owner = jp.getValueAsString();
             return true;
-        }else if ("OWNERGROUP".equals(fieldName)) {
+        } else if ("OWNERGROUP".equals(fieldName)) {
             instance.ownergroup = jp.getValueAsString();
+            return true;
+        } else if ("TARGSTARTDATE".equals(fieldName)) {
+            instance.targstartdate = jp.getValueAsString();
+            return true;
+        } else if ("TARGCOMPDATE".equals(fieldName)) {
+            instance.targcompdate = jp.getValueAsString();
+            return true;
+        } else if ("ACTSTART".equals(fieldName)) {
+            instance.actstart = jp.getValueAsString();
+            return true;
+        } else if ("ACTFINISH".equals(fieldName)) {
+            instance.actfinish = jp.getValueAsString();
             return true;
         }
 

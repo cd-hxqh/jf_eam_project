@@ -12,11 +12,13 @@ import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Labor_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Location_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Person_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
@@ -36,10 +38,12 @@ import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Jobplan;
+import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
+import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.model.Udinspo;
@@ -234,5 +238,17 @@ public class Ig_Json_Model {
     public static ArrayList<Jobplan> parsingJobplan(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Jobplan_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析人员**/
+    public static ArrayList<Person> parsingPerson(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Person_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析员工**/
+    public static ArrayList<Labor> parsingLabor(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Labor_JsonHelper.parseFromJsonList(input);
     }
 }

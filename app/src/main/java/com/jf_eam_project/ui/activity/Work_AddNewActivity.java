@@ -30,6 +30,7 @@ import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Webservice_result;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
@@ -105,6 +106,7 @@ public class Work_AddNewActivity extends BaseActivity {
      * 计划员工*
      */
     private LinearLayout planLinearlayout;
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     /**
      * 任务分配*
@@ -359,7 +361,8 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_PlanActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("wplaborList", (Serializable) wplaborList);
+            bundle.putSerializable("woactivityList",woactivityList);
+            bundle.putSerializable("wplaborList", wplaborList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
@@ -421,7 +424,7 @@ public class Work_AddNewActivity extends BaseActivity {
         timePickerDialog = new CumTimePickerDialog(this, new timelistener(), hour, minute, true);
     }
 
-    public class MydateListener implements View.OnClickListener {
+    private class MydateListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
@@ -439,9 +442,9 @@ public class Work_AddNewActivity extends BaseActivity {
             sb = new StringBuffer();
             monthOfYear = monthOfYear + 1;
             if (dayOfMonth < 10) {
-                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+                sb.append(year%100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
             } else {
-                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
+                sb.append(year%100 + "-" + monthOfYear + "-" + dayOfMonth);
             }
             timePickerDialog.show();
         }

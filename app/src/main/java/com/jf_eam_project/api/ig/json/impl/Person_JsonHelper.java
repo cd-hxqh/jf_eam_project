@@ -6,29 +6,29 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
-import com.jf_eam_project.model.Location;
+import com.jf_eam_project.model.Person;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 
-public final class Location_JsonHelper
-        implements JsonHelper<Location> {
-    private static final String TAG = "Location_JsonHelper";
+public final class Person_JsonHelper
+        implements JsonHelper<Person> {
+    private static final String TAG = "Person_JsonHelper";
 
     /**
      * 解析List*
      */
-    public static ArrayList<Location> parseFromJsonList(JsonParser jp)
+    public static ArrayList<Person> parseFromJsonList(JsonParser jp)
             throws IOException {
 
-        ArrayList<Location> results = null;
+        ArrayList<Person> results = null;
 
         // validate that we're on the right token
         if (jp.getCurrentToken() == JsonToken.START_ARRAY) {
-            results = new ArrayList<Location>();
+            results = new ArrayList<Person>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
-                Location parsed = parseFromJson(jp);
+                Person parsed = parseFromJson(jp);
                 Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
@@ -42,11 +42,11 @@ public final class Location_JsonHelper
 
 
     /**
-     * 解析Location
+     * 解析Person
      */
-    public static Location parseFromJson(JsonParser jp)
+    public static Person parseFromJson(JsonParser jp)
             throws IOException {
-        Location instance = new Location();
+        Person instance = new Person();
 
         // validate that we're on the right token
         if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
@@ -64,30 +64,32 @@ public final class Location_JsonHelper
         return instance;
     }
 
-    public static boolean processSingleField(Location instance, String fieldName, JsonParser jp)
+    public static boolean processSingleField(Person instance, String fieldName, JsonParser jp)
             throws IOException {
-        if ("LOCATION".equals(fieldName)) {
+        if ("PERSONID".equals(fieldName)) {
+            instance.personid = jp.getValueAsString();
+            return true;
+        } else if ("DISPLAYNAME".equals(fieldName)) {
+            instance.displayname = jp.getValueAsString();
+            return true;
+        } else if ("DEPARTMENT".equals(fieldName)) {
+            instance.department = jp.getValueAsString();
+        } else if ("LOCATION".equals(fieldName)) {
             instance.location = jp.getValueAsString();
-            return true;
-        } else if ("DESCRIPTION".equals(fieldName)) {
-            instance.description = jp.getValueAsString();
-            return true;
-        } else if ("SITEID".equals(fieldName)) {
-            instance.siteid = jp.getValueAsString();
-        } else if ("TYPE".equals(fieldName)) {
-            instance.type = jp.getValueAsString();
-        }else if ("branch".equals(fieldName)) {
-            instance.branch = jp.getValueAsString();
-        }else if ("udbelong".equals(fieldName)) {
-            instance.udbelong = jp.getValueAsString();
+        }else if ("LOCATIONORG".equals(fieldName)) {
+            instance.locationorg = jp.getValueAsString();
+        }else if ("LOCATIONSITE".equals(fieldName)) {
+            instance.locationsite = jp.getValueAsString();
+        }else if ("TITLE".equals(fieldName)) {
+            instance.title = jp.getValueAsString();
         }
         return false;
     }
 
     /**
-     * 解析Location_List*
+     * 解析Person_List*
      */
-    public static ArrayList<Location> parseFromJsonList(String inputString)
+    public static ArrayList<Person> parseFromJsonList(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
@@ -95,9 +97,9 @@ public final class Location_JsonHelper
     }
 
     /**
-     * 解析Location*
+     * 解析Person*
      */
-    public static Location parseFromJson(String inputString)
+    public static Person parseFromJson(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();

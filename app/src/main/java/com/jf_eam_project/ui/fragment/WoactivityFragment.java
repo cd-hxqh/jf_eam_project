@@ -36,7 +36,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private WoactivityAdapter woactivityAdapter;
+    public WoactivityAdapter woactivityAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;
@@ -86,15 +86,18 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        refresh_layout.setRefreshing(true);
+
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            refresh_layout.setRefreshing(true);
+            getdata();
+        }
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwoactivityUrl(page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwoactivityUrl(workOrder.wonum,page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);

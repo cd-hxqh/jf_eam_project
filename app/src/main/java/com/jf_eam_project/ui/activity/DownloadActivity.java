@@ -16,6 +16,7 @@ import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
 import com.jf_eam_project.Dao.JobplanDao;
 import com.jf_eam_project.Dao.LocationDao;
+import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -26,6 +27,7 @@ import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Location;
+import com.jf_eam_project.model.Person;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,7 +87,6 @@ public class DownloadActivity extends BaseActivity{
         tempArray01.add("问题代码");
         tempArray01.add("作业计划");
         tempArray01.add("人员");
-        tempArray01.add("任务");
         tempArray01.add("员工");
 
         List<String> tempArray02 = new ArrayList<String>();
@@ -220,6 +221,8 @@ public class DownloadActivity extends BaseActivity{
                 downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.FAILURELIST_NAME),buttonText,button);
             }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
                 downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.JOBPLAN_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(5))){//人员
+                downloaddata(HttpManager.getUrl(Constants.PERSON_APPID,Constants.PERSON_NAME),buttonText,button);
             }
         }
     }
@@ -245,6 +248,9 @@ public class DownloadActivity extends BaseActivity{
                         }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
                             List<Jobplan> jobplans = Ig_Json_Model.parsingJobplan(data);
                             new JobplanDao(DownloadActivity.this).create(jobplans);
+                        }else if(buttonText.equals(childArray.get(0).get(5))){//人员
+                            List<Person> jobplans = Ig_Json_Model.parsingPerson(data);
+                            new PersonDao(DownloadActivity.this).create(jobplans);
                         }
                         button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {

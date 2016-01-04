@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class GetNowTime {
     public static String getTime(){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");//设置日期格式
         return df.format(new Date());
     }
 }

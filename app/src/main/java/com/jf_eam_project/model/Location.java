@@ -28,4 +28,10 @@ public class Location extends Entity {
     @JsonField(fieldName = "type")
     @DatabaseField(columnName = "type")
     public String type;//类型
+    @JsonField(fieldName = "branch")
+    @DatabaseField(columnName = "branch")
+    public String branch;//分公司
+    @JsonField(fieldName = "udbelong")
+    @DatabaseField(columnName = "udbelong")
+    public String udbelong;//类型
 }

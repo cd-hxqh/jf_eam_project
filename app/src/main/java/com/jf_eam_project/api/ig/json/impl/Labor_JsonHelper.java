@@ -6,29 +6,29 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
-import com.jf_eam_project.model.Location;
+import com.jf_eam_project.model.Labor;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 
-public final class Location_JsonHelper
-        implements JsonHelper<Location> {
-    private static final String TAG = "Location_JsonHelper";
+public final class Labor_JsonHelper
+        implements JsonHelper<Labor> {
+    private static final String TAG = "Labor_JsonHelper";
 
     /**
      * 解析List*
      */
-    public static ArrayList<Location> parseFromJsonList(JsonParser jp)
+    public static ArrayList<Labor> parseFromJsonList(JsonParser jp)
             throws IOException {
 
-        ArrayList<Location> results = null;
+        ArrayList<Labor> results = null;
 
         // validate that we're on the right token
         if (jp.getCurrentToken() == JsonToken.START_ARRAY) {
-            results = new ArrayList<Location>();
+            results = new ArrayList<Labor>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
-                Location parsed = parseFromJson(jp);
+                Labor parsed = parseFromJson(jp);
                 Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
@@ -42,11 +42,11 @@ public final class Location_JsonHelper
 
 
     /**
-     * 解析Location
+     * 解析Labor
      */
-    public static Location parseFromJson(JsonParser jp)
+    public static Labor parseFromJson(JsonParser jp)
             throws IOException {
-        Location instance = new Location();
+        Labor instance = new Labor();
 
         // validate that we're on the right token
         if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
@@ -64,30 +64,22 @@ public final class Location_JsonHelper
         return instance;
     }
 
-    public static boolean processSingleField(Location instance, String fieldName, JsonParser jp)
+    public static boolean processSingleField(Labor instance, String fieldName, JsonParser jp)
             throws IOException {
-        if ("LOCATION".equals(fieldName)) {
-            instance.location = jp.getValueAsString();
+        if ("LABORCODE".equals(fieldName)) {
+            instance.laborcode = jp.getValueAsString();
             return true;
-        } else if ("DESCRIPTION".equals(fieldName)) {
-            instance.description = jp.getValueAsString();
+        } else if ("ORGID".equals(fieldName)) {
+            instance.orgid = jp.getValueAsString();
             return true;
-        } else if ("SITEID".equals(fieldName)) {
-            instance.siteid = jp.getValueAsString();
-        } else if ("TYPE".equals(fieldName)) {
-            instance.type = jp.getValueAsString();
-        }else if ("branch".equals(fieldName)) {
-            instance.branch = jp.getValueAsString();
-        }else if ("udbelong".equals(fieldName)) {
-            instance.udbelong = jp.getValueAsString();
         }
         return false;
     }
 
     /**
-     * 解析Location_List*
+     * 解析Labor_List*
      */
-    public static ArrayList<Location> parseFromJsonList(String inputString)
+    public static ArrayList<Labor> parseFromJsonList(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
@@ -95,9 +87,9 @@ public final class Location_JsonHelper
     }
 
     /**
-     * 解析Location*
+     * 解析Labor*
      */
-    public static Location parseFromJson(String inputString)
+    public static Labor parseFromJson(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();

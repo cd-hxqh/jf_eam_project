@@ -41,6 +41,7 @@
     <string name="title_activity_labtrans_details">员工详情</string>
     <string name="title_activity_work_plan">工单计划</string>
     <string name="title_activity_woactivity_details">任务详情</string>
+    <string name="title_activity_woactivity_addnew">任务新增</string>
     <string name="title_activity_wplabor_details">员工详情</string>
     <string name="title_activity_wpmaterial_details">物料详情</string>
     <string name="title_activity_wpservice_details">服务详情</string>
@@ -166,11 +167,11 @@
     <string name="woactivity_wosequence">序号</string>
     <string name="woactivity_taskid">任务</string>
     <string name="woactivity_description">摘要</string>
-    <string name="woactivity_estdur">持续时间</string>
-    <string name="woactivity_status">状态</string>
-    <string name="woactivity_owner">所有者</string>
-    <string name="woactivity_ownergroup">所有者组</string>
-    <string name="woactivity_wonum">记录</string>
+    <string name="woactivity_estdur">估计持续时间</string>
+    <string name="woactivity_targstartdate">目标开始时间</string>
+    <string name="woactivity_targcompdate">目标完成时间</string>
+    <string name="woactivity_actstart">实际开始时间</string>
+    <string name="woactivity_actfinish">实际完成时间</string>
     <string name="woactivity_woclass">记录类</string>
     <string name="woactivity_assetnum">资产</string>
     <string name="woactivity_assetdesc">资产描述</string>

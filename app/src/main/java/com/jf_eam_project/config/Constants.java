@@ -91,6 +91,9 @@ public class Constants {
     public static final String FAILURELIST_NAME = "FAILURELIST";
     //作业计划
     public static final String JOBPLAN_NAME = "JOBPLAN";
+    //人员
+    public static final String PERSON_APPID = "PERSON";
+    public static final String PERSON_NAME = "PERSON";
 
     /**
      * 采购管理*
@@ -170,7 +173,6 @@ public class Constants {
     public static final int FAILURECODE = 120;
     public static final int FAILURELIST = 130;
     public static final int JOBPLAN = 140;
-    public static final int WOACTIVITY = 150;
 
 
     public static final String WAIT_APPROVAL = "等待核准";

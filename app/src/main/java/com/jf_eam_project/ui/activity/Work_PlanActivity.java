@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.ui.fragment.WoactivityFragment;
@@ -36,21 +37,22 @@ public class Work_PlanActivity extends BaseActivity {
     private TextView titlename;
     private ImageView menuImageView;
     private ImageView backimg;
-//    private Button woactivity;//任务
+    private Button woactivity;//任务
     private Button wplabor;//员工
-//    private Button wpservice;//服务
+    //    private Button wpservice;//服务
     private Button wpmaterial;//物料
-//    private Button wptool;//工具
+    //    private Button wptool;//工具
     private ViewPager mViewPager;
     private int currentIndex = 0;
     private List<Fragment> fragmentlist = new ArrayList<>();
-//    private WoactivityFragment woactivityFragment;
+    private WoactivityFragment woactivityFragment;
     private WplaborFragment wplaborFragment;
     private WpmaterialFragment wpmaterialFragment;
 //    private WpserviceFragment wpserviceFragment;
 //    private WptoolFragment wptoolFragment;
 
     public WorkOrder workOrder;
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
 
     @Override
@@ -65,6 +67,7 @@ public class Work_PlanActivity extends BaseActivity {
 
     private void geiIntentData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         wplaborList = (ArrayList<Wplabor>) getIntent().getSerializableExtra("wplaborList");
     }
 
@@ -73,7 +76,7 @@ public class Work_PlanActivity extends BaseActivity {
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backimg = (ImageView) findViewById(R.id.title_back_id);
-//        woactivity = (Button) findViewById(R.id.work_woactivity);
+        woactivity = (Button) findViewById(R.id.work_woactivity);
         wplabor = (Button) findViewById(R.id.work_wplabor);
 //        wpservice = (Button) findViewById(R.id.work_wpservice);
         wpmaterial = (Button) findViewById(R.id.work_wpmaterial);
@@ -96,27 +99,26 @@ public class Work_PlanActivity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-//        woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-//        woactivity.setOnClickListener(new Buttonlistener());
+        woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+        woactivity.setOnClickListener(new Buttonlistener());
         wplabor.setOnClickListener(new Buttonlistener());
 //        wpservice.setOnClickListener(new Buttonlistener());
         wpmaterial.setOnClickListener(new Buttonlistener());
 //        wptool.setOnClickListener(new Buttonlistener());
         fragmentlist = new ArrayList<>();
-//        woactivityFragment = new WoactivityFragment(workOrder);
+        woactivityFragment = new WoactivityFragment(workOrder);
         wplaborFragment = new WplaborFragment(workOrder);
         wpmaterialFragment = new WpmaterialFragment(workOrder);
 //        wpserviceFragment = new WpserviceFragment(workOrder);
 //        wptoolFragment = new WptoolFragment(workOrder);
-//        fragmentlist.add(woactivityFragment);
+        fragmentlist.add(woactivityFragment);
         fragmentlist.add(wplaborFragment);
         fragmentlist.add(wpmaterialFragment);
 //        fragmentlist.add(wpserviceFragment);
 //        fragmentlist.add(wptoolFragment);
         mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));//设置ViewPager的适配器
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
-//        woactivity.performClick();
-        wplabor.performClick();
+        woactivity.performClick();
     }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
@@ -124,7 +126,9 @@ public class Work_PlanActivity extends BaseActivity {
         public void onClick(View view) {
             Intent intent;
             if (currentIndex == 0) {
-
+                intent = new Intent(Work_PlanActivity.this, WoactivityAddNewActivity.class);
+                intent.putExtra("taskid", (woactivityList.size() + 1) * 10);
+                startActivityForResult(intent, 0);
             } else if (currentIndex == 1) {
 //                intent = new Intent(Work_PlanActivity.this,AddWplaborActivity.class);
 //                startActivity(intent);
@@ -143,19 +147,18 @@ public class Work_PlanActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             resetTextView();
-//            if (view.getId() == woactivity.getId()) {
-//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-//                woactivity.setTextColor(getResources().getColor(R.color.white));
-//                currentIndex = 0;
-//            } else
-            if (view.getId() == wplabor.getId()) {
+            if (view.getId() == woactivity.getId()) {
+                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
+                woactivity.setTextColor(getResources().getColor(R.color.white));
+                currentIndex = 0;
+            } else if (view.getId() == wplabor.getId()) {
                 view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
                 wplabor.setTextColor(getResources().getColor(R.color.white));
-                currentIndex = 0;
+                currentIndex = 1;
             } else if (view.getId() == wpmaterial.getId()) {
                 view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
                 wpmaterial.setTextColor(getResources().getColor(R.color.white));
-                currentIndex = 1;
+                currentIndex = 2;
             }
 //            else if (view.getId() == wpservice.getId()) {
 //                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
@@ -213,13 +216,13 @@ public class Work_PlanActivity extends BaseActivity {
         public void onPageSelected(int position) {
             resetTextView();
             switch (position) {
-//                case 0:
-//                    woactivity.performClick();
-//                    break;
                 case 0:
-                    wplabor.performClick();
+                    woactivity.performClick();
                     break;
                 case 1:
+                    wplabor.performClick();
+                    break;
+                case 2:
                     wpmaterial.performClick();
                     break;
 //                case 3:
@@ -238,8 +241,8 @@ public class Work_PlanActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void resetTextView() {
-//        woactivity.setTextColor(getResources().getColor(R.color.black));
-//        woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
+        woactivity.setTextColor(getResources().getColor(R.color.black));
+        woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
         wplabor.setTextColor(getResources().getColor(R.color.black));
         wplabor.setBackground(getResources().getDrawable(R.color.light_gray));
 //        wpservice.setTextColor(getResources().getColor(R.color.black));
@@ -248,5 +251,15 @@ public class Work_PlanActivity extends BaseActivity {
         wpmaterial.setBackground(getResources().getDrawable(R.color.light_gray));
 //        wptool.setTextColor(getResources().getColor(R.color.black));
 //        wptool.setBackground(getResources().getDrawable(R.color.light_gray));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 0:
+                Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                woactivityList.add(woactivity);
+                woactivityFragment.woactivityAdapter.update(woactivityList,true);
+        }
     }
 }

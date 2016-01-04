@@ -11,8 +11,10 @@ import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Jobplan;
+import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
+import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.utils.DataUtils;
@@ -45,6 +47,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Failurecode.class);
             TableUtils.createTable(connectionSource, Failurelist.class);
             TableUtils.createTable(connectionSource, Jobplan.class);
+            TableUtils.createTable(connectionSource, Person.class);
+            TableUtils.createTable(connectionSource, Labor.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,6 +69,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Failurecode.class, true);
             TableUtils.dropTable(connectionSource, Failurelist.class, true);
             TableUtils.dropTable(connectionSource, Jobplan.class, true);
+            TableUtils.dropTable(connectionSource, Person.class, true);
+            TableUtils.dropTable(connectionSource, Labor.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
