@@ -24,6 +24,7 @@ import com.jf_eam_project.Dao.AssetDao;
 import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
 import com.jf_eam_project.Dao.JobplanDao;
+import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
@@ -31,6 +32,7 @@ import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Option;
+import com.jf_eam_project.model.Person;
 import com.jf_eam_project.ui.adapter.OptionAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
@@ -43,6 +45,7 @@ import java.util.List;
  *
  */
 public class OptionActivity extends BaseActivity {
+    private static final String TAG="OptionActivity";
     /**标题**/
     private TextView titlename;
     /**返回**/
@@ -69,6 +72,7 @@ public class OptionActivity extends BaseActivity {
 
     private void getIntentData() {
         requestCode = getIntent().getIntExtra("requestCode",0);
+        Log.i(TAG,"requestCode="+requestCode);
     }
 
     @Override
@@ -187,6 +191,23 @@ public class OptionActivity extends BaseActivity {
                     option.setDescription(jobplans.get(i).description);
                     list.add(option);
                 }
+                break;
+
+            case Constants.PERSON:
+                List<Person> persons;
+                if(searchText.equals("")){
+                    persons = new PersonDao(OptionActivity.this).queryForAll();
+                }else {
+                    persons = new PersonDao(OptionActivity.this).queryByPerson(searchText);
+                }
+                for (int i = 0;i < persons.size();i ++){
+                    option = new Option();
+                    option.setName(persons.get(i).personid);
+                    option.setDescription(persons.get(i).displayname);
+                    list.add(option);
+                }
+
+                Log.i(TAG,"这是人员");
                 break;
         }
         optionAdapter.update(list, true);

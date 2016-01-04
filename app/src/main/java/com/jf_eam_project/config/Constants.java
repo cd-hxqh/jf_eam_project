@@ -20,9 +20,11 @@ public class Constants {
     public static final String SIGN_IN_URL = HTTP_API_URL + "system/login";
 
     /**
-     * webserviceURL*
+     *工单URL*
      */
-    public static String webserviceURL = "http://61.49.28.246:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
+    public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
+    /**巡检Url**/
+    public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
 
 
     /**
@@ -174,6 +176,8 @@ public class Constants {
     public static final int FAILURELIST = 130;
     public static final int JOBPLAN = 140;
 
+    public static final int PERSON=160;
+
 
     public static final String WAIT_APPROVAL = "等待核准";
     public static final String APPROVALED = "已核准";
@@ -190,7 +194,7 @@ public class Constants {
      */
     public static final String NOT_SDCARD_PATH_DB = "/data/data/";
     /** 数据库名称 **/
-    public static final String TB_NAME = "sqlite-bowei.db";
+    public static final String TB_NAME = "sqlite-jf.db";
 
     public static String getWsUrl(Context context) {
         return webserviceURL;

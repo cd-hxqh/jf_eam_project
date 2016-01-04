@@ -84,9 +84,9 @@ public class PersonDao {
      * @param personid
      * @return
      */
-    public Person queryByPerson(String personid){
+    public List<Person> queryByPerson(String personid){
         try {
-            return PersonDaoOpe.queryBuilder().where().eq("personid",personid).queryForFirst();
+            return PersonDaoOpe.queryBuilder().where().like("personid",personid).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

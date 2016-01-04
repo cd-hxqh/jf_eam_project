@@ -52,7 +52,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     /**
      * 巡检单
      */
-    private String insponum;
+    private String insponum="";
 
 
     LinearLayoutManager layoutManager;

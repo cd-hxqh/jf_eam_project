@@ -97,7 +97,6 @@ public class DownloadActivity extends BaseActivity{
         childArray.add(tempArray02);
 
         expandableListView.setAdapter(new MyExpandableListViewAdapter(this));
-        Toast.makeText(DownloadActivity.this,new AssetDao(DownloadActivity.this).queryForAll().size()+"",Toast.LENGTH_SHORT).show();
     }
 
     class MyExpandableListViewAdapter extends BaseExpandableListAdapter {

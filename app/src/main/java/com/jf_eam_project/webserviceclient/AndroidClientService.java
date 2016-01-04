@@ -1,7 +1,10 @@
 package com.jf_eam_project.webserviceclient;
 
 
+import android.util.Log;
+
 import com.jf_eam_project.api.JsonUtils;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Webservice_result;
 
 import org.ksoap2.SoapEnvelope;
@@ -39,7 +42,7 @@ public class AndroidClientService {
     }
 
     /**
-     * ��ӹ�������
+     * 新增工单
      * @param string
      * @return
      */
@@ -101,9 +104,7 @@ public class AndroidClientService {
 //    }
 
     /**
-     * �޸Ĺ�������
-     * @param string
-     * @return
+     *更新工单
      */
     public String UpdataWO(String string){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -159,4 +160,45 @@ public class AndroidClientService {
 //        }
 //        return obj;
 //    }
+
+
+    /**
+     * 新增巡检
+     * @param string
+     * @return
+     */
+    public String InsertPO(String string){
+
+        Log.i(TAG,"string="+string);
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "coserviceinsertCheckOrder");
+        soapReq.addProperty("json", string);
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(Constants.webserviceUdinsPoURL,timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+            return null;
+        }
+        String obj = null;
+        String result = null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            result = obj;
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return result;
+    }
+
+
+
+
+
 }

@@ -209,9 +209,9 @@ public class Udinspo_fragment extends BaseFragment implements SwipeRefreshLayout
                             udinspoListadapter = new UdinspoListadapter(getActivity());
                             recyclerView.setAdapter(udinspoListadapter);
                         }
-                        if (totalPages == page) {
+//                        if (totalPages == page) {
                             udinspoListadapter.adddate(items);
-                        }
+//                        }
                     }
 
                 } catch (IOException e) {
