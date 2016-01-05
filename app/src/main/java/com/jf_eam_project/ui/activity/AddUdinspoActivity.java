@@ -404,11 +404,8 @@ public class AddUdinspoActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void showPopupWindow(View view) {
-
         View contentView = LayoutInflater.from(AddUdinspoActivity.this).inflate(
                 R.layout.udinspo_popup_window, null);
-
-
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setTouchable(true);

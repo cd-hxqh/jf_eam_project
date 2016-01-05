@@ -41,6 +41,7 @@ public class Wplabor extends Entity{
     @JsonField(fieldName = "quantity")
     @DatabaseField(columnName = "quantity")
     public String quantity;//数量
+    @JsonField(fieldName = "wonum")
     @DatabaseField(columnName = "wonum")
     public String wonum;//所属工单
 }

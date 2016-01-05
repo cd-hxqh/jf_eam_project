@@ -247,7 +247,9 @@ public class DownloadActivity extends BaseActivity{
                 if(data != null) {
                     try {
                         if(buttonText.equals(childArray.get(0).get(0))) {//位置
+                            Toast.makeText(DownloadActivity.this,"位置已下载",Toast.LENGTH_SHORT).show();
                             List<Location> locations = Ig_Json_Model.parsingLocation(data);
+                            Toast.makeText(DownloadActivity.this,"位置已解析",Toast.LENGTH_SHORT).show();
                             new LocationDao(DownloadActivity.this).create(locations);
                         }else if(buttonText.equals(childArray.get(0).get(1))){//资产
                             List<Assets> assets = Ig_Json_Model.parsingAsset(data);

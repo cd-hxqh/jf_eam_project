@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.ui.activity.WplaborDetailsActivity;
 
@@ -27,6 +26,7 @@ import java.util.List;
 public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHolder> {
     Context mContext;
     List<Wplabor> wplaborList = new ArrayList<>();
+
     public WplaborAdapter(Context context) {
         this.mContext = context;
     }
@@ -41,10 +41,10 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Wplabor wplabor = wplaborList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(wplabor.taskid);
-        holder.itemDesc.setText(wplabor.laborcode);
+        holder.itemNumTitle.setText("任务");
+        holder.itemDescTitle.setText("工种");
+        holder.itemNum.setText(wplabor.taskid == null ? "" : wplabor.taskid);
+        holder.itemDesc.setText(wplabor.craft == null ? "" : wplabor.craft);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,8 +90,8 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -117,10 +117,11 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
         wplaborList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<Wplabor> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
+
+    //
+    public void adddate(ArrayList<Wplabor> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
                 wplaborList.add(data.get(i));
             }
         }

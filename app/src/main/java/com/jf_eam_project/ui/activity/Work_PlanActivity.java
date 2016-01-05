@@ -271,21 +271,29 @@ public class Work_PlanActivity extends BaseActivity {
 
         switch (resultCode) {
             case 0:
-                Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
-                woactivityList.add(woactivity);
-                woactivityFragment.woactivityAdapter.update(woactivityList, true);
-                woactivityFragment.nodatalayout.setVisibility(View.GONE);
+                if(data != null) {
+                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                    woactivityList.add(woactivity);
+                    woactivityFragment.woactivityAdapter.update(woactivityList, true);
+                    woactivityFragment.nodatalayout.setVisibility(View.GONE);
+                }
                 break;
             case 1:
-                Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
-                wplaborList.add(wplabor);
-                wplaborFragment.wplaborAdapter.update(wplaborList, true);
-                wplaborFragment.nodatalayout.setVisibility(View.GONE);
+                if(data!=null) {
+                    Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
+                    wplaborList.add(wplabor);
+                    wplaborFragment.wplaborAdapter.update(wplaborList, true);
+                    wplaborFragment.nodatalayout.setVisibility(View.GONE);
+                }
+                break;
             case 2:
-                Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
-                wpmaterialList.add(wpmaterial);
-                wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
-                wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
+                if(data != null) {
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
+                    wpmaterialList.add(wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
+                    wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
+                }
+                break;
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -7,11 +8,11 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -68,6 +69,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private RelativeLayout assetnumlayout;
     private TextView assetdesc;//资产描述
     private TextView location; //位置
+    private RelativeLayout locationlayout;
     private TextView locationdesc;//位置描述
     private TextView status; //状态
     private TextView statusdate; //状态日期
@@ -106,18 +108,18 @@ public class Work_AddNewActivity extends BaseActivity {
     /**
      * 计划员工*
      */
-    private LinearLayout planLinearlayout;
+    private TextView planLinearlayout;
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
     /**
      * 任务分配*
      */
-    private LinearLayout taskLinearLayout;
+    private TextView taskLinearLayout;
     /**
      * 实际情况
      */
-    private LinearLayout realinfoLinearLayout;
+    private TextView realinfoLinearLayout;
 
     private Webservice_result result;
     protected static final int S = 0;
@@ -175,6 +177,7 @@ public class Work_AddNewActivity extends BaseActivity {
         assetnumlayout = (RelativeLayout) findViewById(R.id.work_assetnum_layout);
         assetdesc = (TextView) findViewById(R.id.work_assetdesc);
         location = (TextView) findViewById(R.id.work_location);
+        locationlayout = (RelativeLayout) findViewById(R.id.work_location_layout);
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
         status = (TextView) findViewById(R.id.work_status);
         statusdate = (TextView) findViewById(R.id.work_statusdate);
@@ -259,6 +262,7 @@ public class Work_AddNewActivity extends BaseActivity {
         actfinishlayout.setOnClickListener(new MydateListener());
 
         assetnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.ASSETCODE));
+        locationlayout.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONCODE));
         failurecodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
         problemcodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
         jpnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
@@ -346,40 +350,23 @@ public class Work_AddNewActivity extends BaseActivity {
     /**
      * 初始化showPopupWindow*
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void showPopupWindow(View view) {
-
-        // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(Work_AddNewActivity.this).inflate(
                 R.layout.work_popup_window, null);
-
 
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setTouchable(true);
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                return false;
-                // 这里如果返回true的话，touch事件将被拦截
-                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-            }
-        });
-
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
         popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popup_background_mtrl_mult));
+                R.drawable.abc_popup_background_mtrl_mult));
+        popupWindow.showAsDropDown(view, 0, 20);
 
-        // 设置好参数之后再show
-        popupWindow.showAsDropDown(view);
-
-        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_wplabor_id);
-        taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_labtrans_id);
+        planLinearlayout = (TextView) contentView.findViewById(R.id.work_wplabor_id);
+        taskLinearLayout = (TextView) contentView.findViewById(R.id.work_task_id);
+        realinfoLinearLayout = (TextView) contentView.findViewById(R.id.work_labtrans_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
@@ -520,6 +507,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()).description);
                 break;
             case Constants.LOCATIONCODE:
+                option = (Option) data.getSerializableExtra("option");
+                location.setText(option.getName());
+                locationdesc.setText(option.getDescription());
                 break;
             case Constants.FAILURECODE:
                 option = (Option) data.getSerializableExtra("option");

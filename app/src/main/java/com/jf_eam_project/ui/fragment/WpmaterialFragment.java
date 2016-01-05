@@ -86,11 +86,13 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        refresh_layout.setRefreshing(true);
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            refresh_layout.setRefreshing(true);
+            getdata();
+        }
     }
 
     private void getdata() {

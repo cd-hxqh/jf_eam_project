@@ -1,72 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/work_wplabor_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dimens_10">
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/work_wplabor_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_gravity="center"
+            android:padding="@dimen/dimens_10_dip"
             android:text="@string/title_activity_work_wplabor"
-            android:textSize="@dimen/dimens_16dp"/>
+            android:textSize="@dimen/dimens_16dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/num_linearlayout_id"
+            android:background="@drawable/line"></View>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"></View>
-
     <LinearLayout
-        android:id="@+id/work_task_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dimens_10">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/work_task_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_gravity="center"
+            android:padding="@dimen/dimens_10_dip"
             android:text="@string/work_task"
-            android:textSize="@dimen/dimens_16dp"/>
+            android:textSize="@dimen/dimens_16dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/num_linearlayout_id"
+            android:background="@drawable/line"></View>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"></View>
 
     <LinearLayout
-        android:id="@+id/work_labtrans_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dimens_10">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/work_labtrans_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_gravity="center"
+            android:padding="@dimen/dimens_10_dip"
             android:text="@string/title_activity_work_labtrans"
-            android:textSize="@dimen/dimens_16dp"/>
+            android:textSize="@dimen/dimens_16dp" />
+
+        <View
+            android:id="@+id/view_1_id"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/num_linearlayout_id"
+            android:background="@drawable/line"></View>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"></View>
-
 </LinearLayout>

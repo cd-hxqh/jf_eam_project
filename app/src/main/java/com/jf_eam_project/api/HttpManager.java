@@ -287,7 +287,7 @@ public class HttpManager {
     }
 
     /**
-     * 不分页获取信息方法--带进度*
+     * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
         AsyncHttpClient client = new AsyncHttpClient();
