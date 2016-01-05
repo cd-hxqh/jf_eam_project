@@ -35,7 +35,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
-    private LinearLayout nodatalayout;
+    public LinearLayout nodatalayout;
     public WoactivityAdapter woactivityAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
@@ -147,13 +147,17 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        page = 1;
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            page = 1;
+            getdata();
+        }
     }
 
     @Override
     public void onLoad() {
-        page++;
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            page++;
+            getdata();
+        }
     }
 }

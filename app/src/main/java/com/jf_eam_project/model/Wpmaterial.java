@@ -26,4 +26,8 @@ public class Wpmaterial extends Entity{
     public String storelocsite;//库房地点
     @JsonField(fieldName = "unitcost")
     public String unitcost;//单位成本
+    @JsonField(fieldName = "taskid")
+    public String taskid;//任务
+    @JsonField(fieldName = "requestby")
+    public String requestby;//请求者
 }

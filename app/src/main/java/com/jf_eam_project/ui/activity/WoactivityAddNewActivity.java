@@ -111,12 +111,13 @@ public class WoactivityAddNewActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = getIntent();
-                woactivity.taskid = "10";
-                woactivity.description = description.getText().toString();
-                woactivity.targstartdate = targstartdate.getText().toString();
-                woactivity.targcompdate = targcompdate.getText().toString();
-                woactivity.actstart = actstart.getText().toString();
-                woactivity.actfinish = actfinish.getText().toString();
+                woactivity = new Woactivity();
+                woactivity.setTaskid(taskid.getText().toString());
+                woactivity.setDescription(description.getText().toString());
+                woactivity.setTargstartdate(targstartdate.getText().toString());
+                woactivity.setTargcompdate(targcompdate.getText().toString());
+                woactivity.setActstart(actstart.getText().toString());
+                woactivity.setActfinish(actfinish.getText().toString());
 //                woactivity.estdur = estdur.getText().toString();
                 intent.putExtra("woactivity",woactivity);
                 WoactivityAddNewActivity.this.setResult(0,intent);

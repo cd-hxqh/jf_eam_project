@@ -4,28 +4,28 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.Labor;
+import com.jf_eam_project.model.Craftrate;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Created by think on 2015/12/31.
- *员工
+ * Created by think on 2016/1/4.
+ *工种
  */
-public class LaborDao {
+public class CraftrateDao {
     private Context context;
-    private Dao<Labor, Integer> LaborDaoOpe;
+    private Dao<Craftrate, Integer> CraftrateDaoOpe;
     private DatabaseHelper helper;
 
-    public LaborDao(Context context)
+    public CraftrateDao(Context context)
     {
         this.context = context;
         try
         {
             helper = DatabaseHelper.getHelper(context);
-            LaborDaoOpe = helper.getDao(Labor.class);
+            CraftrateDaoOpe = helper.getDao(Craftrate.class);
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -33,17 +33,17 @@ public class LaborDao {
     }
 
     /**
-     *更新位置信息
+     *更新工种信息
      * @param list
      */
-    public void create(final List<Labor> list) {
+    public void create(final List<Craftrate> list) {
             try {
                 deleteall();
-                LaborDaoOpe.callBatchTasks(new Callable<Void>() {
+                CraftrateDaoOpe.callBatchTasks(new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        for (Labor labor : list) {
-                            LaborDaoOpe.createOrUpdate(labor);
+                        for (Craftrate craftrate : list) {
+                            CraftrateDaoOpe.createOrUpdate(craftrate);
                         }
                         return null;
                     }
@@ -58,9 +58,9 @@ public class LaborDao {
      *
      * @return
      */
-    public List<Labor> queryForAll(){
+    public List<Craftrate> queryForAll(){
         try {
-            return LaborDaoOpe.queryForAll();
+            return CraftrateDaoOpe.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class LaborDao {
      */
     public void deleteall(){
         try {
-            LaborDaoOpe.delete(LaborDaoOpe.queryForAll());
+            CraftrateDaoOpe.delete(CraftrateDaoOpe.queryForAll());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,12 +81,12 @@ public class LaborDao {
 
     /**
      *
-     * @param laborcode
+     * @param craft
      * @return
      */
-    public Labor queryByLabor(String laborcode){
+    public List<Craftrate> queryByCraft(String craft){
         try {
-            return LaborDaoOpe.queryBuilder().where().eq("laborcode",laborcode).queryForFirst();
+            return CraftrateDaoOpe.queryBuilder().where().like("craft", craft).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,13 +95,13 @@ public class LaborDao {
 
     /**
      *
-     * @param labor
+     * @param craftrate
      * @return
      */
-    public boolean isexit(Labor labor){
+    public boolean isexit(Craftrate craftrate){
         try {
-            List<Labor>workOrderList = LaborDaoOpe.queryBuilder().where().eq("location",labor.laborcode).query();
-            if(workOrderList.size()>0){
+            List<Craftrate>craftrateList = CraftrateDaoOpe.queryBuilder().where().eq("location",craftrate.craft).query();
+            if(craftrateList.size()>0){
                 return true;
             }else {
                 return false;

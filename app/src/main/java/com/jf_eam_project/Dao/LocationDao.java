@@ -55,17 +55,31 @@ public class LocationDao {
 
 
     /**
-     *
+     *  查询位置
      * @return
      */
     public List<Location> queryForAll(){
         try {
-            return LocationDaoOpe.queryForAll();
+            return LocationDaoOpe.queryBuilder().where().eq("type","操作中").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    /**
+     *  查询库房
+     * @return
+     */
+    public List<Location> queryForLocations(){
+        try {
+            return LocationDaoOpe.queryBuilder().where().eq("type","库房").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      *
@@ -90,13 +104,40 @@ public class LocationDao {
     }
 
     /**
-     *
+     *  条件查询位置
      * @param location
      * @return
      */
-    public Location queryByLocation(String location){
+    public Location queryLocation(String location){
         try {
-            return LocationDaoOpe.queryBuilder().where().eq("location",location).queryForFirst();
+            return LocationDaoOpe.queryBuilder().where().eq("type","操作中").and().eq("location", location).queryForFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     *  条件查询位置list
+     * @param location
+     * @return
+     */
+    public List<Location> queryByLocation(String location){
+        try {
+            return LocationDaoOpe.queryBuilder().where().eq("type","操作中").and().like("location", location).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *  条件查询库房list
+     * @param location
+     * @return
+     */
+    public List<Location> queryByLocations(String location){
+        try {
+            return LocationDaoOpe.queryBuilder().where().eq("type", "库房").and().like("location", location).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

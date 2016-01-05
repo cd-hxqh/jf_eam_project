@@ -96,6 +96,15 @@ public class Constants {
     //人员
     public static final String PERSON_APPID = "PERSON";
     public static final String PERSON_NAME = "PERSON";
+    //员工
+    public static final String LABOR_APPID = "LABOR";
+    public static final String LABOR_NAME = "LABOR";
+    //工种
+    public static final String CRAFTRATE_APPID = "CRAFTRATE";
+    public static final String CRAFTRATE_NAME = "CRAFTRATE";
+    //项目
+    public static final String ITEM_APPID = "ITEM";
+    public static final String ITEM_NAME = "ITEM";
 
     /**
      * 采购管理*
@@ -171,10 +180,13 @@ public class Constants {
      * 选项跳转请求值
      */
     public static final int ASSETCODE = 100;
-    public static final int LOCATIONCODE = 110;
+    public static final int LOCATIONCODE = 110;//位置
+    public static final int LOCATIONSCODE = 111;//库房
     public static final int FAILURECODE = 120;
     public static final int FAILURELIST = 130;
     public static final int JOBPLAN = 140;
+    public static final int CRAFTRATE = 170;
+    public static final int ITEM = 180;
 
     public static final int PERSON=160;
 

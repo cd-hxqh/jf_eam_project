@@ -33,6 +33,7 @@ import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.GetNowTime;
 
@@ -108,6 +109,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private LinearLayout planLinearlayout;
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
+    private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
     /**
      * 任务分配*
      */
@@ -283,7 +285,38 @@ public class Work_AddNewActivity extends BaseActivity {
                     new AsyncTask<String, Webservice_result, Webservice_result>() {
                         @Override
                         protected Webservice_result doInBackground(String... strings) {
-                            String data = "{\"woNum\":\"test2\",\"description\":\"description\",\"location\":\"DST\",\"assetnum\":\"8888\",\"UDWOTYPE\":\"PLAN\",\"actstart\":\"2015-08-01 11:11:11\",\"actfinish\":\"2015-08-10 11:11:11\",\"problem\":\"TEST\",\"remedy\":\"TEST1\",\"cause\":\"TEST2\",\"reportedby\":\"MAXADMIN\",\"lctype\":\"电气\",\"failurecode\":\"TEST\",\"failurelist1\":\"1005\",\"failurelist2\":\"1015\",\"failurelist3\":\"1011\",\"reportdate\":\"2015-08-01 11:11:11\",\"onbehalfof\":\"CHANEY\",\"jpnum\":\"JP11220\",\"wotasks\":[{\"wosequence\":\"\",\"taskid\":\"10\",\"description\":\"步骤1\",\"workorderid\":\"\"},{\"wosequence\":\"\",\"taskid\":\"20\",\"description\":\"步骤2\",\"workorderid\":\"\"}],\"wpmaterials\":[{\"itemnum\":\"TEST003\",\"itemqty\":\"1\",\"location\":\"DST\"},{\"itemnum\":\"TEST002\",\"itemqty\":\"1\",\"location\":\"DST\"}],\"labtrans\":[{\"laborcode\":\"TEST\",\"starttime\":\"2015-08-2 11:11:11\",\"finishtime\":\"2015-08-3 11:11:11\"}]}";
+                            String data = "{\"wonum\":\"1255\",\n" +
+                                    "\"DESCRIPTION\":\"测试1#风机检修\",\n" +
+                                    "\"UDAPPTYPE\":\"UDWOTRACK\",\n" +
+                                    "\"assetnum\":\"TEST001\",\n" +
+                                    "\"status\":\"已核准\",\n" +
+                                    "\"location\":\"TRXNSITE\",\n" +
+                                    "\"lctype\":\"电气\",\n" +
+                                    "\"relationShip\":[{\"wpmaterial\":\"\",\"WOACTIVITY\":\"\"}],\n" +
+                                    "\"wpmaterial\":\n" +
+                                    "[{\n" +
+                                    "\"wonum\":\"1255\",\n" +
+                                    "\"itemnum\":\"TEST003\",\n" +
+                                    "\"itemqty\":\"1\",\n" +
+                                    "\"location\":\"DST\"\n" +
+                                    "},\n" +
+                                    "{\"wonum\":\"1255\",\n" +
+                                    "\"itemnum\":\"TEST002\",\n" +
+                                    "\"itemqty\":\"1\",\n" +
+                                    "\"location\":\"DST\"}\n" +
+                                    "],\n" +
+                                    "\"WOACTIVITY\": \n" +
+                                    "[{\n" +
+                                    "\"wosequence\":\"\",\n" +
+                                    "\"taskid\":\"10\",\n" +
+                                    "\"description\":\"步骤1\",\n" +
+                                    "\"parent\":\"1255\"\n" +
+                                    "},\n" +
+                                    "{\"wosequence\":\"\",\n" +
+                                    "\"taskid\":\"20\",\n" +
+                                    "\"description\":\"步骤2\",\n" +
+                                    "\"parent\":\"1255\"}\n" +
+                                    "]}";
                             result = getBaseApplication().getWsService().InsertWO(data);
                             return result;
                         }
@@ -363,8 +396,9 @@ public class Work_AddNewActivity extends BaseActivity {
             bundle.putSerializable("workOrder", workOrder);
             bundle.putSerializable("woactivityList",woactivityList);
             bundle.putSerializable("wplaborList", wplaborList);
+            bundle.putSerializable("wpmaterialList", wpmaterialList);
             intent.putExtras(bundle);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, 1000);
             popupWindow.dismiss();
         }
     };
@@ -483,7 +517,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 assetnum.setText(option.getName());
                 assetdesc.setText(option.getDescription());
                 location.setText(option.getValue());
-                locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryByLocation(option.getValue()).description);
+                locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()).description);
                 break;
             case Constants.LOCATIONCODE:
                 break;
@@ -500,9 +534,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 jpnum.setText(option.getName());
                 break;
             case 1000:
-                Bundle b=data.getExtras();
-                ArrayList<Wplabor>wplabors = (ArrayList<Wplabor>) b.getSerializable("wplaborList");
-                int i = wplabors.size();
+                woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                wplaborList = (ArrayList<Wplabor>) data.getSerializableExtra("wplaborList");
+                wpmaterialList = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
                 break;
             default:
                 break;

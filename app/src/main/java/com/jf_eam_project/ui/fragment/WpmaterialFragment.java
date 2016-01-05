@@ -35,8 +35,8 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
-    private LinearLayout nodatalayout;
-    private WpmaterialAdapter wpmaterialAdapter;
+    public LinearLayout nodatalayout;
+    public WpmaterialAdapter wpmaterialAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;

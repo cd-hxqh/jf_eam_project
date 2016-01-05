@@ -2,7 +2,10 @@ package com.jf_eam_project.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
@@ -24,13 +27,18 @@ public class WpmaterialDetailsActivity extends BaseActivity{
      */
     private ImageView backImageView;
 
-    private TextView itemnum;//项目
-    private TextView itemqty;//数量
+    private TextView taskid;//任务
+    private RelativeLayout taskidlayout;
+    private TextView itemnum;//项目  项目/物料
+    private RelativeLayout itemnumlayout;
+    private EditText itemqty;//数量
     private TextView location;//库房
+    private RelativeLayout locationlayout;
     private TextView storelocsite;//库房地点
-    private TextView unitcost;//单位成本
-    private TextView restype;//预留类型
+    private TextView requestby;//请求者
     private TextView requiredate;//要求日期
+    private RelativeLayout requiredatelayout;
+    private Button ok;//确认
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +61,16 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
+        taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
+        taskidlayout = (RelativeLayout) findViewById(R.id.wpmaterial_taskid_layout);
         itemnum = (TextView) findViewById(R.id.wpmaterial_itemnum);
-        itemqty = (TextView) findViewById(R.id.wpmaterial_itemqty);
+        itemnumlayout = (RelativeLayout) findViewById(R.id.wpmaterial_itemnum_layout);
+        itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
+        locationlayout = (RelativeLayout) findViewById(R.id.wpmaterial_location_layout);
         storelocsite = (TextView) findViewById(R.id.wpmaterial_storelocsite);
-        unitcost = (TextView) findViewById(R.id.wpmaterial_unitcost);
-        restype = (TextView) findViewById(R.id.wpmaterial_restype);
         requiredate = (TextView) findViewById(R.id.wpmaterial_requiredate);
+        requiredatelayout = (RelativeLayout) findViewById(R.id.wpmaterial_requiredate_layout);
     }
 
     @Override
@@ -76,8 +87,6 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         itemqty.setText(wpmaterial.itemqty);
         location.setText(wpmaterial.location);
         storelocsite.setText(wpmaterial.storelocsite);
-        unitcost.setText(wpmaterial.unitcost);
-        restype.setText(wpmaterial.restype);
         requiredate.setText(wpmaterial.requiredate);
     }
 }

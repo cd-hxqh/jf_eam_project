@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by think on 2015/12/25.
- * 人员
+ * 员工
  */
 @JsonType
 @DatabaseTable(tableName = "Labor")

@@ -43,7 +43,9 @@
     <string name="title_activity_woactivity_details">任务详情</string>
     <string name="title_activity_woactivity_addnew">任务新增</string>
     <string name="title_activity_wplabor_details">员工详情</string>
+    <string name="title_activity_wplabor_addnew">员工新增</string>
     <string name="title_activity_wpmaterial_details">物料详情</string>
+    <string name="title_activity_wpmaterial_addnew">物料新增</string>
     <string name="title_activity_wpservice_details">服务详情</string>
     <string name="title_activity_wptool_details">工具详情</string>
     <string name="title_activity_work_assignment">任务分配</string>
@@ -197,10 +199,12 @@
     <string name="labtrans_regularhrs">常规时数</string>
 
     <!--计划物料详情页面-->
+    <string name="wpmaterial_taskid">任务</string>
     <string name="wpmaterial_itemnum">项目</string>
     <string name="wpmaterial_itemqty">数量</string>
     <string name="wpmaterial_location">库房</string>
     <string name="wpmaterial_storelocsite">库房地点</string>
+    <string name="wpmaterial_requestby">请求者</string>
     <string name="wpmaterial_unitcost">单位成本</string>
     <string name="wpmaterial_restype">预留类型</string>
     <string name="wpmaterial_requiredate">要求日期</string>

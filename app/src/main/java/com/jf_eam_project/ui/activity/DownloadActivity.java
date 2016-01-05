@@ -12,9 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.CraftrateDao;
 import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
+import com.jf_eam_project.Dao.ItemDao;
 import com.jf_eam_project.Dao.JobplanDao;
+import com.jf_eam_project.Dao.LaborDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
@@ -23,9 +26,12 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
+import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
+import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
 
@@ -88,6 +94,8 @@ public class DownloadActivity extends BaseActivity{
         tempArray01.add("作业计划");
         tempArray01.add("人员");
         tempArray01.add("员工");
+        tempArray01.add("工种");
+        tempArray01.add("项目");
 
         List<String> tempArray02 = new ArrayList<String>();
         tempArray02.add("巡检单类型");
@@ -222,6 +230,12 @@ public class DownloadActivity extends BaseActivity{
                 downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.JOBPLAN_NAME),buttonText,button);
             }else if(buttonText.equals(childArray.get(0).get(5))){//人员
                 downloaddata(HttpManager.getUrl(Constants.PERSON_APPID,Constants.PERSON_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(6))){//员工
+                downloaddata(HttpManager.getUrl(Constants.LABOR_APPID,Constants.LABOR_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(7))){//工种
+                downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID,Constants.CRAFTRATE_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(8))){//项目
+                downloaddata(HttpManager.getUrl(Constants.ITEM_APPID,Constants.ITEM_NAME),buttonText,button);
             }
         }
     }
@@ -250,6 +264,15 @@ public class DownloadActivity extends BaseActivity{
                         }else if(buttonText.equals(childArray.get(0).get(5))){//人员
                             List<Person> jobplans = Ig_Json_Model.parsingPerson(data);
                             new PersonDao(DownloadActivity.this).create(jobplans);
+                        }else if(buttonText.equals(childArray.get(0).get(6))){//员工
+                            List<Labor> jobplans = Ig_Json_Model.parsingLabor(data);
+                            new LaborDao(DownloadActivity.this).create(jobplans);
+                        }else if(buttonText.equals(childArray.get(0).get(7))){//工种
+                            List<Craftrate> craftrates = Ig_Json_Model.parsingCraftrate(data);
+                            new CraftrateDao(DownloadActivity.this).create(craftrates);
+                        }else if(buttonText.equals(childArray.get(0).get(8))){//项目
+                            List<Item> craftrates = Ig_Json_Model.parsingItem(data);
+                            new ItemDao(DownloadActivity.this).create(craftrates);
                         }
                         button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {

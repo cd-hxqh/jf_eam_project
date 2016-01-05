@@ -35,8 +35,8 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
-    private LinearLayout nodatalayout;
-    private WplaborAdapter wplaborAdapter;
+    public LinearLayout nodatalayout;
+    public WplaborAdapter wplaborAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;

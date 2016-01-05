@@ -4,28 +4,28 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.Labor;
+import com.jf_eam_project.model.Item;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Created by think on 2015/12/31.
- *员工
+ * Created by think on 2016/1/4.
+ * 项目
  */
-public class LaborDao {
+public class ItemDao {
     private Context context;
-    private Dao<Labor, Integer> LaborDaoOpe;
+    private Dao<Item, Integer> ItemDaoOpe;
     private DatabaseHelper helper;
 
-    public LaborDao(Context context)
+    public ItemDao(Context context)
     {
         this.context = context;
         try
         {
             helper = DatabaseHelper.getHelper(context);
-            LaborDaoOpe = helper.getDao(Labor.class);
+            ItemDaoOpe = helper.getDao(Item.class);
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -33,17 +33,17 @@ public class LaborDao {
     }
 
     /**
-     *更新位置信息
+     *更新项目信息
      * @param list
      */
-    public void create(final List<Labor> list) {
+    public void create(final List<Item> list) {
             try {
                 deleteall();
-                LaborDaoOpe.callBatchTasks(new Callable<Void>() {
+                ItemDaoOpe.callBatchTasks(new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        for (Labor labor : list) {
-                            LaborDaoOpe.createOrUpdate(labor);
+                        for (Item item : list) {
+                            ItemDaoOpe.createOrUpdate(item);
                         }
                         return null;
                     }
@@ -58,9 +58,9 @@ public class LaborDao {
      *
      * @return
      */
-    public List<Labor> queryForAll(){
+    public List<Item> queryForAll(){
         try {
-            return LaborDaoOpe.queryForAll();
+            return ItemDaoOpe.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class LaborDao {
      */
     public void deleteall(){
         try {
-            LaborDaoOpe.delete(LaborDaoOpe.queryForAll());
+            ItemDaoOpe.delete(ItemDaoOpe.queryForAll());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,12 +81,12 @@ public class LaborDao {
 
     /**
      *
-     * @param laborcode
+     * @param itemnum
      * @return
      */
-    public Labor queryByLabor(String laborcode){
+    public List<Item> queryByItem(String itemnum){
         try {
-            return LaborDaoOpe.queryBuilder().where().eq("laborcode",laborcode).queryForFirst();
+            return ItemDaoOpe.queryBuilder().where().like("itemnum", itemnum).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,13 +95,13 @@ public class LaborDao {
 
     /**
      *
-     * @param labor
+     * @param item
      * @return
      */
-    public boolean isexit(Labor labor){
+    public boolean isexit(Item item){
         try {
-            List<Labor>workOrderList = LaborDaoOpe.queryBuilder().where().eq("location",labor.laborcode).query();
-            if(workOrderList.size()>0){
+            List<Item>craftrateList = ItemDaoOpe.queryBuilder().where().eq("location",item.itemnum).query();
+            if(craftrateList.size()>0){
                 return true;
             }else {
                 return false;

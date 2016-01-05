@@ -50,11 +50,14 @@ public class AndroidClientService {
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
-        SoapObject soapReq = new SoapObject(NAMESPACE, "woserviceInsertWO");
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
         soapReq.addProperty("json", string);
         soapReq.addProperty("flag",1);
+        soapReq.addProperty("mboObjectName","workorder");
+        soapReq.addProperty("mboKey","wonum");
+        soapReq.addProperty("personId","maxadmin");
         soapEnvelope.setOutputSoapObject(soapReq);
-        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
+        HttpTransportSE httpTransport = new HttpTransportSE("http://1.202.243.112:7001/meaweb/services/MOBILESERVICE",timeOut);
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {

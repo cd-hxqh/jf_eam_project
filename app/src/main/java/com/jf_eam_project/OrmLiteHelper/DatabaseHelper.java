@@ -8,8 +8,10 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
+import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Labtrans;
@@ -27,7 +29,7 @@ import java.util.Map;
  * Created by think on 2015/12/23.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
@@ -49,6 +51,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Jobplan.class);
             TableUtils.createTable(connectionSource, Person.class);
             TableUtils.createTable(connectionSource, Labor.class);
+            TableUtils.createTable(connectionSource, Craftrate.class);
+            TableUtils.createTable(connectionSource, Item.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,6 +75,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Jobplan.class, true);
             TableUtils.dropTable(connectionSource, Person.class, true);
             TableUtils.dropTable(connectionSource, Labor.class, true);
+            TableUtils.dropTable(connectionSource, Craftrate.class, true);
+            TableUtils.dropTable(connectionSource, Item.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

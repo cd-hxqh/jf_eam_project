@@ -118,8 +118,20 @@
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
+            android:name=".ui.activity.WplaborAddNewActivity"
+            android:label="@string/title_activity_wplabor_addnew"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+        <activity
             android:name=".ui.activity.WpmaterialDetailsActivity"
             android:label="@string/title_activity_wpmaterial_details"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+        <activity
+            android:name=".ui.activity.WpmaterialAddNewActivity"
+            android:label="@string/title_activity_wpmaterial_addnew"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>

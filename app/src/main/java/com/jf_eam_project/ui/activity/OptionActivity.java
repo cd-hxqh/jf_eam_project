@@ -21,16 +21,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.CraftrateDao;
 import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
+import com.jf_eam_project.Dao.ItemDao;
 import com.jf_eam_project.Dao.JobplanDao;
+import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
+import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
+import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Person;
 import com.jf_eam_project.ui.adapter.OptionAdapter;
@@ -150,6 +156,20 @@ public class OptionActivity extends BaseActivity {
                     list.add(option);
                 }
                 break;
+            case Constants.LOCATIONCODE:
+                List<Location> locations;
+                if(searchText.equals("")) {
+                    locations = new LocationDao(OptionActivity.this).queryForAll();
+                }else {
+                    locations = new LocationDao(OptionActivity.this).queryByLocation(searchText);
+                }
+                for (int i = 0;i < locations.size();i ++){
+                    option = new Option();
+                    option.setName(locations.get(i).location);
+                    option.setDescription(locations.get(i).description);
+                    list.add(option);
+                }
+                break;
             case Constants.FAILURECODE:
                 List<Failurecode>failurecodes;
                 if(searchText.equals("")){
@@ -189,6 +209,48 @@ public class OptionActivity extends BaseActivity {
                     option = new Option();
                     option.setName(jobplans.get(i).jpnum);
                     option.setDescription(jobplans.get(i).description);
+                    list.add(option);
+                }
+                break;
+            case Constants.CRAFTRATE:
+                List<Craftrate> craftrates;
+                if(searchText.equals("")){
+                    craftrates = new CraftrateDao(OptionActivity.this).queryForAll();
+                }else {
+                    craftrates = new CraftrateDao(OptionActivity.this).queryByCraft(searchText);
+                }
+                for (int i = 0;i < craftrates.size();i ++){
+                    option = new Option();
+                    option.setName(craftrates.get(i).craft);
+                    option.setDescription(craftrates.get(i).skilllevel);
+                    list.add(option);
+                }
+                break;
+            case Constants.ITEM:
+                List<Item> items;
+                if(searchText.equals("")){
+                    items = new ItemDao(OptionActivity.this).queryForAll();
+                }else {
+                    items = new ItemDao(OptionActivity.this).queryByItem(searchText);
+                }
+                for (int i = 0;i < items.size();i ++){
+                    option = new Option();
+                    option.setName(items.get(i).itemnum);
+                    option.setDescription(items.get(i).description);
+                    list.add(option);
+                }
+                break;
+            case Constants.LOCATIONSCODE:
+                List<Location> locationses;
+                if(searchText.equals("")) {
+                    locationses = new LocationDao(OptionActivity.this).queryForLocations();
+                }else {
+                    locationses = new LocationDao(OptionActivity.this).queryByLocations(searchText);
+                }
+                for (int i = 0;i < locationses.size();i ++){
+                    option = new Option();
+                    option.setName(locationses.get(i).location);
+                    option.setDescription(locationses.get(i).description);
                     list.add(option);
                 }
                 break;

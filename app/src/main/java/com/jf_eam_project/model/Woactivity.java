@@ -47,4 +47,139 @@ public class Woactivity extends Entity{
     @JsonField(fieldName = "actfinish")
     public String actfinish;//实际完成时间
 
+    public String getTaskid() {
+        return taskid;
+    }
+
+    public void setTaskid(String taskid) {
+        this.taskid = taskid;
+    }
+
+    public String getAssetdesc() {
+        return assetdesc;
+    }
+
+    public void setAssetdesc(String assetdesc) {
+        this.assetdesc = assetdesc;
+    }
+
+    public String getAssetnum() {
+        return assetnum;
+    }
+
+    public void setAssetnum(String assetnum) {
+        this.assetnum = assetnum;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getWoclass() {
+        return woclass;
+    }
+
+    public void setWoclass(String woclass) {
+        this.woclass = woclass;
+    }
+
+    public String getLocationdesc() {
+        return locationdesc;
+    }
+
+    public void setLocationdesc(String locationdesc) {
+        this.locationdesc = locationdesc;
+    }
+
+    public String getWosequence() {
+        return wosequence;
+    }
+
+    public void setWosequence(String wosequence) {
+        this.wosequence = wosequence;
+    }
+
+    public String getEstdur() {
+        return estdur;
+    }
+
+    public void setEstdur(String estdur) {
+        this.estdur = estdur;
+    }
+
+    public String getWonum() {
+        return wonum;
+    }
+
+    public void setWonum(String wonum) {
+        this.wonum = wonum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getOwnergroup() {
+        return ownergroup;
+    }
+
+    public void setOwnergroup(String ownergroup) {
+        this.ownergroup = ownergroup;
+    }
+
+    public String getTargstartdate() {
+        return targstartdate;
+    }
+
+    public void setTargstartdate(String targstartdate) {
+        this.targstartdate = targstartdate;
+    }
+
+    public String getTargcompdate() {
+        return targcompdate;
+    }
+
+    public void setTargcompdate(String targcompdate) {
+        this.targcompdate = targcompdate;
+    }
+
+    public String getActstart() {
+        return actstart;
+    }
+
+    public void setActstart(String actstart) {
+        this.actstart = actstart;
+    }
+
+    public String getActfinish() {
+        return actfinish;
+    }
+
+    public void setActfinish(String actfinish) {
+        this.actfinish = actfinish;
+    }
 }

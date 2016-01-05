@@ -6,11 +6,13 @@ import android.util.Log;
 
 import com.jf_eam_project.api.ig.json.impl.Asset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Craftrate_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Item_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labor_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
@@ -32,11 +34,13 @@ import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
+import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Labtrans;
@@ -250,5 +254,17 @@ public class Ig_Json_Model {
     public static ArrayList<Labor> parsingLabor(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Labor_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析工种**/
+    public static ArrayList<Craftrate> parsingCraftrate(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Craftrate_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析项目**/
+    public static ArrayList<Item> parsingItem(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Item_JsonHelper.parseFromJsonList(input);
     }
 }

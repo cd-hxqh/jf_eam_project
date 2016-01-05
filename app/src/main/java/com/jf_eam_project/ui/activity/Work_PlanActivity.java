@@ -18,6 +18,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.fragment.WoactivityFragment;
 import com.jf_eam_project.ui.fragment.WplaborFragment;
 import com.jf_eam_project.ui.fragment.WpmaterialFragment;
@@ -54,6 +55,7 @@ public class Work_PlanActivity extends BaseActivity {
     public WorkOrder workOrder;
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
+    private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class Work_PlanActivity extends BaseActivity {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
         woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         wplaborList = (ArrayList<Wplabor>) getIntent().getSerializableExtra("wplaborList");
+        wpmaterialList = (ArrayList<Wpmaterial>) getIntent().getSerializableExtra("wpmaterialList");
     }
 
     @Override
@@ -90,12 +93,7 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setCurrentItem(currentIndex);
         mViewPager.setOffscreenPageLimit(1);
         titlename.setText(getResources().getString(R.string.work_plan));
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backimg.setOnClickListener(backOnClickListener);
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
@@ -121,6 +119,18 @@ public class Work_PlanActivity extends BaseActivity {
         woactivity.performClick();
     }
 
+    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            intent.putExtra("woactivityList", woactivityList);
+            intent.putExtra("wplaborList", wplaborList);
+            intent.putExtra("wpmaterialList", wpmaterialList);
+            Work_PlanActivity.this.setResult(1000, intent);
+            finish();
+        }
+    };
+
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -130,10 +140,13 @@ public class Work_PlanActivity extends BaseActivity {
                 intent.putExtra("taskid", (woactivityList.size() + 1) * 10);
                 startActivityForResult(intent, 0);
             } else if (currentIndex == 1) {
-//                intent = new Intent(Work_PlanActivity.this,AddWplaborActivity.class);
-//                startActivity(intent);
+                intent = new Intent(Work_PlanActivity.this, WplaborAddNewActivity.class);
+                intent.putExtra("woactivityList", woactivityList);
+                startActivityForResult(intent, 1);
             } else if (currentIndex == 2) {
-
+                intent = new Intent(Work_PlanActivity.this, WpmaterialAddNewActivity.class);
+                intent.putExtra("woactivityList", woactivityList);
+                startActivityForResult(intent, 2);
             }
         }
     };
@@ -255,11 +268,24 @@ public class Work_PlanActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (resultCode) {
             case 0:
                 Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                 woactivityList.add(woactivity);
-                woactivityFragment.woactivityAdapter.update(woactivityList,true);
+                woactivityFragment.woactivityAdapter.update(woactivityList, true);
+                woactivityFragment.nodatalayout.setVisibility(View.GONE);
+                break;
+            case 1:
+                Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
+                wplaborList.add(wplabor);
+                wplaborFragment.wplaborAdapter.update(wplaborList, true);
+                wplaborFragment.nodatalayout.setVisibility(View.GONE);
+            case 2:
+                Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
+                wpmaterialList.add(wpmaterial);
+                wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
+                wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
         }
     }
 }
