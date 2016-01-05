@@ -2,6 +2,7 @@ package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -44,6 +45,8 @@ import java.util.List;
  * 基础数据下载页面
  */
 public class DownloadActivity extends BaseActivity{
+
+    private static final String TAG="DownloadActivity";
     /**
      * 标题*
      */
@@ -244,6 +247,8 @@ public class DownloadActivity extends BaseActivity{
         HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
+
+                Log.i(TAG,"data="+data);
                 if(data != null) {
                     try {
                         if(buttonText.equals(childArray.get(0).get(0))) {//位置

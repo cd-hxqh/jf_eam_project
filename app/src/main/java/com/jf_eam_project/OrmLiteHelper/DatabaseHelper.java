@@ -17,6 +17,7 @@ import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
+import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.utils.DataUtils;
@@ -29,7 +30,7 @@ import java.util.Map;
  * Created by think on 2015/12/23.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
@@ -53,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Labor.class);
             TableUtils.createTable(connectionSource, Craftrate.class);
             TableUtils.createTable(connectionSource, Item.class);
+            TableUtils.createTable(connectionSource, Udinspoasset.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,6 +79,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Labor.class, true);
             TableUtils.dropTable(connectionSource, Craftrate.class, true);
             TableUtils.dropTable(connectionSource, Item.class, true);
+            TableUtils.dropTable(connectionSource, Udinspoasset.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

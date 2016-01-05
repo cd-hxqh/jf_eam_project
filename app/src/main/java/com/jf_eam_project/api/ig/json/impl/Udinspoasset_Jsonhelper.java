@@ -11,11 +11,16 @@ import com.jf_eam_project.model.Udinspoasset;
 
 import java.io.IOException;
 import java.util.ArrayList;
-/**设备备件**/
+
+
+/**
+ * 设备备件*
+ */
 
 public final class Udinspoasset_Jsonhelper
         implements JsonHelper<Udinspoasset> {
     private static final String TAG = "Udinspoasset_Jsonhelper";
+
     /**
      * 解析List*
      */
@@ -112,6 +117,7 @@ public final class Udinspoasset_Jsonhelper
         jp.nextToken();
         return parseFromJson(jp);
     }
+
 
 
 }

@@ -179,7 +179,7 @@ public class Constants {
     /**
      * 选项跳转请求值
      */
-    public static final int ASSETCODE = 100;
+    public static final int ASSETCODE = 100; //资产
     public static final int LOCATIONCODE = 110;//位置
     public static final int LOCATIONSCODE = 111;//库房
     public static final int FAILURECODE = 120;

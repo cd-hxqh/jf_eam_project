@@ -266,6 +266,14 @@
             android:name=".ui.activity.Udinspojxxm_Details_Activity"
             android:label="@string/udinspojxxm_detail_title" >
         </activity>
+        <activity
+            android:name=".ui.activity.Add_Udinspoasset_Activity"
+            android:label="@string/udinspoasset_title" >
+        </activity>
+        <activity
+            android:name=".ui.activity.AddUdinspoAssetActivity"
+            android:label="@string/add_udinspoasset_title" >
+        </activity>
     </application>
 
 </manifest>

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -33,12 +35,14 @@ import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
+import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,7 +107,9 @@ public class AddUdinspoActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     private TextView udinspoasset; //设备部件
-    private  String insponum; //巡检单编号
+    private String insponum; //巡检单编号
+
+    ArrayList<Udinspoasset> udinspoassets = new ArrayList<Udinspoasset>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,7 +262,7 @@ public class AddUdinspoActivity extends BaseActivity {
 
                 inspotypeText.setText(mMenuItems.get(position).mOperName);
 
-                inspotype=inspotypeTexts[position];
+                inspotype = inspotypeTexts[position];
                 dialog.dismiss();
             }
         });
@@ -272,7 +278,6 @@ public class AddUdinspoActivity extends BaseActivity {
 
         for (int i = 0; i < inspotypes.length; i++)
             mMenuItems.add(new DialogMenuItem(inspotypes[i], 0));
-
 
 
     }
@@ -292,6 +297,10 @@ public class AddUdinspoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
         switch (resultCode) {
+            case 0:
+                udinspoassets = (ArrayList<Udinspoasset>) data.getSerializableExtra("udinspoassets");
+
+                break;
             case Constants.PERSON:
                 option = (Option) data.getSerializableExtra("option");
                 inspobyText.setText(option.getName());
@@ -348,12 +357,12 @@ public class AddUdinspoActivity extends BaseActivity {
                         Log.i(TAG, "s=" + s);
 
                         try {
-                            JSONObject jsonObject=new JSONObject(s);
-                            String insponum=jsonObject.getString("INSPONUM");
-                            String success=jsonObject.getString("success");
-                            String errorNo=jsonObject.getString("errorNo");
+                            JSONObject jsonObject = new JSONObject(s);
+                            String insponum = jsonObject.getString("INSPONUM");
+                            String success = jsonObject.getString("success");
+                            String errorNo = jsonObject.getString("errorNo");
 
-                            if (success.equals("成功")&&errorNo.equals("0")) {
+                            if (success.equals("成功") && errorNo.equals("0")) {
                                 MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交成功");
                             } else {
                                 MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交失败");
@@ -391,11 +400,32 @@ public class AddUdinspoActivity extends BaseActivity {
             jsonObject.put("CREATEDATE", createdate);
             jsonObject.put("INSPOBY", inspoby);
             jsonObject.put("INSPODATE", inspodate);
+            if (!jsonUdinPoAssetInfo(udinspoassets).equals("")) {
+                jsonObject.put("CHILDREN", jsonUdinPoAssetInfo(udinspoassets));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return jsonObject.toString();
+    }
+
+
+    /**
+     * 封装udinspoAsset信息*
+     */
+    private String jsonUdinPoAssetInfo(ArrayList<Udinspoasset> udinspoassets) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json2 = "";
+        try {
+            json2 = mapper.writeValueAsString(udinspoassets);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "";
+        }
+        return json2;
     }
 
 
@@ -424,14 +454,12 @@ public class AddUdinspoActivity extends BaseActivity {
     private View.OnClickListener udinspoassetOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(AddUdinspoActivity.this, Udinspoasset_Activity.class);
-            intent.putExtra("insponum",insponum);
+            Intent intent = new Intent(AddUdinspoActivity.this, Add_Udinspoasset_Activity.class);
+            intent.putExtra("insponum", insponum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }
     };
-
-
 
 
 }

@@ -119,7 +119,7 @@ public class Work_AddNewActivity extends BaseActivity {
     /**
      * 实际情况
      */
-    private TextView realinfoLinearLayout;
+    private LinearLayout realinfoLinearLayout;
 
     private Webservice_result result;
     protected static final int S = 0;
@@ -364,13 +364,14 @@ public class Work_AddNewActivity extends BaseActivity {
                 R.drawable.abc_popup_background_mtrl_mult));
         popupWindow.showAsDropDown(view, 0, 20);
 
+
+
         planLinearlayout = (TextView) contentView.findViewById(R.id.work_wplabor_id);
         taskLinearLayout = (TextView) contentView.findViewById(R.id.work_task_id);
-        realinfoLinearLayout = (TextView) contentView.findViewById(R.id.work_labtrans_id);
+        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.linearlayout_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
-
 
         realinfoLinearLayout.setVisibility(View.GONE);
     }

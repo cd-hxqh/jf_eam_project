@@ -302,6 +302,7 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.i(TAG,"responseString="+responseString);
                 String result = JsonUtils.parsingResults1(cxt,responseString);
                 SafeHandler.onSuccess(handler, result);
             }
