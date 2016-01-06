@@ -10,30 +10,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Woactivity;
-import com.jf_eam_project.model.Wplabor;
-import com.jf_eam_project.model.Wpmaterial;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * 设备备件新增
+ * 检修项目标准
  */
-public class AddUdinspoAssetActivity extends BaseActivity {
+public class AddUdinspojxxmActivity extends BaseActivity {
 
-    private static final String TAG = "AddUdinspoAssetActivity";
+    private static final String TAG = "AddUdinspojxxmActivity";
 
     /**
      * 标题*
@@ -144,7 +137,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private View.OnClickListener locationOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(AddUdinspoAssetActivity.this, OptionActivity.class);
+            Intent intent = new Intent(AddUdinspojxxmActivity.this, OptionActivity.class);
             intent.putExtra("requestCode", Constants.LOCATIONCODE);
             startActivityForResult(intent, Constants.LOCATIONCODE);
         }
@@ -156,7 +149,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private View.OnClickListener assetnumOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(AddUdinspoAssetActivity.this, OptionActivity.class);
+            Intent intent = new Intent(AddUdinspojxxmActivity.this, OptionActivity.class);
             intent.putExtra("requestCode", Constants.ASSETCODE);
             startActivityForResult(intent, Constants.ASSETCODE);
         }
@@ -207,7 +200,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void showPopupWindow(View view) {
 
-        View contentView = LayoutInflater.from(AddUdinspoAssetActivity.this).inflate(
+        View contentView = LayoutInflater.from(AddUdinspojxxmActivity.this).inflate(
                 R.layout.udinspo_popup_window, null);
 
 
@@ -230,7 +223,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private View.OnClickListener udinspoassetOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(AddUdinspoAssetActivity.this, Add_Udinspojxxm_Activity.class);
+            Intent intent = new Intent(AddUdinspojxxmActivity.this, Add_Udinspojxxm_Activity.class);
             intent.putExtra("udinspoassetnum", udinspoassetnum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
@@ -290,7 +283,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         udinspoasset.setChildassetnum(childassetnumText.getText().toString());
 
 
-        new UdinspoAssetDao(AddUdinspoAssetActivity.this).insert(udinspoasset);
+        new UdinspoAssetDao(AddUdinspojxxmActivity.this).insert(udinspoasset);
 
         return udinspoasset;
     }

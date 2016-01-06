@@ -280,6 +280,10 @@
             android:name=".ui.activity.AddUdinspoAssetActivity"
             android:label="@string/add_udinspoasset_title" >
         </activity>
+        <activity
+            android:name=".ui.activity.Add_Udinspojxxm_Activity"
+            android:label="@string/udinspojxxm_title" >
+        </activity>
     </application>
 
 </manifest>
