@@ -125,7 +125,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        udinspoassetlinenumText.setText(linenum == 0 ? "1" : linenum + "");
+        udinspoassetlinenumText.setText(linenum == 0 ? "1" : (linenum+1) + "");
         udinspoassetnumText.setText("SC" + getRandomNumber(4));
 
         locationText.setOnClickListener(locationOnClickListener);

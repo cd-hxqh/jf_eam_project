@@ -297,7 +297,7 @@ public class AddUdinspoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
         switch (resultCode) {
-            case 0:
+            case 1:
                 udinspoassets = (ArrayList<Udinspoasset>) data.getSerializableExtra("udinspoassets");
 
                 break;

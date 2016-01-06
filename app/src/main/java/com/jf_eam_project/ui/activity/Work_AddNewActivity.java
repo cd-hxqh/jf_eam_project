@@ -458,16 +458,6 @@ public class Work_AddNewActivity extends BaseActivity {
                 sb.append(i + ":" + i1 + ":00");
             }
 
-//            Log.i(TAG,"sb="+sb);
-            if (layoutnum == targstartdatelayout.getId()) {
-                targstartdate.setText(sb);
-            } else if (layoutnum == targcompdatelayout.getId()) {
-                targcompdate.setText(sb);
-            } else if (layoutnum == actstartlayout.getId()) {
-                actstart.setText(sb);
-            } else if(layoutnum == actfinishlayout.getId()){
-                actfinish.setText(sb);
-            }
 
         }
     }

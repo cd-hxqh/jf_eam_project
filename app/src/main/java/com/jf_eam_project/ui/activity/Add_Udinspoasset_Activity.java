@@ -262,7 +262,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
 
             Intent intent = getIntent();
             intent.putExtra("udinspoassets", (Serializable) uditems);
-            setResult(0, intent);
+            setResult(1, intent);
             finish();
         }
     };
@@ -278,7 +278,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
         switch (resultCode) {
             case 0:
                 Udinspoasset udinspoasset = (Udinspoasset) data.getSerializableExtra("udinspoasset");
-                uditems = new ArrayList<Udinspoasset>();
+
                 uditems.add(udinspoasset);
                 udinspoassetListAdapter.adddate(uditems);
                 nodatalayout.setVisibility(View.GONE);
