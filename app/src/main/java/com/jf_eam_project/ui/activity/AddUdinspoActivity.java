@@ -391,7 +391,7 @@ public class AddUdinspoActivity extends BaseActivity {
         String inspoby = inspobyText.getText().toString();
         String inspodate = inspodateText.getText().toString();
 
-
+        String json2 = "[{\"assetnum\":\"0101001001\",\"childassetnum\":\"loll\",\"location\":\"G001MKA01CT206\",\"udinspoassetnum\":\"SC2451\"}]";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("DESCRIPTION", desc);
@@ -407,7 +407,6 @@ public class AddUdinspoActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return jsonObject.toString();
     }
 
@@ -415,17 +414,24 @@ public class AddUdinspoActivity extends BaseActivity {
     /**
      * 封装udinspoAsset信息*
      */
-    private String jsonUdinPoAssetInfo(ArrayList<Udinspoasset> udinspoassets) {
+    private JSONArray jsonUdinPoAssetInfo(ArrayList<Udinspoasset> udinspoassets) {
 
         ObjectMapper mapper = new ObjectMapper();
+        JSONArray jsonArray = null;
+
         String json2 = "";
         try {
             json2 = mapper.writeValueAsString(udinspoassets);
+            jsonArray = new JSONArray(json2);
+            Log.i(TAG,json2);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return "";
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
-        return json2;
+        return jsonArray;
     }
 
 

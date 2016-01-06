@@ -54,6 +54,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     /**
      * 界面信息显示*
      */
+    private TextView udinspoassetlinenumText; //序号
     private TextView udinspoassetnumText; //设备编号
     private TextView locationText; //位置
     private TextView locationDescText; //位置描述
@@ -74,6 +75,10 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      * 保存按钮*
      */
     private Button submitBtn;
+    /**
+     * 序号*
+     */
+    private int linenum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      */
     private void initData() {
         udinspoasset = (Udinspoasset) getIntent().getSerializableExtra("Udinspoasset");
+        linenum = getIntent().getIntExtra("udinspoassetlinenum", 0);
     }
 
     @Override
@@ -97,6 +103,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
+        udinspoassetlinenumText = (TextView) findViewById(R.id.udinspoasset_udinspoassetlinenum_text);
         udinspoassetnumText = (TextView) findViewById(R.id.ud_udinspoassetnum_text);
         locationText = (TextView) findViewById(R.id.udinspoasset_location_text);
         locationDescText = (TextView) findViewById(R.id.udinspoasset_location_description_text);
@@ -118,6 +125,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
+        udinspoassetlinenumText.setText(linenum == 0 ? "1" : linenum + "");
         udinspoassetnumText.setText("SC" + getRandomNumber(4));
 
         locationText.setOnClickListener(locationOnClickListener);
@@ -271,6 +279,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private Udinspoasset addUdinspoInfo() {
         Udinspoasset udinspoasset = new Udinspoasset();
 
+        udinspoasset.setUdinspoassetlinenum(udinspoassetlinenumText.getText().toString());
         udinspoasset.setUdinspoassetnum(udinspoassetnumText.getText().toString());
         udinspoasset.setLocation(locationText.getText().toString());
         udinspoasset.setLocationsdesc(locationDescText.getText().toString());

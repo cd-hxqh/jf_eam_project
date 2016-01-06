@@ -26,11 +26,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.ui.adapter.PrLineListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
@@ -84,7 +80,8 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
      */
     private Button affirmBtn;
 
-    ArrayList<Udinspoasset> uditems;
+    ArrayList<Udinspoasset> uditems=new ArrayList<Udinspoasset>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,6 +249,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
         public void onClick(View view) {
             Intent intent = new Intent();
             intent.setClass(Add_Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
+            intent.putExtra("udinspoassetlinenum",udinspoassetListAdapter.getItemCount());
             startActivityForResult(intent, 0);
         }
     };
@@ -259,12 +257,18 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
     private View.OnClickListener affirmBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+
+
             Intent intent = getIntent();
             intent.putExtra("udinspoassets", (Serializable) uditems);
             setResult(0, intent);
             finish();
         }
     };
+
+
+
 
 
     @Override
