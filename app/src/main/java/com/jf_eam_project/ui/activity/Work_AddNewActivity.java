@@ -61,42 +61,31 @@ public class Work_AddNewActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     private TextView wonum;//工单号
-    private RelativeLayout wonumlayout;
+    private LinearLayout wonumlayout;
     private TextView description;//描述
 //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
     private TextView assetnum;//资产编号
-    private RelativeLayout assetnumlayout;
     private TextView assetdesc;//资产描述
     private TextView location; //位置
-    private RelativeLayout locationlayout;
     private TextView locationdesc;//位置描述
     private TextView status; //状态
     private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
 //    private TextView woclass; //类
     private TextView failurecode; //故障类
-    private RelativeLayout failurecodelayout;
     private TextView problemcode; //问题代码
-    private RelativeLayout problemcodelayout;
     private TextView displayname; //创建人
     private TextView createdate; //创建时间
 
     private TextView jpnum; //作业计划
-    private RelativeLayout jpnumlayout;
     private TextView targstartdate;//计划开始时间
-    private RelativeLayout targstartdatelayout;
     private TextView targcompdate;//计划完成时间
-    private RelativeLayout targcompdatelayout;
     private TextView actstart;//实际开始时间
-    private RelativeLayout actstartlayout;
     private TextView actfinish;//实际完成时间
-    private RelativeLayout actfinishlayout;
 
     private TextView reportedby; //报告人
     private TextView reportdate; //汇报日期
-
-    private RelativeLayout lctypelayout;//风机/电气
 
     private Button addnew;
 
@@ -108,14 +97,14 @@ public class Work_AddNewActivity extends BaseActivity {
     /**
      * 计划员工*
      */
-    private TextView planLinearlayout;
+    private LinearLayout planLinearlayout;
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
     /**
      * 任务分配*
      */
-    private TextView taskLinearLayout;
+    private LinearLayout taskLinearLayout;
     /**
      * 实际情况
      */
@@ -169,40 +158,29 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (ImageView) findViewById(R.id.title_back_id);
         wonum = (TextView) findViewById(R.id.work_wonum);
-        wonumlayout = (RelativeLayout) findViewById(R.id.work_wonum_layout);
+        wonumlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         description = (TextView) findViewById(R.id.work_desc);
 //        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
         assetnum = (TextView) findViewById(R.id.work_assetnum);
-        assetnumlayout = (RelativeLayout) findViewById(R.id.work_assetnum_layout);
         assetdesc = (TextView) findViewById(R.id.work_assetdesc);
         location = (TextView) findViewById(R.id.work_location);
-        locationlayout = (RelativeLayout) findViewById(R.id.work_location_layout);
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
         status = (TextView) findViewById(R.id.work_status);
         statusdate = (TextView) findViewById(R.id.work_statusdate);
         lctype = (TextView) findViewById(R.id.work_lctype);
 //        woclass = (TextView) findViewById(R.id.work_woclass);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
-        failurecodelayout = (RelativeLayout) findViewById(R.id.work_failurecode_layout);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
-        problemcodelayout = (RelativeLayout) findViewById(R.id.work_problemcode_layout);
         displayname = (TextView) findViewById(R.id.work_displayname);
         createdate = (TextView) findViewById(R.id.work_createdate);
         jpnum = (TextView) findViewById(R.id.work_jpnum);
-        jpnumlayout = (RelativeLayout) findViewById(R.id.work_jpnum_layout);
         targstartdate = (TextView) findViewById(R.id.work_targstartdate);
-        targstartdatelayout = (RelativeLayout) findViewById(R.id.work_targstartdate_layout);
         targcompdate = (TextView) findViewById(R.id.work_targcompdate);
-        targcompdatelayout = (RelativeLayout) findViewById(R.id.work_targcompdate_layout);
         actstart = (TextView) findViewById(R.id.work_acstart);
-        actstartlayout = (RelativeLayout) findViewById(R.id.work_acstart_layout);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
-        actfinishlayout = (RelativeLayout) findViewById(R.id.work_actfinish_layout);
         reportedby = (TextView) findViewById(R.id.work_reportedby);
         reportdate = (TextView) findViewById(R.id.work_reportdate);
-
-        lctypelayout = (RelativeLayout) findViewById(R.id.work_lctype_layout);
 
         addnew = (Button) findViewById(R.id.work_add);
     }
@@ -223,7 +201,7 @@ public class Work_AddNewActivity extends BaseActivity {
         reportedby.setText(getBaseApplication().getUsername());
         reportdate.setText(GetNowTime.getTime());
 
-        lctypelayout.setOnClickListener(new View.OnClickListener() {
+        lctype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int checked = 0;
@@ -256,16 +234,16 @@ public class Work_AddNewActivity extends BaseActivity {
         });
 
         setDataListener();
-        targstartdatelayout.setOnClickListener(new MydateListener());
-        targcompdatelayout.setOnClickListener(new MydateListener());
-        actstartlayout.setOnClickListener(new MydateListener());
-        actfinishlayout.setOnClickListener(new MydateListener());
+        targstartdate.setOnClickListener(new MydateListener());
+        targcompdate.setOnClickListener(new MydateListener());
+        actstart.setOnClickListener(new MydateListener());
+        actfinish.setOnClickListener(new MydateListener());
 
-        assetnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.ASSETCODE));
-        locationlayout.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONCODE));
-        failurecodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
-        problemcodelayout.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
-        jpnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
+        assetnum.setOnClickListener(new LayoutOnClickListener(Constants.ASSETCODE));
+        location.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONCODE));
+        failurecode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
+        problemcode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
+        jpnum.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
     }
 
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
@@ -364,16 +342,14 @@ public class Work_AddNewActivity extends BaseActivity {
                 R.drawable.abc_popup_background_mtrl_mult));
         popupWindow.showAsDropDown(view, 0, 20);
 
-
-
-        planLinearlayout = (TextView) contentView.findViewById(R.id.work_wplabor_id);
-        taskLinearLayout = (TextView) contentView.findViewById(R.id.work_task_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.linearlayout_id);
+        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_wplabor_id);
+        taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
+        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_labtrans_id);
+        realinfoLinearLayout.setVisibility(View.GONE);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
-        realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
+//        realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-        realinfoLinearLayout.setVisibility(View.GONE);
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
@@ -403,17 +379,17 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
-    private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this, Work_LabtransActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workOrder", workOrder);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            popupWindow.dismiss();
-        }
-    };
+//    private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Intent intent = new Intent(Work_AddNewActivity.this, Work_LabtransActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("workOrder", workOrder);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//            popupWindow.dismiss();
+//        }
+//    };
 
     private class LayoutOnClickListener implements View.OnClickListener{
         int requestCode;

@@ -145,13 +145,17 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        page = 1;
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            page = 1;
+            getdata();
+        }
     }
 
     @Override
     public void onLoad() {
-        page++;
-        getdata();
+        if (workOrder.wonum != null && !workOrder.equals("")) {
+            page++;
+            getdata();
+        }
     }
 }

@@ -5,14 +5,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Woactivity;
+
+import java.util.ArrayList;
 
 /**
- * Created by think on 2015/12/11.
- * 任务分配详情页面
+ * Created by think on 2016/1/6.
+ * 新增任务分配页面
  */
-public class AssignmentDetailsActivity extends BaseActivity{
+public class AssigmentAddNewActivity extends BaseActivity{
     private Assignment assignment;
 
     /**
@@ -29,6 +36,10 @@ public class AssignmentDetailsActivity extends BaseActivity{
     private TextView craft;//工种
     private TextView laborhrs;//时数
 
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +54,7 @@ public class AssignmentDetailsActivity extends BaseActivity{
      * 获取数据*
      */
     private void geiIntentData() {
-        assignment = (Assignment) getIntent().getSerializableExtra("assignment");
+        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
     }
     @Override
     protected void findViewById() {
@@ -58,17 +69,23 @@ public class AssignmentDetailsActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-        titlename.setText(R.string.title_activity_work_assignment_details);
+        titlename.setText(R.string.title_activity_work_assignment_addnew);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+        addTaskData();
+    }
 
-        taskid.setText(assignment.taskid);
-        laborcode.setText(assignment.laborcode);
-        craft.setText(assignment.craft);
-        laborhrs.setText(assignment.laborhrs);
+    /**
+     * 添加任务数据*
+     */
+    private void addTaskData() {
+        for (int i = 0; i < woactivityList.size(); i++)
+            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
     }
 }

@@ -14,6 +14,7 @@ import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
+import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
@@ -54,6 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Labor.class);
             TableUtils.createTable(connectionSource, Craftrate.class);
             TableUtils.createTable(connectionSource, Item.class);
+            TableUtils.createTable(connectionSource, Laborcraftrate.class);
             TableUtils.createTable(connectionSource, Udinspoasset.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,6 +81,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Labor.class, true);
             TableUtils.dropTable(connectionSource, Craftrate.class, true);
             TableUtils.dropTable(connectionSource, Item.class, true);
+            TableUtils.dropTable(connectionSource, Laborcraftrate.class, true);
             TableUtils.dropTable(connectionSource, Udinspoasset.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {

@@ -15,6 +15,7 @@ import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Item_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labor_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Laborcraftrate_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Location_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
@@ -43,6 +44,7 @@ import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
+import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.PR;
@@ -266,5 +268,11 @@ public class Ig_Json_Model {
     public static ArrayList<Item> parsingItem(String input) throws IOException {
         Log.i(TAG, "input=" + input);
         return Item_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析员工工种**/
+    public static ArrayList<Laborcraftrate> parsingLaborcraftrate(String input) throws IOException {
+        Log.i(TAG, "input=" + input);
+        return Laborcraftrate_JsonHelper.parseFromJsonList(input);
     }
 }

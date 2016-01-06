@@ -37,15 +37,10 @@ public class WoactivityAddNewActivity extends BaseActivity{
     private TextView taskid;//任务
     private TextView description;//摘要
     private TextView targstartdate;
-    private RelativeLayout targstartdatelayout;
     private TextView targcompdate;
-    private RelativeLayout targcompdatelayout;
     private TextView actstart;
-    private RelativeLayout actstartlayout;
     private TextView actfinish;
-    private RelativeLayout actfinishlayout;
     private TextView estdur;//估计持续时间
-    private RelativeLayout estdurlayout;
     private Button ok;//确定
 
     private DatePickerDialog datePickerDialog;
@@ -76,15 +71,10 @@ public class WoactivityAddNewActivity extends BaseActivity{
         taskid = (TextView) findViewById(R.id.woactivity_taskid);
         description = (TextView) findViewById(R.id.woactivity_description);
         targstartdate = (TextView) findViewById(R.id.woactivity_targstartdate);
-        targstartdatelayout = (RelativeLayout) findViewById(R.id.woactivity_targstartdate_layout);
         targcompdate = (TextView) findViewById(R.id.woactivity_targcompdate);
-        targcompdatelayout = (RelativeLayout) findViewById(R.id.woactivity_targcompdate_layout);
         actstart = (TextView) findViewById(R.id.woactivity_actstart);
-        actstartlayout = (RelativeLayout) findViewById(R.id.woactivity_actstart_layout);
         actfinish = (TextView) findViewById(R.id.woactivity_actfinish);
-        actfinishlayout = (RelativeLayout) findViewById(R.id.woactivity_actfinish_layout);
         estdur = (TextView) findViewById(R.id.woactivity_estdur);
-        estdurlayout = (RelativeLayout) findViewById(R.id.woactivity_estdur_layout);
         ok = (Button) findViewById(R.id.woactivity_ok);
 
     }
@@ -102,10 +92,10 @@ public class WoactivityAddNewActivity extends BaseActivity{
         taskid.setText(getIntent().getIntExtra("taskid", 0) + "");
 
         setDataListener();
-        targstartdatelayout.setOnClickListener(new MydateListener());
-        targcompdatelayout.setOnClickListener(new MydateListener());
-        actstartlayout.setOnClickListener(new MydateListener());
-        actfinishlayout.setOnClickListener(new MydateListener());
+        targstartdate.setOnClickListener(new MydateListener());
+        targcompdate.setOnClickListener(new MydateListener());
+        actstart.setOnClickListener(new MydateListener());
+        actfinish.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,13 +169,13 @@ public class WoactivityAddNewActivity extends BaseActivity{
             } else {
                 sb.append(i + ":" + i1 + ":00");
             }
-            if (layoutnum == targstartdatelayout.getId()) {
+            if (layoutnum == targstartdate.getId()) {
                 targstartdate.setText(sb);
-            } else if (layoutnum == targcompdatelayout.getId()) {
+            } else if (layoutnum == targcompdate.getId()) {
                 targcompdate.setText(sb);
-            } else if (layoutnum == actstartlayout.getId()) {
+            } else if (layoutnum == actstart.getId()) {
                 actstart.setText(sb);
-            } else if(layoutnum == actfinishlayout.getId()){
+            } else if(layoutnum == actfinish.getId()){
                 actfinish.setText(sb);
             }
         }

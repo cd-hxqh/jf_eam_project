@@ -41,9 +41,7 @@ public class WplaborAddNewActivity extends BaseActivity {
     private ImageView backImageView;
 
     private TextView taskid;//任务
-    private RelativeLayout taskidlayout;
     private TextView craft;//工种
-    private RelativeLayout craftlayout;
     private EditText quantity;//数量
     private EditText laborhrs;//常规时数
     private Button ok;//确认
@@ -76,9 +74,7 @@ public class WplaborAddNewActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         taskid = (TextView) findViewById(R.id.wplabor_taskid);
-        taskidlayout = (RelativeLayout) findViewById(R.id.wplabor_taskid_layout);
         craft = (TextView) findViewById(R.id.wplabor_craft);
-        craftlayout = (RelativeLayout) findViewById(R.id.wplabor_craft_layout);
         quantity = (EditText) findViewById(R.id.wplabor_quantity);
         laborhrs = (EditText) findViewById(R.id.wplabor_laborhrs);
         ok = (Button) findViewById(R.id.wplabor_ok);
@@ -97,8 +93,8 @@ public class WplaborAddNewActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addTaskData();
-        taskidlayout.setOnClickListener(taskidlayoutOnClickListener);
-        craftlayout.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
+        taskid.setOnClickListener(taskidlayoutOnClickListener);
+        craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
     }
 

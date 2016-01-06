@@ -102,12 +102,12 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                 android.R.color.holo_red_light);
 //        refresh_layout.setProgressViewOffset(false, 0,
 //                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-        refresh_layout.setRefreshing(true);
-
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
-
-        getdata();
+        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+            refresh_layout.setRefreshing(true);
+            getdata();
+        }
     }
 
     private void getdata() {
@@ -160,13 +160,17 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        page = 1;
-        getdata();
+        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+            page = 1;
+            getdata();
+        }
     }
 
     @Override
     public void onLoad(){
-        page++;
-        getdata();
+        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+            page++;
+            getdata();
+        }
     }
 }

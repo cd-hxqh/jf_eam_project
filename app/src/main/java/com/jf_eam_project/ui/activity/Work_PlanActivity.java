@@ -117,6 +117,16 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));//设置ViewPager的适配器
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
         woactivity.performClick();
+
+        if (woactivityList.size() != 0) {
+            woactivityFragment.woactivityAdapter.update(woactivityList, true);
+        }
+        if (wplaborList.size() != 0) {
+            wplaborFragment.wplaborAdapter.update(wplaborList, true);
+        }
+        if (wpmaterialList.size() != 0) {
+            wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
+        }
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
@@ -271,7 +281,7 @@ public class Work_PlanActivity extends BaseActivity {
 
         switch (resultCode) {
             case 0:
-                if(data != null) {
+                if (data != null) {
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                     woactivityList.add(woactivity);
                     woactivityFragment.woactivityAdapter.update(woactivityList, true);
@@ -279,7 +289,7 @@ public class Work_PlanActivity extends BaseActivity {
                 }
                 break;
             case 1:
-                if(data!=null) {
+                if (data != null) {
                     Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
                     wplaborList.add(wplabor);
                     wplaborFragment.wplaborAdapter.update(wplaborList, true);
@@ -287,7 +297,7 @@ public class Work_PlanActivity extends BaseActivity {
                 }
                 break;
             case 2:
-                if(data != null) {
+                if (data != null) {
                     Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     wpmaterialList.add(wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);

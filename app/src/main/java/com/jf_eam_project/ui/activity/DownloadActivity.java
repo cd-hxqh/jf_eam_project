@@ -19,6 +19,7 @@ import com.jf_eam_project.Dao.FailurelistDao;
 import com.jf_eam_project.Dao.ItemDao;
 import com.jf_eam_project.Dao.JobplanDao;
 import com.jf_eam_project.Dao.LaborDao;
+import com.jf_eam_project.Dao.LaborcraftrateDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
@@ -33,6 +34,7 @@ import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
+import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
 
@@ -99,6 +101,7 @@ public class DownloadActivity extends BaseActivity{
         tempArray01.add("员工");
         tempArray01.add("工种");
         tempArray01.add("项目");
+        tempArray01.add("员工工种");
 
         List<String> tempArray02 = new ArrayList<String>();
         tempArray02.add("巡检单类型");
@@ -239,6 +242,8 @@ public class DownloadActivity extends BaseActivity{
                 downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID,Constants.CRAFTRATE_NAME),buttonText,button);
             }else if(buttonText.equals(childArray.get(0).get(8))){//项目
                 downloaddata(HttpManager.getUrl(Constants.ITEM_APPID,Constants.ITEM_NAME),buttonText,button);
+            }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
+                downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID,Constants.LABORCRAFTRATE_NAME),buttonText,button);
             }
         }
     }
@@ -280,6 +285,9 @@ public class DownloadActivity extends BaseActivity{
                         }else if(buttonText.equals(childArray.get(0).get(8))){//项目
                             List<Item> craftrates = Ig_Json_Model.parsingItem(data);
                             new ItemDao(DownloadActivity.this).create(craftrates);
+                        }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
+                            List<Laborcraftrate> craftrates = Ig_Json_Model.parsingLaborcraftrate(data);
+                            new LaborcraftrateDao(DownloadActivity.this).create(craftrates);
                         }
                         button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {

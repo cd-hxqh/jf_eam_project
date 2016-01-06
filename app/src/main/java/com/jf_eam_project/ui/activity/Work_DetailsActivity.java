@@ -70,7 +70,6 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView status; //状态
     private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
-//    private TextView woclass; //类
     private TextView failurecode; //故障类
     private TextView problemcode; //问题代码
     private TextView displayname; //创建人

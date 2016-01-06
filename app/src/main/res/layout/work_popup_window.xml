@@ -5,12 +5,12 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/work_wplabor_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/work_wplabor_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,12 +27,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/work_task_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/work_task_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -49,13 +49,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_id"
+        android:id="@+id/work_labtrans_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/work_labtrans_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

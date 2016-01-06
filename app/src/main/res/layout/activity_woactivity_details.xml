@@ -19,16 +19,18 @@
             android:orientation="vertical"
             android:padding="@dimen/dimens_10">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/work_wonum_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_taskid"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
@@ -37,12 +39,11 @@
                     android:id="@+id/woactivity_taskid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimens_10"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -50,33 +51,30 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_description"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <EditText
                     android:id="@+id/woactivity_description"
-                    android:layout_width="240dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimens_10"
-                    android:gravity="right"
-                    android:hint="@string/work_description_hint"
-                    android:inputType="textMultiLine"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -84,38 +82,33 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/woactivity_targstartdate_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_targstartdate"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
                     android:id="@+id/woactivity_targstartdate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@drawable/item_more"
+                    android:gravity="center_vertical"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dimens_10"
-                    android:src="@drawable/item_more" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -123,38 +116,33 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/woactivity_targcompdate_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_targcompdate"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
                     android:id="@+id/woactivity_targcompdate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@drawable/item_more"
+                    android:gravity="center_vertical"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dimens_10"
-                    android:src="@drawable/item_more" />
-            </RelativeLayout>
+                    android:textSize="@dimen/dimens_16dp"  />
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -162,38 +150,33 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/woactivity_actstart_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_actstart"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
                     android:id="@+id/woactivity_actstart"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@drawable/item_more"
+                    android:gravity="center_vertical"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dimens_10"
-                    android:src="@drawable/item_more" />
-            </RelativeLayout>
+                    android:textSize="@dimen/dimens_16dp"  />
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -201,38 +184,33 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/woactivity_actfinish_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_actfinish"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
                     android:id="@+id/woactivity_actfinish"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@drawable/item_more"
+                    android:gravity="center_vertical"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dimens_10"
-                    android:src="@drawable/item_more" />
-            </RelativeLayout>
+                    android:textSize="@dimen/dimens_16dp"  />
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -240,38 +218,33 @@
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/woactivity_estdur_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp">
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimens_5"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
                     android:text="@string/woactivity_estdur"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
                     android:id="@+id/woactivity_estdur"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@drawable/item_more"
+                    android:gravity="center_vertical"
+                    android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dimens_10"
-                    android:src="@drawable/item_more" />
-            </RelativeLayout>
+                    android:textSize="@dimen/dimens_16dp"  />
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"

@@ -105,6 +105,9 @@ public class Constants {
     //项目
     public static final String ITEM_APPID = "ITEM";
     public static final String ITEM_NAME = "ITEM";
+    //员工工种
+    public static final String LABORCRAFTRATE_APPID = "LABORCRAFTRATE";
+    public static final String LABORCRAFTRATE_NAME = "LABORCRAFTRATE";
 
     /**
      * 采购管理*

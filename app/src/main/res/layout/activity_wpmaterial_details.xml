@@ -15,38 +15,33 @@
         android:orientation="vertical"
         android:padding="@dimen/dimens_10">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_taskid_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_taskid"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
                 android:id="@+id/wpmaterial_taskid"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@drawable/item_more"
+                android:gravity="center_vertical"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/dimens_10"
-                android:src="@drawable/item_more" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
@@ -54,108 +49,97 @@
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_itemnum_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_itemnum"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
                 android:id="@+id/wpmaterial_itemnum"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@drawable/item_more"
+                android:gravity="center_vertical"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/dimens_10"
-                android:src="@drawable/item_more" />
-        </RelativeLayout>
+                android:textSize="@dimen/dimens_16dp"  />
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_itemqty"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <EditText
                 android:id="@+id/wpmaterial_itemqty"
-                android:layout_width="140dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimens_10"
-                android:gravity="right"
-                android:inputType="number"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_location_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_location"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
                 android:id="@+id/wpmaterial_location"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@drawable/item_more"
+                android:gravity="center_vertical"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/dimens_10"
-                android:src="@drawable/item_more" />
-        </RelativeLayout>
+                android:textSize="@dimen/dimens_16dp"  />
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
@@ -163,16 +147,18 @@
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_storelocsite_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_storelocsite"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
@@ -181,29 +167,30 @@
                 android:id="@+id/wpmaterial_storelocsite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_requestby_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_requestby"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
@@ -212,13 +199,12 @@
                 android:id="@+id/wpmaterial_requestby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
@@ -226,38 +212,33 @@
             android:layout_below="@+id/num_linearlayout_id"
             android:background="@drawable/line"></View>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wpmaterial_requiredate_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimens_5"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/wpmaterial_requiredate"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
                 android:id="@+id/wpmaterial_requiredate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@drawable/item_more"
+                android:gravity="center_vertical"
+                android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/dimens_10"
-                android:src="@drawable/item_more" />
-        </RelativeLayout>
+                android:textSize="@dimen/dimens_16dp"  />
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"

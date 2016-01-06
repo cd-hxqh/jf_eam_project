@@ -49,16 +49,12 @@ public class WpmaterialAddNewActivity extends BaseActivity{
 
     //任务可以选填，项目必填，行类型必填，库房选填，地点默认就是TRXNSITE，数量必填，输入人，实际日期必填。
     private TextView taskid;//任务
-    private RelativeLayout taskidlayout;
     private TextView itemnum;//项目  项目/物料
-    private RelativeLayout itemnumlayout;
     private EditText itemqty;//数量
     private TextView location;//库房
-    private RelativeLayout locationlayout;
     private TextView storelocsite;//库房地点
     private TextView requestby;//请求者
     private TextView requiredate;//要求日期
-    private RelativeLayout requiredatelayout;
     private Button ok;//确认
 
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
@@ -93,16 +89,12 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
-        taskidlayout = (RelativeLayout) findViewById(R.id.wpmaterial_taskid_layout);
         itemnum = (TextView) findViewById(R.id.wpmaterial_itemnum);
-        itemnumlayout = (RelativeLayout) findViewById(R.id.wpmaterial_itemnum_layout);
         itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
-        locationlayout = (RelativeLayout) findViewById(R.id.wpmaterial_location_layout);
         storelocsite = (TextView) findViewById(R.id.wpmaterial_storelocsite);
         requestby = (TextView) findViewById(R.id.wpmaterial_requestby);
         requiredate = (TextView) findViewById(R.id.wpmaterial_requiredate);
-        requiredatelayout = (RelativeLayout) findViewById(R.id.wpmaterial_requiredate_layout);
 
         ok = (Button) findViewById(R.id.wpmaterial_ok);
     }
@@ -120,14 +112,14 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addTaskData();
-        taskidlayout.setOnClickListener(taskidlayoutOnClickListener);
-        itemnumlayout.setOnClickListener(new LayoutOnClickListener(Constants.ITEM));
-        locationlayout.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONSCODE));
+        taskid.setOnClickListener(taskidlayoutOnClickListener);
+        itemnum.setOnClickListener(new LayoutOnClickListener(Constants.ITEM));
+        location.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONSCODE));
         storelocsite.setText("TRXNSITE");
         requestby.setText(getBaseApplication().getUsername());
         requiredate.setText(GetNowTime.getTime());
         setDataListener();
-        requiredatelayout.setOnClickListener(new MydateListener());
+        requiredate.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(okOnClickListener);
     }
@@ -241,7 +233,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
             } else {
                 sb.append(i + ":" + i1 + ":00");
             }
-            if (layoutnum == requiredatelayout.getId()) {
+            if (layoutnum == requiredate.getId()) {
                 requiredate.setText(sb);
             }
         }

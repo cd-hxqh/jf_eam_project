@@ -28,16 +28,12 @@ public class WpmaterialDetailsActivity extends BaseActivity{
     private ImageView backImageView;
 
     private TextView taskid;//任务
-    private RelativeLayout taskidlayout;
     private TextView itemnum;//项目  项目/物料
-    private RelativeLayout itemnumlayout;
     private EditText itemqty;//数量
     private TextView location;//库房
-    private RelativeLayout locationlayout;
     private TextView storelocsite;//库房地点
     private TextView requestby;//请求者
     private TextView requiredate;//要求日期
-    private RelativeLayout requiredatelayout;
     private Button ok;//确认
 
     @Override
@@ -62,15 +58,11 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
-        taskidlayout = (RelativeLayout) findViewById(R.id.wpmaterial_taskid_layout);
         itemnum = (TextView) findViewById(R.id.wpmaterial_itemnum);
-        itemnumlayout = (RelativeLayout) findViewById(R.id.wpmaterial_itemnum_layout);
         itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
-        locationlayout = (RelativeLayout) findViewById(R.id.wpmaterial_location_layout);
         storelocsite = (TextView) findViewById(R.id.wpmaterial_storelocsite);
         requiredate = (TextView) findViewById(R.id.wpmaterial_requiredate);
-        requiredatelayout = (RelativeLayout) findViewById(R.id.wpmaterial_requiredate_layout);
     }
 
     @Override

@@ -49,6 +49,7 @@
     <string name="title_activity_wpservice_details">服务详情</string>
     <string name="title_activity_wptool_details">工具详情</string>
     <string name="title_activity_work_assignment">任务分配</string>
+    <string name="title_activity_work_assignment_addnew">任务分配</string>
     <string name="title_activity_work_realinfo">实际情况</string>
     <string name="title_activity_work_assignment_details">任务分配详情</string>
     <string name="title_activity_work_failurereport">故障报告</string>
