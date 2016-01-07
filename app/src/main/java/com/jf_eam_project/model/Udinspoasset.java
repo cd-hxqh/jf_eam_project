@@ -1,6 +1,7 @@
 package com.jf_eam_project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
 import com.j256.ormlite.field.DatabaseField;
@@ -16,10 +17,12 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Udinspoasset extends Entity {
 
     @DatabaseField(generatedId = true)
+    @JsonIgnore
     public int id;
 
     @DatabaseField(columnName = "assetdesc")
     @JsonField(fieldName = "assetdesc")
+    @JsonIgnore
     public String assetdesc;//设备描述
 
     @DatabaseField(columnName = "assetnum")
@@ -32,6 +35,7 @@ public class Udinspoasset extends Entity {
 
     @DatabaseField(columnName = "insponum")
     @JsonField(fieldName = "insponum")
+    @JsonIgnore
     public String insponum;//巡检单
 
     @DatabaseField(columnName = "location")
@@ -44,6 +48,7 @@ public class Udinspoasset extends Entity {
 
     @DatabaseField(columnName = "locationsdesc")
     @JsonField(fieldName = "locationsdesc")
+    @JsonIgnore
     public String locationsdesc;//位置描述
 
     @DatabaseField(columnName = "udinspoassetnum")

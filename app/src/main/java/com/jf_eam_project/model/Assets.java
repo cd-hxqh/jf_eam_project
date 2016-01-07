@@ -1,5 +1,6 @@
 package com.jf_eam_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
 import com.j256.ormlite.field.DatabaseField;

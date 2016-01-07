@@ -4,26 +4,27 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.jf_eam_project.Dao.LocationDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Woactivity;
-import com.jf_eam_project.model.Wplabor;
-import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.model.Udinspojxxm;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -79,8 +80,14 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      * 序号*
      */
     private int linenum;
-    /**udinspoassetnum**/
+    /**
+     * udinspoassetnum*
+     */
     private String udinspoassetnum;
+
+
+    ArrayList<Udinspojxxm> udinspojxxms=new ArrayList<Udinspojxxm>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +134,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        udinspoassetlinenumText.setText(linenum == 0 ? "1" : (linenum+1) + "");
+        udinspoassetlinenumText.setText(linenum == 0 ? "1" : (linenum + 1) + "");
         udinspoassetnumText.setText("SC" + getRandomNumber(4));
 
         locationText.setOnClickListener(locationOnClickListener);
@@ -231,7 +238,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(AddUdinspoAssetActivity.this, Add_Udinspojxxm_Activity.class);
-            intent.putExtra("udinspoassetnum", udinspoassetnum);
+            intent.putExtra("udinspoassetnum", udinspoassetnumText.getText().toString());
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }
@@ -252,7 +259,9 @@ public class AddUdinspoAssetActivity extends BaseActivity {
                 locationText.setText(option.getName());
                 locationDescText.setText(option.getDescription());
                 break;
-
+            case 1:
+                udinspojxxms = (ArrayList<Udinspojxxm>) data.getSerializableExtra("udinspojxxms");
+                break;
             default:
                 break;
         }
@@ -265,10 +274,9 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Udinspoasset udinspoasset = addUdinspoInfo();
-
             Intent intent = getIntent();
             intent.putExtra("udinspoasset", udinspoasset);
-            setResult(0, intent);
+            setResult(1, intent);
             finish();
         }
     };
@@ -289,11 +297,38 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         udinspoasset.setAssetdesc(assetnumDescText.getText().toString());
         udinspoasset.setChildassetnum(childassetnumText.getText().toString());
 
-
+        jsonUdinPoAssetInfo(udinspojxxms);
         new UdinspoAssetDao(AddUdinspoAssetActivity.this).insert(udinspoasset);
 
         return udinspoasset;
     }
+
+
+    /**
+     * 封装Udinspojxxm信息*
+     */
+    private JSONArray jsonUdinPoAssetInfo(ArrayList<Udinspojxxm> udinspoassets) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JSONArray jsonArray = null;
+
+        String json2 = "";
+        try {
+            json2 = mapper.writeValueAsString(udinspoassets);
+            jsonArray = new JSONArray(json2);
+            Log.i(TAG, json2);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jsonArray;
+    }
+
+
+
 
 
 }

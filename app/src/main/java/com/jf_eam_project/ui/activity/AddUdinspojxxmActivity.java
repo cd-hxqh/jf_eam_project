@@ -13,16 +13,13 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.jf_eam_project.Dao.UdinspoAssetDao;
+import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspoasset;
-
-import java.util.Random;
+import com.jf_eam_project.model.Udinspojxxm;
 
 /**
- * 检修项目标准
+ * 检修项目标准新建
  */
 public class AddUdinspojxxmActivity extends BaseActivity {
 
@@ -39,46 +36,30 @@ public class AddUdinspojxxmActivity extends BaseActivity {
 
 
     /**
-     * 菜单*
-     */
-    private ImageView menuImageView;
-
-
-    /**
      * 界面信息显示*
      */
-    private TextView udinspoassetlinenumText; //序号
-    private TextView udinspoassetnumText; //设备编号
-    private TextView locationText; //位置
-    private TextView locationDescText; //位置描述
-    private TextView assetnumText; //设备
-    private TextView assetnumDescText; //设备描述
-    private EditText childassetnumText; //设备部件
+    private TextView udinspojxxmlinenumText; //序号
+    private EditText descriptionText; //巡检项目标准
+    private EditText executionText; //巡检情况描述
+    private EditText checkbyText; //巡检人员
 
 
-    private Udinspoasset udinspoasset = null; //设备备件
+    private Udinspojxxm udinspojxxm; //设备备件
 
 
-    private PopupWindow popupWindow;
+    private Button submitBtn; //确认按钮
 
-    private TextView udinspojxxm; //检修项目标准
-
-
-    /**
-     * 保存按钮*
-     */
-    private Button submitBtn;
     /**
      * 序号*
      */
     private int linenum;
-    /**udinspoassetnum**/
+    /**巡检备件**/
     private String udinspoassetnum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udinspoasset_add);
+        setContentView(R.layout.activity_udinspojxxm_add);
         initData();
         findViewById();
         initView();
@@ -88,23 +69,21 @@ public class AddUdinspojxxmActivity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        udinspoasset = (Udinspoasset) getIntent().getSerializableExtra("Udinspoasset");
+        udinspojxxm = (Udinspojxxm) getIntent().getSerializableExtra("Udinspojxxm");
         linenum = getIntent().getIntExtra("udinspoassetlinenum", 0);
+        udinspoassetnum = getIntent().getStringExtra("udinspoassetnum");
     }
 
     @Override
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-        menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        udinspoassetlinenumText = (TextView) findViewById(R.id.udinspoasset_udinspoassetlinenum_text);
-        udinspoassetnumText = (TextView) findViewById(R.id.ud_udinspoassetnum_text);
-        locationText = (TextView) findViewById(R.id.udinspoasset_location_text);
-        locationDescText = (TextView) findViewById(R.id.udinspoasset_location_description_text);
-        assetnumText = (TextView) findViewById(R.id.udinspoasset_assetnum_text);
-        assetnumDescText = (TextView) findViewById(R.id.udinspoasset_assetnum_desc_text);
-        childassetnumText = (EditText) findViewById(R.id.udinspoasset_childassetnum_text);
+        udinspojxxmlinenumText = (TextView) findViewById(R.id.udinspoasset_udinspoassetlinenum_text);
+        descriptionText = (EditText) findViewById(R.id.udinspojxxm_description_text);
+        executionText = (EditText) findViewById(R.id.udinspojxxm_execution_text);
+        checkbyText = (EditText) findViewById(R.id.ud_udinspojxxm4_text);
+
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
 
@@ -113,64 +92,15 @@ public class AddUdinspojxxmActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getResources().getString(R.string.add_udinspoasset_title));
+        titleView.setText(getString(R.string.add_udinspojxxm_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
-        menuImageView.setImageResource(R.drawable.ic_drawer);
-        menuImageView.setVisibility(View.VISIBLE);
-        menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        udinspoassetlinenumText.setText(linenum == 0 ? "1" : (linenum+1) + "");
-        udinspoassetnumText.setText("SC" + getRandomNumber(4));
-
-        locationText.setOnClickListener(locationOnClickListener);
-        assetnumText.setOnClickListener(assetnumOnClickListener);
-
+        udinspojxxmlinenumText.setText(linenum == 0 ? "1" : (linenum + 1) + "");
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
     }
-
-    /**
-     * 位置选择*
-     */
-    private View.OnClickListener locationOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(AddUdinspojxxmActivity.this, OptionActivity.class);
-            intent.putExtra("requestCode", Constants.LOCATIONCODE);
-            startActivityForResult(intent, Constants.LOCATIONCODE);
-        }
-    };
-
-    /**
-     * 资产选择*
-     */
-    private View.OnClickListener assetnumOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(AddUdinspojxxmActivity.this, OptionActivity.class);
-            intent.putExtra("requestCode", Constants.ASSETCODE);
-            startActivityForResult(intent, Constants.ASSETCODE);
-        }
-    };
-
-
-    public static int getRandomNumber(int n) {
-        int temp = 0;
-        int min = (int) Math.pow(10, n - 1);
-        int max = (int) Math.pow(10, n);
-        Random rand = new Random();
-
-        while (true) {
-            temp = rand.nextInt(max);
-            if (temp >= min)
-                break;
-        }
-
-        return temp;
-    }
-
 
     /**
      * 返回按钮*
@@ -182,111 +112,38 @@ public class AddUdinspojxxmActivity extends BaseActivity {
         }
     };
 
-
     /**
-     * 菜单按钮*
-     */
-    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            showPopupWindow(menuImageView);
-        }
-    };
-
-
-    /**
-     * 显示PopupWindow*
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void showPopupWindow(View view) {
-
-        View contentView = LayoutInflater.from(AddUdinspojxxmActivity.this).inflate(
-                R.layout.udinspo_popup_window, null);
-
-
-        popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setTouchable(true);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.abc_popup_background_mtrl_mult));
-        popupWindow.showAsDropDown(view, 0, 20);
-
-        udinspojxxm = (TextView) contentView.findViewById(R.id.udinspoasset_text_id);
-        udinspojxxm.setText(getString(R.string.udinspojxxm_title));
-        udinspojxxm.setOnClickListener(udinspoassetOnClickListener);
-
-    }
-
-
-    private View.OnClickListener udinspoassetOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(AddUdinspojxxmActivity.this, Add_Udinspojxxm_Activity.class);
-            intent.putExtra("udinspoassetnum", udinspoassetnum);
-            startActivityForResult(intent, 0);
-            popupWindow.dismiss();
-        }
-    };
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Option option;
-        switch (resultCode) {
-            case Constants.ASSETCODE:
-                option = (Option) data.getSerializableExtra("option");
-                assetnumText.setText(option.getName());
-                assetnumDescText.setText(option.getDescription());
-                break;
-            case Constants.LOCATIONCODE:
-                option = (Option) data.getSerializableExtra("option");
-                locationText.setText(option.getName());
-                locationDescText.setText(option.getDescription());
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 保存方法*
+     * 确认按钮*
      */
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Udinspoasset udinspoasset = addUdinspoInfo();
+            Udinspojxxm udinspojxxm=saveUdinspojxxmInfo();
 
             Intent intent = getIntent();
-            intent.putExtra("udinspoasset", udinspoasset);
+            intent.putExtra("udinspojxxm", udinspojxxm);
             setResult(0, intent);
             finish();
         }
+
+
     };
 
-
     /**
-     * 将数据保存至本地数据库*
+     * 保存信息*
      */
-
-    private Udinspoasset addUdinspoInfo() {
-        Udinspoasset udinspoasset = new Udinspoasset();
-
-        udinspoasset.setUdinspoassetlinenum(udinspoassetlinenumText.getText().toString());
-        udinspoasset.setUdinspoassetnum(udinspoassetnumText.getText().toString());
-        udinspoasset.setLocation(locationText.getText().toString());
-        udinspoasset.setLocationsdesc(locationDescText.getText().toString());
-        udinspoasset.setAssetnum(assetnumText.getText().toString());
-        udinspoasset.setAssetdesc(assetnumDescText.getText().toString());
-        udinspoasset.setChildassetnum(childassetnumText.getText().toString());
-
-
-        new UdinspoAssetDao(AddUdinspojxxmActivity.this).insert(udinspoasset);
-
-        return udinspoasset;
+    private Udinspojxxm saveUdinspojxxmInfo() {
+        udinspojxxm = new Udinspojxxm();
+        udinspojxxm.setUdinspojxxmlinenum(udinspojxxmlinenumText.getText().toString());
+        udinspojxxm.setUdinspoassetnum(udinspoassetnum);
+        udinspojxxm.setDescription(descriptionText.getText().toString());
+        udinspojxxm.setExecution(executionText.getText().toString());
+        udinspojxxm.setCheckby(checkbyText.getText().toString());
+        new UdinspojxxmDao(AddUdinspojxxmActivity.this).insert(udinspojxxm);
+        return udinspojxxm;
     }
+
+
 
 
 }

@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,11 +31,12 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Webservice_result;
+import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 巡检单新增
@@ -111,10 +112,15 @@ public class AddUdinspoActivity extends BaseActivity {
 
     ArrayList<Udinspoasset> udinspoassets = new ArrayList<Udinspoasset>();
 
+    ArrayList<Udinspojxxm> allUdinspojxxms = new ArrayList<Udinspojxxm>();
+
+    private UdinspojxxmDao udinspojxxmDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_udinspo);
+        initDAO();
         findViewById();
         initView();
 
@@ -122,6 +128,11 @@ public class AddUdinspoActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addInspotypeData();
+    }
+
+    private void initDAO() {
+        udinspojxxmDao = new UdinspojxxmDao(AddUdinspoActivity.this);
+
     }
 
     @Override
@@ -299,6 +310,13 @@ public class AddUdinspoActivity extends BaseActivity {
         switch (resultCode) {
             case 1:
                 udinspoassets = (ArrayList<Udinspoasset>) data.getSerializableExtra("udinspoassets");
+                for (int i = 0; i < udinspoassets.size(); i++) {
+                    Log.i(TAG, "udinspoassetnum=" + udinspoassets.get(i).udinspoassetnum);
+                    List<Udinspojxxm> udinspojxxms = udinspojxxmDao.findByudinspoassetnum(udinspoassets.get(i).udinspoassetnum);
+                    for(int j =0;j<udinspojxxms.size();j++) {
+                        allUdinspojxxms.add(udinspojxxms.get(j));
+                    }
+                }
 
                 break;
             case Constants.PERSON:
@@ -323,6 +341,7 @@ public class AddUdinspoActivity extends BaseActivity {
      * 数据封装*
      */
     private void encapsulationData() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(AddUdinspoActivity.this);
         builder.setMessage("确定新增巡检单吗？").setTitle("提示")
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -391,7 +410,6 @@ public class AddUdinspoActivity extends BaseActivity {
         String inspoby = inspobyText.getText().toString();
         String inspodate = inspodateText.getText().toString();
 
-        String json2 = "[{\"assetnum\":\"0101001001\",\"childassetnum\":\"loll\",\"location\":\"G001MKA01CT206\",\"udinspoassetnum\":\"SC2451\"}]";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("DESCRIPTION", desc);
@@ -402,6 +420,9 @@ public class AddUdinspoActivity extends BaseActivity {
             jsonObject.put("INSPODATE", inspodate);
             if (!jsonUdinPoAssetInfo(udinspoassets).equals("")) {
                 jsonObject.put("CHILDREN", jsonUdinPoAssetInfo(udinspoassets));
+                if(!jsonUdinspojxxmsInfo(allUdinspojxxms).equals("")){
+                    jsonObject.put("GRADESON", jsonUdinspojxxmsInfo(allUdinspojxxms));
+                }
             }
 
         } catch (JSONException e) {
@@ -419,11 +440,34 @@ public class AddUdinspoActivity extends BaseActivity {
         ObjectMapper mapper = new ObjectMapper();
         JSONArray jsonArray = null;
 
+        String json3 = "";
+        try {
+            json3 = mapper.writeValueAsString(udinspoassets);
+            jsonArray = new JSONArray(json3);
+            Log.i(TAG, json3);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jsonArray;
+    }
+
+    /**
+     * 封装udinspojxxms信息*
+     */
+    private JSONArray jsonUdinspojxxmsInfo(ArrayList<Udinspojxxm> udinspojxxms) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JSONArray jsonArray = null;
+
         String json2 = "";
         try {
-            json2 = mapper.writeValueAsString(udinspoassets);
+            json2 = mapper.writeValueAsString(udinspojxxms);
             jsonArray = new JSONArray(json2);
-            Log.i(TAG,json2);
+            Log.i(TAG, json2);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;

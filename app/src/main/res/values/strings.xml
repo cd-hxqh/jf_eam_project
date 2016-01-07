@@ -403,6 +403,7 @@
     <string name="udinspojxxm_detail_title">检修项目详情</string>
     <string name="data_sumbit_hint">数据正在提交...</string>
     <string name="add_udinspoasset_title">新建备件</string>
+    <string name="add_udinspojxxm_title">新建检修项目标准</string>
 
 
 </resources>

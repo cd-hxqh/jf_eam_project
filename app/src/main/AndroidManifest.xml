@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jf_eam_project" >
+    package="com.jf_eam_project">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -27,11 +27,11 @@
         android:label="@string/app_name"
         android:launchMode="singleTask"
         android:screenOrientation="portrait"
-        android:theme="@style/SampleTheme" >
+        android:theme="@style/SampleTheme">
         <activity
             android:name=".ui.activity.LoadActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,249 +41,205 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!-- 流程审批 -->
         <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/title_activity_wfm"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!-- 工单管理 -->
         <activity
             android:name=".ui.activity.Work_ListActivity"
             android:label="@string/title_activity_work_list"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.Work_DetailsActivity"
             android:label="@string/title_activity_work_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_AddNewActivity"
             android:label="@string/title_activity_work_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_WplaborActivity"
             android:label="@string/title_activity_work_wplabor"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_LabtransActivity"
             android:label="@string/title_activity_work_labtrans"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.LabtransDetailsActivity"
             android:label="@string/title_activity_labtrans_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_PlanActivity"
             android:label="@string/title_activity_work_plan"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WoactivityDetailsActivity"
             android:label="@string/title_activity_woactivity_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WoactivityAddNewActivity"
             android:label="@string/title_activity_woactivity_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WplaborDetailsActivity"
             android:label="@string/title_activity_wplabor_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WplaborAddNewActivity"
             android:label="@string/title_activity_wplabor_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WpmaterialDetailsActivity"
             android:label="@string/title_activity_wpmaterial_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WpmaterialAddNewActivity"
             android:label="@string/title_activity_wpmaterial_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WpserviceDetailsActivity"
             android:label="@string/title_activity_wpservice_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.WptoolDetailsActivity"
             android:label="@string/title_activity_wptool_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_AssignmentActivity"
             android:label="@string/title_activity_work_assignment"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.AssigmentAddNewActivity"
             android:label="@string/title_activity_work_assignment_addnew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_RealInfoActivity"
             android:label="@string/title_activity_work_realinfo"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.AssignmentDetailsActivity"
             android:label="@string/title_activity_work_assignment_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.Work_FailurereportActivity"
             android:label="@string/title_activity_work_failurereport"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
 
         <!-- 采购计划 -->
         <activity
             android:name=".ui.activity.Pr_Activity"
-            android:label="@string/pr_title_text" >
-        </activity>
+            android:label="@string/pr_title_text"></activity>
         <activity
             android:name=".ui.activity.PR_Details_Activity"
-            android:label="@string/pr_detail_title" >
-        </activity>
+            android:label="@string/pr_detail_title"></activity>
         <activity
             android:name=".ui.activity.Prline_Activity"
-            android:label="@string/prline_title" >
-        </activity>
+            android:label="@string/prline_title"></activity>
         <activity
             android:name=".ui.activity.PRLine_Details_Activity"
-            android:label="@string/prline_detail_title" >
-        </activity>
+            android:label="@string/prline_detail_title"></activity>
 
         <!-- 采购订单 -->
 
         <activity
             android:name=".ui.activity.Po_order_Activity"
-            android:label="@string/title_activity_po_order_" >
-        </activity>
+            android:label="@string/title_activity_po_order_"></activity>
         <activity
             android:name=".ui.activity.PO_Details_Activity"
-            android:label="@string/title_activity_po_details_" >
-        </activity>
+            android:label="@string/title_activity_po_details_"></activity>
         <activity
             android:name=".ui.activity.Poline_Activity"
-            android:label="@string/title_activity_poline" >
-        </activity>
+            android:label="@string/title_activity_poline"></activity>
         <activity
             android:name=".ui.activity.PoLine_Details_Activity"
-            android:label="@string/title_activity_po_line_details" >
-        </activity>
+            android:label="@string/title_activity_po_line_details"></activity>
 
         <!-- 发票 -->
         <activity
             android:name=".ui.activity.Invoice_Activity"
-            android:label="@string/invoice_title_text" >
-        </activity>
+            android:label="@string/invoice_title_text"></activity>
         <activity
             android:name=".ui.activity.Invoice_Details_Activity"
-            android:label="@string/invoice_details_title" >
-        </activity>
+            android:label="@string/invoice_details_title"></activity>
 
         <!-- 下载 -->
         <activity
             android:name=".ui.activity.DownloadActivity"
-            android:label="@string/data_download" >
-        </activity>
+            android:label="@string/data_download"></activity>
         <!-- 入库 -->
         <activity
             android:name=".ui.activity.Inventory_Activity"
-            android:label="@string/inventory_title" >
-        </activity>
+            android:label="@string/inventory_title"></activity>
         <activity
             android:name=".ui.activity.Inventory_Details_Activity"
-            android:label="@string/inventory_detail_title" >
-        </activity>
+            android:label="@string/inventory_detail_title"></activity>
 
         <!-- 巡检管理 -->
         <activity
             android:name=".ui.activity.Udinspo_Details_activity"
-            android:label="@string/udinspo_detail_title" >
-        </activity>
+            android:label="@string/udinspo_detail_title"></activity>
         <!-- 设备备件 -->
         <activity
             android:name=".ui.activity.Udinspoasset_Activity"
-            android:label="@string/udinspoasset_title" >
-        </activity>
+            android:label="@string/udinspoasset_title"></activity>
         <!--通用选项页面-->
         <activity
             android:name=".ui.activity.OptionActivity"
-            android:label="@string/activity_option_title" >
-        </activity>
+            android:label="@string/activity_option_title"></activity>
 
         <activity
             android:name=".ui.activity.Udinspoasset_Details_Activity"
-            android:label="@string/udinspoasset_detail_title" >
-        </activity>
+            android:label="@string/udinspoasset_detail_title"></activity>
         <activity
             android:name=".ui.activity.AddUdinspoActivity"
-            android:label="@string/title_activity_add_udinspo" >
-        </activity>
+            android:label="@string/title_activity_add_udinspo"></activity>
         <activity
             android:name=".ui.activity.Udinspojxxm_Activity"
-            android:label="@string/udinspojxxm_title" >
-        </activity>
+            android:label="@string/udinspojxxm_title"></activity>
         <activity
             android:name=".ui.activity.Udinspojxxm_Details_Activity"
-            android:label="@string/udinspojxxm_detail_title" >
-        </activity>
+            android:label="@string/udinspojxxm_detail_title"></activity>
         <activity
             android:name=".ui.activity.Add_Udinspoasset_Activity"
-            android:label="@string/udinspoasset_title" >
-        </activity>
+            android:label="@string/udinspoasset_title"></activity>
         <activity
             android:name=".ui.activity.AddUdinspoAssetActivity"
-            android:label="@string/add_udinspoasset_title" >
-        </activity>
+            android:label="@string/add_udinspoasset_title"></activity>
         <activity
             android:name=".ui.activity.Add_Udinspojxxm_Activity"
-            android:label="@string/udinspojxxm_title" >
-        </activity>
+            android:label="@string/udinspojxxm_title"></activity>
+        <activity
+            android:name=".ui.activity.AddUdinspojxxmActivity"
+            android:label="@string/add_udinspojxxm_title"></activity>
     </application>
 
 </manifest>

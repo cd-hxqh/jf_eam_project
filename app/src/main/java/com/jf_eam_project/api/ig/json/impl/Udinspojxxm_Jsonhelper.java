@@ -87,6 +87,9 @@ public final class Udinspojxxm_Jsonhelper
         } else if ("DESCRIPTION".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
+        }else if ("CHECKBY".equals(fieldName)) {
+            instance.checkby = jp.getValueAsString();
+            return true;
         }
 
         return false;

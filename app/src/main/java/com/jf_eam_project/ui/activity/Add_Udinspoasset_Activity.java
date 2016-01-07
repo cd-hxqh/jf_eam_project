@@ -80,7 +80,8 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
      */
     private Button affirmBtn;
 
-    ArrayList<Udinspoasset> uditems=new ArrayList<Udinspoasset>();
+
+    ArrayList<Udinspoasset> uditems = new ArrayList<Udinspoasset>();
 
 
     @Override
@@ -249,7 +250,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
         public void onClick(View view) {
             Intent intent = new Intent();
             intent.setClass(Add_Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
-            intent.putExtra("udinspoassetlinenum",udinspoassetListAdapter.getItemCount());
+            intent.putExtra("udinspoassetlinenum", udinspoassetListAdapter.getItemCount());
             startActivityForResult(intent, 0);
         }
     };
@@ -257,7 +258,6 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
     private View.OnClickListener affirmBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
 
 
             Intent intent = getIntent();
@@ -268,19 +268,17 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
     };
 
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (resultCode) {
-            case 0:
+            case 1:
                 Udinspoasset udinspoasset = (Udinspoasset) data.getSerializableExtra("udinspoasset");
 
                 uditems.add(udinspoasset);
                 udinspoassetListAdapter.adddate(uditems);
+
                 nodatalayout.setVisibility(View.GONE);
                 break;
 

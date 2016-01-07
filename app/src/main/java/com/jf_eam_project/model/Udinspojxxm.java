@@ -1,8 +1,11 @@
 package com.jf_eam_project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 
 /**
@@ -10,26 +13,70 @@ import com.instagram.common.json.annotation.JsonType;
  *
  */
 @JsonType
+@DatabaseTable(tableName = "Udinspojxxm")
 public class Udinspojxxm extends Entity {
+    @DatabaseField(generatedId = true)
+    @JsonIgnore
+    public int id;
 
-
+    @DatabaseField(columnName = "udinspojxxmlinenum")
     @JsonField(fieldName = "udinspojxxmlinenum")
     public String udinspojxxmlinenum;//序号
+
+    @DatabaseField(columnName = "udinspojxxm4")
     @JsonField(fieldName = "udinspojxxm4")
+    @JsonIgnore
     public String udinspojxxm4;//数值（C(相)）
+
+    @DatabaseField(columnName = "udinspojxxm3")
     @JsonField(fieldName = "udinspojxxm3")
+    @JsonIgnore
     public String udinspojxxm3;//数值（B(相)）
+
+    @DatabaseField(columnName = "udinspojxxm2")
     @JsonField(fieldName = "udinspojxxm2")
+    @JsonIgnore
     public String udinspojxxm2;//数值（A(相)）
+
+    @DatabaseField(columnName = "udinspoassetnum")
     @JsonField(fieldName = "udinspoassetnum")
     public String udinspoassetnum;//设备编号
+
+    @DatabaseField(columnName = "fillmethod")
     @JsonField(fieldName = "fillmethod")
+    @JsonIgnore
     public String fillmethod;//计量单位
+
+    @DatabaseField(columnName = "execution")
     @JsonField(fieldName = "execution")
     public String execution;//巡检情况描述
+
+
+    @DatabaseField(columnName = "description")
     @JsonField(fieldName = "description")
     public String description;//巡检项目标准
 
+
+    @DatabaseField(columnName = "checkby")
+    @JsonField(fieldName = "checkby")
+    public String checkby;//巡检人员
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCheckby() {
+        return checkby;
+    }
+
+    public void setCheckby(String checkby) {
+        this.checkby = checkby;
+    }
 
     public String getUdinspojxxmlinenum() {
         return udinspojxxmlinenum;

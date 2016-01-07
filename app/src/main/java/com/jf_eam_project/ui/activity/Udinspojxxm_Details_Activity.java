@@ -45,7 +45,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private TextView udinspojxxm4Text; //数值C
     private TextView fillmethodText; //计量单位
     private TextView executionText; //巡检情况描述
-    private TextView udinspojxxm5Text; //巡检人员
+    private TextView checkbyText; //巡检人员
 
 
     private Udinspojxxm udinspojxxm; //设备备件
@@ -80,7 +80,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udinspojxxm4Text = (TextView) findViewById(R.id.udinspojxxm_udinspojxxm4_text);
         fillmethodText = (TextView) findViewById(R.id.udinspojxxm_fillmethod_text);
         executionText = (TextView) findViewById(R.id.udinspojxxm_execution_text);
-        udinspojxxm5Text = (TextView) findViewById(R.id.ud_udinspojxxm4_text);
+        checkbyText = (TextView) findViewById(R.id.ud_udinspojxxm4_text);
 
     }
 
@@ -100,7 +100,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
             udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
             fillmethodText.setText(udinspojxxm.getFillmethod() == null ? "" : udinspojxxm.getFillmethod());
             executionText.setText(udinspojxxm.getExecution()== null ? "" : udinspojxxm.getExecution());
-            udinspojxxm5Text.setText(udinspojxxm.getUdinspojxxm4()== null ? "" : udinspojxxm.getUdinspojxxm4());
+            checkbyText.setText(udinspojxxm.getCheckby()== null ? "" : udinspojxxm.getCheckby());
         }
 
 

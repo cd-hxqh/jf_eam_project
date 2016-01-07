@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -47,6 +50,11 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
      * 返回
      */
     private ImageView backImageView;
+
+    /**
+     * 新增*
+     */
+    private ImageView addImageView;
 
 
     /**
@@ -70,10 +78,22 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
     private int page = 1;
 
 
+
+
+    /**
+     * 确认*
+     */
+    private Button affirmBtn;
+
+
+
+    ArrayList<Udinspojxxm> uditems=new ArrayList<Udinspojxxm>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work);
+        setContentView(R.layout.activity_udinspoasset);
 
         initData();
         findViewById();
@@ -91,18 +111,23 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
+
+
+        affirmBtn = (Button) findViewById(R.id.submit_btn_id);
     }
 
     @Override
     protected void initView() {
         titleView.setText(getResources().getString(R.string.udinspojxxm_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setImageResource(R.drawable.add_ico);
         setSearchEdit();
 
 
@@ -123,14 +148,39 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
+        addImageView.setOnClickListener(addImageViewOnClickListener);
+
+        affirmBtn.setOnClickListener(affirmBtnOnClickListener);
     }
+
+
+    private View.OnClickListener affirmBtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+
+
+            Intent intent = getIntent();
+            intent.putExtra("udinspojxxms", (Serializable) uditems);
+            setResult(1, intent);
+            finish();
+        }
+    };
+
+
+
+
+
+
+
+
+
 
 
     private void getData(String search) {
         HttpManager.getDataPagingInfo(this, HttpManager.getUdinspojxxmUrl(udinspoassetnum, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override
@@ -197,6 +247,19 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
         });
     }
 
+
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent();
+            intent.setClass(Add_Udinspojxxm_Activity.this, AddUdinspojxxmActivity.class);
+            intent.putExtra("udinspoassetlinenum", udinspojxxmListAdapter.getItemCount());
+            intent.putExtra("udinspoassetnum", udinspoassetnum);
+            startActivityForResult(intent, 0);
+        }
+    };
+
+
     /**
      * 返回点击
      */
@@ -219,4 +282,32 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
         page++;
         getData(searchText);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 0:
+                Udinspojxxm udinspojxxm = (Udinspojxxm) data.getSerializableExtra("udinspojxxm");
+
+                uditems.add(udinspojxxm);
+                udinspojxxmListAdapter.adddate(uditems);
+                nodatalayout.setVisibility(View.GONE);
+                break;
+
+
+            default:
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
 }
