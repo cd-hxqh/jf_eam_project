@@ -27,7 +27,9 @@ import android.widget.Toast;
 
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Webservice_result;
@@ -101,6 +103,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
+    private ArrayList<Assignment> assignmentList = new ArrayList<>();
     /**
      * 任务分配*
      */
@@ -264,42 +267,43 @@ public class Work_AddNewActivity extends BaseActivity {
                             getString(R.string.inputing), true, true);
                     mProgressDialog.setCanceledOnTouchOutside(false);
                     mProgressDialog.setCancelable(false);
+                    final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(),woactivityList,wplaborList,wpmaterialList,assignmentList,null);
                     new AsyncTask<String, Webservice_result, Webservice_result>() {
                         @Override
                         protected Webservice_result doInBackground(String... strings) {
-                            String data = "{\"wonum\":\"1255\",\n" +
-                                    "\"DESCRIPTION\":\"测试1#风机检修\",\n" +
-                                    "\"UDAPPTYPE\":\"UDWOTRACK\",\n" +
-                                    "\"assetnum\":\"TEST001\",\n" +
-                                    "\"status\":\"已核准\",\n" +
-                                    "\"location\":\"TRXNSITE\",\n" +
-                                    "\"lctype\":\"电气\",\n" +
-                                    "\"relationShip\":[{\"wpmaterial\":\"\",\"WOACTIVITY\":\"\"}],\n" +
-                                    "\"wpmaterial\":\n" +
-                                    "[{\n" +
-                                    "\"wonum\":\"1255\",\n" +
-                                    "\"itemnum\":\"TEST003\",\n" +
-                                    "\"itemqty\":\"1\",\n" +
-                                    "\"location\":\"DST\"\n" +
-                                    "},\n" +
-                                    "{\"wonum\":\"1255\",\n" +
-                                    "\"itemnum\":\"TEST002\",\n" +
-                                    "\"itemqty\":\"1\",\n" +
-                                    "\"location\":\"DST\"}\n" +
-                                    "],\n" +
-                                    "\"WOACTIVITY\": \n" +
-                                    "[{\n" +
-                                    "\"wosequence\":\"\",\n" +
-                                    "\"taskid\":\"10\",\n" +
-                                    "\"description\":\"步骤1\",\n" +
-                                    "\"parent\":\"1255\"\n" +
-                                    "},\n" +
-                                    "{\"wosequence\":\"\",\n" +
-                                    "\"taskid\":\"20\",\n" +
-                                    "\"description\":\"步骤2\",\n" +
-                                    "\"parent\":\"1255\"}\n" +
-                                    "]}";
-                            result = getBaseApplication().getWsService().InsertWO(data);
+//                            String data = "{\"wonum\":\"1255\",\n" +
+//                                    "\"DESCRIPTION\":\"测试1#风机检修\",\n" +
+//                                    "\"UDAPPTYPE\":\"UDWOTRACK\",\n" +
+//                                    "\"assetnum\":\"TEST001\",\n" +
+//                                    "\"status\":\"已核准\",\n" +
+//                                    "\"location\":\"TRXNSITE\",\n" +
+//                                    "\"lctype\":\"电气\",\n" +
+//                                    "\"relationShip\":[{\"wpmaterial\":\"\",\"WOACTIVITY\":\"\"}],\n" +
+//                                    "\"wpmaterial\":\n" +
+//                                    "[{\n" +
+//                                    "\"wonum\":\"1255\",\n" +
+//                                    "\"itemnum\":\"TEST003\",\n" +
+//                                    "\"itemqty\":\"1\",\n" +
+//                                    "\"location\":\"DST\"\n" +
+//                                    "},\n" +
+//                                    "{\"wonum\":\"1255\",\n" +
+//                                    "\"itemnum\":\"TEST002\",\n" +
+//                                    "\"itemqty\":\"1\",\n" +
+//                                    "\"location\":\"DST\"}\n" +
+//                                    "],\n" +
+//                                    "\"WOACTIVITY\": \n" +
+//                                    "[{\n" +
+//                                    "\"wosequence\":\"\",\n" +
+//                                    "\"taskid\":\"10\",\n" +
+//                                    "\"description\":\"步骤1\",\n" +
+//                                    "\"parent\":\"1255\"\n" +
+//                                    "},\n" +
+//                                    "{\"wosequence\":\"\",\n" +
+//                                    "\"taskid\":\"20\",\n" +
+//                                    "\"description\":\"步骤2\",\n" +
+//                                    "\"parent\":\"1255\"}\n" +
+//                                    "]}";
+                            result = getBaseApplication().getWsService().InsertWO(updataInfo,getBaseApplication().getUsername());
                             return result;
                         }
 
@@ -317,6 +321,32 @@ public class Work_AddNewActivity extends BaseActivity {
             }).create().show();
         }
     };
+
+    private WorkOrder getWorkOrder(){
+        WorkOrder workOrder = new WorkOrder();
+        workOrder.wonum = "";
+        workOrder.description = description.getText().toString();
+        workOrder.udwotype = udwotype.getText().toString();
+        workOrder.assetnum = assetnum.getText().toString();
+        workOrder.assetdesc = assetdesc.getText().toString();
+        workOrder.location = location.getText().toString();
+        workOrder.locationdesc = locationdesc.getText().toString();
+        workOrder.status = status.getText().toString();
+        workOrder.statusdate = statusdate.getText().toString();
+        workOrder.lctype = lctype.getText().toString();
+        workOrder.failurecode = failurecode.getText().toString();
+        workOrder.problemcode = problemcode.getText().toString();
+        workOrder.displayname = displayname.getText().toString();
+        workOrder.createdate = createdate.getText().toString();
+        workOrder.jpnum = jpnum.getText().toString();
+        workOrder.targstartdate = targstartdate.getText().toString();
+        workOrder.targcompdate = targcompdate.getText().toString();
+        workOrder.actstart = actstart.getText().toString();
+        workOrder.actfinish = actfinish.getText().toString();
+        workOrder.reportedby = reportedby.getText().toString();
+        workOrder.reportdate = reportdate.getText().toString();
+        return workOrder;
+    }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -373,8 +403,10 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("woactivityList",woactivityList);
+            bundle.putSerializable("assignmentList",assignmentList);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, 2000);
             popupWindow.dismiss();
         }
     };
@@ -458,6 +490,16 @@ public class Work_AddNewActivity extends BaseActivity {
                 sb.append(i + ":" + i1 + ":00");
             }
 
+//            Log.i(TAG,"sb="+sb);
+            if (layoutnum == targstartdate.getId()) {
+                targstartdate.setText(sb);
+            } else if (layoutnum == targcompdate.getId()) {
+                targcompdate.setText(sb);
+            } else if (layoutnum == actstart.getId()) {
+                actstart.setText(sb);
+            } else if(layoutnum == actfinish.getId()){
+                actfinish.setText(sb);
+            }
 
         }
     }
@@ -494,6 +536,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
                 wplaborList = (ArrayList<Wplabor>) data.getSerializableExtra("wplaborList");
                 wpmaterialList = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
+                break;
+            case 2000:
+                assignmentList = (ArrayList<Assignment>) data.getSerializableExtra("assignmentList");
                 break;
             default:
                 break;

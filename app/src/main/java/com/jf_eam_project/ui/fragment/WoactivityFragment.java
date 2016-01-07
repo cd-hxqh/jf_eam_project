@@ -40,12 +40,18 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;
+    private ArrayList<Woactivity> woactivities;
 
     public WoactivityFragment() {
     }
 
     public WoactivityFragment(WorkOrder workOrder) {
         this.workOrder = workOrder;
+    }
+
+    public WoactivityFragment(WorkOrder workOrder,ArrayList<Woactivity> woactivities) {
+        this.workOrder = workOrder;
+        this.woactivities = woactivities;
     }
 
     @Override
@@ -93,6 +99,10 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
         if (workOrder.wonum != null && !workOrder.equals("")) {
             refresh_layout.setRefreshing(true);
             getdata();
+        }else {
+            if(woactivities!=null&&woactivities.size()!=0){
+                woactivityAdapter.update(woactivities,true);
+            }
         }
     }
 

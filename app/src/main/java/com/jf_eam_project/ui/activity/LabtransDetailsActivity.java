@@ -24,13 +24,14 @@ public class LabtransDetailsActivity extends BaseActivity{
      * 返回*
      */
     private ImageView backImageView;
-
-    private TextView laborcode;//任务
-    private TextView craft;//工种
-    private TextView payrate;//数量
-    private TextView transtype;//常规时数
-    private TextView startdate;//常规时数
+    //员工，开始日期，常规时数，工种，费率，类型
+    private TextView taskid;//任务
+    private TextView laborcode;//员工
+    private TextView startdate;//开始日期
     private TextView regularhrs;//常规时数
+    private TextView craft;//工种
+    private TextView payrate;//费率
+    private TextView transtype;//类型
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class LabtransDetailsActivity extends BaseActivity{
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        laborcode = (TextView) findViewById(R.id.labtrans_laborcode);
+        taskid = (TextView) findViewById(R.id.labtrans_laborcode);
         craft = (TextView) findViewById(R.id.labtrans_craft);
         payrate = (TextView) findViewById(R.id.labtrans_payrate);
         transtype = (TextView) findViewById(R.id.labtrans_transtype);
@@ -71,7 +72,7 @@ public class LabtransDetailsActivity extends BaseActivity{
             }
         });
 
-        laborcode.setText(labtrans.laborcode);
+        taskid.setText(labtrans.taskid);
         craft.setText(labtrans.craft);
         payrate.setText(labtrans.payrate);
         transtype.setText(labtrans.transtype);

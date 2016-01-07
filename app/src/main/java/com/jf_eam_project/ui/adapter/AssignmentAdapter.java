@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * Created by think on 2015/12/4.
  * 任务分配
- *
  */
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
     Context mContext;
     List<Assignment> assignmentList = new ArrayList<>();
+
     public AssignmentAdapter(Context context) {
         this.mContext = context;
     }
@@ -91,8 +91,8 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -118,13 +118,19 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         assignmentList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<Assignment> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
+
+    //
+    public void adddate(ArrayList<Assignment> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
                 assignmentList.add(data.get(i));
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void adddate(Assignment assignment) {
+        assignmentList.add(assignment);
         notifyDataSetChanged();
     }
 }

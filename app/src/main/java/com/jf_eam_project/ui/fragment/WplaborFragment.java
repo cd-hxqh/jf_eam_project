@@ -24,6 +24,7 @@ import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -40,12 +41,18 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;
+    private ArrayList<Wplabor> wplabors;
 
     public WplaborFragment() {
     }
 
     public WplaborFragment(WorkOrder workOrder) {
         this.workOrder = workOrder;
+    }
+
+    public WplaborFragment(WorkOrder workOrder,ArrayList<Wplabor> wplabors) {
+        this.workOrder = workOrder;
+        this.wplabors = wplabors;
     }
 
     @Override
@@ -91,6 +98,10 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
         if (workOrder.wonum != null && !workOrder.equals("")) {
             refresh_layout.setRefreshing(true);
             getdata();
+        }else {
+            if (wplabors!=null&&wplabors.size()!=0){
+                wplaborAdapter.update(wplabors,true);
+            }
         }
     }
 

@@ -40,12 +40,17 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     private WorkOrder workOrder;
+    private ArrayList<Wpmaterial> wpmaterials;
 
     public WpmaterialFragment() {
     }
 
     public WpmaterialFragment(WorkOrder workOrder) {
         this.workOrder = workOrder;
+    }
+    public WpmaterialFragment(WorkOrder workOrder,ArrayList<Wpmaterial> wpmaterials) {
+        this.workOrder = workOrder;
+        this.wpmaterials = wpmaterials;
     }
 
     @Override
@@ -92,6 +97,10 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
         if (workOrder.wonum != null && !workOrder.equals("")) {
             refresh_layout.setRefreshing(true);
             getdata();
+        }else {
+            if(wpmaterials!=null&&wpmaterials.size()!=0){
+                wpmaterialAdapter.update(wpmaterials,true);
+            }
         }
     }
 

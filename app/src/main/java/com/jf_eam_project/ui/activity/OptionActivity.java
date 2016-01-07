@@ -26,6 +26,7 @@ import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
 import com.jf_eam_project.Dao.ItemDao;
 import com.jf_eam_project.Dao.JobplanDao;
+import com.jf_eam_project.Dao.LaborcraftrateDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
@@ -36,6 +37,7 @@ import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
+import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Person;
@@ -47,16 +49,18 @@ import java.util.List;
 
 /**
  * Created by think on 2015/12/28.
- *通用选项查询界面
- *
+ * 通用选项查询界面
  */
 public class OptionActivity extends BaseActivity {
-    private static final String TAG="OptionActivity";
-    /**标题**/
+    private static final String TAG = "OptionActivity";
+    /**
+     * 标题*
+     */
     private TextView titlename;
-    /**返回**/
+    /**
+     * 返回*
+     */
     private ImageView backImage;
-
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
@@ -66,6 +70,9 @@ public class OptionActivity extends BaseActivity {
     private String searchText = "";
     public int requestCode;
     ArrayList<Option> list;
+
+    private String CraftSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +84,11 @@ public class OptionActivity extends BaseActivity {
     }
 
     private void getIntentData() {
-        requestCode = getIntent().getIntExtra("requestCode",0);
-        Log.i(TAG,"requestCode="+requestCode);
+        requestCode = getIntent().getIntExtra("requestCode", 0);
+        if (requestCode == Constants.LABORCRAFTRATE) {
+            CraftSearch = getIntent().getStringExtra("craft");
+        }
+        Log.i(TAG, "requestCode=" + requestCode);
     }
 
     @Override
@@ -112,7 +122,7 @@ public class OptionActivity extends BaseActivity {
         getData(searchText);
     }
 
-    private void setSearchEdit(){
+    private void setSearchEdit() {
         SpannableString msp = new SpannableString("XX搜索");
         Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
         msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -137,18 +147,18 @@ public class OptionActivity extends BaseActivity {
         });
     }
 
-    private void getData(String searchText){
+    private void getData(String searchText) {
         list = new ArrayList<Option>();
         Option option;
         switch (requestCode) {
             case Constants.ASSETCODE:
                 List<Assets> assets;
-                if(searchText.equals("")) {
+                if (searchText.equals("")) {
                     assets = new AssetDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     assets = new AssetDao(OptionActivity.this).queryByNum(searchText);
                 }
-                for (int i = 0;i < assets.size();i ++){
+                for (int i = 0; i < assets.size(); i++) {
                     option = new Option();
                     option.setName(assets.get(i).assetnum);
                     option.setDescription(assets.get(i).description);
@@ -158,12 +168,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.LOCATIONCODE:
                 List<Location> locations;
-                if(searchText.equals("")) {
+                if (searchText.equals("")) {
                     locations = new LocationDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     locations = new LocationDao(OptionActivity.this).queryByLocation(searchText);
                 }
-                for (int i = 0;i < locations.size();i ++){
+                for (int i = 0; i < locations.size(); i++) {
                     option = new Option();
                     option.setName(locations.get(i).location);
                     option.setDescription(locations.get(i).description);
@@ -171,13 +181,13 @@ public class OptionActivity extends BaseActivity {
                 }
                 break;
             case Constants.FAILURECODE:
-                List<Failurecode>failurecodes;
-                if(searchText.equals("")){
+                List<Failurecode> failurecodes;
+                if (searchText.equals("")) {
                     failurecodes = new FailurecodeDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     failurecodes = new FailurecodeDao(OptionActivity.this).queryByFailurecode(searchText);
                 }
-                for (int i = 0;i < failurecodes.size();i ++){
+                for (int i = 0; i < failurecodes.size(); i++) {
                     option = new Option();
                     option.setName(failurecodes.get(i).failurecode);
                     option.setDescription(failurecodes.get(i).description);
@@ -186,12 +196,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.FAILURELIST:
                 List<Failurelist> failurelists;
-                if(searchText.equals("")){
+                if (searchText.equals("")) {
                     failurelists = new FailurelistDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     failurelists = new FailurelistDao(OptionActivity.this).queryByFailurecode(searchText);
                 }
-                for (int i = 0;i < failurelists.size();i ++){
+                for (int i = 0; i < failurelists.size(); i++) {
                     option = new Option();
                     option.setName(failurelists.get(i).failurecode);
                     option.setDescription(failurelists.get(i).flcdescription);
@@ -200,12 +210,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.JOBPLAN:
                 List<Jobplan> jobplans;
-                if(searchText.equals("")){
+                if (searchText.equals("")) {
                     jobplans = new JobplanDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     jobplans = new JobplanDao(OptionActivity.this).queryByJobplan(searchText);
                 }
-                for (int i = 0;i < jobplans.size();i ++){
+                for (int i = 0; i < jobplans.size(); i++) {
                     option = new Option();
                     option.setName(jobplans.get(i).jpnum);
                     option.setDescription(jobplans.get(i).description);
@@ -214,12 +224,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.CRAFTRATE:
                 List<Craftrate> craftrates;
-                if(searchText.equals("")){
+                if (searchText.equals("")) {
                     craftrates = new CraftrateDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     craftrates = new CraftrateDao(OptionActivity.this).queryByCraft(searchText);
                 }
-                for (int i = 0;i < craftrates.size();i ++){
+                for (int i = 0; i < craftrates.size(); i++) {
                     option = new Option();
                     option.setName(craftrates.get(i).craft);
                     option.setDescription(craftrates.get(i).skilllevel);
@@ -228,12 +238,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.ITEM:
                 List<Item> items;
-                if(searchText.equals("")){
+                if (searchText.equals("")) {
                     items = new ItemDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     items = new ItemDao(OptionActivity.this).queryByItem(searchText);
                 }
-                for (int i = 0;i < items.size();i ++){
+                for (int i = 0; i < items.size(); i++) {
                     option = new Option();
                     option.setName(items.get(i).itemnum);
                     option.setDescription(items.get(i).description);
@@ -242,12 +252,12 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.LOCATIONSCODE:
                 List<Location> locationses;
-                if(searchText.equals("")) {
+                if (searchText.equals("")) {
                     locationses = new LocationDao(OptionActivity.this).queryForLocations();
-                }else {
+                } else {
                     locationses = new LocationDao(OptionActivity.this).queryByLocations(searchText);
                 }
-                for (int i = 0;i < locationses.size();i ++){
+                for (int i = 0; i < locationses.size(); i++) {
                     option = new Option();
                     option.setName(locationses.get(i).location);
                     option.setDescription(locationses.get(i).description);
@@ -257,19 +267,35 @@ public class OptionActivity extends BaseActivity {
 
             case Constants.PERSON:
                 List<Person> persons;
-                if(searchText.equals("")){
+                if (searchText.equals("")) {
                     persons = new PersonDao(OptionActivity.this).queryForAll();
-                }else {
+                } else {
                     persons = new PersonDao(OptionActivity.this).queryByPerson(searchText);
                 }
-                for (int i = 0;i < persons.size();i ++){
+                for (int i = 0; i < persons.size(); i++) {
                     option = new Option();
                     option.setName(persons.get(i).personid);
                     option.setDescription(persons.get(i).displayname);
                     list.add(option);
                 }
 
-                Log.i(TAG,"这是人员");
+                Log.i(TAG, "这是人员");
+                break;
+            case Constants.LABORCRAFTRATE:
+                List<Laborcraftrate> laborcraftrates;
+                if (searchText.equals("") && CraftSearch.equals("")) {
+                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryForAll();
+                } else if (searchText.equals("") && !CraftSearch.equals("")) {
+                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByCraft(CraftSearch);
+                } else {
+                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByLabor(searchText);
+                }
+                for (int i = 0; i < laborcraftrates.size(); i++) {
+                    option = new Option();
+                    option.setName(laborcraftrates.get(i).laborcode);
+                    option.setDescription(laborcraftrates.get(i).craft);
+                    list.add(option);
+                }
                 break;
         }
         optionAdapter.update(list, true);

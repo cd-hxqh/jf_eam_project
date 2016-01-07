@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class WoactivityAddNewActivity extends BaseActivity{
     private TextView targcompdate;
     private TextView actstart;
     private TextView actfinish;
-    private TextView estdur;//估计持续时间
+    private EditText estdur;//估计持续时间
     private Button ok;//确定
 
     private DatePickerDialog datePickerDialog;
@@ -74,7 +75,7 @@ public class WoactivityAddNewActivity extends BaseActivity{
         targcompdate = (TextView) findViewById(R.id.woactivity_targcompdate);
         actstart = (TextView) findViewById(R.id.woactivity_actstart);
         actfinish = (TextView) findViewById(R.id.woactivity_actfinish);
-        estdur = (TextView) findViewById(R.id.woactivity_estdur);
+        estdur = (EditText) findViewById(R.id.woactivity_estdur);
         ok = (Button) findViewById(R.id.woactivity_ok);
 
     }
@@ -108,7 +109,7 @@ public class WoactivityAddNewActivity extends BaseActivity{
                 woactivity.setTargcompdate(targcompdate.getText().toString());
                 woactivity.setActstart(actstart.getText().toString());
                 woactivity.setActfinish(actfinish.getText().toString());
-//                woactivity.estdur = estdur.getText().toString();
+                woactivity.estdur = estdur.getText().toString();
                 intent.putExtra("woactivity",woactivity);
                 WoactivityAddNewActivity.this.setResult(0,intent);
                 finish();

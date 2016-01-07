@@ -127,4 +127,9 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
         }
         notifyDataSetChanged();
     }
+
+    public void adddate(Wplabor wplabor) {
+        wplaborList.add(wplabor);
+        notifyDataSetChanged();
+    }
 }

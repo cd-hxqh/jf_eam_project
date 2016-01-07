@@ -84,9 +84,23 @@ public class LaborcraftrateDao {
      * @param laborcode
      * @return
      */
-    public Laborcraftrate queryByLabor(String laborcode){
+    public List<Laborcraftrate> queryByLabor(String laborcode){
         try {
-            return LaborcraftrateDaoOpe.queryBuilder().where().eq("laborcode",laborcode).queryForFirst();
+            return LaborcraftrateDaoOpe.queryBuilder().where().like("laborcode",laborcode).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param craft
+     * @return
+     */
+    public List<Laborcraftrate> queryByCraft(String craft){
+        try {
+            return LaborcraftrateDaoOpe.queryBuilder().where().eq("craft", craft).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

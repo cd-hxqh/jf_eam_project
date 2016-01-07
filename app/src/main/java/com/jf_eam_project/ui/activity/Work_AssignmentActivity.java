@@ -18,6 +18,7 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.AssignmentAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
@@ -45,6 +46,8 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     private int page = 1;
 
     private WorkOrder workOrder;
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    private ArrayList<Assignment> assignmentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
 
     private void geiIntentData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
+        assignmentList = (ArrayList<Assignment>) getIntent().getSerializableExtra("assignmentList");
     }
     @Override
     protected void findViewById() {
@@ -76,18 +81,13 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Work_AssignmentActivity.this, Work_AddNewActivity.class);
-                intent.putExtra("workOrder", workOrder);
-                startActivity(intent);
+                Intent intent = new Intent(Work_AssignmentActivity.this, AssigmentAddNewActivity.class);
+                intent.putExtra("woactivityList",woactivityList);
+                startActivityForResult(intent, 1);
             }
         });
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backImage.setOnClickListener(backOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -108,7 +108,20 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             refresh_layout.setRefreshing(true);
             getdata();
         }
+        if(assignmentList.size()!=0){
+            assignmentAdapter.update(assignmentList,true);
+        }
     }
+
+    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            intent.putExtra("assignmentList", assignmentList);
+            setResult(2000,intent);
+            finish();
+        }
+    };
 
     private void getdata() {
         HttpManager.getDataPagingInfo(Work_AssignmentActivity.this, HttpManager.getAssignmentUrl(page, 20), new HttpRequestHandler<Results>() {
@@ -157,6 +170,22 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             assignmentAdapter.adddate(list);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (resultCode) {
+            case 1:
+                if (data != null) {
+                    Assignment assignment = (Assignment) data.getSerializableExtra("assignment");
+                    assignmentList.add(assignment);
+                    assignmentAdapter.adddate(assignment);
+                    nodatalayout.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
     //下拉刷新触发事件
     @Override
     public void onRefresh() {

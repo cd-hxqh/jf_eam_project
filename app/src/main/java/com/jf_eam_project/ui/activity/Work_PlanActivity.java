@@ -91,7 +91,7 @@ public class Work_PlanActivity extends BaseActivity {
     @Override
     protected void initView() {
         mViewPager.setCurrentItem(currentIndex);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(2);
         titlename.setText(getResources().getString(R.string.work_plan));
         backimg.setOnClickListener(backOnClickListener);
         menuImageView.setImageResource(R.drawable.add_ico);
@@ -104,9 +104,9 @@ public class Work_PlanActivity extends BaseActivity {
         wpmaterial.setOnClickListener(new Buttonlistener());
 //        wptool.setOnClickListener(new Buttonlistener());
         fragmentlist = new ArrayList<>();
-        woactivityFragment = new WoactivityFragment(workOrder);
-        wplaborFragment = new WplaborFragment(workOrder);
-        wpmaterialFragment = new WpmaterialFragment(workOrder);
+        woactivityFragment = new WoactivityFragment(workOrder,woactivityList);
+        wplaborFragment = new WplaborFragment(workOrder,wplaborList);
+        wpmaterialFragment = new WpmaterialFragment(workOrder,wpmaterialList);
 //        wpserviceFragment = new WpserviceFragment(workOrder);
 //        wptoolFragment = new WptoolFragment(workOrder);
         fragmentlist.add(woactivityFragment);
@@ -117,16 +117,6 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));//设置ViewPager的适配器
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
         woactivity.performClick();
-
-        if (woactivityList.size() != 0) {
-            woactivityFragment.woactivityAdapter.update(woactivityList, true);
-        }
-        if (wplaborList.size() != 0) {
-            wplaborFragment.wplaborAdapter.update(wplaborList, true);
-        }
-        if (wpmaterialList.size() != 0) {
-            wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
-        }
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
@@ -284,7 +274,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if (data != null) {
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                     woactivityList.add(woactivity);
-                    woactivityFragment.woactivityAdapter.update(woactivityList, true);
+                    woactivityFragment.woactivityAdapter.adddate(woactivity);
                     woactivityFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 break;
@@ -292,7 +282,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if (data != null) {
                     Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
                     wplaborList.add(wplabor);
-                    wplaborFragment.wplaborAdapter.update(wplaborList, true);
+                    wplaborFragment.wplaborAdapter.adddate(wplabor);
                     wplaborFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 break;
@@ -300,7 +290,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if (data != null) {
                     Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     wpmaterialList.add(wpmaterial);
-                    wpmaterialFragment.wpmaterialAdapter.update(wpmaterialList, true);
+                    wpmaterialFragment.wpmaterialAdapter.adddate(wpmaterial);
                     wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 break;

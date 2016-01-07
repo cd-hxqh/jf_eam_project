@@ -234,16 +234,15 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/woactivity_estdur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
-                    android:drawableRight="@drawable/item_more"
-                    android:gravity="center_vertical"
+                    android:inputType="datetime"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp"  />
+                    android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
 
             <View

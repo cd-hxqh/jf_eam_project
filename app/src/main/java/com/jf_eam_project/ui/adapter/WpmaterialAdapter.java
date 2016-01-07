@@ -27,6 +27,7 @@ import java.util.List;
 public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.ViewHolder> {
     Context mContext;
     List<Wpmaterial> wpmaterialList = new ArrayList<>();
+
     public WpmaterialAdapter(Context context) {
         this.mContext = context;
     }
@@ -90,8 +91,8 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -117,13 +118,19 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
         wpmaterialList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<Wpmaterial> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
+
+    //
+    public void adddate(ArrayList<Wpmaterial> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
                 wpmaterialList.add(data.get(i));
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void adddate(Wpmaterial wpmaterial) {
+        wpmaterialList.add(wpmaterial);
         notifyDataSetChanged();
     }
 }

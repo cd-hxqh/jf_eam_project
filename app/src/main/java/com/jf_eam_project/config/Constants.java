@@ -190,7 +190,7 @@ public class Constants {
     public static final int JOBPLAN = 140;
     public static final int CRAFTRATE = 170;
     public static final int ITEM = 180;
-
+    public static final int LABORCRAFTRATE = 190;
     public static final int PERSON=160;
 
 

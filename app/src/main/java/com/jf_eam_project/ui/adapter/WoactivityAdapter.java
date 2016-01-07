@@ -26,6 +26,7 @@ import java.util.List;
 public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.ViewHolder> {
     Context mContext;
     List<Woactivity> woactivityList = new ArrayList<>();
+
     public WoactivityAdapter(Context context) {
         this.mContext = context;
     }
@@ -89,8 +90,8 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -116,13 +117,19 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
         woactivityList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<Woactivity> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
+
+    //
+    public void adddate(ArrayList<Woactivity> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
                 woactivityList.add(data.get(i));
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void adddate(Woactivity woactivity) {
+        woactivityList.add(woactivity);
         notifyDataSetChanged();
     }
 }
