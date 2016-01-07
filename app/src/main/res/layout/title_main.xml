@@ -25,6 +25,16 @@
         android:textColor="@color/white"
         android:textSize="18sp" />
 
+    <ImageView
+        android:id="@+id/title_edit"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/title_add"
+        android:src="@drawable/edit_query"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/title_add"
@@ -34,5 +44,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
+        android:src="@drawable/edit_query"
         android:visibility="gone" />
 </RelativeLayout>

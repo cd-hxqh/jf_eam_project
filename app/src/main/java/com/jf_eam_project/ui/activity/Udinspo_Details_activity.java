@@ -29,6 +29,11 @@ public class Udinspo_Details_activity extends BaseActivity {
      * 返回按钮*
      */
     private ImageView backImageView;
+
+    /**
+     * 编辑*
+     */
+    private ImageView editImageView;
     /**
      * 菜单*
      */
@@ -59,7 +64,6 @@ public class Udinspo_Details_activity extends BaseActivity {
     private TextView udinspoasset; //设备部件
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         menuImageView = (ImageView) findViewById(R.id.title_add);
+        editImageView = (ImageView) findViewById(R.id.title_edit);
 
         insponumText = (TextView) findViewById(R.id.udinspo_insponum_text);
         descriptionText = (TextView) findViewById(R.id.udinspo_description_text);
@@ -103,7 +108,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-
+        editImageView.setVisibility(View.VISIBLE);
 
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
