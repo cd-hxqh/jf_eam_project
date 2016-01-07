@@ -67,14 +67,15 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/udinspo_description_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
+                    android:textSize="@dimen/dimens_16dp"
+                    android:focusable="false"/>
             </LinearLayout>
 
             <View
@@ -133,12 +134,16 @@
 
                 <TextView
                     android:id="@+id/udinspo_inspotype_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
+                    android:textSize="@dimen/dimens_16dp"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/item_more"
+                    android:focusable="false"
+                    />
             </LinearLayout>
 
             <View
@@ -321,6 +326,28 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/submit_btn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:text="@string/confirm_btn"
+                    android:visibility="gone"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
 
 
         </LinearLayout>
