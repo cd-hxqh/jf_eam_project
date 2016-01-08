@@ -2,6 +2,7 @@ package com.jf_eam_project.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import java.util.Calendar;
  */
 public class WoactivityDetailsActivity extends BaseActivity{
     private Woactivity woactivity;
+    private int position;
 
     /**
      * 标题*
@@ -36,10 +38,10 @@ public class WoactivityDetailsActivity extends BaseActivity{
 
     private TextView taskid;//任务
     private TextView description;//摘要
-    private TextView targstartdate;
-    private TextView targcompdate;
-    private TextView actstart;
-    private TextView actfinish;
+    private TextView targstartdate;//目标开始时间
+    private TextView targcompdate;//目标结束时间
+    private TextView actstart;//实际开始时间
+    private TextView actfinish;//实际结束时间
     private EditText estdur;//估计持续时间
     private Button ok;//确定
 
@@ -63,6 +65,7 @@ public class WoactivityDetailsActivity extends BaseActivity{
      */
     private void geiIntentData() {
         woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
+        position = getIntent().getIntExtra("position",0);
     }
     @Override
     protected void findViewById() {
@@ -103,7 +106,28 @@ public class WoactivityDetailsActivity extends BaseActivity{
         targcompdate.setOnClickListener(new MydateListener());
         actstart.setOnClickListener(new MydateListener());
         actfinish.setOnClickListener(new MydateListener());
+
+        ok.setOnClickListener(okOnClickListener);
     }
+
+    private View.OnClickListener okOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            woactivity = new Woactivity();
+            woactivity.setTaskid(taskid.getText().toString());
+            woactivity.setDescription(description.getText().toString());
+            woactivity.setTargstartdate(targstartdate.getText().toString());
+            woactivity.setTargcompdate(targcompdate.getText().toString());
+            woactivity.setActstart(actstart.getText().toString());
+            woactivity.setActfinish(actfinish.getText().toString());
+            woactivity.estdur = estdur.getText().toString();
+            intent.putExtra("woactivity",woactivity);
+            intent.putExtra("position",position);
+            WoactivityDetailsActivity.this.setResult(4,intent);
+            finish();
+        }
+    };
 
     /**
      * 设置时间选择器*
@@ -141,9 +165,9 @@ public class WoactivityDetailsActivity extends BaseActivity{
             sb = new StringBuffer();
             monthOfYear = monthOfYear + 1;
             if (dayOfMonth < 10) {
-                sb.append(year%100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
             } else {
-                sb.append(year%100 + "-" + monthOfYear + "-" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
             timePickerDialog.show();
         }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.ui.activity.WoactivityDetailsActivity;
+import com.jf_eam_project.ui.activity.Work_PlanActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,10 @@ import java.util.List;
  * 任务
  */
 public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.ViewHolder> {
-    Context mContext;
-    List<Woactivity> woactivityList = new ArrayList<>();
+    Work_PlanActivity mContext;
+    public ArrayList<Woactivity> woactivityList = new ArrayList<>();
 
-    public WoactivityAdapter(Context context) {
+    public WoactivityAdapter(Work_PlanActivity context) {
         this.mContext = context;
     }
 
@@ -51,8 +52,9 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
                 Intent intent = new Intent(mContext, WoactivityDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("woactivity", woactivity);
+                bundle.putSerializable("position", position);
                 intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent, 4);
             }
         });
     }

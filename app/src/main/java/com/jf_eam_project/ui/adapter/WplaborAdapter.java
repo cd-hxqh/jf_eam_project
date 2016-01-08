@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.ui.activity.Work_PlanActivity;
 import com.jf_eam_project.ui.activity.WplaborDetailsActivity;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ import java.util.List;
  * 员工
  */
 public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHolder> {
-    Context mContext;
-    List<Wplabor> wplaborList = new ArrayList<>();
+    Work_PlanActivity mContext;
+    public ArrayList<Wplabor> wplaborList = new ArrayList<>();
 
-    public WplaborAdapter(Context context) {
+    public WplaborAdapter(Work_PlanActivity context) {
         this.mContext = context;
     }
 
@@ -51,8 +52,10 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
                 Intent intent = new Intent(mContext, WplaborDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("wplabor", wplabor);
+                bundle.putSerializable("woactivityList", mContext.woactivityList);
+                bundle.putSerializable("position", position);
                 intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent,5);
             }
         });
     }

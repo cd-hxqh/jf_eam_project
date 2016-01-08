@@ -46,18 +46,18 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public Webservice_result InsertWO(String string,String personId){
+    public String InsertWO(String string,String personId){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
         soapReq.addProperty("json", string);
         soapReq.addProperty("flag",1);
-        soapReq.addProperty("mboObjectName","workorder");
-        soapReq.addProperty("mboKey","wonum");
+        soapReq.addProperty("mboObjectName","WORKORDER");
+        soapReq.addProperty("mboKey","WONUM");
         soapReq.addProperty("personId",personId);
         soapEnvelope.setOutputSoapObject(soapReq);
-        HttpTransportSE httpTransport = new HttpTransportSE("http://1.202.243.112:7001/meaweb/services/MOBILESERVICE",timeOut);
+        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
@@ -66,45 +66,15 @@ public class AndroidClientService {
             e.printStackTrace();
         }
         String obj = null;
-        Webservice_result result = null;
+        String wonum = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-            result = JsonUtils.parsingWebservice_result(obj);
+            wonum = JsonUtils.parsingWebservice_result(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }
-        return result;
+        return wonum;
     }
-
-//    /**
-//     * Ԥ�ù�������
-//     * @param string
-//     * @return
-//     */
-//    public String InsertWOyz(String string){
-//        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//        soapEnvelope.implicitTypes = true;
-//        soapEnvelope.dotNet = true;
-//        SoapObject soapReq = new SoapObject(NAMESPACE, "InsertWO");
-//        soapReq.addProperty("in0", string);
-//        soapReq.addProperty("in1", 0);
-//        soapEnvelope.setOutputSoapObject(soapReq);
-//        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
-//        try {
-//            httpTransport.call("", soapEnvelope);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        }
-//        String obj = null;
-//        try {
-//            obj = soapEnvelope.getResponse().toString();
-//        } catch (SoapFault soapFault) {
-//            soapFault.printStackTrace();
-//        }
-//        return obj;
-//    }
 
     /**
      *更新工单
@@ -134,35 +104,38 @@ public class AndroidClientService {
         return obj;
     }
 
-//    /**
-//     * �޸�Ԥ�ù�������
-//     * @param string
-//     * @return
-//     */
-//    public String UpdataWOyz(String string){
-//        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//        soapEnvelope.implicitTypes = true;
-//        soapEnvelope.dotNet = true;
-//        SoapObject soapReq = new SoapObject(NAMESPACE, "UpdateWO");
-//        soapReq.addProperty("in0", string);
-//        soapReq.addProperty("in1", 0);
-//        soapEnvelope.setOutputSoapObject(soapReq);
-//        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
-//        try {
-//            httpTransport.call("", soapEnvelope);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        }
-//        String obj = null;
-//        try {
-//            obj = soapEnvelope.getResponse().toString();
-//        } catch (SoapFault soapFault) {
-//            soapFault.printStackTrace();
-//        }
-//        return obj;
-//    }
+    /**
+     * 开始工作流
+     * @return
+     */
+    public String startwf(String processname,String mbo,String keyValue,String key){
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
+        soapReq.addProperty("processname", "UDFJHWO");//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
+        soapReq.addProperty("mbo", "WORKORDER");//工单WORKORDER,采购申请pr
+        soapReq.addProperty("keyValue", 0);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
+        soapReq.addProperty("key", 0);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        String obj = null;
+        String result = null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            result = JsonUtils.parsingwfserviceResult(obj);
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return result;
+    }
 
 
     /**

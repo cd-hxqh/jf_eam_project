@@ -38,6 +38,10 @@ public class BaseApplication extends Application {
         return new AndroidClientService(Constants.getWsUrl(this));
     }
 
+    public AndroidClientService getWfService() {
+        return new AndroidClientService(Constants.getWsUrl(this));
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -52,18 +52,45 @@ public class JsonUtils {
         }
     }
 
-    public static Webservice_result parsingWebservice_result(String data) {
+    /**
+     * 解析新增工单返回信息
+     * @param data
+     * @return
+     */
+    public static String parsingWebservice_result(String data) {
         Log.i(TAG, "data=" + data);
-        Webservice_result webserviceResult = null;
+        String woNum = null;
         try {
             JSONObject object = new JSONObject(data);
-            webserviceResult.setWoNum(object.getString("woNum"));
-            webserviceResult.setErrorMsg(object.getString("errorMsg"));
-            webserviceResult.setErrorNo(object.getString("errorNo"));
+            if(object.getString("success").equals("成功")){
+                if (object.has("wonum")) {
+                    woNum = object.getString("wonum");
+                }else if(object.has("WONUM")){
+                    woNum = object.getString("WONUM");
+                }
+            }else {
+                woNum = "";
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return webserviceResult;
+        return woNum;
+    }
+
+    public static String parsingwfserviceResult(String data) {
+        Log.i(TAG, "data=" + data);
+        String result = null;
+        try {
+            JSONObject object = new JSONObject(data);
+            if(object.getString("errorMsg").equals("工作流启动成功")){
+                result = object.getString("errorMsg");
+            }else {
+                result = "";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
@@ -134,26 +161,26 @@ public class JsonUtils {
                 jsonObject.put("wonum", workOrder.wonum);
             }
             jsonObject.put("UDAPPTYPE", "UDWOTRACK");
-            jsonObject.put("description", workOrder.description);
-            jsonObject.put("udwotype", workOrder.udwotype);
-            jsonObject.put("assetnum", workOrder.assetnum);
-            jsonObject.put("assetdesc", workOrder.assetdesc);
-            jsonObject.put("location", workOrder.location);
-            jsonObject.put("locationdesc", workOrder.locationdesc);
-            jsonObject.put("status", workOrder.status);
-            jsonObject.put("statusdate", workOrder.statusdate);
-            jsonObject.put("lctype", workOrder.lctype);
-            jsonObject.put("failurecode", workOrder.failurecode);
-            jsonObject.put("problemcode", workOrder.problemcode);
-            jsonObject.put("displayname", workOrder.displayname);
-            jsonObject.put("createdate", workOrder.createdate);
-            jsonObject.put("jpnum", workOrder.jpnum);
-            jsonObject.put("targstartdate", workOrder.targstartdate);
-            jsonObject.put("targcompdate", workOrder.targcompdate);
-            jsonObject.put("actstart", workOrder.actstart);
-            jsonObject.put("actfinish", workOrder.actfinish);
-            jsonObject.put("reportedby", workOrder.reportedby);
-            jsonObject.put("reportdate", workOrder.reportdate);
+            jsonObject.put("DESCRIPTION", workOrder.description);
+            jsonObject.put("UDWOTYPE", workOrder.udwotype);
+            jsonObject.put("ASSETNUM", workOrder.assetnum);
+            jsonObject.put("ASSETDESC", workOrder.assetdesc);
+            jsonObject.put("LOCATION", workOrder.location);
+            jsonObject.put("LOCATIONDESC", workOrder.locationdesc);
+            jsonObject.put("STATUS", workOrder.status);
+            jsonObject.put("STATUSDATE", workOrder.statusdate);
+            jsonObject.put("LCTYPE", workOrder.lctype);
+            jsonObject.put("FAILURECODE", workOrder.failurecode);
+            jsonObject.put("PROBLEMCODE", workOrder.problemcode);
+            jsonObject.put("DISPLAYNAME", workOrder.displayname);
+            jsonObject.put("CREATEDATE", workOrder.createdate);
+            jsonObject.put("JPNUM", workOrder.jpnum);
+            jsonObject.put("TARGSTARTDATE", workOrder.targstartdate);
+            jsonObject.put("TARGCOMPDATE", workOrder.targcompdate);
+            jsonObject.put("ACTSTART", workOrder.actstart);
+            jsonObject.put("ACTFINISH", workOrder.actfinish);
+            jsonObject.put("REPORTEDBY", workOrder.reportedby);
+            jsonObject.put("REPORTDATE", workOrder.reportdate);
 
             JSONObject object = new JSONObject();
             if (woactivities != null && woactivities.size() != 0) {
@@ -162,13 +189,13 @@ public class JsonUtils {
                 JSONObject woactivityObj;
                 for (int i = 0; i < woactivities.size(); i++) {
                     woactivityObj = new JSONObject();
-                    woactivityObj.put("taskid", woactivities.get(i).taskid);
-                    woactivityObj.put("description", woactivities.get(i).description);
-                    woactivityObj.put("targstartdate", woactivities.get(i).targstartdate);
-                    woactivityObj.put("targcompdate", woactivities.get(i).targcompdate);
-                    woactivityObj.put("actstart", woactivities.get(i).actstart);
-                    woactivityObj.put("actfinish", woactivities.get(i).actfinish);
-                    woactivityObj.put("estdur", woactivities.get(i).estdur);
+                    woactivityObj.put("TASKID", woactivities.get(i).taskid);
+                    woactivityObj.put("DESCRIPTION", woactivities.get(i).description);
+                    woactivityObj.put("TARGSTARTDATE", woactivities.get(i).targstartdate);
+                    woactivityObj.put("TARGCOMPDATE", woactivities.get(i).targcompdate);
+                    woactivityObj.put("ACTSTART", woactivities.get(i).actstart);
+                    woactivityObj.put("ACTFINISH", woactivities.get(i).actfinish);
+                    woactivityObj.put("ESTDUR", woactivities.get(i).estdur);
                     woactivityArray.put(woactivityObj);
                 }
                 jsonObject.put("WOACTIVITY", woactivityArray);
@@ -179,10 +206,10 @@ public class JsonUtils {
                 JSONObject wplaborObj;
                 for (int i = 0; i < wplabors.size(); i++) {
                     wplaborObj = new JSONObject();
-                    wplaborObj.put("taskid", wplabors.get(i).taskid);
-                    wplaborObj.put("craft", wplabors.get(i).craft);
-                    wplaborObj.put("quantity", wplabors.get(i).quantity);
-                    wplaborObj.put("laborhrs", wplabors.get(i).laborhrs);
+                    wplaborObj.put("TASKID", wplabors.get(i).taskid);
+                    wplaborObj.put("CRAFT", wplabors.get(i).craft);
+                    wplaborObj.put("QUANTITY", wplabors.get(i).quantity);
+                    wplaborObj.put("LABORHRS", wplabors.get(i).laborhrs);
                     wplaborArray.put(wplaborObj);
                 }
                 jsonObject.put("WPLABOR", wplaborArray);
@@ -193,13 +220,13 @@ public class JsonUtils {
                 JSONObject wpmaterialObj;
                 for(int i = 0;i < wpmaterials.size();i ++){
                     wpmaterialObj = new JSONObject();
-                    wpmaterialObj.put("taskid",wpmaterials.get(i).taskid);
-                    wpmaterialObj.put("itemnum",wpmaterials.get(i).itemnum);
-                    wpmaterialObj.put("itemqty",wpmaterials.get(i).itemqty);
-                    wpmaterialObj.put("location",wpmaterials.get(i).location);
-                    wpmaterialObj.put("storelocsite",wpmaterials.get(i).storelocsite);
-                    wpmaterialObj.put("requestby",wpmaterials.get(i).requestby);
-                    wpmaterialObj.put("requiredate",wpmaterials.get(i).requiredate);
+                    wpmaterialObj.put("TASKID",wpmaterials.get(i).taskid);
+                    wpmaterialObj.put("ITEMNUM",wpmaterials.get(i).itemnum);
+                    wpmaterialObj.put("ITEMQTY",wpmaterials.get(i).itemqty);
+                    wpmaterialObj.put("LOCATION",wpmaterials.get(i).location);
+                    wpmaterialObj.put("STORELOCSITE",wpmaterials.get(i).storelocsite);
+                    wpmaterialObj.put("REQUESTBY",wpmaterials.get(i).requestby);
+                    wpmaterialObj.put("REQUIREDATE",wpmaterials.get(i).requiredate);
                     wpmaterialArray.put(wpmaterialObj);
                 }
                 jsonObject.put("WPMATERIAL",wpmaterialArray);
@@ -210,10 +237,10 @@ public class JsonUtils {
                 JSONObject assignmentObj;
                 for(int i = 0;i < assignments.size();i ++){
                     assignmentObj = new JSONObject();
-                    assignmentObj.put("taskid",assignments.get(i).taskid);
-                    assignmentObj.put("laborcode",assignments.get(i).laborcode);
-                    assignmentObj.put("craft",assignments.get(i).craft);
-                    assignmentObj.put("laborhrs",assignments.get(i).laborhrs);
+                    assignmentObj.put("TASKID",assignments.get(i).taskid);
+                    assignmentObj.put("LABORCODE",assignments.get(i).laborcode);
+                    assignmentObj.put("CRAFT",assignments.get(i).craft);
+                    assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
                     assignmentArray.put(assignmentObj);
                 }
                 jsonObject.put("ASSIGNMENT",assignmentArray);
@@ -224,13 +251,13 @@ public class JsonUtils {
                 JSONObject labtransObj;
                 for(int i = 0;i < labtranses.size();i ++){
                     labtransObj = new JSONObject();
-                    labtransObj.put("taskid",labtranses.get(i).taskid);
-                    labtransObj.put("laborcode",labtranses.get(i).laborcode);
-                    labtransObj.put("startdate",labtranses.get(i).startdate);
-                    labtransObj.put("regularhrs",labtranses.get(i).regularhrs);
-                    labtransObj.put("craft",labtranses.get(i).craft);
-                    labtransObj.put("payrate",labtranses.get(i).payrate);
-                    labtransObj.put("transtype",labtranses.get(i).transtype);
+                    labtransObj.put("TASKID",labtranses.get(i).taskid);
+                    labtransObj.put("LABORCODE",labtranses.get(i).laborcode);
+                    labtransObj.put("STARTDATE",labtranses.get(i).startdate);
+                    labtransObj.put("REGULARHRS",labtranses.get(i).regularhrs);
+                    labtransObj.put("CRAFT",labtranses.get(i).craft);
+                    labtransObj.put("PAYRATE",labtranses.get(i).payrate);
+                    labtransObj.put("TRANSTYPE",labtranses.get(i).transtype);
                     labtransArray.put(labtransObj);
                 }
                 jsonObject.put("LABTRANS",labtransArray);

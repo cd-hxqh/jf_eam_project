@@ -52,7 +52,6 @@ import java.util.List;
 /**
  * Created by think on 2015/11/30.
  * 新增工单详情页面
- *
  */
 public class Work_AddNewActivity extends BaseActivity {
 
@@ -65,7 +64,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView wonum;//工单号
     private LinearLayout wonumlayout;
     private TextView description;//描述
-//    private TextView parent;//父工单
+    //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
     private TextView assetnum;//资产编号
     private TextView assetdesc;//资产描述
@@ -74,7 +73,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView status; //状态
     private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
-//    private TextView woclass; //类
+    //    private TextView woclass; //类
     private TextView failurecode; //故障类
     private TextView problemcode; //问题代码
     private TextView displayname; //创建人
@@ -89,7 +88,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView reportedby; //报告人
     private TextView reportdate; //汇报日期
 
-    private Button addnew;
+    private Button addnew;//新增按钮
+    private Button wfservice;//开始工作流
 
     private DatePickerDialog datePickerDialog;
     private CumTimePickerDialog timePickerDialog;
@@ -113,7 +113,8 @@ public class Work_AddNewActivity extends BaseActivity {
      */
     private LinearLayout realinfoLinearLayout;
 
-    private Webservice_result result;
+    private String addresult;
+    private String result;
     protected static final int S = 0;
     protected static final int F = 1;
     protected static final int YUZHI_S = 2;
@@ -186,6 +187,7 @@ public class Work_AddNewActivity extends BaseActivity {
         reportdate = (TextView) findViewById(R.id.work_reportdate);
 
         addnew = (Button) findViewById(R.id.work_add);
+        wfservice = (Button) findViewById(R.id.wfservice);
     }
 
     @Override
@@ -228,6 +230,7 @@ public class Work_AddNewActivity extends BaseActivity {
         });
 
         addnew.setOnClickListener(addnewlistener);
+        wfservice.setOnClickListener(wfserviceOnClickListener);
 
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,54 +270,25 @@ public class Work_AddNewActivity extends BaseActivity {
                             getString(R.string.inputing), true, true);
                     mProgressDialog.setCanceledOnTouchOutside(false);
                     mProgressDialog.setCancelable(false);
-                    final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(),woactivityList,wplaborList,wpmaterialList,assignmentList,null);
-                    new AsyncTask<String, Webservice_result, Webservice_result>() {
+                    final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+                    new AsyncTask<String, String, String>() {
                         @Override
-                        protected Webservice_result doInBackground(String... strings) {
-//                            String data = "{\"wonum\":\"1255\",\n" +
-//                                    "\"DESCRIPTION\":\"测试1#风机检修\",\n" +
-//                                    "\"UDAPPTYPE\":\"UDWOTRACK\",\n" +
-//                                    "\"assetnum\":\"TEST001\",\n" +
-//                                    "\"status\":\"已核准\",\n" +
-//                                    "\"location\":\"TRXNSITE\",\n" +
-//                                    "\"lctype\":\"电气\",\n" +
-//                                    "\"relationShip\":[{\"wpmaterial\":\"\",\"WOACTIVITY\":\"\"}],\n" +
-//                                    "\"wpmaterial\":\n" +
-//                                    "[{\n" +
-//                                    "\"wonum\":\"1255\",\n" +
-//                                    "\"itemnum\":\"TEST003\",\n" +
-//                                    "\"itemqty\":\"1\",\n" +
-//                                    "\"location\":\"DST\"\n" +
-//                                    "},\n" +
-//                                    "{\"wonum\":\"1255\",\n" +
-//                                    "\"itemnum\":\"TEST002\",\n" +
-//                                    "\"itemqty\":\"1\",\n" +
-//                                    "\"location\":\"DST\"}\n" +
-//                                    "],\n" +
-//                                    "\"WOACTIVITY\": \n" +
-//                                    "[{\n" +
-//                                    "\"wosequence\":\"\",\n" +
-//                                    "\"taskid\":\"10\",\n" +
-//                                    "\"description\":\"步骤1\",\n" +
-//                                    "\"parent\":\"1255\"\n" +
-//                                    "},\n" +
-//                                    "{\"wosequence\":\"\",\n" +
-//                                    "\"taskid\":\"20\",\n" +
-//                                    "\"description\":\"步骤2\",\n" +
-//                                    "\"parent\":\"1255\"}\n" +
-//                                    "]}";
-                            result = getBaseApplication().getWsService().InsertWO(updataInfo,getBaseApplication().getUsername());
-                            return result;
+                        protected String doInBackground(String... strings) {
+                            addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                            return addresult;
                         }
 
                         @Override
-                        protected void onPostExecute(Webservice_result s) {
+                        protected void onPostExecute(String s) {
                             super.onPostExecute(s);
-                            if (s.getErrorMsg().equals("成功")) {
-                                Toast.makeText(Work_AddNewActivity.this, "新增工单成功", Toast.LENGTH_SHORT).show();
+                            if (s == null || s.equals("")) {
+                                Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Work_AddNewActivity.this, s.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
+                                wonumlayout.setVisibility(View.VISIBLE);
+                                wonum.setText(s);
                             }
+                            mProgressDialog.dismiss();
                         }
                     }.execute();
                 }
@@ -322,7 +296,53 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
-    private WorkOrder getWorkOrder(){
+    private View.OnClickListener wfserviceOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (wonumlayout.getVisibility() == View.GONE && (wonum.getText().toString() == null || wonum.getText().toString().equals(""))) {
+                Toast.makeText(Work_AddNewActivity.this, "请先新增工单", Toast.LENGTH_SHORT).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
+                builder.setMessage("确定开始工作流吗").setTitle("提示")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        mProgressDialog = ProgressDialog.show(Work_AddNewActivity.this, null,
+                                getString(R.string.inputing), true, true);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setCancelable(false);
+                        new AsyncTask<String, String, String>() {
+                            @Override
+                            protected String doInBackground(String... strings) {
+                                result = getBaseApplication().getWfService().startwf("UDFJHWO","WORKORDER",addresult,"WONUM");
+                                return result;
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                if (s == null || s.equals("")) {
+                                    Toast.makeText(Work_AddNewActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Work_AddNewActivity.this,  s , Toast.LENGTH_SHORT).show();
+                                    Work_AddNewActivity.this.finish();
+                                }
+                                mProgressDialog.dismiss();
+                            }
+                        }.execute();
+                    }
+                });
+            }
+        }
+    };
+
+    private WorkOrder getWorkOrder() {
         WorkOrder workOrder = new WorkOrder();
         workOrder.wonum = "";
         workOrder.description = description.getText().toString();
@@ -388,7 +408,7 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_PlanActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("woactivityList",woactivityList);
+            bundle.putSerializable("woactivityList", woactivityList);
             bundle.putSerializable("wplaborList", wplaborList);
             bundle.putSerializable("wpmaterialList", wpmaterialList);
             intent.putExtras(bundle);
@@ -403,8 +423,8 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("woactivityList",woactivityList);
-            bundle.putSerializable("assignmentList",assignmentList);
+            bundle.putSerializable("woactivityList", woactivityList);
+            bundle.putSerializable("assignmentList", assignmentList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 2000);
             popupWindow.dismiss();
@@ -423,15 +443,17 @@ public class Work_AddNewActivity extends BaseActivity {
 //        }
 //    };
 
-    private class LayoutOnClickListener implements View.OnClickListener{
+    private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
-        private LayoutOnClickListener(int requestCode){
+
+        private LayoutOnClickListener(int requestCode) {
             this.requestCode = requestCode;
         }
+
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_AddNewActivity.this,OptionActivity.class);
-            intent.putExtra("requestCode",requestCode);
+            Intent intent = new Intent(Work_AddNewActivity.this, OptionActivity.class);
+            intent.putExtra("requestCode", requestCode);
             startActivityForResult(intent, requestCode);
         }
     }
@@ -472,9 +494,9 @@ public class Work_AddNewActivity extends BaseActivity {
             sb = new StringBuffer();
             monthOfYear = monthOfYear + 1;
             if (dayOfMonth < 10) {
-                sb.append(year%100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+                sb.append(year % 100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
             } else {
-                sb.append(year%100 + "-" + monthOfYear + "-" + dayOfMonth);
+                sb.append(year % 100 + "-" + monthOfYear + "-" + dayOfMonth);
             }
             timePickerDialog.show();
         }
@@ -497,7 +519,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 targcompdate.setText(sb);
             } else if (layoutnum == actstart.getId()) {
                 actstart.setText(sb);
-            } else if(layoutnum == actfinish.getId()){
+            } else if (layoutnum == actfinish.getId()) {
                 actfinish.setText(sb);
             }
 
