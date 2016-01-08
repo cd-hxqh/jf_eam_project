@@ -19,6 +19,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.ui.activity.Work_PlanActivity;
 import com.jf_eam_project.ui.adapter.WpmaterialAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
@@ -84,7 +85,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        wpmaterialAdapter = new WpmaterialAdapter(getActivity());
+        wpmaterialAdapter = new WpmaterialAdapter((Work_PlanActivity) getActivity());
         recyclerView.setAdapter(wpmaterialAdapter);
 
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -142,7 +143,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
             nodatalayout.setVisibility(View.GONE);
         }
         if (page == 1 && wpmaterialAdapter.getItemCount() != 0) {
-            wpmaterialAdapter = new WpmaterialAdapter(getActivity());
+            wpmaterialAdapter = new WpmaterialAdapter((Work_PlanActivity) getActivity());
             recyclerView.setAdapter(wpmaterialAdapter);
         }
         if ((list == null || list.size() == 0) && page == 1) {

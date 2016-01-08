@@ -25,6 +25,8 @@ public class Constants {
     public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**巡检Url**/
     public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
+    /**工作流审批地址**/
+    public static String webserviceWfserviceURL = "http://61.49.28.246:7001/meaweb/wsdl/WFSERVICE.wsdl";//审批工作流地址
 
 
     /**
@@ -213,5 +215,9 @@ public class Constants {
 
     public static String getWsUrl(Context context) {
         return webserviceURL;
+    }
+
+    public static String getWfUrl(Context context) {
+        return webserviceWfserviceURL;
     }
 }

@@ -19,6 +19,8 @@ import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.ui.adapter.WoactivityAdapter;
+import com.jf_eam_project.ui.adapter.WplaborAdapter;
 import com.jf_eam_project.ui.fragment.WoactivityFragment;
 import com.jf_eam_project.ui.fragment.WplaborFragment;
 import com.jf_eam_project.ui.fragment.WpmaterialFragment;
@@ -53,7 +55,7 @@ public class Work_PlanActivity extends BaseActivity {
 //    private WptoolFragment wptoolFragment;
 
     public WorkOrder workOrder;
-    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    public ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
 
@@ -292,6 +294,33 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialList.add(wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.adddate(wpmaterial);
                     wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
+                }
+                break;
+            case 4:
+                if (data != null){
+                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                    int position = data.getIntExtra("position",0);
+                    woactivityList.set(position,woactivity);
+                    woactivityFragment.woactivityAdapter.woactivityList.set(position, woactivity);
+                    woactivityFragment.woactivityAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 5:
+                if(data != null){
+                    Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
+                    int position = data.getIntExtra("position",0);
+                    wplaborList.set(position,wplabor);
+                    wplaborFragment.wplaborAdapter.wplaborList.set(position,wplabor);
+                    wplaborFragment.wplaborAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 6:
+                if(data != null){
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
+                    int position = data.getIntExtra("position",0);
+                    wpmaterialList.set(position,wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.wpmaterialList.set(position,wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 break;
         }

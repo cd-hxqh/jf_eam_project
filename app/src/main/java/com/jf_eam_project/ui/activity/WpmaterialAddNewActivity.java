@@ -216,9 +216,9 @@ public class WpmaterialAddNewActivity extends BaseActivity{
             sb = new StringBuffer();
             monthOfYear = monthOfYear + 1;
             if (dayOfMonth < 10) {
-                sb.append(year%100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
             } else {
-                sb.append(year%100 + "-" + monthOfYear + "-" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
             timePickerDialog.show();
         }

@@ -126,8 +126,8 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        wplaborAdapter = new WplaborAdapter(Work_WplaborActivity.this);
-        recyclerView.setAdapter(wplaborAdapter);
+//        wplaborAdapter = new WplaborAdapter(Work_WplaborActivity.this);
+//        recyclerView.setAdapter(wplaborAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -179,8 +179,8 @@ public class Work_WplaborActivity extends BaseActivity implements SwipeRefreshLa
             nodatalayout.setVisibility(View.GONE);
         }
         if (page == 1 && wplaborAdapter.getItemCount() != 0) {
-            wplaborAdapter = new WplaborAdapter(Work_WplaborActivity.this);
-            recyclerView.setAdapter(wplaborAdapter);
+//            wplaborAdapter = new WplaborAdapter(Work_WplaborActivity.this);
+//            recyclerView.setAdapter(wplaborAdapter);
         }
         if ((list == null || list.size() == 0) && page == 1) {
             nodatalayout.setVisibility(View.VISIBLE);

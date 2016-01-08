@@ -7,9 +7,9 @@ public class Webservice_result extends Entity {
     private static final String TAG = "Assignment";
     private static final long serialVersionUID = 2015050105L;
 
-    private String woNum;
-    private String errorMsg;
-    private String errorNo;
+    public String woNum;
+    public String success;
+    public int errorNo;
 
     public String getWoNum() {
         return woNum;
@@ -19,19 +19,19 @@ public class Webservice_result extends Entity {
         this.woNum = woNum;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getSuccess() {
+        return success;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setSuccess(String success) {
+        this.success = success;
     }
 
-    public String getErrorNo() {
+    public int getErrorNo() {
         return errorNo;
     }
 
-    public void setErrorNo(String errorNo) {
+    public void setErrorNo(int errorNo) {
         this.errorNo = errorNo;
     }
 }

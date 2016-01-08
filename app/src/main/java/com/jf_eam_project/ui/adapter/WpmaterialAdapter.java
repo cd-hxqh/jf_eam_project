@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.ui.activity.Work_PlanActivity;
 import com.jf_eam_project.ui.activity.WpmaterialDetailsActivity;
 
 import java.util.ArrayList;
@@ -25,10 +26,10 @@ import java.util.List;
  * 物料
  */
 public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.ViewHolder> {
-    Context mContext;
-    List<Wpmaterial> wpmaterialList = new ArrayList<>();
+    Work_PlanActivity mContext;
+    public ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
 
-    public WpmaterialAdapter(Context context) {
+    public WpmaterialAdapter(Work_PlanActivity context) {
         this.mContext = context;
     }
 
@@ -42,8 +43,8 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Wpmaterial wpmaterial = wpmaterialList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
+        holder.itemNumTitle.setText("项目");
+        holder.itemDescTitle.setText("数量");
         holder.itemNum.setText(wpmaterial.itemnum);
         holder.itemDesc.setText(wpmaterial.itemqty);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +53,10 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
                 Intent intent = new Intent(mContext, WpmaterialDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("wpmaterial", wpmaterial);
+                bundle.putSerializable("woactivityList", mContext.woactivityList);
+                bundle.putSerializable("position", position);
                 intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent,6);
             }
         });
     }
