@@ -2,7 +2,9 @@ package com.jf_eam_project.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -25,13 +29,20 @@ import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
+import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspo;
+import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.MessageUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 巡检单详情
@@ -95,6 +106,10 @@ public class Udinspo_Details_activity extends BaseActivity {
 
     private String inspotype;
 
+    StringBuffer sb;
+    private DatePickerDialog datePickerDialog;
+    private CumTimePickerDialog timePickerDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +122,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addInspotypeData();
+        setDataListener();
     }
 
     /**
@@ -165,12 +181,86 @@ public class Udinspo_Details_activity extends BaseActivity {
 
         inspotypeText.setOnClickListener(inspotypeOnClickListener);
 
+        inspobyText.setOnClickListener(inspobyOnClickListener);
 
-
-
+        inspodateText.setOnClickListener(inspodateOnClickListener);
 
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
     }
+
+
+    private View.OnClickListener inspodateOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            sb = new StringBuffer();
+            datePickerDialog.show();
+        }
+    };
+
+
+
+    /**
+     * 设置时间选择器*
+     */
+    private void setDataListener() {
+
+        final Calendar objTime = Calendar.getInstance();
+        int iYear = objTime.get(Calendar.YEAR);
+        int iMonth = objTime.get(Calendar.MONTH);
+        int iDay = objTime.get(Calendar.DAY_OF_MONTH);
+        int hour = objTime.get(Calendar.HOUR_OF_DAY);
+
+        int minute = objTime.get(Calendar.MINUTE);
+
+
+        datePickerDialog = new DatePickerDialog(this, new datelistener(), iYear, iMonth, iDay);
+        timePickerDialog = new CumTimePickerDialog(this, new timelistener(), hour, minute, true);
+    }
+
+
+    private class datelistener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            sb = new StringBuffer();
+            monthOfYear = monthOfYear + 1;
+            if (dayOfMonth < 10) {
+                sb.append(year % 100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+            } else {
+                sb.append(year % 100 + "-" + monthOfYear + "-" + dayOfMonth);
+            }
+            timePickerDialog.show();
+        }
+    }
+
+    private class timelistener implements TimePickerDialog.OnTimeSetListener {
+        @Override
+        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+            sb.append(" ");
+            if (i1 < 10) {
+                sb.append(i + ":" + "0" + i1 + ":00");
+            } else {
+                sb.append(i + ":" + i1 + ":00");
+            }
+
+            inspodateText.setText(sb);
+        }
+    }
+
+
+
+
+
+
+
+    private View.OnClickListener inspobyOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Udinspo_Details_activity.this, OptionActivity.class);
+            intent.putExtra("requestCode", Constants.PERSON);
+            startActivityForResult(intent, Constants.PERSON);
+        }
+    };
 
 
     /**
@@ -195,19 +285,20 @@ public class Udinspo_Details_activity extends BaseActivity {
         dialog.setOnOperItemClickL(new OnOperItemClickL() {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                inspotypeText.setText(mMenuItems.get(position).mOperName);
-
                 inspotype = inspotypeTexts[position];
+                inspotypeText.setText(inspotype);
+
+
                 dialog.dismiss();
             }
         });
     }
 
 
-
-    /**类型选择**/
-    private View.OnClickListener inspotypeOnClickListener=new View.OnClickListener() {
+    /**
+     * 类型选择*
+     */
+    private View.OnClickListener inspotypeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             NormalListDialog();
@@ -215,19 +306,22 @@ public class Udinspo_Details_activity extends BaseActivity {
     };
 
 
-
-
-
-
-
-
-
     private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             confirmBtn.setVisibility(View.VISIBLE);
+            statusEdit();
         }
     };
+
+
+    /**设置状态编辑**/
+    private void statusEdit() {
+        descriptionText.setFocusable(true);
+        inspotypeText.setEnabled(true);
+        inspobyText.setEnabled(true);
+        inspodateText.setEnabled(true);
+    }
 
 
     /**
@@ -330,8 +424,6 @@ public class Udinspo_Details_activity extends BaseActivity {
                         mProgressDialog.dismiss();
 
 
-                        Log.i(TAG, "s=" + s);
-
                         try {
                             JSONObject jsonObject = new JSONObject(s);
                             String insponum = jsonObject.getString("INSPONUM");
@@ -405,6 +497,17 @@ public class Udinspo_Details_activity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        switch (resultCode) {
 
+            case Constants.PERSON:
+                option = (Option) data.getSerializableExtra("option");
+                inspobyText.setText(option.getName());
+                break;
+
+        }
+    }
 
 }

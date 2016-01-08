@@ -72,10 +72,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:focusable="false"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp"
-                    android:focusable="false"/>
+                    android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
 
             <View
@@ -137,13 +137,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:drawableRight="@drawable/in_ico"
+                    android:gravity="center_vertical"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp"
-                    android:gravity="center_vertical"
-                    android:drawableRight="@drawable/item_more"
-                    android:focusable="false"
-                    />
+                    android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
 
             <View
@@ -171,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:clickable="false"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -200,6 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:clickable="false"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -225,11 +227,14 @@
 
                 <TextView
                     android:id="@+id/udinspo_inspoby_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:enabled="false"
                     android:textColor="@color/light_black"
+                    android:drawableRight="@drawable/in_ico"
+                    android:gravity="center_vertical"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
 
@@ -255,10 +260,13 @@
 
                 <TextView
                     android:id="@+id/udinspo_inspodate_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:drawableRight="@drawable/in_ico"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -343,11 +351,9 @@
                     android:background="@drawable/btn_selector"
                     android:gravity="center"
                     android:text="@string/confirm_btn"
-                    android:visibility="gone"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
-
-
 
 
         </LinearLayout>
