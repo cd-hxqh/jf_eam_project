@@ -31,16 +31,19 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -313,7 +316,7 @@ public class AddUdinspoActivity extends BaseActivity {
                 for (int i = 0; i < udinspoassets.size(); i++) {
                     Log.i(TAG, "udinspoassetnum=" + udinspoassets.get(i).udinspoassetnum);
                     List<Udinspojxxm> udinspojxxms = udinspojxxmDao.findByudinspoassetnum(udinspoassets.get(i).udinspoassetnum);
-                    for(int j =0;j<udinspojxxms.size();j++) {
+                    for (int j = 0; j < udinspojxxms.size(); j++) {
                         allUdinspojxxms.add(udinspojxxms.get(j));
                     }
                 }
@@ -357,46 +360,70 @@ public class AddUdinspoActivity extends BaseActivity {
                         getString(R.string.inputing), true, true);
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.setCancelable(false);
-                new AsyncTask<String, String, String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        String data = submitData();
 
-                        result = getBaseApplication().getWsService().InsertPO(data);
-
-                        return result;
-                    }
-
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        mProgressDialog.dismiss();
+                if (NetWorkHelper.isNetwork(AddUdinspoActivity.this)) {
+                    MessageUtils.showMiddleToast(AddUdinspoActivity.this, "暂无网络,现离线保存数据!");
+                    mProgressDialog.dismiss();
+                    saveUdinspo();
+                } else {
 
 
-                        Log.i(TAG, "s=" + s);
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            String data = submitData();
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            String insponum = jsonObject.getString("INSPONUM");
-                            String success = jsonObject.getString("success");
-                            String errorNo = jsonObject.getString("errorNo");
+                            result = getBaseApplication().getWsService().InsertPO(data);
 
-                            if (success.equals("成功") && errorNo.equals("0")) {
-                                MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交成功");
-                            } else {
-                                MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交失败");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            return result;
                         }
 
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            mProgressDialog.dismiss();
 
-                    }
-                }.execute();
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                String insponum = jsonObject.getString("INSPONUM");
+                                String success = jsonObject.getString("success");
+                                String errorNo = jsonObject.getString("errorNo");
+
+                                if (success.equals("成功") && errorNo.equals("0")) {
+                                    MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交成功");
+                                } else {
+                                    MessageUtils.showMiddleToast(AddUdinspoActivity.this, "提交失败");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }.execute();
+                }
             }
         }).create().show();
 
 
+    }
+
+    /**将巡检信息保存至本地**/
+    private void saveUdinspo() {
+        String desc = descEditText.getText().toString();
+        String createby = createbyText.getText().toString();
+        String createdate = createdateText.getText().toString();
+        String inspoby = inspobyText.getText().toString();
+        String inspodate = inspodateText.getText().toString();
+
+        Udinspo udinspo=new Udinspo();
+        udinspo.setDescription(desc);
+        udinspo.setCreateby(createby);
+        udinspo.setCreatedate(createdate);
+        udinspo.setInspoby(inspoby);
+        udinspo.setInspodate(inspodate);
+        new UdinspoDao(AddUdinspoActivity.this).insert(udinspo);
     }
 
     /**
@@ -420,7 +447,7 @@ public class AddUdinspoActivity extends BaseActivity {
             jsonObject.put("INSPODATE", inspodate);
             if (!jsonUdinPoAssetInfo(udinspoassets).equals("")) {
                 jsonObject.put("CHILDREN", jsonUdinPoAssetInfo(udinspoassets));
-                if(!jsonUdinspojxxmsInfo(allUdinspojxxms).equals("")){
+                if (!jsonUdinspojxxmsInfo(allUdinspojxxms).equals("")) {
                     jsonObject.put("GRADESON", jsonUdinspojxxmsInfo(allUdinspojxxms));
                 }
             }
@@ -446,7 +473,6 @@ public class AddUdinspoActivity extends BaseActivity {
             jsonArray = new JSONArray(json3);
             Log.i(TAG, json3);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
             return null;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -469,7 +495,6 @@ public class AddUdinspoActivity extends BaseActivity {
             jsonArray = new JSONArray(json2);
             Log.i(TAG, json2);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
             return null;
         } catch (JSONException e) {
             e.printStackTrace();

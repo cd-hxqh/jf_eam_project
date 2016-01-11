@@ -4,9 +4,22 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 /**网络消息处理类**/
 public class NetWorkHelper {
+
+	private static final String TAG="NetWorkHelper";
+	/**判断是否有网络
+	 *  false表示有网络
+	 *  true 表示没有网络
+	 */
+	public static boolean isNetwork(Context paramContext) {
+		Log.i(TAG,"network="+getNetType(paramContext)[0]);
+		return "Unknown".equals(getNetType(paramContext)[0]);
+	}
+
+
 
 	/**
 	 * 判断是不是wifi网络状态

@@ -34,10 +34,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile files('libs/httpcore-4.4.3.jar')
     compile 'com.instagram:ig-json-parser-processor-prerelease:0.0.6.0'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.7.0-rc1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0-rc2'
     compile files('libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
     compile files('libs/ormlite-android-4.48.jar')
     compile files('libs/ormlite-core-4.48.jar')
     compile project(':FlycoDialog_Lib')
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0-rc2'
+
 }

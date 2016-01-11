@@ -18,6 +18,7 @@ import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.WorkOrder;
@@ -58,6 +59,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Item.class);
             TableUtils.createTable(connectionSource, Laborcraftrate.class);
 
+            TableUtils.createTable(connectionSource, Udinspo.class);
             TableUtils.createTable(connectionSource, Udinspoasset.class);
             TableUtils.createTable(connectionSource, Udinspojxxm.class);
         } catch (SQLException e) {
@@ -85,6 +87,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Item.class, true);
             TableUtils.dropTable(connectionSource, Laborcraftrate.class, true);
 
+            TableUtils.dropTable(connectionSource, Udinspo.class, true);
             TableUtils.dropTable(connectionSource, Udinspoasset.class, true);
             TableUtils.dropTable(connectionSource, Udinspojxxm.class, true);
             onCreate(database, connectionSource);

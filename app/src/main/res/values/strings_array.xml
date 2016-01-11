@@ -6,6 +6,7 @@
         <item>巡检管理</item>
         <item>库存管理</item>
         <item>采购管理</item>
+        <item>本地历史</item>
         <item>关于</item>
         <item>退出</item>
     </string-array>

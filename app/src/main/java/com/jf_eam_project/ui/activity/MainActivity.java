@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.ui.fragment.HistoryFragment;
 import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
@@ -37,7 +38,6 @@ public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final String TAG = "MainActivity";
-    //    private SpinnerAdapter mSpinnerAdapter;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private ViewGroup mDrawerLayout;
     private View mActionbarCustom;
@@ -80,6 +80,11 @@ public class MainActivity extends BaseActivity
      * 采购管理*
      */
     private Po_Fragment po_fragment;
+    /**
+     * 本地历史*
+     */
+    private HistoryFragment historyFragment;
+
     /**
      * 关于*
      */
@@ -178,6 +183,14 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, po_fragment).commit();
                 break;
             case 5:
+                if (historyFragment == null) {
+                    historyFragment = new HistoryFragment();
+                    Bundle bundle = new Bundle();
+                    historyFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, historyFragment).commit();
+                break;
+            case 6:
                 if (settingFragment == null) {
                     settingFragment = new Setting_Fragment();
                     Bundle bundle = new Bundle();
@@ -185,7 +198,7 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, settingFragment).commit();
                 break;
-            case 6:
+            case 7:
                 mNavigationDrawerFragment.closeDrawer();
                 showAlertDialog();
                 break;

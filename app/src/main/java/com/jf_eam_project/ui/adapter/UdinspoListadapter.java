@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.ui.activity.Udinspo_Details_activity;
+import com.jf_eam_project.utils.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
     public UdinspoListadapter(Context context) {
         this.mContext = context;
     }
+
+    public OnLongClickListener onLongClickListener;
+
 
 
     @Override
@@ -53,6 +57,13 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
                 bundle.putSerializable("udinspo", udinspo);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onLongClickListener.cOnLongClickListener();
+                return true;
             }
         });
     }
@@ -135,5 +146,18 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
         if (udinspoList.size() > 0) {
             udinspoList.removeAll(udinspoList);
         }
+    }
+
+  public  interface  OnLongClickListener{
+      public void cOnLongClickListener();
+  }
+
+
+    public OnLongClickListener getOnLongClickListener() {
+        return onLongClickListener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 }

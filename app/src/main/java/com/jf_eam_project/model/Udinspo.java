@@ -1,43 +1,82 @@
 package com.jf_eam_project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 
 /**
  * Created by think on 2015/12/10
- * 发票表
+ * 巡检单
  *
  */
 @JsonType
+@DatabaseTable(tableName = "Udinspo")
 public class Udinspo extends Entity {
 
+    @DatabaseField(generatedId = true)
+    @JsonIgnore
+    public int id;
 
     @JsonField(fieldName = "branch")
+    @DatabaseField(columnName = "branch")
     public String branch;//
+
     @JsonField(fieldName = "createby")
+    @DatabaseField(columnName = "createby")
     public String createby;//创建人
+
     @JsonField(fieldName = "createdate")
+    @DatabaseField(columnName = "createdate")
     public String createdate;//创建时间
+
     @JsonField(fieldName = "description")
+    @DatabaseField(columnName = "description")
     public String description;//描述
+
     @JsonField(fieldName = "inspoby")
+    @DatabaseField(columnName = "inspoby")
     public String inspoby;//巡检人
+
     @JsonField(fieldName = "inspodate")
+    @DatabaseField(columnName = "inspodate")
     public String inspodate;//巡检日期
+
     @JsonField(fieldName = "insponum")
+    @DatabaseField(columnName = "insponum")
     public String insponum;//巡检单编号
+
     @JsonField(fieldName = "inspotype")
+    @DatabaseField(columnName = "inspotype")
     public String inspotype;//巡检单类型
+
+    @DatabaseField(columnName = "inspplannum")
     @JsonField(fieldName = "inspplannum")
     public String inspplannum;//计划编号
+
+    @DatabaseField(columnName = "lastrundate")
     @JsonField(fieldName = "lastrundate")
     public String lastrundate;//本次生成日期
+
+    @DatabaseField(columnName = "nextrundate")
     @JsonField(fieldName = "nextrundate")
     public String nextrundate;//下次运行时间
+
+    @DatabaseField(columnName = "udinspplandescription")
     @JsonField(fieldName = "udinspplan.description")
     public String udinspplandescription;//计划编号描述
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getBranch() {
         return branch;

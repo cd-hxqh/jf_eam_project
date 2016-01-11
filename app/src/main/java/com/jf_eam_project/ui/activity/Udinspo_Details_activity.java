@@ -165,7 +165,8 @@ public class Udinspo_Details_activity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
-
+        descriptionText.setFocusable(false);
+        descriptionText. setFocusableInTouchMode(false);
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
             descriptionText.setText(udinspo.getDescription() == null ? "" : udinspo.getDescription());
@@ -318,6 +319,7 @@ public class Udinspo_Details_activity extends BaseActivity {
     /**设置状态编辑**/
     private void statusEdit() {
         descriptionText.setFocusable(true);
+        descriptionText. setFocusableInTouchMode(true);
         inspotypeText.setEnabled(true);
         inspobyText.setEnabled(true);
         inspodateText.setEnabled(true);
