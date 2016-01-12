@@ -255,7 +255,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
+            if (wonumlayout.getVisibility()==View.VISIBLE&&!wonum.getText().toString().equals("")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
             builder.setMessage("确定新增工单吗").setTitle("提示")
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
@@ -293,6 +294,9 @@ public class Work_AddNewActivity extends BaseActivity {
                     }.execute();
                 }
             }).create().show();
+        }else {
+                Toast.makeText(Work_AddNewActivity.this, "请先新增工单", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
@@ -337,7 +341,7 @@ public class Work_AddNewActivity extends BaseActivity {
                             }
                         }.execute();
                     }
-                });
+                }).create().show();
             }
         }
     };

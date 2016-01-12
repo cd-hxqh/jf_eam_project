@@ -157,22 +157,25 @@ public class JsonUtils {
                                     ArrayList<Wpmaterial> wpmaterials, ArrayList<Assignment> assignments, ArrayList<Labtrans> labtranses) {
         JSONObject jsonObject = new JSONObject();
         try {
-            if (!workOrder.wonum.equals("")) {
-                jsonObject.put("wonum", workOrder.wonum);
+            if (!workOrder.wonum.equals("")) {//修改
+                jsonObject.put("WONUM", workOrder.wonum);
             }
             jsonObject.put("UDAPPTYPE", "UDWOTRACK");
             jsonObject.put("DESCRIPTION", workOrder.description);
             jsonObject.put("UDWOTYPE", workOrder.udwotype);
             jsonObject.put("ASSETNUM", workOrder.assetnum);
-            jsonObject.put("ASSETDESC", workOrder.assetdesc);
+            if(workOrder.wonum.equals("")){
+                jsonObject.put("ASSETDESC", workOrder.assetdesc);
+                jsonObject.put("LOCATIONDESC", workOrder.locationdesc);
+                jsonObject.put("DISPLAYNAME", workOrder.displayname);
+            }
             jsonObject.put("LOCATION", workOrder.location);
-            jsonObject.put("LOCATIONDESC", workOrder.locationdesc);
+
             jsonObject.put("STATUS", workOrder.status);
             jsonObject.put("STATUSDATE", workOrder.statusdate);
             jsonObject.put("LCTYPE", workOrder.lctype);
             jsonObject.put("FAILURECODE", workOrder.failurecode);
             jsonObject.put("PROBLEMCODE", workOrder.problemcode);
-            jsonObject.put("DISPLAYNAME", workOrder.displayname);
             jsonObject.put("CREATEDATE", workOrder.createdate);
             jsonObject.put("JPNUM", workOrder.jpnum);
             jsonObject.put("TARGSTARTDATE", workOrder.targstartdate);

@@ -56,8 +56,18 @@ public class Work_PlanActivity extends BaseActivity {
 
     public WorkOrder workOrder;
     public ArrayList<Woactivity> woactivityList = new ArrayList<>();
-    private ArrayList<Wplabor> wplaborList = new ArrayList<>();
-    private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
+    public ArrayList<Wplabor> wplaborList = new ArrayList<>();
+    public ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
+
+    public void setWoactivityList(ArrayList<Woactivity> list){
+        this.woactivityList = list;
+    }
+    public void setWplaborList(ArrayList<Wplabor> list){
+        this.wplaborList = list;
+    }
+    public void setWpmaterialList(ArrayList<Wpmaterial> list){
+        this.wpmaterialList = list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

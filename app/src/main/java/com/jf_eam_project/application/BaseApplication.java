@@ -39,7 +39,7 @@ public class BaseApplication extends Application {
     }
 
     public AndroidClientService getWfService() {
-        return new AndroidClientService(Constants.getWsUrl(this));
+        return new AndroidClientService(Constants.getWfUrl(this));
     }
 
     @Override

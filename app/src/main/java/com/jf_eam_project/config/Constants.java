@@ -26,7 +26,7 @@ public class Constants {
     /**巡检Url**/
     public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
     /**工作流审批地址**/
-    public static String webserviceWfserviceURL = "http://61.49.28.246:7001/meaweb/wsdl/WFSERVICE.wsdl";//审批工作流地址
+    public static String webserviceWfserviceURL = "http://1.202.243.112:7001/meaweb/services/WFSERVICE";//审批工作流地址
 
 
     /**

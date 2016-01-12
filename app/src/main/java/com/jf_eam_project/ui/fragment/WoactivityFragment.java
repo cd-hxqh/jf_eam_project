@@ -152,6 +152,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             woactivityAdapter.adddate(list);
+            ((Work_PlanActivity)getActivity()).setWoactivityList(list);
         }
     }
 

@@ -83,9 +83,10 @@ public class AndroidClientService {
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
-        SoapObject soapReq = new SoapObject(NAMESPACE, "UpdateWO");
-        soapReq.addProperty("in0", string);
-        soapReq.addProperty("in1", 1);
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceUpdateMbo");
+        soapReq.addProperty("json", string);
+        soapReq.addProperty("mboObjectName","WORKORDER");
+        soapReq.addProperty("mboKey","WONUM");
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
@@ -113,10 +114,10 @@ public class AndroidClientService {
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
-        soapReq.addProperty("processname", "UDFJHWO");//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
-        soapReq.addProperty("mbo", "WORKORDER");//工单WORKORDER,采购申请pr
-        soapReq.addProperty("keyValue", 0);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
-        soapReq.addProperty("key", 0);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
+        soapReq.addProperty("mbo", mbo);//工单WORKORDER,采购申请pr
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
+        soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
