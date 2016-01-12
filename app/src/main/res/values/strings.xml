@@ -406,6 +406,7 @@
     <string name="add_udinspojxxm_title">新建检修项目标准</string>
     <string name="confirm_btn">确定</string>
     <string name="history_udinspo_title">巡检单</string>
+    <string name="add_udinspo_title">新建巡检单</string>
 
 
 </resources>

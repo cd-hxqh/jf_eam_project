@@ -120,7 +120,7 @@ public class Udinspo_fragment extends BaseFragment implements SwipeRefreshLayout
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspoListadapter = new UdinspoListadapter(getActivity());
+        udinspoListadapter = new UdinspoListadapter(getActivity(),0);
         recyclerView.setAdapter(udinspoListadapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -206,7 +206,7 @@ public class Udinspo_fragment extends BaseFragment implements SwipeRefreshLayout
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspoListadapter = new UdinspoListadapter(getActivity());
+                            udinspoListadapter = new UdinspoListadapter(getActivity(),0);
                             recyclerView.setAdapter(udinspoListadapter);
                         }
 //                        if (totalPages == page) {

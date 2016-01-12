@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,12 +31,36 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
     Context mContext;
     List<Udinspo> udinspoList = new ArrayList<>();
 
-    public UdinspoListadapter(Context context) {
+    /**
+     * checkbox
+     * 隐藏/显示
+     */
+    private int mark = 0;
+    /**
+     * 全选*
+     */
+    private boolean allChoose;
+
+    /**
+     * 入口*
+     */
+    private int cMark;
+
+    public UdinspoListadapter(Context context, int cMark) {
+
         this.mContext = context;
+        this.cMark = cMark;
     }
 
+    /**
+     * 长按事件*
+     */
     public OnLongClickListener onLongClickListener;
 
+    /**
+     * 选中事件*
+     */
+    public OnCheckedChangeListener onCheckedChangeListener;
 
 
     @Override
@@ -59,13 +86,38 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
                 mContext.startActivity(intent);
             }
         });
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                onLongClickListener.cOnLongClickListener();
-                return true;
+
+        if (cMark == 1) { //历史记录
+            holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    onLongClickListener.cOnLongClickListener();
+
+                    return true;
+                }
+            });
+
+            if (mark == 0) {
+                holder.checkBox.setVisibility(View.GONE);
+                holder.item_more.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.item_more.setVisibility(View.GONE);
             }
-        });
+
+            holder.checkBox.setChecked(allChoose);
+
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) {
+                        onCheckedChangeListener.cOnCheckedChangeListener(position);
+                    }
+                }
+            });
+
+        }
     }
 
     @Override
@@ -96,6 +148,14 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
          * 描述*
          */
         public TextView itemDesc;
+        /**
+         * 选择*
+         */
+        private CheckBox checkBox;
+        /**
+         * 更多*
+         */
+        private ImageView item_more;
 
         public ViewHolder(View view) {
             super(view);
@@ -107,6 +167,8 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
+            checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
+            item_more = (ImageView) view.findViewById(R.id.avatar);
         }
     }
 
@@ -148,9 +210,28 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
         }
     }
 
-  public  interface  OnLongClickListener{
-      public void cOnLongClickListener();
-  }
+    /**
+     * 传递值*
+     */
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    /**
+     * 设置全选*
+     */
+    public void setAllChoose(boolean allChoose) {
+        this.allChoose = allChoose;
+    }
+
+
+    public interface OnLongClickListener {
+        public void cOnLongClickListener();
+    }
+
+    public interface OnCheckedChangeListener {
+        public void cOnCheckedChangeListener(int postion);
+    }
 
 
     public OnLongClickListener getOnLongClickListener() {
@@ -159,5 +240,14 @@ public class UdinspoListadapter extends RecyclerView.Adapter<UdinspoListadapter.
 
     public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
+    }
+
+
+    public OnCheckedChangeListener getOnCheckedChangeListener() {
+        return onCheckedChangeListener;
+    }
+
+    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+        this.onCheckedChangeListener = onCheckedChangeListener;
     }
 }

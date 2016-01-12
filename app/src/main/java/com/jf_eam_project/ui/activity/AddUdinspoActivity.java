@@ -158,7 +158,7 @@ public class AddUdinspoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.udinspo_detail_title));
+        titleView.setText(getString(R.string.add_udinspo_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
@@ -419,6 +419,7 @@ public class AddUdinspoActivity extends BaseActivity {
 
         Udinspo udinspo=new Udinspo();
         udinspo.setDescription(desc);
+        udinspo.setInspotype(inspotype);
         udinspo.setCreateby(createby);
         udinspo.setCreatedate(createdate);
         udinspo.setInspoby(inspoby);

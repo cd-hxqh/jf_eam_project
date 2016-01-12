@@ -43,16 +43,36 @@
         android:id="@+id/choose_linearlayout_id"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
         android:visibility="gone"
-        android:layout_alignParentBottom="true">
+        android:background="@drawable/ab_solid_example">
 
-        <Button
-            android:id="@+id/delete_btn_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_selector"
+        <TextView
+            android:id="@+id/all_choose_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="全选"
+            android:textColor="@drawable/text_selector"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/upload_choose_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="删除"
-            android:textColor="@color/white" />
+            android:textColor="@drawable/text_selector"
+            android:text="上传" />
+
+        <TextView
+            android:id="@+id/delete_choose_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@drawable/text_selector"
+            android:gravity="center"
+            android:text="删除" />
     </LinearLayout>
 </RelativeLayout>
