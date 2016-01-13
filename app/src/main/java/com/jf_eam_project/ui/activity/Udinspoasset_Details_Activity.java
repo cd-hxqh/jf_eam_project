@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.PR;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.utils.MessageUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,9 +142,9 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         if (udinspoasset != null) {
             udinspoassetlinenumText.setText(udinspoasset.getUdinspoassetlinenum() == null ? "" : udinspoasset.getUdinspoassetlinenum());
             udinspoassetnumText.setText(udinspoasset.getUdinspoassetnum() == null ? "" : udinspoasset.getUdinspoassetnum());
-            locationText.setText(udinspoasset.getLocation() == null ? "" : udinspoasset.getLocation());
+            locationText.setText(udinspoasset.location == null ? "" : udinspoasset.location);
             locationDescText.setText(udinspoasset.getLocationsdesc() == null ? "" : udinspoasset.getLocationsdesc());
-            assetnumText.setText(udinspoasset.getAssetnum() == null ? "" : udinspoasset.getAssetnum());
+            assetnumText.setText(udinspoasset.assetnum == null ? "" : udinspoasset.assetnum);
             assetnumDescText.setText(udinspoasset.getAssetdesc() == null ? "" : udinspoasset.getAssetdesc());
             childassetnumText.setText(udinspoasset.getChildassetnum() == null ? "" : udinspoasset.getChildassetnum());
         }
@@ -186,8 +191,6 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     };
 
 
-
-
     /**
      * 数据封装*
      */
@@ -211,7 +214,12 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
                 new AsyncTask<String, String, String>() {
                     @Override
                     protected String doInBackground(String... strings) {
-                        String data = submitBtn();
+                        String data = null;
+                        try {
+                            data = submitBtn();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                         String result = getBaseApplication().getWsService().UpdatePO(data);
 
@@ -222,14 +230,13 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
                     protected void onPostExecute(String s) {
                         super.onPostExecute(s);
                         mProgressDialog.dismiss();
-
+                        Log.i(TAG, "s=" + s);
 
                         try {
                             JSONObject jsonObject = new JSONObject(s);
-                            String insponum = jsonObject.getString("INSPONUM");
                             String success = jsonObject.getString("status");
                             String errorNo = jsonObject.getString("errorNo");
-
+                            Log.i(TAG, "success=" + success + ",errorNo=" + errorNo);
                             if (success.equals("数据更新成功") && errorNo.equals("0")) {
                                 MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新成功");
                             } else {
@@ -249,51 +256,61 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     }
 
 
+    /**
+     * 保存数据*
+     */
+    private String submitBtn() throws JSONException {
+        String location = locationText.getText().toString();
+        String assetnum = assetnumText.getText().toString();
+        String childassetnum = childassetnumText.getText().toString();
+
+        Udinspoasset udinspoasset1 = new Udinspoasset();
+        JSONObject json = new JSONObject();
+        udinspoasset1.setUdinspoassetnum(udinspoasset.udinspoassetnum);
+        json.put("UDINSPOASSETNUM", udinspoasset.udinspoassetnum);
+        udinspoasset1.setType(Constants.UPDATE);
+        json.put("TYPE", Constants.UPDATE);
+        if (!location.equals(udinspoasset.location)) {
+            udinspoasset1.setLocation(location);
+            json.put("LOCATION", location);
+        }
+        if (!assetnum.equals(udinspoasset.assetnum)) {
+            udinspoasset1.setAssetnum(assetnum);
+            json.put("ASSETNUM", assetnum);
+        }
+        if (!childassetnum.equals(udinspoasset.childassetnum)) {
+            udinspoasset1.setChildassetnum(childassetnum);
+            json.put("CHILDASSETNUM", childassetnum);
+        }
 
 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CHILDREN", jsonUdinPoAssetInfo(json.toString()));
 
 
-
-
-
-
-
-
-
-
-
-
-
+        return jsonObject.toString();
+    }
 
 
 
 
     /**
-     * 保存数据*
+     * 封装udinspoAsset信息*
      */
-    private String submitBtn() {
-        String location = locationText.getText().toString();
-        String assetnum = assetnumText.getText().toString();
-        String childassetnum = childassetnumText.getText().toString();
+    private JSONArray jsonUdinPoAssetInfo(String str) {
+        JSONArray jsonArray = null;
 
-        JSONObject jsonObject = new JSONObject();
+        String json3 = "";
         try {
-            jsonObject.put("UDINSPOASSETNUM", udinspoasset.udinspoassetnum);
-            if (!location.equals(udinspoasset.location)) {
-                jsonObject.put("LOCATION", location);
-            }
-            if (!assetnum.equals(udinspoasset.assetnum)) {
-                jsonObject.put("ASSETNUM", assetnum);
-            }
-            if (!childassetnum.equals(udinspoasset.childassetnum)) {
-                jsonObject.put("childassetnum", childassetnum);
-            }
+            json3 = "[" + str + "]";
 
-
+            Log.i(TAG, "json3=" + json3);
+            jsonArray = new JSONArray(json3);
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
-        return jsonObject.toString();
+        return jsonArray;
     }
 
 

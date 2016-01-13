@@ -68,9 +68,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/udinspojxxm_description_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
@@ -80,6 +80,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
@@ -88,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -112,6 +114,7 @@
                 android:id="@+id/view_2_id"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
@@ -120,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -144,6 +148,7 @@
                 android:id="@+id/view_3_id"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@drawable/line"></View>
 
@@ -152,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -175,6 +181,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@drawable/line"></View>
 
             <LinearLayout
@@ -182,6 +189,7 @@
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -220,9 +228,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/udinspojxxm_execution_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
@@ -248,9 +256,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/ud_udinspojxxm4_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
@@ -263,7 +271,24 @@
                 android:layout_height="1dp"
                 android:background="@drawable/line"></View>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/submit_btn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:text="@string/confirm_btn"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+            </LinearLayout>
 
         </LinearLayout>
 

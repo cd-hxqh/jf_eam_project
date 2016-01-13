@@ -55,6 +55,24 @@ public class Udinspoasset extends Entity {
     @JsonField(fieldName = "udinspoassetnum")
     public String udinspoassetnum;//设备编号
 
+    public String type; //上传类型
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUdinspoassetnum() {
         return udinspoassetnum;
     }

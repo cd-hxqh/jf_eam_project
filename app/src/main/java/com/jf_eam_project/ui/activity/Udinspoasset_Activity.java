@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,11 +49,14 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
      */
     private ImageView backImageView;
 
-
+    /**
+     * 新增*
+     */
+    private ImageView addImageView;
     /**
      * 巡检单
      */
-    private String insponum="";
+    private String insponum = "";
 
 
     LinearLayoutManager layoutManager;
@@ -91,7 +95,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-
+        addImageView = (ImageView) findViewById(R.id.title_add);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
@@ -102,7 +106,9 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     protected void initView() {
         titleView.setText(getResources().getString(R.string.udinspoasset_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-
+        addImageView.setImageResource(R.drawable.add_ico);
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setOnClickListener(addImageViewOnClickListener);
         setSearchEdit();
 
 
@@ -124,6 +130,16 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
         refresh_layout.setOnLoadListener(this);
 
     }
+
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
+            intent.putExtra("insponum", insponum);
+            intent.putExtra("udinspoassetlinenum", udinspoassetListAdapter.getItemCount());
+            startActivityForResult(intent, 0);
+        }
+    };
 
 
     private void getData(String search) {

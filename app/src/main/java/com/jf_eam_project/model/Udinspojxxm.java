@@ -61,6 +61,8 @@ public class Udinspojxxm extends Entity {
     @JsonField(fieldName = "checkby")
     public String checkby;//巡检人员
 
+    public String type; //操作类型
+
 
     public int getId() {
         return id;
@@ -140,5 +142,14 @@ public class Udinspojxxm extends Entity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

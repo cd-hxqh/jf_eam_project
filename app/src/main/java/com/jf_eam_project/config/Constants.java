@@ -220,4 +220,11 @@ public class Constants {
     public static String getWfUrl(Context context) {
         return webserviceWfserviceURL;
     }
+
+
+    /**交互类型**/
+    public static final String ADD = "add"; //新增
+    public static final String UPDATE = "update"; //更新
+    public static final String DELETE = "delete"; //删除
+
 }
