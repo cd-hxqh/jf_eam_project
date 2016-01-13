@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +63,8 @@ public class DownloadActivity extends BaseActivity{
     List<String> groupArray = new ArrayList<String>();
     //子标题
     List<List<String>> childArray = new ArrayList<List<String>>();
+
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -245,6 +248,10 @@ public class DownloadActivity extends BaseActivity{
             }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
                 downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID,Constants.LABORCRAFTRATE_NAME),buttonText,button);
             }
+            mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
+                    getString(R.string.downloading), true, true);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.setCancelable(false);
         }
     }
 
@@ -287,12 +294,14 @@ public class DownloadActivity extends BaseActivity{
                             List<Laborcraftrate> craftrates = Ig_Json_Model.parsingLaborcraftrate(data);
                             new LaborcraftrateDao(DownloadActivity.this).create(craftrates);
                         }
+                        mProgressDialog.dismiss();
                         button.setText(getResources().getString(R.string.downloaded));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else {
                     Toast.makeText(DownloadActivity.this,"下载数据出现问题",Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
                 }
             }
 

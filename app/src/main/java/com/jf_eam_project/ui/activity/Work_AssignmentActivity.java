@@ -124,7 +124,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     };
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(Work_AssignmentActivity.this, HttpManager.getAssignmentUrl(page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(Work_AssignmentActivity.this, HttpManager.getAssignmentUrl(page, 20,workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -175,7 +175,14 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (resultCode) {
-            case 1:
+            case 0://修改
+                Assignment assignment1 = (Assignment) data.getSerializableExtra("assignment");
+                int position = data.getIntExtra("position",0);
+                assignmentList.set(position,assignment1);
+                assignmentAdapter.assignmentList.set(position,assignment1);
+                assignmentAdapter.notifyDataSetChanged();
+                break;
+            case 1://新增
                 if (data != null) {
                     Assignment assignment = (Assignment) data.getSerializableExtra("assignment");
                     assignmentList.add(assignment);
@@ -202,4 +209,5 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             getdata();
         }
     }
+
 }

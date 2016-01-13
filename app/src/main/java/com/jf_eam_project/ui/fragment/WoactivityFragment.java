@@ -97,7 +97,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew) {
             refresh_layout.setRefreshing(true);
             getdata();
         }else {

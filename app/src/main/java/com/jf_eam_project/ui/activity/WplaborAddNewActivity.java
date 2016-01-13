@@ -130,6 +130,7 @@ public class WplaborAddNewActivity extends BaseActivity {
             wplabor.craft = craft.getText().toString();
             wplabor.quantity = quantity.getText().toString();
             wplabor.laborhrs = laborhrs.getText().toString();
+            wplabor.type = "add";
             intent.putExtra("wplabor",wplabor);
             WplaborAddNewActivity.this.setResult(1,intent);
             finish();
@@ -166,7 +167,9 @@ public class WplaborAddNewActivity extends BaseActivity {
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++)
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        }
     }
 }

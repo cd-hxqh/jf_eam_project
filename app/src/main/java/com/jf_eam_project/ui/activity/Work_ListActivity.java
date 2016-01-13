@@ -189,9 +189,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-//                    workListAdapter = new WorkListAdapter(Work_ListActivity.this);
-//                    recyclerView.setAdapter(workListAdapter);
-//                    getData(searchText);
+                    workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                    recyclerView.setAdapter(workListAdapter);
+                    getData(searchText);
                     return true;
                 }
                 return false;

@@ -28,10 +28,12 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -183,6 +185,7 @@ public class Work_DetailsActivity extends BaseActivity {
         });
 
         wonum.setText(workOrder.wonum);
+        workOrder.isnew = false;
         description.setText(workOrder.description);
 //        parent.setText(workOrder.parent);
         udwotype.setText(workOrder.udwotype);
@@ -243,21 +246,24 @@ public class Work_DetailsActivity extends BaseActivity {
                                 getString(R.string.inputing), true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
-                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+
+                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), assignmentList, null);
                         new AsyncTask<String, String, String>() {
                             @Override
                             protected String doInBackground(String... strings) {
-                                reviseresult = getBaseApplication().getWsService().UpdataWO(updataInfo);
+                                reviseresult = getBaseApplication().getWsService().UpdataWO(updataInfo,wonum.getText().toString());
                                 return reviseresult;
                             }
 
                             @Override
                             protected void onPostExecute(String s) {
                                 super.onPostExecute(s);
-                                if (s == null || s.equals("")) {
+                                if (s.equals("成功")) {
+                                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                                } else if (s.equals("")){
                                     Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
                                 }
                                 mProgressDialog.dismiss();
                             }
@@ -279,42 +285,53 @@ public class Work_DetailsActivity extends BaseActivity {
 
     private void MaterialDialogOneBtn() {
         final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
                 .btnNum(3)
-                .content("为保证咖啡豆的新鲜度和咖啡的香味，并配以特有的传统烘焙和手工冲。")//
-                .btnText("通过", "不通过", "取消")//
+                .content("请选择审核意见")//
+                .btnText("通过", "取消","不通过")//
                 .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
+                .dismissAnim(mBasOut)
                 .show();
 
         dialog.setOnBtnClickL(
-                new OnBtnClickL() {//left btn click listener
+                new OnBtnClickL() {//通过
                     @Override
                     public void onBtnClick() {
-//                        T.showShort(Work_DetailsActivity.this, "left");
+                        Toast.makeText(Work_DetailsActivity.this, "通过", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 },
-                new OnBtnClickL() {//right btn click listener
+                new OnBtnClickL() {//取消
                     @Override
                     public void onBtnClick() {
-//                        T.showShort(Work_DetailsActivity.this, "right");
+                        Toast.makeText(Work_DetailsActivity.this, "取消", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
                 ,
-                new OnBtnClickL() {//middle btn click listener
+                new OnBtnClickL() {//不通过
                     @Override
                     public void onBtnClick() {
-//                        T.showShort(Work_DetailsActivity.this, "middle");
+                        Toast.makeText(Work_DetailsActivity.this, "不通过", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
         );
     }
 
+    /**
+     * 审批工作流
+     * @param wonum
+     * @param zx
+     */
+    private void wfgoon(String wonum,String zx){
+
+    }
+
+    //获取界面上工单内容
     private WorkOrder getWorkOrder() {
-        WorkOrder workOrder = new WorkOrder();
         workOrder.wonum = wonum.getText().toString();
         workOrder.description = description.getText().toString();
         workOrder.udwotype = udwotype.getText().toString();
@@ -336,6 +353,50 @@ public class Work_DetailsActivity extends BaseActivity {
         return workOrder;
     }
 
+    //过滤变化过的任务数据
+    private ArrayList<Woactivity> getWoactivityList(){
+        ArrayList<Woactivity> woactivities = null;
+        for(int i = 0;i < woactivityList.size();i ++){
+            if(woactivityList.get(i).type!=null&&(woactivityList.get(i).equals("add")||woactivityList.get(i).equals("update"))){//如果此条数据是变动后的
+                woactivities.add(woactivityList.get(i));
+            }
+        }
+        return woactivities;
+    }
+
+    //过滤变化过的计划员工数据
+    private ArrayList<Wplabor> getWplaborList(){
+        ArrayList<Wplabor> wplabors = null;
+        for(int i = 0;i < wplaborList.size();i ++){
+            if(wplaborList.get(i).type!=null&&(wplaborList.get(i).equals("add")||wplaborList.get(i).equals("update"))){//如果此条数据是变动后的
+                wplabors.add(wplaborList.get(i));
+            }
+        }
+        return wplabors;
+    }
+
+    //过滤变化过的计划数据
+    private ArrayList<Wpmaterial> getWpmaterialList(){
+        ArrayList<Wpmaterial> wpmaterials = null;
+        for(int i = 0;i < wpmaterialList.size();i ++){
+            if(wpmaterialList.get(i).type!=null&&(wpmaterialList.get(i).equals("add")||wpmaterialList.get(i).equals("update"))){//如果此条数据是变动后的
+                wpmaterials.add(wpmaterialList.get(i));
+            }
+        }
+        return wpmaterials;
+    }
+
+    //过滤变化过的计划数据
+    private ArrayList<Assignment> getAssignmentList(){
+        ArrayList<Assignment> assignments = null;
+        for(int i = 0;i < assignmentList.size();i ++){
+            if(assignmentList.get(i).type!=null&&(assignmentList.get(i).equals("add")||assignmentList.get(i).equals("update"))){//如果此条数据是变动后的
+                assignments.add(assignmentList.get(i));
+            }
+        }
+        return assignments;
+    }
+
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -346,40 +407,21 @@ public class Work_DetailsActivity extends BaseActivity {
      * 初始化showPopupWindow*
      */
     private void showPopupWindow(View view) {
-
-        // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(Work_DetailsActivity.this).inflate(
                 R.layout.work_popup_window, null);
-
 
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setTouchable(true);
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                return false;
-                // 这里如果返回true的话，touch事件将被拦截
-                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-            }
-        });
-
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
         popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popup_background_mtrl_mult));
-
-        // 设置好参数之后再show
-        popupWindow.showAsDropDown(view);
+                R.drawable.abc_popup_background_mtrl_mult));
+        popupWindow.showAsDropDown(view, 0, 20);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_wplabor_id);
         taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
         realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_labtrans_id);
-        realinfoLinearLayout.setVisibility(View.GONE);
         planLinearlayout.setOnClickListener(planOnClickListener);
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
@@ -408,6 +450,7 @@ public class Work_DetailsActivity extends BaseActivity {
             Intent intent = new Intent(Work_DetailsActivity.this,Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("assignmentList", (Serializable) assignmentList);
             intent.putExtras(bundle);
             startActivity(intent);
             popupWindow.dismiss();
@@ -511,11 +554,39 @@ public class Work_DetailsActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
         switch (resultCode) {
+            case Constants.ASSETCODE:
+                option = (Option) data.getSerializableExtra("option");
+                assetnum.setText(option.getName());
+                assetdesc.setText(option.getDescription());
+                location.setText(option.getValue());
+                locationdesc.setText(new LocationDao(Work_DetailsActivity.this).queryLocation(option.getValue()).description);
+                break;
+            case Constants.LOCATIONCODE:
+                option = (Option) data.getSerializableExtra("option");
+                location.setText(option.getName());
+                locationdesc.setText(option.getDescription());
+                break;
+            case Constants.FAILURECODE:
+                option = (Option) data.getSerializableExtra("option");
+                failurecode.setText(option.getName());
+                break;
+            case Constants.FAILURELIST:
+                option = (Option) data.getSerializableExtra("option");
+                problemcode.setText(option.getName());
+                break;
+            case Constants.JOBPLAN:
+                option = (Option) data.getSerializableExtra("option");
+                jpnum.setText(option.getName());
+                break;
             case 1000:
-                Bundle b=data.getExtras();
-                ArrayList<Wplabor> wplabors = (ArrayList<Wplabor>) b.getSerializable("wplaborList");
-                int i = wplabors.size();
+                woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                wplaborList = (ArrayList<Wplabor>) data.getSerializableExtra("wplaborList");
+                wpmaterialList = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
+                break;
+            case 2000:
+                assignmentList = (ArrayList<Assignment>) data.getSerializableExtra("assignmentList");
                 break;
             default:
                 break;

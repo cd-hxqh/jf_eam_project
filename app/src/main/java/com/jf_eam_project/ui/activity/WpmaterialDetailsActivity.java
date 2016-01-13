@@ -95,6 +95,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
         storelocsite = (TextView) findViewById(R.id.wpmaterial_storelocsite);
+        requestby = (TextView) findViewById(R.id.wpmaterial_requestby);
         requiredate = (TextView) findViewById(R.id.wpmaterial_requiredate);
 
         ok = (Button) findViewById(R.id.wpmaterial_ok);
@@ -110,10 +111,12 @@ public class WpmaterialDetailsActivity extends BaseActivity{
             }
         });
 
+        taskid.setText(wpmaterial.taskid);
         itemnum.setText(wpmaterial.itemnum);
         itemqty.setText(wpmaterial.itemqty);
         location.setText(wpmaterial.location);
         storelocsite.setText(wpmaterial.storelocsite);
+        requestby.setText(wpmaterial.requestby);
         requiredate.setText(wpmaterial.requiredate);
 
         mBasIn = new BounceTopEnter();
@@ -170,14 +173,23 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            wpmaterial = new Wpmaterial();
-            wpmaterial.taskid = taskid.getText().toString();
-            wpmaterial.itemnum = itemnum.getText().toString();
-            wpmaterial.itemqty = itemqty.getText().toString();
-            wpmaterial.location = location.getText().toString();
-            wpmaterial.storelocsite = storelocsite.getText().toString();
-            wpmaterial.requestby = requestby.getText().toString();
-            wpmaterial.requiredate = requiredate.getText().toString();
+            if(!wpmaterial.taskid.equals(taskid.getText().toString())
+                    ||!wpmaterial.itemnum.equals(itemnum.getText().toString())
+                    ||!wpmaterial.itemqty.equals(itemqty.getText().toString())
+                    ||!wpmaterial.location.equals(location.getText().toString())
+                    ||!wpmaterial.storelocsite.equals(storelocsite.getText().toString())
+                    ||!wpmaterial.requestby.equals(requestby.getText().toString())
+                    ||!wpmaterial.requiredate.equals(requiredate.getText().toString())) {
+                wpmaterial = new Wpmaterial();
+                wpmaterial.taskid = taskid.getText().toString();
+                wpmaterial.itemnum = itemnum.getText().toString();
+                wpmaterial.itemqty = itemqty.getText().toString();
+                wpmaterial.location = location.getText().toString();
+                wpmaterial.storelocsite = storelocsite.getText().toString();
+                wpmaterial.requestby = requestby.getText().toString();
+                wpmaterial.requiredate = requiredate.getText().toString();
+                wpmaterial.type = "update";
+            }
             intent.putExtra("wpmaterial",wpmaterial);
             intent.putExtra("position",position);
             WpmaterialDetailsActivity.this.setResult(6,intent);
@@ -248,8 +260,10 @@ public class WpmaterialDetailsActivity extends BaseActivity{
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++)
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        }
     }
 
     @Override

@@ -110,6 +110,7 @@ public class WoactivityAddNewActivity extends BaseActivity{
                 woactivity.setActstart(actstart.getText().toString());
                 woactivity.setActfinish(actfinish.getText().toString());
                 woactivity.estdur = estdur.getText().toString();
+                woactivity.type = "add";
                 intent.putExtra("woactivity",woactivity);
                 WoactivityAddNewActivity.this.setResult(0,intent);
                 finish();

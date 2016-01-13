@@ -105,6 +105,7 @@ public class AssigmentAddNewActivity extends BaseActivity{
             assignment.laborcode = laborcode.getText().toString();
             assignment.craft = craft.getText().toString();
             assignment.laborhrs = laborhrs.getText().toString();
+            assignment.type = "add";
             intent.putExtra("assignment",assignment);
             AssigmentAddNewActivity.this.setResult(1,intent);
             finish();

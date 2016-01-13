@@ -15,6 +15,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Wptool;
 import com.jf_eam_project.ui.activity.AssignmentDetailsActivity;
+import com.jf_eam_project.ui.activity.Work_AssignmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ import java.util.List;
  * 任务分配
  */
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
-    Context mContext;
-    List<Assignment> assignmentList = new ArrayList<>();
+    Work_AssignmentActivity mContext;
+    public List<Assignment> assignmentList = new ArrayList<>();
 
-    public AssignmentAdapter(Context context) {
+    public AssignmentAdapter(Work_AssignmentActivity context) {
         this.mContext = context;
     }
 
@@ -52,8 +53,9 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
                 Intent intent = new Intent(mContext, AssignmentDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("assignment", assignment);
+                bundle.putSerializable("position", position);
                 intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent,0);
             }
         });
     }

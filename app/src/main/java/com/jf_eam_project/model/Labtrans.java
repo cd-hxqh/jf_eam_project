@@ -43,4 +43,5 @@ public class Labtrans extends Entity{
     public String transtype;//类型
     @DatabaseField(columnName = "wonum")
     public String wonum;//所属工单
+    public String type;//add/update
 }

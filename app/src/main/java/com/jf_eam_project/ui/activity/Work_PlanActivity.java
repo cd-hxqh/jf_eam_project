@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -109,6 +110,9 @@ public class Work_PlanActivity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+        if (workOrder.wonum!=null&&!workOrder.wonum.equals("")&&!workOrder.status.equals(Constants.WAIT_APPROVAL)){
+            menuImageView.setVisibility(View.GONE);
+        }
         woactivity.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
         woactivity.setOnClickListener(new Buttonlistener());
         wplabor.setOnClickListener(new Buttonlistener());

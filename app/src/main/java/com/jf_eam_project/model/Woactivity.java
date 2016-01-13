@@ -46,6 +46,7 @@ public class Woactivity extends Entity{
     public String actstart;//实际开始时间
     @JsonField(fieldName = "actfinish")
     public String actfinish;//实际完成时间
+    public String type;//add/update
 
     public String getTaskid() {
         return taskid;

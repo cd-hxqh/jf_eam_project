@@ -60,7 +60,7 @@ public class ItemDao {
      */
     public List<Item> queryForAll(){
         try {
-            return ItemDaoOpe.queryForAll();
+            return ItemDaoOpe.queryBuilder().limit(2000).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

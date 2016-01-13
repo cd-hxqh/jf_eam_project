@@ -146,9 +146,9 @@ public class HttpManager {
     /**
      * 设置计划物料接口*
      */
-    public static String getWpmaterialUrl(int curpage, int showcount) {
+    public static String getWpmaterialUrl(int curpage, int showcount,String wonum) {
         return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
-                Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+                Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**
@@ -170,9 +170,9 @@ public class HttpManager {
     /**
      * 设置任务分配接口*
      */
-    public static String getAssignmentUrl(int curpage, int showcount) {
+    public static String getAssignmentUrl(int curpage, int showcount,String wonum) {
         return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
-                Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+                Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**

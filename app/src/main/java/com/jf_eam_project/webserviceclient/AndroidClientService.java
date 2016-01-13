@@ -69,7 +69,7 @@ public class AndroidClientService {
         String wonum = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-            wonum = JsonUtils.parsingWebservice_result(obj);
+            wonum = JsonUtils.parsingInsertWO(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }
@@ -79,13 +79,14 @@ public class AndroidClientService {
     /**
      *更新工单
      */
-    public String UpdataWO(String string){
+    public String UpdataWO(String string,String wonum){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceUpdateMbo");
         soapReq.addProperty("json", string);
         soapReq.addProperty("mboObjectName","WORKORDER");
+        soapReq.addProperty("mboKeyValue",wonum);
         soapReq.addProperty("mboKey","WONUM");
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
@@ -97,12 +98,14 @@ public class AndroidClientService {
             e.printStackTrace();
         }
         String obj = null;
+        String result = null;
         try {
             obj = soapEnvelope.getResponse().toString();
+            result = JsonUtils.parsingUpdataWO(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }
-        return obj;
+        return result;
     }
 
     /**
@@ -118,6 +121,40 @@ public class AndroidClientService {
         soapReq.addProperty("mbo", mbo);//工单WORKORDER,采购申请pr
         soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        String obj = null;
+        String result = null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            result = JsonUtils.parsingwfserviceResult(obj);
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 审批工作流
+     * @return
+     */
+    public String wfGoOn(String processname,String mbo,String keyValue,String key,String  zx){
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
+        soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
+        soapReq.addProperty("mboName", mbo);//工单WORKORDER,采购申请pr
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
+        soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapReq.addProperty("zx", zx);//审批的结果，1为审批通过，0为审批不通过
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
