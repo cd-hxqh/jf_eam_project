@@ -276,6 +276,9 @@ public class JsonUtils {
                     assignmentObj.put("LABORCODE",assignments.get(i).laborcode);
                     assignmentObj.put("CRAFT",assignments.get(i).craft);
                     assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
+                    if(!workOrder.isnew){
+                        assignmentObj.put("TYPE",assignments.get(i).type);
+                    }
                     assignmentArray.put(assignmentObj);
                 }
                 jsonObject.put("ASSIGNMENT",assignmentArray);

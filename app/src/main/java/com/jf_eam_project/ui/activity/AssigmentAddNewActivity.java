@@ -172,7 +172,9 @@ public class AssigmentAddNewActivity extends BaseActivity{
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++)
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        }
     }
 }

@@ -50,7 +50,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
         this.workOrder = workOrder;
     }
 
-    public WoactivityFragment(WorkOrder workOrder,ArrayList<Woactivity> woactivities) {
+    public WoactivityFragment(WorkOrder workOrder, ArrayList<Woactivity> woactivities) {
         this.workOrder = workOrder;
         this.woactivities = woactivities;
     }
@@ -97,18 +97,18 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew && (woactivities == null || woactivities.size() == 0)) {
             refresh_layout.setRefreshing(true);
             getdata();
-        }else {
-            if(woactivities!=null&&woactivities.size()!=0){
-                woactivityAdapter.update(woactivities,true);
+        } else {
+            if (woactivities != null && woactivities.size() != 0) {
+                woactivityAdapter.update(woactivities, true);
             }
         }
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwoactivityUrl(workOrder.wonum,page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwoactivityUrl(workOrder.wonum, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -152,14 +152,14 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             woactivityAdapter.adddate(list);
-            ((Work_PlanActivity)getActivity()).setWoactivityList(list);
+            ((Work_PlanActivity) getActivity()).setWoactivityList(list);
         }
     }
 
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew) {
             page = 1;
             getdata();
         }
@@ -167,7 +167,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onLoad() {
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew) {
             page++;
             getdata();
         }

@@ -337,6 +337,8 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 break;
+            default:
+                break;
         }
     }
 }

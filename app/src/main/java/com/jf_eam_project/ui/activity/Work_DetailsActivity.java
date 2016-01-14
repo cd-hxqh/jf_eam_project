@@ -90,7 +90,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
     private TextView wonum;//工单号
     private TextView description;//描述
-//    private TextView parent;//父工单
+    //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
     private TextView assetnum;//资产编号
     private TextView assetdesc;//资产描述
@@ -230,7 +230,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (status.getText().toString().equals(Constants.WAIT_APPROVAL)){
+            if (status.getText().toString().equals(Constants.WAIT_APPROVAL)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Work_DetailsActivity.this);
                 builder.setMessage("确定修改工单吗").setTitle("提示")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -247,11 +247,12 @@ public class Work_DetailsActivity extends BaseActivity {
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
 
-                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), assignmentList, null);
+                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
                         new AsyncTask<String, String, String>() {
                             @Override
                             protected String doInBackground(String... strings) {
-                                reviseresult = getBaseApplication().getWsService().UpdataWO(updataInfo,wonum.getText().toString());
+                                String s = updataInfo;
+                                reviseresult = getBaseApplication().getWsService().UpdataWO(updataInfo, wonum.getText().toString());
                                 return reviseresult;
                             }
 
@@ -260,7 +261,7 @@ public class Work_DetailsActivity extends BaseActivity {
                                 super.onPostExecute(s);
                                 if (s.equals("成功")) {
                                     Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-                                } else if (s.equals("")){
+                                } else if (s.equals("")) {
                                     Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -270,7 +271,7 @@ public class Work_DetailsActivity extends BaseActivity {
                         }.execute();
                     }
                 }).create().show();
-            }else {
+            } else {
                 Toast.makeText(Work_DetailsActivity.this, "工单状态不允许修改", Toast.LENGTH_SHORT).show();
             }
         }
@@ -290,7 +291,7 @@ public class Work_DetailsActivity extends BaseActivity {
         dialog.isTitleShow(false)//
                 .btnNum(3)
                 .content("请选择审核意见")//
-                .btnText("通过", "取消","不通过")//
+                .btnText("通过", "取消", "不通过")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
                 .show();
@@ -323,10 +324,11 @@ public class Work_DetailsActivity extends BaseActivity {
 
     /**
      * 审批工作流
+     *
      * @param wonum
      * @param zx
      */
-    private void wfgoon(String wonum,String zx){
+    private void wfgoon(String wonum, String zx) {
 
     }
 
@@ -354,10 +356,10 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     //过滤变化过的任务数据
-    private ArrayList<Woactivity> getWoactivityList(){
-        ArrayList<Woactivity> woactivities = null;
-        for(int i = 0;i < woactivityList.size();i ++){
-            if(woactivityList.get(i).type!=null&&(woactivityList.get(i).equals("add")||woactivityList.get(i).equals("update"))){//如果此条数据是变动后的
+    private ArrayList<Woactivity> getWoactivityList() {
+        ArrayList<Woactivity> woactivities = new ArrayList<>();
+        for (int i = 0; i < woactivityList.size(); i++) {
+            if (woactivityList.get(i).type != null && !woactivityList.get(i).type.equals("")) {//如果此条数据是变动后的
                 woactivities.add(woactivityList.get(i));
             }
         }
@@ -365,32 +367,32 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     //过滤变化过的计划员工数据
-    private ArrayList<Wplabor> getWplaborList(){
-        ArrayList<Wplabor> wplabors = null;
-        for(int i = 0;i < wplaborList.size();i ++){
-            if(wplaborList.get(i).type!=null&&(wplaborList.get(i).equals("add")||wplaborList.get(i).equals("update"))){//如果此条数据是变动后的
+    private ArrayList<Wplabor> getWplaborList() {
+        ArrayList<Wplabor> wplabors = new ArrayList<>();
+        for (int i = 0; i < wplaborList.size(); i++) {
+            if (wplaborList.get(i).type != null && !wplaborList.get(i).equals("")) {//如果此条数据是变动后的
                 wplabors.add(wplaborList.get(i));
             }
         }
         return wplabors;
     }
 
-    //过滤变化过的计划数据
-    private ArrayList<Wpmaterial> getWpmaterialList(){
-        ArrayList<Wpmaterial> wpmaterials = null;
-        for(int i = 0;i < wpmaterialList.size();i ++){
-            if(wpmaterialList.get(i).type!=null&&(wpmaterialList.get(i).equals("add")||wpmaterialList.get(i).equals("update"))){//如果此条数据是变动后的
+    //过滤变化过的计划物料数据
+    private ArrayList<Wpmaterial> getWpmaterialList() {
+        ArrayList<Wpmaterial> wpmaterials = new ArrayList<>();
+        for (int i = 0; i < wpmaterialList.size(); i++) {
+            if (wpmaterialList.get(i).type != null && !wpmaterialList.get(i).type.equals("")) {//如果此条数据是变动后的
                 wpmaterials.add(wpmaterialList.get(i));
             }
         }
         return wpmaterials;
     }
 
-    //过滤变化过的计划数据
-    private ArrayList<Assignment> getAssignmentList(){
-        ArrayList<Assignment> assignments = null;
-        for(int i = 0;i < assignmentList.size();i ++){
-            if(assignmentList.get(i).type!=null&&(assignmentList.get(i).equals("add")||assignmentList.get(i).equals("update"))){//如果此条数据是变动后的
+    //过滤变化过的任务分配数据
+    private ArrayList<Assignment> getAssignmentList() {
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        for (int i = 0; i < assignmentList.size(); i++) {
+            if (assignmentList.get(i).type != null && !assignmentList.get(i).type.equals("")) {//如果此条数据是变动后的
                 assignments.add(assignmentList.get(i));
             }
         }
@@ -403,6 +405,7 @@ public class Work_DetailsActivity extends BaseActivity {
             showPopupWindow(menuImageView);
         }
     };
+
     /**
      * 初始化showPopupWindow*
      */
@@ -426,7 +429,7 @@ public class Work_DetailsActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-        if(workOrder.status.equals(Constants.WAIT_APPROVAL)){
+        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
             realinfoLinearLayout.setVisibility(View.GONE);
         }
     }
@@ -434,10 +437,12 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_PlanActivity.class);
+            Intent intent = new Intent(Work_DetailsActivity.this, Work_PlanActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("wplaborList", (Serializable) wplaborList);
+            bundle.putSerializable("woactivityList", woactivityList);
+            bundle.putSerializable("wplaborList", wplaborList);
+            bundle.putSerializable("wpmaterialList", wpmaterialList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
@@ -447,7 +452,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener taskOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_AssignmentActivity.class);
+            Intent intent = new Intent(Work_DetailsActivity.this, Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             bundle.putSerializable("assignmentList", (Serializable) assignmentList);
@@ -460,7 +465,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this,Work_LabtransActivity.class);
+            Intent intent = new Intent(Work_DetailsActivity.this, Work_LabtransActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             intent.putExtras(bundle);

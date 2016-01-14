@@ -261,8 +261,9 @@ public class WpmaterialDetailsActivity extends BaseActivity{
      */
     private void addTaskData() {
         if (woactivityList != null && woactivityList.size() != 0) {
-            for (int i = 0; i < woactivityList.size(); i++)
+            for (int i = 0; i < woactivityList.size(); i++) {
                 mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+            }
         }
     }
 

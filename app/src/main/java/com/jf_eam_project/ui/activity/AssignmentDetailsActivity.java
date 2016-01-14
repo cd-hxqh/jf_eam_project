@@ -122,7 +122,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
             }
             intent.putExtra("assignment", assignment);
             intent.putExtra("position", position);
-            AssignmentDetailsActivity.this.setResult(1, intent);
+            AssignmentDetailsActivity.this.setResult(0, intent);
             finish();
         }
     };
@@ -187,7 +187,10 @@ public class AssignmentDetailsActivity extends BaseActivity {
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++) {
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+            }
+        }
     }
 }
