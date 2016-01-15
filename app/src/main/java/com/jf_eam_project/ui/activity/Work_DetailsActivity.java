@@ -8,17 +8,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,12 +25,19 @@ import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.JsonUtils;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -40,10 +45,9 @@ import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by think on 2015/11/27.
@@ -79,6 +83,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private ArrayList<Wplabor> wplaborList = new ArrayList<>();
     private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
+    private ArrayList<Labtrans> labtransList = new ArrayList<>();
     /**
      * 任务分配*
      */
@@ -225,6 +230,12 @@ public class Work_DetailsActivity extends BaseActivity {
 
         revise.setOnClickListener(reviseOnClickListener);
         wfservice.setOnClickListener(wfserviceOnClickListener);
+
+        if (workOrder.udwotype.equals(Constants.UNPLAN)) {
+            wfservice.setVisibility(View.VISIBLE);
+        } else {
+            wfservice.setVisibility(View.GONE);
+        }
     }
 
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
@@ -247,12 +258,17 @@ public class Work_DetailsActivity extends BaseActivity {
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
 
-                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+                        String updataInfo = null;
+                        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+                            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+                        } else if (workOrder.status.equals(Constants.APPROVALED)) {
+                            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
+                        }
+                        final String finalUpdataInfo = updataInfo;
                         new AsyncTask<String, String, String>() {
                             @Override
                             protected String doInBackground(String... strings) {
-                                String s = updataInfo;
-                                reviseresult = getBaseApplication().getWsService().UpdataWO(updataInfo, wonum.getText().toString());
+                                reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
                                 return reviseresult;
                             }
 
@@ -284,13 +300,13 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     };
 
-    private void MaterialDialogOneBtn() {
+    private void MaterialDialogOneBtn() {//选择审核结果
         final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
                 .btnNum(3)
-                .content("请选择审核意见")//
+                .content("请选择审核结果")//
                 .btnText("通过", "取消", "不通过")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
@@ -300,14 +316,13 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {//通过
                     @Override
                     public void onBtnClick() {
-                        Toast.makeText(Work_DetailsActivity.this, "通过", Toast.LENGTH_SHORT).show();
+                        MaterialDialogOneBtn1(true);
                         dialog.dismiss();
                     }
                 },
                 new OnBtnClickL() {//取消
                     @Override
                     public void onBtnClick() {
-                        Toast.makeText(Work_DetailsActivity.this, "取消", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
@@ -316,10 +331,144 @@ public class Work_DetailsActivity extends BaseActivity {
                     @Override
                     public void onBtnClick() {
                         Toast.makeText(Work_DetailsActivity.this, "不通过", Toast.LENGTH_SHORT).show();
+                        MaterialDialogOneBtn1(false);
                         dialog.dismiss();
                     }
                 }
         );
+    }
+
+    private void MaterialDialogOneBtn1(final boolean isok) {//是否输入审核意见
+        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否填写输入意见")//
+                .btnText("是", "否，直接提交")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        EditDialog(isok);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        getwfstatus(isok);
+//                        if (isstart) {
+//                            wfstart(workOrder.wonum);
+//                        } else {
+//                            wfgoon(workOrder.wonum, isok ? "1" : "0", isok ? "通过" : "不通过");
+//                        }
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void EditDialog(final boolean isok) {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Work_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content(isok ? "通过" : "不通过")//
+                .btnText("提交", "取消")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        getwfstatus(isok);
+//                        if (isstart) {
+//                            wfstart(workOrder.wonum);
+//                        } else {
+//                            wfgoon(workOrder.wonum, isok ? "1" : "0", text);
+//                        }
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    /**
+     * 判断工作流是否已启动
+     *
+     * @return
+     */
+    private void getwfstatus(final boolean isok) {
+        HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, workOrder.workorderid), new HttpRequestHandler<Results>() {
+            String result;
+
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
+                if (result.equals("N")) {
+                    wfstart(workOrder.wonum);
+                } else {
+                    wfgoon(workOrder.wonum, isok ? "1" : "0", isok ? "通过" : "不通过");
+                }
+                Log.i(TAG, "data=" + result);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(Work_DetailsActivity.this, "查询工作流状态失败，审核中止", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
+        });
+
+    }
+
+    /**
+     * 开始工作流
+     *
+     * @param wonum
+     */
+    private void wfstart(final String wonum) {
+        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
+                getString(R.string.inputing), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                String result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", wonum, "WONUM");
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s == null || s.equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     /**
@@ -328,8 +477,29 @@ public class Work_DetailsActivity extends BaseActivity {
      * @param wonum
      * @param zx
      */
-    private void wfgoon(String wonum, String zx) {
+    private void wfgoon(final String wonum, final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
+                getString(R.string.inputing), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                String result = getBaseApplication().getWfService().wfGoOn("UDFJHWO", "WORKORDER", wonum, "WONUM", zx, desc);
+                return result;
+            }
 
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s == null || s.equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     //获取界面上工单内容
@@ -399,6 +569,17 @@ public class Work_DetailsActivity extends BaseActivity {
         return assignments;
     }
 
+    //过滤变化过的实际数据
+    private ArrayList<Labtrans> getLabtransList() {
+        ArrayList<Labtrans> labtranses = new ArrayList<>();
+        for (int i = 0; i < labtransList.size(); i++) {
+            if (labtransList.get(i).type != null && !labtransList.get(i).type.equals("")) {//如果此条数据是变动后的
+                labtranses.add(labtransList.get(i));
+            }
+        }
+        return labtranses;
+    }
+
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -429,9 +610,9 @@ public class Work_DetailsActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-            realinfoLinearLayout.setVisibility(View.GONE);
-        }
+//        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+//            realinfoLinearLayout.setVisibility(View.GONE);
+//        }
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
@@ -455,9 +636,9 @@ public class Work_DetailsActivity extends BaseActivity {
             Intent intent = new Intent(Work_DetailsActivity.this, Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("assignmentList", (Serializable) assignmentList);
+            bundle.putSerializable("assignmentList", assignmentList);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, 2000);
             popupWindow.dismiss();
         }
     };
@@ -468,8 +649,9 @@ public class Work_DetailsActivity extends BaseActivity {
             Intent intent = new Intent(Work_DetailsActivity.this, Work_LabtransActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("labtransList", labtransList);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, 3000);
             popupWindow.dismiss();
         }
     };
@@ -592,6 +774,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 break;
             case 2000:
                 assignmentList = (ArrayList<Assignment>) data.getSerializableExtra("assignmentList");
+                break;
+            case 3000:
+                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");
                 break;
             default:
                 break;

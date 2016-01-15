@@ -39,16 +39,16 @@ public class WplaborDetailsActivity extends BaseActivity {
      */
     private ImageView backImageView;
 
-    private TextView taskid;//任务
+//    private TextView taskid;//任务
     private TextView craft;//工种
     private TextView quantity;//数量
     private TextView laborhrs;//常规时数
     private Button ok;//确认
 
-    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
-    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
+//    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+//    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+//    private BaseAnimatorSet mBasIn;
+//    private BaseAnimatorSet mBasOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class WplaborDetailsActivity extends BaseActivity {
      */
     private void geiIntentData() {
         wplabor = (Wplabor) getIntent().getSerializableExtra("wplabor");
-        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
+//        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         position = getIntent().getIntExtra("position", 0);
     }
 
@@ -74,7 +74,7 @@ public class WplaborDetailsActivity extends BaseActivity {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        taskid = (TextView) findViewById(R.id.wplabor_taskid);
+//        taskid = (TextView) findViewById(R.id.wplabor_taskid);
         craft = (TextView) findViewById(R.id.wplabor_craft);
         quantity = (TextView) findViewById(R.id.wplabor_quantity);
         laborhrs = (TextView) findViewById(R.id.wplabor_laborhrs);
@@ -91,52 +91,52 @@ public class WplaborDetailsActivity extends BaseActivity {
             }
         });
 
-        taskid.setText(wplabor.taskid);
+//        taskid.setText(wplabor.taskid);
         craft.setText(wplabor.craft);
         quantity.setText(wplabor.quantity);
         laborhrs.setText(wplabor.laborhrs);
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
-        addTaskData();
-        taskid.setOnClickListener(taskidlayoutOnClickListener);
+//        mBasIn = new BounceTopEnter();
+//        mBasOut = new SlideBottomExit();
+//        addTaskData();
+//        taskid.setOnClickListener(taskidlayoutOnClickListener);
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
+
     }
 
-    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NormalListDialog();
-        }
-    };
-
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(WplaborDetailsActivity.this, mMenuItems);
-        dialog.title("请选择")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                taskid.setText(mMenuItems.get(position).mOperName);
-                dialog.dismiss();
-            }
-        });
-    }
+//    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            NormalListDialog();
+//        }
+//    };
+//
+//    private void NormalListDialog() {
+//        final NormalListDialog dialog = new NormalListDialog(WplaborDetailsActivity.this, mMenuItems);
+//        dialog.title("请选择")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)//
+//                .show();
+//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+//            @Override
+//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                taskid.setText(mMenuItems.get(position).mOperName);
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if (!wplabor.taskid.equals(taskid.getText().toString())
-                    || !wplabor.craft.equals(craft.getText().toString())
+            if (!wplabor.craft.equals(craft.getText().toString())
                     || !wplabor.quantity.equals(quantity.getText().toString())
                     || !wplabor.laborhrs.equals(laborhrs.getText().toString())) {
                 wplabor = new Wplabor();
-                wplabor.taskid = taskid.getText().toString();
+//                wplabor.taskid = taskid.getText().toString();
                 wplabor.craft = craft.getText().toString();
                 wplabor.quantity = quantity.getText().toString();
                 wplabor.laborhrs = laborhrs.getText().toString();
@@ -175,14 +175,14 @@ public class WplaborDetailsActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 添加任务数据*
-     */
-    private void addTaskData() {
-        if (woactivityList != null && woactivityList.size() != 0) {
-            for (int i = 0; i < woactivityList.size(); i++) {
-                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
-            }
-        }
-    }
+//    /**
+//     * 添加任务数据*
+//     */
+//    private void addTaskData() {
+//        if (woactivityList != null && woactivityList.size() != 0) {
+//            for (int i = 0; i < woactivityList.size(); i++) {
+//                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+//            }
+//        }
+//    }
 }

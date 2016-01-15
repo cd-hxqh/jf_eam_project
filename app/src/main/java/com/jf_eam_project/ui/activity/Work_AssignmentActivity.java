@@ -24,6 +24,7 @@ import com.jf_eam_project.ui.adapter.AssignmentAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -52,7 +53,6 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     private int page = 1;
 
     private WorkOrder workOrder;
-    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
 
     @Override
@@ -66,7 +66,6 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
 
     private void geiIntentData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         assignmentList = (ArrayList<Assignment>) getIntent().getSerializableExtra("assignmentList");
     }
 
@@ -89,7 +88,6 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Work_AssignmentActivity.this, AssigmentAddNewActivity.class);
-                intent.putExtra("woactivityList", woactivityList);
                 startActivityForResult(intent, 1);
             }
         });
@@ -107,8 +105,6 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-//        refresh_layout.setProgressViewOffset(false, 0,
-//                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
         if (!workOrder.isnew && (assignmentList == null || assignmentList.size() == 0)) {
@@ -124,7 +120,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("assignmentList", assignmentList);
+            intent.putExtra("assignmentList", (Serializable) assignmentAdapter.assignmentList);
             setResult(2000, intent);
             finish();
         }
@@ -186,7 +182,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                 if (data != null) {
                     Assignment assignment1 = (Assignment) data.getSerializableExtra("assignment");
                     int position = data.getIntExtra("position", 0);
-                    assignmentList.set(position, assignment1);
+//                    assignmentList.set(position, assignment1);
                     assignmentAdapter.assignmentList.set(position, assignment1);
                     assignmentAdapter.notifyDataSetChanged();
                 }
@@ -194,7 +190,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             case 1://新增
                 if (data != null) {
                     Assignment assignment = (Assignment) data.getSerializableExtra("assignment");
-                    assignmentList.add(assignment);
+//                    assignmentList.add(assignment);
                     assignmentAdapter.adddate(assignment);
                     nodatalayout.setVisibility(View.GONE);
                 }
@@ -207,9 +203,11 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew&& (assignmentAdapter.assignmentList == null || assignmentAdapter.assignmentList.size() == 0)) {
             page = 1;
             getdata();
+        }else {
+            refresh_layout.setRefreshing(false);
         }
     }
 

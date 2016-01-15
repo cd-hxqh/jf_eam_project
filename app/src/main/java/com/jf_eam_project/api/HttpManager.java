@@ -186,6 +186,14 @@ public class HttpManager {
     }
 
     /**
+     * 设置获取工作流状态接口*
+     */
+    public static String getWfStatusUrl(int curpage, int showcount,String ownerid) {
+        return "{'appid':'" + Constants.WFINSTANCE_NAME + "','objectname':'" +
+                Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'UDWO','OWNERTABLE':'WORKORDER','OWNERID':'" + ownerid + "'}}";
+    }
+
+    /**
      * 设置故障报告接口*
      */
     public static String getFailurereportUrl(String wonum, int curpage, int showcount) {

@@ -139,9 +139,9 @@ public class Work_PlanActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("woactivityList", woactivityList);
-            intent.putExtra("wplaborList", wplaborList);
-            intent.putExtra("wpmaterialList", wpmaterialList);
+            intent.putExtra("woactivityList", woactivityFragment.woactivityAdapter.woactivityList);
+            intent.putExtra("wplaborList", wplaborFragment.wplaborAdapter.wplaborList);
+            intent.putExtra("wpmaterialList", wpmaterialFragment.wpmaterialAdapter.wpmaterialList);
             Work_PlanActivity.this.setResult(1000, intent);
             finish();
         }
@@ -153,15 +153,15 @@ public class Work_PlanActivity extends BaseActivity {
             Intent intent;
             if (currentIndex == 0) {
                 intent = new Intent(Work_PlanActivity.this, WoactivityAddNewActivity.class);
-                intent.putExtra("taskid", (woactivityList.size() + 1) * 10);
+                intent.putExtra("taskid", (woactivityFragment.woactivityAdapter.woactivityList.size() + 1) * 10);
                 startActivityForResult(intent, 0);
             } else if (currentIndex == 1) {
                 intent = new Intent(Work_PlanActivity.this, WplaborAddNewActivity.class);
-                intent.putExtra("woactivityList", woactivityList);
+//                intent.putExtra("woactivityList", woactivityFragment.woactivityAdapter.woactivityList);
                 startActivityForResult(intent, 1);
             } else if (currentIndex == 2) {
                 intent = new Intent(Work_PlanActivity.this, WpmaterialAddNewActivity.class);
-                intent.putExtra("woactivityList", woactivityList);
+//                intent.putExtra("woactivityList", woactivityFragment.woactivityAdapter.woactivityList);
                 startActivityForResult(intent, 2);
             }
         }
@@ -189,15 +189,6 @@ public class Work_PlanActivity extends BaseActivity {
                 wpmaterial.setTextColor(getResources().getColor(R.color.white));
                 currentIndex = 2;
             }
-//            else if (view.getId() == wpservice.getId()) {
-//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-//                wpservice.setTextColor(getResources().getColor(R.color.white));
-//                currentIndex = 3;
-//            }else if (view.getId() == wptool.getId()) {
-//                view.setBackground(getResources().getDrawable(R.drawable.ab_solid_example));
-//                wptool.setTextColor(getResources().getColor(R.color.white));
-//                currentIndex = 4;
-//            }
             mViewPager.setCurrentItem(currentIndex);
         }
     }
@@ -254,12 +245,6 @@ public class Work_PlanActivity extends BaseActivity {
                 case 2:
                     wpmaterial.performClick();
                     break;
-//                case 3:
-//                    wpservice.performClick();
-//                    break;
-//                case 4:
-//                    wptool.performClick();
-//                    break;
             }
             currentIndex = position;
         }
@@ -274,12 +259,8 @@ public class Work_PlanActivity extends BaseActivity {
         woactivity.setBackground(getResources().getDrawable(R.color.light_gray));
         wplabor.setTextColor(getResources().getColor(R.color.black));
         wplabor.setBackground(getResources().getDrawable(R.color.light_gray));
-//        wpservice.setTextColor(getResources().getColor(R.color.black));
-//        wpservice.setBackground(getResources().getDrawable(R.color.light_gray));
         wpmaterial.setTextColor(getResources().getColor(R.color.black));
         wpmaterial.setBackground(getResources().getDrawable(R.color.light_gray));
-//        wptool.setTextColor(getResources().getColor(R.color.black));
-//        wptool.setBackground(getResources().getDrawable(R.color.light_gray));
     }
 
     @Override
@@ -289,7 +270,7 @@ public class Work_PlanActivity extends BaseActivity {
             case 0:
                 if (data != null) {
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
-                    woactivityList.add(woactivity);
+//                    woactivityList.add(woactivity);
                     woactivityFragment.woactivityAdapter.adddate(woactivity);
                     woactivityFragment.nodatalayout.setVisibility(View.GONE);
                 }
@@ -297,7 +278,7 @@ public class Work_PlanActivity extends BaseActivity {
             case 1:
                 if (data != null) {
                     Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
-                    wplaborList.add(wplabor);
+//                    wplaborList.add(wplabor);
                     wplaborFragment.wplaborAdapter.adddate(wplabor);
                     wplaborFragment.nodatalayout.setVisibility(View.GONE);
                 }
@@ -305,7 +286,7 @@ public class Work_PlanActivity extends BaseActivity {
             case 2:
                 if (data != null) {
                     Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
-                    wpmaterialList.add(wpmaterial);
+//                    wpmaterialList.add(wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.adddate(wpmaterial);
                     wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
                 }
@@ -314,7 +295,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if (data != null){
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                     int position = data.getIntExtra("position",0);
-                    woactivityList.set(position,woactivity);
+//                    woactivityList.set(position,woactivity);
                     woactivityFragment.woactivityAdapter.woactivityList.set(position, woactivity);
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
@@ -323,7 +304,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if(data != null){
                     Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
                     int position = data.getIntExtra("position",0);
-                    wplaborList.set(position,wplabor);
+//                    wplaborList.set(position,wplabor);
                     wplaborFragment.wplaborAdapter.wplaborList.set(position,wplabor);
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
@@ -332,7 +313,7 @@ public class Work_PlanActivity extends BaseActivity {
                 if(data != null){
                     Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     int position = data.getIntExtra("position",0);
-                    wpmaterialList.set(position,wpmaterial);
+//                    wpmaterialList.set(position,wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.wpmaterialList.set(position,wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }

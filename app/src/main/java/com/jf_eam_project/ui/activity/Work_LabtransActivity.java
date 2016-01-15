@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.ui.adapter.LabtransAdapter;
@@ -23,6 +25,7 @@ import com.jf_eam_project.ui.adapter.WplaborAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -44,10 +47,12 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
      */
     private ImageView addimg;
     private WorkOrder workOrder;
+    //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    private ArrayList<Labtrans> labtransList = new ArrayList<>();
 
-    private TextView wonum;
-    private TextView status;
-    private TextView parent;
+    //    private TextView wonum;
+//    private TextView status;
+//    private TextView parent;
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
@@ -67,6 +72,8 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
 
     private void getIntentData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+//        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
+        labtransList = (ArrayList<Labtrans>) getIntent().getSerializableExtra("labtransList");
     }
 
     @Override
@@ -77,9 +84,9 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        wonum = (TextView) findViewById(R.id.work_wonum);
-        status = (TextView) findViewById(R.id.work_status);
-        parent = (TextView) findViewById(R.id.work_parent);
+//        wonum = (TextView) findViewById(R.id.work_wonum);
+//        status = (TextView) findViewById(R.id.work_status);
+//        parent = (TextView) findViewById(R.id.work_parent);
 
     }
 
@@ -91,20 +98,17 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(Work_LabtransActivity.this, LabtransAddNewActivity.class);
+//                intent.putExtra("woactivityList", woactivityList);
+                startActivityForResult(intent, 1);
             }
         });
 
-        wonum.setText(workOrder.wonum == null ? "" : workOrder.wonum);
-        status.setText(workOrder.status == null ? "" : workOrder.status);
-        parent.setText(workOrder.parent == null ? "" : workOrder.parent);
+//        wonum.setText(workOrder.wonum == null ? "" : workOrder.wonum);
+//        status.setText(workOrder.status == null ? "" : workOrder.status);
+//        parent.setText(workOrder.parent == null ? "" : workOrder.parent);
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backImage.setOnClickListener(backOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -116,15 +120,30 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
-        refresh_layout.setRefreshing(true);
-        getdata();
+        if (!workOrder.isnew && (labtransList == null || labtransList.size() == 0)) {
+            refresh_layout.setRefreshing(true);
+            getdata();
+        }
+        if (labtransList.size()!=0){
+            labtransAdapter.update(labtransList,true);
+        }
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
     }
 
+    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            intent.putExtra("labtransList", (Serializable) labtransAdapter.labtransList);
+            setResult(3000, intent);
+            finish();
+        }
+    };
+
     private void getdata() {
-        HttpManager.getDataPagingInfo(Work_LabtransActivity.this, HttpManager.getLabtransUrl(page, 20,workOrder.wonum), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(Work_LabtransActivity.this, HttpManager.getLabtransUrl(page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -171,18 +190,49 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (resultCode) {
+            case 0://修改
+                if (data != null) {
+                    Labtrans labtrans = (Labtrans) data.getSerializableExtra("labtrans");
+                    int position = data.getIntExtra("position", 0);
+//                    labtransList.set(position, labtrans);
+                    labtransAdapter.labtransList.set(position, labtrans);
+                    labtransAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 1://新增
+                if (data != null) {
+                    Labtrans labtrans = (Labtrans) data.getSerializableExtra("labtrans");
+//                    labtransList.add(labtrans);
+                    labtransAdapter.adddate(labtrans);
+                    nodatalayout.setVisibility(View.GONE);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        page = 1;
-        getdata();
+        if (!workOrder.isnew && (labtransAdapter.labtransList == null || labtransAdapter.labtransList.size() == 0)) {
+            page = 1;
+            getdata();
+        } else {
+            refresh_layout.setRefreshing(false);
+        }
     }
 
     //上拉加载
     @Override
     public void onLoad() {
-        page++;
-        getdata();
+        if (!workOrder.isnew) {
+            page++;
+            getdata();
+        }
     }
 }

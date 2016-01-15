@@ -39,6 +39,7 @@
     <string name="title_activity_work_wplabor">计划员工</string>
     <string name="title_activity_work_labtrans">实际员工</string>
     <string name="title_activity_labtrans_details">员工详情</string>
+    <string name="title_activity_labtrans_addnew">员工新增</string>
     <string name="title_activity_work_plan">工单计划</string>
     <string name="title_activity_woactivity_details">任务详情</string>
     <string name="title_activity_woactivity_addnew">任务新增</string>
@@ -193,6 +194,7 @@
     <string name="wplabor_laborhrs">常规时数</string>
 
     <!--实际员工详情页面-->
+    <string name="labtrans_taskid">任务</string>
     <string name="labtrans_laborcode">员工</string>
     <string name="labtrans_craft">工种</string>
     <string name="labtrans_payrate">费率</string>

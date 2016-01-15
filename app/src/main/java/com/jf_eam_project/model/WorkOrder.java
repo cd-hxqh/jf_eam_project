@@ -18,6 +18,9 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "wonum")
     @DatabaseField(columnName = "wonum")
     public String wonum;//工单号
+    @JsonField(fieldName = "workorderid")
+    @DatabaseField(columnName = "workorderid")
+    public String workorderid;//工单号
     @JsonField(fieldName = "actfinish")
     @DatabaseField(columnName = "actfinish")
     public String actfinish;//实际完成时间

@@ -69,6 +69,9 @@ public final class WorkOrder_JsonHelper
         if ("WONUM".equals(fieldName)) {
             instance.setWonum(jp.getValueAsString());
             return true;
+        } else if ("WORKORDERID".equals(fieldName)) {
+            instance.workorderid = jp.getValueAsString();
+            return true;
         } else if ("ACTSTART".equals(fieldName)) {
             instance.setActstart(jp.getValueAsString());
             return true;

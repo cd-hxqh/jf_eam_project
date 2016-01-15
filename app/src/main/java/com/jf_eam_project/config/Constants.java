@@ -71,6 +71,8 @@ public class Constants {
     public static final String TOOLTRANS_NAME = "TOOLTRANS";
     //故障报告
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
+    //工作流状态
+    public static final String WFINSTANCE_NAME = "WFINSTANCE";
 
     /**巡检管理**/
     //巡检单的appid

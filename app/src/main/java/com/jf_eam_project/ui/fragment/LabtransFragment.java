@@ -19,6 +19,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.ui.activity.Work_LabtransActivity;
 import com.jf_eam_project.ui.adapter.LabtransAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
@@ -79,7 +80,7 @@ public class LabtransFragment extends Fragment implements SwipeRefreshLayout.OnR
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        labtransAdapter = new LabtransAdapter(getActivity());
+        labtransAdapter = new LabtransAdapter((Work_LabtransActivity) getActivity());
         recyclerView.setAdapter(labtransAdapter);
 
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -131,7 +132,7 @@ public class LabtransFragment extends Fragment implements SwipeRefreshLayout.OnR
             nodatalayout.setVisibility(View.GONE);
         }
         if (page == 1 && labtransAdapter.getItemCount() != 0) {
-            labtransAdapter = new LabtransAdapter(getActivity());
+            labtransAdapter = new LabtransAdapter((Work_LabtransActivity) getActivity());
             recyclerView.setAdapter(labtransAdapter);
         }
         if ((list == null || list.size() == 0) && page == 1) {

@@ -48,7 +48,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
     private ImageView backImageView;
 
     //任务可以选填，项目必填，行类型必填，库房选填，地点默认就是TRXNSITE，数量必填，输入人，实际日期必填。
-    private TextView taskid;//任务
+//    private TextView taskid;//任务
     private TextView itemnum;//项目  项目/物料
     private EditText itemqty;//数量
     private TextView location;//库房
@@ -88,7 +88,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
+//        taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
         itemnum = (TextView) findViewById(R.id.wpmaterial_itemnum);
         itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
@@ -109,10 +109,10 @@ public class WpmaterialAddNewActivity extends BaseActivity{
             }
         });
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
-        addTaskData();
-        taskid.setOnClickListener(taskidlayoutOnClickListener);
+//        mBasIn = new BounceTopEnter();
+//        mBasOut = new SlideBottomExit();
+//        addTaskData();
+//        taskid.setOnClickListener(taskidlayoutOnClickListener);
         itemnum.setOnClickListener(new LayoutOnClickListener(Constants.ITEM));
         location.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONSCODE));
         storelocsite.setText("TRXNSITE");
@@ -122,30 +122,31 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         requiredate.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(okOnClickListener);
+
     }
 
-    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NormalListDialog();
-        }
-    };
-
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(WpmaterialAddNewActivity.this, mMenuItems);
-        dialog.title("请选择")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                taskid.setText(mMenuItems.get(position).mOperName);
-                dialog.dismiss();
-            }
-        });
-    }
+//    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            NormalListDialog();
+//        }
+//    };
+//
+//    private void NormalListDialog() {
+//        final NormalListDialog dialog = new NormalListDialog(WpmaterialAddNewActivity.this, mMenuItems);
+//        dialog.title("请选择")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)//
+//                .show();
+//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+//            @Override
+//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                taskid.setText(mMenuItems.get(position).mOperName);
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -167,7 +168,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         public void onClick(View view) {
             Intent intent = getIntent();
             wpmaterial = new Wpmaterial();
-            wpmaterial.taskid = taskid.getText().toString();
+//            wpmaterial.taskid = taskid.getText().toString();
             wpmaterial.itemnum = itemnum.getText().toString();
             wpmaterial.itemqty = itemqty.getText().toString();
             wpmaterial.location = location.getText().toString();
@@ -240,15 +241,15 @@ public class WpmaterialAddNewActivity extends BaseActivity{
         }
     }
 
-    /**
-     * 添加任务数据*
-     */
-    private void addTaskData() {
-        if (woactivityList != null && woactivityList.size() != 0) {
-            for (int i = 0; i < woactivityList.size(); i++)
-                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
-        }
-    }
+//    /**
+//     * 添加任务数据*
+//     */
+//    private void addTaskData() {
+//        if (woactivityList != null && woactivityList.size() != 0) {
+//            for (int i = 0; i < woactivityList.size(); i++)
+//                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

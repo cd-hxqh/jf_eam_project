@@ -42,10 +42,10 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Wplabor wplabor = wplaborList.get(position);
-        holder.itemNumTitle.setText("任务");
-        holder.itemDescTitle.setText("工种");
-        holder.itemNum.setText(wplabor.taskid == null ? "" : wplabor.taskid);
-        holder.itemDesc.setText(wplabor.craft == null ? "" : wplabor.craft);
+        holder.itemNumTitle.setText("工种");
+        holder.itemDescTitle.setText("数量");
+        holder.itemNum.setText(wplabor.craft == null ? "" : wplabor.craft);
+        holder.itemDesc.setText(wplabor.quantity == null ? "" : wplabor.quantity);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

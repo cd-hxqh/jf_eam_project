@@ -145,7 +145,7 @@ public class AndroidClientService {
      * 审批工作流
      * @return
      */
-    public String wfGoOn(String processname,String mbo,String keyValue,String key,String  zx){
+    public String wfGoOn(String processname,String mbo,String keyValue,String key,String zx,String desc){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -155,6 +155,7 @@ public class AndroidClientService {
         soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
         soapReq.addProperty("zx", zx);//审批的结果，1为审批通过，0为审批不通过
+        soapReq.addProperty("desc", desc);//审批意见
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
@@ -168,7 +169,7 @@ public class AndroidClientService {
         String result = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-            result = JsonUtils.parsingwfserviceResult(obj);
+            result = JsonUtils.parsingwfserviceGoOnResult(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }

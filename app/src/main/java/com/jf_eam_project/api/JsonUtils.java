@@ -116,6 +116,36 @@ public class JsonUtils {
         return result;
     }
 
+    public static String parsingwfserviceGoOnResult(String data) {
+        Log.i(TAG, "data=" + data);
+        String result = null;
+        try {
+            JSONObject object = new JSONObject(data);
+            if(object.has("status")){
+                result = object.getString("status");
+            }else {
+                result = "";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    //解析查询工作流返回的数据
+    public static String parsingwfstatusResult(String data){
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            if(jsonObject.has("ACTIVE")){
+                return jsonObject.getString("ACTIVE");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 分页解析返回的结果*
      */
@@ -235,7 +265,6 @@ public class JsonUtils {
                 JSONObject wplaborObj;
                 for (int i = 0; i < wplabors.size(); i++) {
                     wplaborObj = new JSONObject();
-                    wplaborObj.put("TASKID", wplabors.get(i).taskid);
                     wplaborObj.put("CRAFT", wplabors.get(i).craft);
                     wplaborObj.put("QUANTITY", wplabors.get(i).quantity);
                     wplaborObj.put("LABORHRS", wplabors.get(i).laborhrs);
@@ -252,7 +281,6 @@ public class JsonUtils {
                 JSONObject wpmaterialObj;
                 for(int i = 0;i < wpmaterials.size();i ++){
                     wpmaterialObj = new JSONObject();
-                    wpmaterialObj.put("TASKID",wpmaterials.get(i).taskid);
                     wpmaterialObj.put("ITEMNUM",wpmaterials.get(i).itemnum);
                     wpmaterialObj.put("ITEMQTY",wpmaterials.get(i).itemqty);
                     wpmaterialObj.put("LOCATION",wpmaterials.get(i).location);
@@ -272,7 +300,6 @@ public class JsonUtils {
                 JSONObject assignmentObj;
                 for(int i = 0;i < assignments.size();i ++){
                     assignmentObj = new JSONObject();
-                    assignmentObj.put("TASKID",assignments.get(i).taskid);
                     assignmentObj.put("LABORCODE",assignments.get(i).laborcode);
                     assignmentObj.put("CRAFT",assignments.get(i).craft);
                     assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
@@ -289,13 +316,11 @@ public class JsonUtils {
                 JSONObject labtransObj;
                 for(int i = 0;i < labtranses.size();i ++){
                     labtransObj = new JSONObject();
-                    labtransObj.put("TASKID",labtranses.get(i).taskid);
                     labtransObj.put("LABORCODE",labtranses.get(i).laborcode);
                     labtransObj.put("STARTDATE",labtranses.get(i).startdate);
                     labtransObj.put("REGULARHRS",labtranses.get(i).regularhrs);
                     labtransObj.put("CRAFT",labtranses.get(i).craft);
                     labtransObj.put("PAYRATE",labtranses.get(i).payrate);
-                    labtransObj.put("TRANSTYPE",labtranses.get(i).transtype);
                     labtransArray.put(labtransObj);
                 }
                 jsonObject.put("LABTRANS",labtransArray);

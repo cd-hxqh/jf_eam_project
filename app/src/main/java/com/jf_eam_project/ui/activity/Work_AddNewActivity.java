@@ -153,7 +153,7 @@ public class Work_AddNewActivity extends BaseActivity {
      * 获取数据*
      */
     private void geiIntentData() {
-        workOrder.setWorktype(getIntent().getStringExtra("worktype"));
+        workOrder.setUdwotype(getIntent().getStringExtra("worktype"));
     }
 
     @Override
@@ -199,7 +199,7 @@ public class Work_AddNewActivity extends BaseActivity {
 
         wonumlayout.setVisibility(View.GONE);
         workOrder.isnew = true;
-        udwotype.setText(workOrder.worktype);
+        udwotype.setText(workOrder.udwotype);
         status.setText("等待核准");
         statusdate.setText(GetNowTime.getTime());
         displayname.setText(getBaseApplication().getUsername());
@@ -251,6 +251,12 @@ public class Work_AddNewActivity extends BaseActivity {
         failurecode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
         jpnum.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
+
+        if(workOrder.udwotype.equals(Constants.UNPLAN)){
+            wfservice.setVisibility(View.VISIBLE);
+        }else {
+            wfservice.setVisibility(View.GONE);
+        }
     }
 
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
@@ -427,7 +433,7 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_AssignmentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("woactivityList", woactivityList);
+//            bundle.putSerializable("woactivityList", woactivityList);
             bundle.putSerializable("assignmentList", assignmentList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 2000);

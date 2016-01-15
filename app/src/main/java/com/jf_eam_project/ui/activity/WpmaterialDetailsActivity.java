@@ -47,7 +47,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
      */
     private ImageView backImageView;
 
-    private TextView taskid;//任务
+//    private TextView taskid;//任务
     private TextView itemnum;//项目  项目/物料
     private EditText itemqty;//数量
     private TextView location;//库房
@@ -56,11 +56,11 @@ public class WpmaterialDetailsActivity extends BaseActivity{
     private TextView requiredate;//要求日期
     private Button ok;//确认
 
-    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+//    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private int position;
-    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
+//    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+//    private BaseAnimatorSet mBasIn;
+//    private BaseAnimatorSet mBasOut;
 
     private DatePickerDialog datePickerDialog;
     private CumTimePickerDialog timePickerDialog;
@@ -82,7 +82,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
      */
     private void geiIntentData() {
         wpmaterial = (Wpmaterial) getIntent().getSerializableExtra("wpmaterial");
-        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
+//        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         position = getIntent().getIntExtra("position",0);
     }
     @Override
@@ -90,7 +90,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
+//        taskid = (TextView) findViewById(R.id.wpmaterial_taskid);
         itemnum = (TextView) findViewById(R.id.wpmaterial_itemnum);
         itemqty = (EditText) findViewById(R.id.wpmaterial_itemqty);
         location = (TextView) findViewById(R.id.wpmaterial_location);
@@ -111,7 +111,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
             }
         });
 
-        taskid.setText(wpmaterial.taskid);
+//        taskid.setText(wpmaterial.taskid);
         itemnum.setText(wpmaterial.itemnum);
         itemqty.setText(wpmaterial.itemqty);
         location.setText(wpmaterial.location);
@@ -119,10 +119,10 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         requestby.setText(wpmaterial.requestby);
         requiredate.setText(wpmaterial.requiredate);
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
-        addTaskData();
-        taskid.setOnClickListener(taskidlayoutOnClickListener);
+//        mBasIn = new BounceTopEnter();
+//        mBasOut = new SlideBottomExit();
+//        addTaskData();
+//        taskid.setOnClickListener(taskidlayoutOnClickListener);
         itemnum.setOnClickListener(new LayoutOnClickListener(Constants.ITEM));
         location.setOnClickListener(new LayoutOnClickListener(Constants.LOCATIONSCODE));
         setDataListener();
@@ -131,28 +131,28 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         ok.setOnClickListener(okOnClickListener);
     }
 
-    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NormalListDialog();
-        }
-    };
-
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(WpmaterialDetailsActivity.this, mMenuItems);
-        dialog.title("请选择")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                taskid.setText(mMenuItems.get(position).mOperName);
-                dialog.dismiss();
-            }
-        });
-    }
+//    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            NormalListDialog();
+//        }
+//    };
+//
+//    private void NormalListDialog() {
+//        final NormalListDialog dialog = new NormalListDialog(WpmaterialDetailsActivity.this, mMenuItems);
+//        dialog.title("请选择")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)//
+//                .show();
+//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+//            @Override
+//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                taskid.setText(mMenuItems.get(position).mOperName);
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -173,15 +173,14 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if(!wpmaterial.taskid.equals(taskid.getText().toString())
-                    ||!wpmaterial.itemnum.equals(itemnum.getText().toString())
+            if(!wpmaterial.itemnum.equals(itemnum.getText().toString())
                     ||!wpmaterial.itemqty.equals(itemqty.getText().toString())
                     ||!wpmaterial.location.equals(location.getText().toString())
                     ||!wpmaterial.storelocsite.equals(storelocsite.getText().toString())
                     ||!wpmaterial.requestby.equals(requestby.getText().toString())
                     ||!wpmaterial.requiredate.equals(requiredate.getText().toString())) {
                 wpmaterial = new Wpmaterial();
-                wpmaterial.taskid = taskid.getText().toString();
+//                wpmaterial.taskid = taskid.getText().toString();
                 wpmaterial.itemnum = itemnum.getText().toString();
                 wpmaterial.itemqty = itemqty.getText().toString();
                 wpmaterial.location = location.getText().toString();
@@ -256,16 +255,16 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         }
     }
 
-    /**
-     * 添加任务数据*
-     */
-    private void addTaskData() {
-        if (woactivityList != null && woactivityList.size() != 0) {
-            for (int i = 0; i < woactivityList.size(); i++) {
-                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
-            }
-        }
-    }
+//    /**
+//     * 添加任务数据*
+//     */
+//    private void addTaskData() {
+//        if (woactivityList != null && woactivityList.size() != 0) {
+//            for (int i = 0; i < woactivityList.size(); i++) {
+//                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+//            }
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

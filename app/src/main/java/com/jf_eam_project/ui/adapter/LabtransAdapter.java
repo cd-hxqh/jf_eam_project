@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.ui.activity.LabtransDetailsActivity;
+import com.jf_eam_project.ui.activity.Work_LabtransActivity;
 import com.jf_eam_project.ui.activity.WplaborDetailsActivity;
 
 import java.util.ArrayList;
@@ -25,9 +26,10 @@ import java.util.List;
  * 实际员工
  */
 public class LabtransAdapter extends RecyclerView.Adapter<LabtransAdapter.ViewHolder> {
-    Context mContext;
-    List<Labtrans> labtransList = new ArrayList<>();
-    public LabtransAdapter(Context context) {
+    Work_LabtransActivity mContext;
+    public List<Labtrans> labtransList = new ArrayList<>();
+
+    public LabtransAdapter(Work_LabtransActivity context) {
         this.mContext = context;
     }
 
@@ -51,8 +53,9 @@ public class LabtransAdapter extends RecyclerView.Adapter<LabtransAdapter.ViewHo
                 Intent intent = new Intent(mContext, LabtransDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("labtrans", labtrans);
+                bundle.putSerializable("position", position);
                 intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent,0);
             }
         });
     }
@@ -90,8 +93,8 @@ public class LabtransAdapter extends RecyclerView.Adapter<LabtransAdapter.ViewHo
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -117,13 +120,19 @@ public class LabtransAdapter extends RecyclerView.Adapter<LabtransAdapter.ViewHo
         labtransList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<Labtrans> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
+
+    //
+    public void adddate(ArrayList<Labtrans> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
                 labtransList.add(data.get(i));
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void adddate(Labtrans data) {
+        labtransList.add(data);
         notifyDataSetChanged();
     }
 }

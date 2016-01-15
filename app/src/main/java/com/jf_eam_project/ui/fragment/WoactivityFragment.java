@@ -159,9 +159,11 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew&& (woactivities == null || woactivities.size() == 0)) {
             page = 1;
             getdata();
+        }else {
+            refresh_layout.setRefreshing(false);
         }
     }
 

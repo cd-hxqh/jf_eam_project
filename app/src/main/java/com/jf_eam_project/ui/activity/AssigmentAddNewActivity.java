@@ -39,16 +39,12 @@ public class AssigmentAddNewActivity extends BaseActivity{
      */
     private ImageView backImageView;
     //员工、工种、任务时数
-    private TextView taskid;//任务
     private TextView laborcode;//员工
     private TextView craft;//工种
     private EditText laborhrs;//时数
     private Button ok;//确定
 
-    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
-    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +59,12 @@ public class AssigmentAddNewActivity extends BaseActivity{
      * 获取数据*
      */
     private void geiIntentData() {
-        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
     }
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        taskid = (TextView) findViewById(R.id.assignment_taskid);
         laborcode = (TextView) findViewById(R.id.assignment_laborcode);
         craft = (TextView) findViewById(R.id.assignment_craft);
         laborhrs = (EditText) findViewById(R.id.assignment_laborhrs);
@@ -87,10 +81,7 @@ public class AssigmentAddNewActivity extends BaseActivity{
             }
         });
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
-        addTaskData();
-        taskid.setOnClickListener(taskidlayoutOnClickListener);
+
         laborcode.setOnClickListener(new LayoutOnClickListener(Constants.LABORCRAFTRATE));
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
@@ -101,7 +92,6 @@ public class AssigmentAddNewActivity extends BaseActivity{
         public void onClick(View view) {
             Intent intent = getIntent();
             assignment = new Assignment();
-            assignment.taskid = taskid.getText().toString();
             assignment.laborcode = laborcode.getText().toString();
             assignment.craft = craft.getText().toString();
             assignment.laborhrs = laborhrs.getText().toString();
@@ -112,28 +102,7 @@ public class AssigmentAddNewActivity extends BaseActivity{
         }
     };
 
-    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NormalListDialog();
-        }
-    };
 
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(AssigmentAddNewActivity.this, mMenuItems);
-        dialog.title("请选择")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                taskid.setText(mMenuItems.get(position).mOperName);
-                dialog.dismiss();
-            }
-        });
-    }
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -165,16 +134,9 @@ public class AssigmentAddNewActivity extends BaseActivity{
             case Constants.CRAFTRATE:
                 option = (Option) data.getSerializableExtra("option");
                 craft.setText(option.getName());
+                break;
         }
     }
 
-    /**
-     * 添加任务数据*
-     */
-    private void addTaskData() {
-        if (woactivityList != null && woactivityList.size() != 0) {
-            for (int i = 0; i < woactivityList.size(); i++)
-                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
-        }
-    }
+
 }

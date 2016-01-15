@@ -43,10 +43,10 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Assignment assignment = assignmentList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.item_num_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.item_desc_title));
-        holder.itemNum.setText(assignment.taskid);
-        holder.itemDesc.setText(assignment.laborcode);
+        holder.itemNumTitle.setText("员工");
+        holder.itemDescTitle.setText("时数");
+        holder.itemNum.setText(assignment.laborcode);
+        holder.itemDesc.setText(assignment.laborhrs);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
