@@ -233,4 +233,8 @@ public class Constants {
     /**刷新标识**/
     public static final int REFRESH=10000;
 
+    /**巡检单入口**/
+    public static final int ENTRANCE_1=1000;
+    public static final int ENTRANCE_2=1001;
+
 }

@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,6 +25,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
@@ -47,6 +49,8 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
      * 返回
      */
     private ImageView backImageView;
+    /**新增**/
+    private ImageView addImageView;
 
 
     /**
@@ -91,6 +95,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addImageView=(ImageView)findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -102,6 +107,10 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     protected void initView() {
         titleView.setText(getResources().getString(R.string.udinspojxxm_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
+
+        addImageView.setImageResource(R.drawable.add_ico);
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setOnClickListener(addImageViewOnClickListener);
 
         setSearchEdit();
 
@@ -219,5 +228,36 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     public void onRefresh() {
         page++;
         getData(searchText);
+    }
+
+
+
+
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+
+            Intent intent = new Intent(Udinspojxxm_Activity.this, AddUdinspojxxmActivity.class);
+            intent.putExtra("udinspoassetnum", udinspoassetnum);
+            intent.putExtra("udinspoassetlinenum", udinspojxxmListAdapter.getItemCount());
+            intent.putExtra("mark", Constants.ENTRANCE_1);
+            startActivityForResult(intent, 0);
+        }
+    };
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG,"requestCode="+requestCode+"resultCode="+resultCode);
+
+        switch (resultCode){
+            case Constants.REFRESH:
+                getData(searchText);
+                break;
+        }
+
     }
 }

@@ -96,9 +96,9 @@ public class HttpManager {
      */
     public static String getUdinspoasseturl(String insponum, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDINSPOASSETLINENUM ASC','condition':{'INSPONUM':'" + insponum + "'}}";
         } else {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDINSPOASSETLINENUM ASC','condition':{'INSPONUM':'" + insponum + "','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
         }
     }
 
@@ -107,9 +107,9 @@ public class HttpManager {
      */
     public static String getUdinspojxxmUrl(String insponum, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'" + insponum + "'}}";
         } else {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum + "','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'" + insponum + "','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
         }
     }
 
