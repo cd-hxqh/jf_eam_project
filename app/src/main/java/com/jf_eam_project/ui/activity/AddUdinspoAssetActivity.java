@@ -130,7 +130,6 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         udinspoasset = (Udinspoasset) getIntent().getSerializableExtra("Udinspoasset");
         linenum = getIntent().getIntExtra("udinspoassetlinenum", 0);
         insponum = getIntent().getExtras().getString("insponum");
-        Log.i(TAG, "insponum=" + insponum);
     }
 
     @Override

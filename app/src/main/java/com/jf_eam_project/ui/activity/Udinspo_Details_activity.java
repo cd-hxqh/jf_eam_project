@@ -26,7 +26,9 @@ import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
@@ -166,7 +168,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
         descriptionText.setFocusable(false);
-        descriptionText. setFocusableInTouchMode(false);
+        descriptionText.setFocusableInTouchMode(false);
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
             descriptionText.setText(udinspo.getDescription() == null ? "" : udinspo.getDescription());
@@ -197,7 +199,6 @@ public class Udinspo_Details_activity extends BaseActivity {
             datePickerDialog.show();
         }
     };
-
 
 
     /**
@@ -247,11 +248,6 @@ public class Udinspo_Details_activity extends BaseActivity {
             inspodateText.setText(sb);
         }
     }
-
-
-
-
-
 
 
     private View.OnClickListener inspobyOnClickListener = new View.OnClickListener() {
@@ -316,10 +312,12 @@ public class Udinspo_Details_activity extends BaseActivity {
     };
 
 
-    /**设置状态编辑**/
+    /**
+     * 设置状态编辑*
+     */
     private void statusEdit() {
         descriptionText.setFocusable(true);
-        descriptionText. setFocusableInTouchMode(true);
+        descriptionText.setFocusableInTouchMode(true);
         inspotypeText.setEnabled(true);
         inspobyText.setEnabled(true);
         inspodateText.setEnabled(true);
@@ -395,59 +393,70 @@ public class Udinspo_Details_activity extends BaseActivity {
      */
     private void encapsulationData() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspo_Details_activity.this);
-        builder.setMessage("确定更新巡检单吗？").setTitle("提示")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        final NormalDialog dialog = new NormalDialog(Udinspo_Details_activity.this);
+        dialog.content("确定更新巡检单吗？")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+
+
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onBtnClick() {
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    private void startAsyncTask() {
+        new AsyncTask<String, String, String>() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                mProgressDialog = ProgressDialog.show(Udinspo_Details_activity.this, null,
-                        getString(R.string.inputing), true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
-                new AsyncTask<String, String, String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        String data = submitData();
+            protected String doInBackground(String... strings) {
+                String data = submitData();
 
-                        String result = getBaseApplication().getWsService().UpdatePO(data,"");
+                String result = getBaseApplication().getWsService().UpdatePO(data, udinspo.insponum);
 
-                        return result;
-                    }
-
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        mProgressDialog.dismiss();
-
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            String insponum = jsonObject.getString("INSPONUM");
-                            String success = jsonObject.getString("status");
-                            String errorNo = jsonObject.getString("errorNo");
-
-                            if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                                MessageUtils.showMiddleToast(Udinspo_Details_activity.this, "数据更新成功");
-                            } else {
-                                MessageUtils.showMiddleToast(Udinspo_Details_activity.this, "数据更新失败");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }.execute();
+                return result;
             }
-        }).create().show();
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                closeProgressDialog();
+                Log.i(TAG,"s="+s);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String insponum = jsonObject.getString("INSPONUM");
+                    String success = jsonObject.getString("status");
+                    String errorNo = jsonObject.getString("errorNo");
+
+                    if (success.equals("数据更新成功") && errorNo.equals("0")) {
+                        MessageUtils.showMiddleToast(Udinspo_Details_activity.this, "数据更新成功");
+                        setResult(Constants.REFRESH);
+                        finish();
+                    } else {
+                        MessageUtils.showMiddleToast(Udinspo_Details_activity.this, "数据更新失败");
+                        setResult(Constants.REFRESH);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
+            }
+        }.execute();
     }
 
 

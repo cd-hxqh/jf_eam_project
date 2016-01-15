@@ -21,6 +21,11 @@ import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
@@ -88,6 +93,10 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
 
 
     private ProgressDialog mProgressDialog;
+
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +166,10 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         assetnumText.setOnClickListener(assetnumOnClickListener);
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
+
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
     }
 
 
@@ -196,61 +209,76 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
      */
     private void encapsulationData() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspoasset_Details_Activity.this);
-        builder.setMessage("确定更新巡检备件吗？").setTitle("提示")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        final NormalDialog dialog = new NormalDialog(Udinspoasset_Details_Activity.this);
+        dialog.content("确定更新巡检单吗？")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+
+
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onBtnClick() {
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
+                    }
+                });
+
+
+    }
+
+    private void startAsyncTask() {
+
+
+        new AsyncTask<String, String, String>() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                mProgressDialog = ProgressDialog.show(Udinspoasset_Details_Activity.this, null,
-                        getString(R.string.inputing), true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
-                new AsyncTask<String, String, String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        String data = null;
-                        try {
-                            data = submitBtn();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+            protected String doInBackground(String... strings) {
+                String data = null;
+                try {
+                    data = submitBtn();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                        String result = getBaseApplication().getWsService().UpdatePO(data,"");
+                String result = getBaseApplication().getWsService().UpdatePO(data, udinspoasset.udinspoassetnum);
 
-                        return result;
-                    }
-
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        mProgressDialog.dismiss();
-                        Log.i(TAG, "s=" + s);
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            String success = jsonObject.getString("status");
-                            String errorNo = jsonObject.getString("errorNo");
-                            Log.i(TAG, "success=" + success + ",errorNo=" + errorNo);
-                            if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                                MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新成功");
-                            } else {
-                                MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新失败");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }.execute();
+                return result;
             }
-        }).create().show();
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                closeProgressDialog();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String success = jsonObject.getString("status");
+                    String errorNo = jsonObject.getString("errorNo");
+                    if (success.equals("数据更新成功") && errorNo.equals("0")) {
+                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新成功");
+                        setResult(Constants.REFRESH);
+                        finish();
+                    } else {
+                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新失败");
+                        setResult(Constants.REFRESH);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }.execute();
 
 
     }
@@ -290,8 +318,6 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
 
         return jsonObject.toString();
     }
-
-
 
 
     /**
