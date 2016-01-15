@@ -218,7 +218,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                             e.printStackTrace();
                         }
 
-                        String result = getBaseApplication().getWsService().UpdatePO(data);
+                        String result = getBaseApplication().getWsService().UpdatePO(data,"");
 
                         return result;
                     }

@@ -1,7 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +20,24 @@ import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
+import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.utils.MessageUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -80,13 +93,25 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      * 序号*
      */
     private int linenum;
+
+    /**
+     * 巡检单号*
+     */
+    private String insponum;
     /**
      * udinspoassetnum*
      */
     private String udinspoassetnum;
 
 
-    ArrayList<Udinspojxxm> udinspojxxms=new ArrayList<Udinspojxxm>();
+    ArrayList<Udinspojxxm> udinspojxxms = new ArrayList<Udinspojxxm>();
+
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
+
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -104,6 +129,8 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private void initData() {
         udinspoasset = (Udinspoasset) getIntent().getSerializableExtra("Udinspoasset");
         linenum = getIntent().getIntExtra("udinspoassetlinenum", 0);
+        insponum = getIntent().getExtras().getString("insponum");
+        Log.i(TAG, "insponum=" + insponum);
     }
 
     @Override
@@ -142,6 +169,9 @@ public class AddUdinspoAssetActivity extends BaseActivity {
 
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
 
     }
 
@@ -273,13 +303,153 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Udinspoasset udinspoasset = addUdinspoInfo();
-            Intent intent = getIntent();
-            intent.putExtra("udinspoasset", udinspoasset);
-            setResult(1, intent);
-            finish();
+
+            if (insponum.equals("")) {
+                Udinspoasset udinspoasset = addUdinspoInfo();
+                Intent intent = getIntent();
+                intent.putExtra("udinspoasset", udinspoasset);
+                setResult(1, intent);
+                finish();
+            } else {
+                submitDataInfo();
+            }
+
+
         }
     };
+
+
+    /**
+     * 提交数据*
+     */
+    private void submitDataInfo() {
+
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(AddUdinspoAssetActivity.this);
+        dialog.content("确定新增巡检备件吗？")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+
+
+                    @Override
+                    public void onBtnClick(String text) {
+                        Log.i(TAG,"text="+text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        Log.i(TAG,"text="+text);
+                        showProgressDialog(progressDialog, "数据提交中...");
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 提交数据*
+     */
+    private void startAsyncTask() {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                String data = null;
+                try {
+                    data = submitBtn();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String result = getBaseApplication().getWsService().UpdatePO(data, "");
+
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                progressDialog.dismiss();
+                Log.i(TAG, "s=" + s);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String success = jsonObject.getString("status");
+                    String errorNo = jsonObject.getString("errorNo");
+                    Log.i(TAG, "success=" + success + ",errorNo=" + errorNo);
+                    if (success.equals("数据更新成功") && errorNo.equals("0")) {
+                        MessageUtils.showMiddleToast(AddUdinspoAssetActivity.this, "数据更新成功");
+                    } else {
+                        MessageUtils.showMiddleToast(AddUdinspoAssetActivity.this, "数据更新失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }.execute();
+
+    }
+
+
+    /**
+     * 保存数据*
+     */
+    private String submitBtn() throws JSONException {
+        String location = locationText.getText().toString();
+        String assetnum = assetnumText.getText().toString();
+        String childassetnum = childassetnumText.getText().toString();
+
+        JSONObject json = new JSONObject();
+        json.put("INSPONUM", insponum);
+        json.put("UDINSPOASSETNUM", udinspoasset.udinspoassetnum);
+        json.put("TYPE", Constants.UPDATE);
+        if (!location.equals(udinspoasset.location)) {
+            json.put("LOCATION", location);
+        }
+        if (!assetnum.equals(udinspoasset.assetnum)) {
+            json.put("ASSETNUM", assetnum);
+        }
+        if (!childassetnum.equals(udinspoasset.childassetnum)) {
+            json.put("CHILDASSETNUM", childassetnum);
+        }
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CHILDREN", jsonUdinPoAssetJson(json.toString()));
+
+
+        return jsonObject.toString();
+    }
+
+
+    /**
+     * 封装udinspoAsset信息*
+     */
+    private JSONArray jsonUdinPoAssetJson(String str) {
+        JSONArray jsonArray = null;
+
+        String json3 = "";
+        try {
+            json3 = "[" + str + "]";
+
+            Log.i(TAG, "json3=" + json3);
+            jsonArray = new JSONArray(json3);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jsonArray;
+    }
+
+
+
+
+
 
 
     /**
@@ -326,9 +496,6 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         }
         return jsonArray;
     }
-
-
-
 
 
 }

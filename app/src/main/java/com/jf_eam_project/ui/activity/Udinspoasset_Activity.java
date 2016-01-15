@@ -134,6 +134,8 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+
             Intent intent = new Intent(Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
             intent.putExtra("insponum", insponum);
             intent.putExtra("udinspoassetlinenum", udinspoassetListAdapter.getItemCount());

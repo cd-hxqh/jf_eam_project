@@ -415,7 +415,7 @@ public class Udinspo_Details_activity extends BaseActivity {
                     protected String doInBackground(String... strings) {
                         String data = submitData();
 
-                        String result = getBaseApplication().getWsService().UpdatePO(data);
+                        String result = getBaseApplication().getWsService().UpdatePO(data,"");
 
                         return result;
                     }

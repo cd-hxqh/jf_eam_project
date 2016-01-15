@@ -248,7 +248,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent();
+            Intent intent = getIntent();
             intent.setClass(Add_Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
             intent.putExtra("udinspoassetlinenum", udinspoassetListAdapter.getItemCount());
             startActivityForResult(intent, 0);

@@ -217,7 +217,7 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String UpdatePO(String string){
+    public String UpdatePO(String string,String key){
 
         Log.i(TAG,"string="+string);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -225,6 +225,9 @@ public class AndroidClientService {
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "coserviceUpdateCheckOrder");
         soapReq.addProperty("json", string);
+        if(!key.equals("")) {
+            soapReq.addProperty("key", key);
+        }
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(Constants.webserviceUdinsPoURL,timeOut);
         try {

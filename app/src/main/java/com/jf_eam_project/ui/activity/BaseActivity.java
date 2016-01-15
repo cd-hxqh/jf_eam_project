@@ -110,21 +110,27 @@ public abstract class BaseActivity extends ActionBarActivity {
     /**
      * 加载进度条
      */
-    public void showProgressDialog() {
-        ProgressDialog progressDialog = null;
+    public void showProgressDialog(ProgressDialog progressDialog,String message) {
+
+
 
         if (progressDialog != null) {
             progressDialog.cancel();
         }
         progressDialog = new ProgressDialog(this);
-//        Drawable drawable=getResources().getDrawable(R.drawable.loading_animation);
-//        progressDialog.setIndeterminateDrawable(drawable);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(true);
-        progressDialog.setMessage("请稍候，正在努力加载。。");
+        progressDialog.setMessage(message);
         progressDialog.show();
     }
 
+
+    /**关闭进度条**/
+    public void closeProgressDialog(ProgressDialog progressDialog){
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+    }
 
     public void DisplayToast(String str) {
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
