@@ -174,6 +174,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
             wpmaterial.storelocsite = storelocsite.getText().toString();
             wpmaterial.requestby = requestby.getText().toString();
             wpmaterial.requiredate = requiredate.getText().toString();
+            wpmaterial.type = "add";
             intent.putExtra("wpmaterial",wpmaterial);
             WpmaterialAddNewActivity.this.setResult(2,intent);
             finish();
@@ -243,8 +244,10 @@ public class WpmaterialAddNewActivity extends BaseActivity{
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++)
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        }
     }
 
     @Override

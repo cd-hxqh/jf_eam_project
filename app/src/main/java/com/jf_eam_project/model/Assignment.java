@@ -36,4 +36,5 @@ public class Assignment extends Entity {
     public String status;//状态
     @JsonField(fieldName = "vendor")
     public String vendor;//供应商
+    public String type;//add/update
 }

@@ -30,4 +30,5 @@ public class Wpmaterial extends Entity{
     public String taskid;//任务
     @JsonField(fieldName = "requestby")
     public String requestby;//请求者
+    public String type;//add/update
 }

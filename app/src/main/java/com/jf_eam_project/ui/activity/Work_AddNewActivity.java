@@ -198,6 +198,7 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
         wonumlayout.setVisibility(View.GONE);
+        workOrder.isnew = true;
         udwotype.setText(workOrder.worktype);
         status.setText("等待核准");
         statusdate.setText(GetNowTime.getTime());
@@ -255,47 +256,47 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (wonumlayout.getVisibility()==View.VISIBLE&&!wonum.getText().toString().equals("")){
+            if (wonumlayout.getVisibility() == View.GONE) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
-            builder.setMessage("确定新增工单吗").setTitle("提示")
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                    mProgressDialog = ProgressDialog.show(Work_AddNewActivity.this, null,
-                            getString(R.string.inputing), true, true);
-                    mProgressDialog.setCanceledOnTouchOutside(false);
-                    mProgressDialog.setCancelable(false);
-                    final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
-                    new AsyncTask<String, String, String>() {
-                        @Override
-                        protected String doInBackground(String... strings) {
-                            addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
-                            return addresult;
-                        }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-                            super.onPostExecute(s);
-                            if (s == null || s.equals("")) {
-                                Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
-                                wonumlayout.setVisibility(View.VISIBLE);
-                                wonum.setText(s);
+                builder.setMessage("确定新增工单吗").setTitle("提示")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
                             }
-                            mProgressDialog.dismiss();
-                        }
-                    }.execute();
-                }
-            }).create().show();
-        }else {
-                Toast.makeText(Work_AddNewActivity.this, "请先新增工单", Toast.LENGTH_SHORT).show();
+                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        mProgressDialog = ProgressDialog.show(Work_AddNewActivity.this, null,
+                                getString(R.string.inputing), true, true);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setCancelable(false);
+                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+                        new AsyncTask<String, String, String>() {
+                            @Override
+                            protected String doInBackground(String... strings) {
+                                addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                                return addresult;
+                            }
+
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                if (s == null || s.equals("")) {
+                                    Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
+                                    wonumlayout.setVisibility(View.VISIBLE);
+                                    wonum.setText(s);
+                                }
+                                mProgressDialog.dismiss();
+                            }
+                        }.execute();
+                    }
+                }).create().show();
+            } else {
+                Toast.makeText(Work_AddNewActivity.this, "工单已新增", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -324,7 +325,7 @@ public class Work_AddNewActivity extends BaseActivity {
                         new AsyncTask<String, String, String>() {
                             @Override
                             protected String doInBackground(String... strings) {
-                                result = getBaseApplication().getWfService().startwf("UDFJHWO","WORKORDER",addresult,"WONUM");
+                                result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", addresult, "WONUM");
                                 return result;
                             }
 
@@ -334,7 +335,7 @@ public class Work_AddNewActivity extends BaseActivity {
                                 if (s == null || s.equals("")) {
                                     Toast.makeText(Work_AddNewActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(Work_AddNewActivity.this,  s , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
                                     Work_AddNewActivity.this.finish();
                                 }
                                 mProgressDialog.dismiss();
@@ -347,7 +348,6 @@ public class Work_AddNewActivity extends BaseActivity {
     };
 
     private WorkOrder getWorkOrder() {
-        WorkOrder workOrder = new WorkOrder();
         workOrder.wonum = "";
         workOrder.description = description.getText().toString();
         workOrder.udwotype = udwotype.getText().toString();
@@ -539,7 +539,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 assetnum.setText(option.getName());
                 assetdesc.setText(option.getDescription());
                 location.setText(option.getValue());
-                locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()).description);
+                if(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue())!=null){
+                    locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()).description);
+                }
                 break;
             case Constants.LOCATIONCODE:
                 option = (Option) data.getSerializableExtra("option");

@@ -114,15 +114,26 @@ public class WoactivityDetailsActivity extends BaseActivity{
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            woactivity = new Woactivity();
-            woactivity.setTaskid(taskid.getText().toString());
-            woactivity.setDescription(description.getText().toString());
-            woactivity.setTargstartdate(targstartdate.getText().toString());
-            woactivity.setTargcompdate(targcompdate.getText().toString());
-            woactivity.setActstart(actstart.getText().toString());
-            woactivity.setActfinish(actfinish.getText().toString());
-            woactivity.estdur = estdur.getText().toString();
-            intent.putExtra("woactivity",woactivity);
+            if(woactivity.taskid.equals(taskid.getText().toString())
+                    &&woactivity.description.equals(description.getText().toString())
+                    &&woactivity.targstartdate.equals(targstartdate.getText().toString())
+                    &&woactivity.targcompdate.equals(targcompdate.getText().toString())
+                    &&woactivity.actstart.equals(actstart.getText().toString())
+                    &&woactivity.actfinish.equals(actfinish.getText().toString())
+                    &&woactivity.estdur.equals(estdur.getText().toString())) {//如果内容没有修改
+                intent.putExtra("woactivity",woactivity);
+            }else {
+                woactivity = new Woactivity();
+                woactivity.setTaskid(taskid.getText().toString());
+                woactivity.setDescription(description.getText().toString());
+                woactivity.setTargstartdate(targstartdate.getText().toString());
+                woactivity.setTargcompdate(targcompdate.getText().toString());
+                woactivity.setActstart(actstart.getText().toString());
+                woactivity.setActfinish(actfinish.getText().toString());
+                woactivity.estdur = estdur.getText().toString();
+                woactivity.type = "update";
+                intent.putExtra("woactivity",woactivity);
+            }
             intent.putExtra("position",position);
             WoactivityDetailsActivity.this.setResult(4,intent);
             finish();

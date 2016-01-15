@@ -131,6 +131,9 @@ public class HttpManager {
     /**
      * 设置计划任务接口*
      */
+    public static String getwoactivityUrl(String parent,int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "'}}";
     public static String getwoactivityUrl(String wonum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
@@ -148,6 +151,9 @@ public class HttpManager {
     /**
      * 设置计划物料接口*
      */
+    public static String getWpmaterialUrl(int curpage, int showcount,String wonum) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     public static String getWpmaterialUrl(int curpage, int showcount) {
         return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
@@ -172,6 +178,9 @@ public class HttpManager {
     /**
      * 设置任务分配接口*
      */
+    public static String getAssignmentUrl(int curpage, int showcount,String wonum) {
+        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+                Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     public static String getAssignmentUrl(int curpage, int showcount) {
         return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";

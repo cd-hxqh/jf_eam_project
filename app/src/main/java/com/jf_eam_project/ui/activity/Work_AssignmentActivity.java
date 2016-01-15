@@ -30,13 +30,19 @@ import java.util.ArrayList;
  * Created by think on 2015/12/4.
  * 任务分配页面
  */
-public class Work_AssignmentActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
-    /**标题**/
+public class Work_AssignmentActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+    /**
+     * 标题*
+     */
     private TextView titlename;
-    /**返回**/
+    /**
+     * 返回*
+     */
     private ImageView backImage;
 
-    /**菜单按钮**/
+    /**
+     * 菜单按钮*
+     */
     private ImageView addimg;
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
@@ -63,6 +69,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
         assignmentList = (ArrayList<Assignment>) getIntent().getSerializableExtra("assignmentList");
     }
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
@@ -82,7 +89,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Work_AssignmentActivity.this, AssigmentAddNewActivity.class);
-                intent.putExtra("woactivityList",woactivityList);
+                intent.putExtra("woactivityList", woactivityList);
                 startActivityForResult(intent, 1);
             }
         });
@@ -104,12 +111,12 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
 //                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
-        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+        if (!workOrder.isnew && (assignmentList == null || assignmentList.size() == 0)) {
             refresh_layout.setRefreshing(true);
             getdata();
         }
-        if(assignmentList.size()!=0){
-            assignmentAdapter.update(assignmentList,true);
+        if (assignmentList.size() != 0) {
+            assignmentAdapter.update(assignmentList, true);
         }
     }
 
@@ -118,13 +125,13 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         public void onClick(View view) {
             Intent intent = getIntent();
             intent.putExtra("assignmentList", assignmentList);
-            setResult(2000,intent);
+            setResult(2000, intent);
             finish();
         }
     };
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(Work_AssignmentActivity.this, HttpManager.getAssignmentUrl(page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(Work_AssignmentActivity.this, HttpManager.getAssignmentUrl(page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -175,7 +182,16 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (resultCode) {
-            case 1:
+            case 0://修改
+                if (data != null) {
+                    Assignment assignment1 = (Assignment) data.getSerializableExtra("assignment");
+                    int position = data.getIntExtra("position", 0);
+                    assignmentList.set(position, assignment1);
+                    assignmentAdapter.assignmentList.set(position, assignment1);
+                    assignmentAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 1://新增
                 if (data != null) {
                     Assignment assignment = (Assignment) data.getSerializableExtra("assignment");
                     assignmentList.add(assignment);
@@ -183,23 +199,26 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     nodatalayout.setVisibility(View.GONE);
                 }
                 break;
+            default:
+                break;
         }
     }
 
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+        if (!workOrder.isnew) {
             page = 1;
             getdata();
         }
     }
 
     @Override
-    public void onLoad(){
-        if(workOrder.wonum!=null&&!workOrder.wonum.equals("")) {
+    public void onLoad() {
+        if (!workOrder.isnew) {
             page++;
             getdata();
         }
     }
+
 }

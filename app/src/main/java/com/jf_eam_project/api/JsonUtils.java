@@ -57,7 +57,7 @@ public class JsonUtils {
      * @param data
      * @return
      */
-    public static String parsingWebservice_result(String data) {
+    public static String parsingInsertWO(String data) {
         Log.i(TAG, "data=" + data);
         String woNum = null;
         try {
@@ -75,6 +75,29 @@ public class JsonUtils {
             e.printStackTrace();
         }
         return woNum;
+    }
+
+    /**
+     * 解析修改工单返回信息
+     * @param data
+     * @return
+     */
+    public static String parsingUpdataWO(String data) {
+        Log.i(TAG, "data=" + data);
+        String success = null;
+        try {
+            JSONObject object = new JSONObject(data);
+            if(object.has("success")&&object.getString("success").equals("成功")){
+                success = object.getString("success");
+            }else if (object.has("errorMsg")){
+                success = object.getString("errorMsg");
+            }else {
+                success = "";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return success;
     }
 
     public static String parsingwfserviceResult(String data) {
@@ -157,14 +180,14 @@ public class JsonUtils {
                                     ArrayList<Wpmaterial> wpmaterials, ArrayList<Assignment> assignments, ArrayList<Labtrans> labtranses) {
         JSONObject jsonObject = new JSONObject();
         try {
-            if (!workOrder.wonum.equals("")) {//修改
+            if (!workOrder.isnew) {//修改
                 jsonObject.put("WONUM", workOrder.wonum);
             }
             jsonObject.put("UDAPPTYPE", "UDWOTRACK");
             jsonObject.put("DESCRIPTION", workOrder.description);
             jsonObject.put("UDWOTYPE", workOrder.udwotype);
             jsonObject.put("ASSETNUM", workOrder.assetnum);
-            if(workOrder.wonum.equals("")){
+            if(workOrder.isnew){
                 jsonObject.put("ASSETDESC", workOrder.assetdesc);
                 jsonObject.put("LOCATIONDESC", workOrder.locationdesc);
                 jsonObject.put("DISPLAYNAME", workOrder.displayname);
@@ -199,6 +222,9 @@ public class JsonUtils {
                     woactivityObj.put("ACTSTART", woactivities.get(i).actstart);
                     woactivityObj.put("ACTFINISH", woactivities.get(i).actfinish);
                     woactivityObj.put("ESTDUR", woactivities.get(i).estdur);
+                    if(!workOrder.isnew){
+                        woactivityObj.put("TYPE",woactivities.get(i).type);
+                    }
                     woactivityArray.put(woactivityObj);
                 }
                 jsonObject.put("WOACTIVITY", woactivityArray);
@@ -213,6 +239,9 @@ public class JsonUtils {
                     wplaborObj.put("CRAFT", wplabors.get(i).craft);
                     wplaborObj.put("QUANTITY", wplabors.get(i).quantity);
                     wplaborObj.put("LABORHRS", wplabors.get(i).laborhrs);
+                    if(!workOrder.isnew){
+                        wplaborObj.put("TYPE",wplabors.get(i).type);
+                    }
                     wplaborArray.put(wplaborObj);
                 }
                 jsonObject.put("WPLABOR", wplaborArray);
@@ -230,6 +259,9 @@ public class JsonUtils {
                     wpmaterialObj.put("STORELOCSITE",wpmaterials.get(i).storelocsite);
                     wpmaterialObj.put("REQUESTBY",wpmaterials.get(i).requestby);
                     wpmaterialObj.put("REQUIREDATE",wpmaterials.get(i).requiredate);
+                    if(!workOrder.isnew){
+                        wpmaterialObj.put("TYPE",wpmaterials.get(i).type);
+                    }
                     wpmaterialArray.put(wpmaterialObj);
                 }
                 jsonObject.put("WPMATERIAL",wpmaterialArray);
@@ -244,6 +276,9 @@ public class JsonUtils {
                     assignmentObj.put("LABORCODE",assignments.get(i).laborcode);
                     assignmentObj.put("CRAFT",assignments.get(i).craft);
                     assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
+                    if(!workOrder.isnew){
+                        assignmentObj.put("TYPE",assignments.get(i).type);
+                    }
                     assignmentArray.put(assignmentObj);
                 }
                 jsonObject.put("ASSIGNMENT",assignmentArray);

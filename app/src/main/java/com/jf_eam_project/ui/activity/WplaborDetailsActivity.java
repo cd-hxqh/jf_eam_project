@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Created by think on 2015/12/7.
  * 计划员工详情页面
  */
-public class WplaborDetailsActivity extends BaseActivity{
+public class WplaborDetailsActivity extends BaseActivity {
     private Wplabor wplabor;
     private int position;
 
@@ -66,8 +66,9 @@ public class WplaborDetailsActivity extends BaseActivity{
     private void geiIntentData() {
         wplabor = (Wplabor) getIntent().getSerializableExtra("wplabor");
         woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
     }
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
@@ -130,14 +131,20 @@ public class WplaborDetailsActivity extends BaseActivity{
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            wplabor = new Wplabor();
-            wplabor.taskid = taskid.getText().toString();
-            wplabor.craft = craft.getText().toString();
-            wplabor.quantity = quantity.getText().toString();
-            wplabor.laborhrs = laborhrs.getText().toString();
-            intent.putExtra("wplabor",wplabor);
-            intent.putExtra("position",position);
-            WplaborDetailsActivity.this.setResult(5,intent);
+            if (!wplabor.taskid.equals(taskid.getText().toString())
+                    || !wplabor.craft.equals(craft.getText().toString())
+                    || !wplabor.quantity.equals(quantity.getText().toString())
+                    || !wplabor.laborhrs.equals(laborhrs.getText().toString())) {
+                wplabor = new Wplabor();
+                wplabor.taskid = taskid.getText().toString();
+                wplabor.craft = craft.getText().toString();
+                wplabor.quantity = quantity.getText().toString();
+                wplabor.laborhrs = laborhrs.getText().toString();
+                wplabor.type = "update";
+            }
+            intent.putExtra("wplabor", wplabor);
+            intent.putExtra("position", position);
+            WplaborDetailsActivity.this.setResult(5, intent);
             finish();
         }
     };
@@ -172,7 +179,10 @@ public class WplaborDetailsActivity extends BaseActivity{
      * 添加任务数据*
      */
     private void addTaskData() {
-        for (int i = 0; i < woactivityList.size(); i++)
-            mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+        if (woactivityList != null && woactivityList.size() != 0) {
+            for (int i = 0; i < woactivityList.size(); i++) {
+                mMenuItems.add(new DialogMenuItem(woactivityList.get(i).getTaskid(), 0));
+            }
+        }
     }
 }

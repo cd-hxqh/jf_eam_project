@@ -114,6 +114,7 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "reportedby")
     @DatabaseField(columnName = "reportedby")
     public String reportedby; //报告人
+    public boolean isnew;//是否是新增工单
 
 
     public String getWonum() {

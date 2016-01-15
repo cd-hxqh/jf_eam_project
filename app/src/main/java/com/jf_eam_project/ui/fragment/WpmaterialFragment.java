@@ -49,7 +49,8 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
     public WpmaterialFragment(WorkOrder workOrder) {
         this.workOrder = workOrder;
     }
-    public WpmaterialFragment(WorkOrder workOrder,ArrayList<Wpmaterial> wpmaterials) {
+
+    public WpmaterialFragment(WorkOrder workOrder, ArrayList<Wpmaterial> wpmaterials) {
         this.workOrder = workOrder;
         this.wpmaterials = wpmaterials;
     }
@@ -95,18 +96,18 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew && (wpmaterials==null||wpmaterials.size() == 0)) {
             refresh_layout.setRefreshing(true);
             getdata();
-        }else {
-            if(wpmaterials!=null&&wpmaterials.size()!=0){
-                wpmaterialAdapter.update(wpmaterials,true);
+        } else {
+            if (wpmaterials != null && wpmaterials.size() != 0) {
+                wpmaterialAdapter.update(wpmaterials, true);
             }
         }
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl(page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl(page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -150,13 +151,14 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             wpmaterialAdapter.adddate(list);
+            ((Work_PlanActivity) getActivity()).setWpmaterialList(list);
         }
     }
 
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew) {
             page = 1;
             getdata();
         }
@@ -164,7 +166,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onLoad() {
-        if (workOrder.wonum != null && !workOrder.equals("")) {
+        if (!workOrder.isnew) {
             page++;
             getdata();
         }
