@@ -9,10 +9,16 @@ import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+
+import java.io.IOException;
+import java.net.URI;
 
 
 /**
@@ -62,8 +68,6 @@ public class HttpManager {
     }
 
 
-
-
     /**
      * 设置流程审批*
      */
@@ -74,6 +78,7 @@ public class HttpManager {
             return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "'}}";
         }
     }
+
     /**
      * 设置巡检管理*
      */
@@ -89,27 +94,24 @@ public class HttpManager {
     /**
      * 设置设备备件*
      */
-    public static String getUdinspoasseturl(String insponum,String vlaue , int curpage, int showcount) {
+    public static String getUdinspoasseturl(String insponum, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "'}}";
         } else {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum+"','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "','UDINSPOASSETLINENUM':'" + vlaue + "'}}";
         }
     }
+
     /**
      * 项目检修标准*
      */
-    public static String getUdinspojxxmUrl(String insponum,String vlaue , int curpage, int showcount) {
+    public static String getUdinspojxxmUrl(String insponum, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum + "'}}";
         } else {
-            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum+"','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDINSPOASSETNUM':'" + insponum + "','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
         }
     }
-
-
-
-
 
 
     /**
@@ -129,16 +131,16 @@ public class HttpManager {
     /**
      * 设置计划任务接口*
      */
-    public static String getwoactivityUrl(String wonum,int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getwoactivityUrl(String wonum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**
      * 设置计划员工接口*
      */
-    public static String getWplaborUrl(int curpage, int showcount,String wonum) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getWplaborUrl(int curpage, int showcount, String wonum) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPLABOR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'," +
                 "'condition':{'WONUM':'" + wonum + "'}}";
     }
@@ -147,7 +149,7 @@ public class HttpManager {
      * 设置计划物料接口*
      */
     public static String getWpmaterialUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
@@ -155,7 +157,7 @@ public class HttpManager {
      * 设置计划服务接口*
      */
     public static String getWpserviceUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPSERVICE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
@@ -163,7 +165,7 @@ public class HttpManager {
      * 设置计划工具接口*
      */
     public static String getWptoolUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPTOOL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
@@ -171,23 +173,23 @@ public class HttpManager {
      * 设置任务分配接口*
      */
     public static String getAssignmentUrl(int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
      * 设置实际员工接口*
      */
-    public static String getLabtransUrl(int curpage, int showcount,String refwo) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getLabtransUrl(int curpage, int showcount, String refwo) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.LABTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'refwo':'" + refwo + "'}}";
     }
 
     /**
      * 设置故障报告接口*
      */
-    public static String getFailurereportUrl(String wonum,int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getFailurereportUrl(String wonum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.FAILUREREPORT_NAME + "','curpage':" + curpage + ",'showcount':" +
                 showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
@@ -248,6 +250,7 @@ public class HttpManager {
                     showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "'}}";
         }
     }
+
     /**
      * 设置库存接口*
      */
@@ -282,7 +285,7 @@ public class HttpManager {
     /**
      * 设置基础数据接口
      */
-    public static String getUrl(String appid,String objectname){
+    public static String getUrl(String appid, String objectname) {
         return "{'appid':'" + appid + "','objectname':'" + objectname + "','option':'read'}";
     }
 
@@ -302,13 +305,77 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.i(TAG,"responseString="+responseString);
-                String result = JsonUtils.parsingResults1(cxt,responseString);
+                Log.i(TAG, "responseString=" + responseString);
+                String result = JsonUtils.parsingResults1(cxt, responseString);
                 SafeHandler.onSuccess(handler, result);
+            }
+
+        });
+    }
+
+
+    /**
+     * 不分页获取信息方法*
+     */
+    public static void getData1(final Context cxt, String data, final HttpRequestHandler<String> handler) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("data", data);
+        client.setTimeout(600000);
+        client.get(Constants.BASE_URL, params, new AsyncHttpResponseHandler() {
+
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                super.onProgress(bytesWritten, totalSize);
+
+                Log.i(TAG, "bytesWritten=" + bytesWritten + ",totalSize=" + totalSize);
+                int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
+                Log.i(TAG, "count=" + count);
+            }
+
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.i(TAG, "responseString=" + responseBody.length);
+                String result = JsonUtils.parsingResults1(cxt, responseBody + "");
+                SafeHandler.onSuccess(handler, result);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                SafeHandler.onFailure(handler, "查询失败");
             }
         });
     }
 
+    /**
+     * 不分页获取信息方法*
+     */
+    public static void getData2(final Context cxt, String data, final HttpRequestHandler<String> handler) {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.get("https://www.baidu.com", new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                super.onProgress(bytesWritten, totalSize);
+                Log.i(TAG, "bytesWritten=" + bytesWritten + ",totalSize=" + totalSize);
+                int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
+                Log.i(TAG, "count=" + count);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
 
 
     /**

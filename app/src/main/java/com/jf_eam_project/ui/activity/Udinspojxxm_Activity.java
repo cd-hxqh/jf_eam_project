@@ -137,6 +137,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspojxxm> items = null;
                 try {
+                    Log.i(TAG,"results="+results.getResultlist());
                     items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);

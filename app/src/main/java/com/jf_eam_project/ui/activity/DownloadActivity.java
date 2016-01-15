@@ -249,41 +249,41 @@ public class DownloadActivity extends BaseActivity{
     }
 
     private void downloaddata(String url, final String buttonText, final Button button){
-        HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
+       HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
 
-                Log.i(TAG,"data="+data);
-                if(data != null) {
+                Log.i(TAG, "data=" + data);
+                if (data != null) {
                     try {
-                        if(buttonText.equals(childArray.get(0).get(0))) {//位置
+                        if (buttonText.equals(childArray.get(0).get(0))) {//位置
                             List<Location> locations = Ig_Json_Model.parsingLocation(data);
                             new LocationDao(DownloadActivity.this).create(locations);
-                        }else if(buttonText.equals(childArray.get(0).get(1))){//资产
+                        } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
                             List<Assets> assets = Ig_Json_Model.parsingAsset(data);
                             new AssetDao(DownloadActivity.this).create(assets);
-                        }else if(buttonText.equals(childArray.get(0).get(2))){//故障类
+                        } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
                             List<Failurecode> failurecodes = Ig_Json_Model.parsingFailurecode(data);
                             new FailurecodeDao(DownloadActivity.this).create(failurecodes);
-                        }else if(buttonText.equals(childArray.get(0).get(3))){//问题代码
+                        } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
                             List<Failurelist> failurelists = Ig_Json_Model.parsingFailurelist(data);
                             new FailurelistDao(DownloadActivity.this).create(failurelists);
-                        }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
+                        } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
                             List<Jobplan> jobplans = Ig_Json_Model.parsingJobplan(data);
                             new JobplanDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(5))){//人员
+                        } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
                             List<Person> jobplans = Ig_Json_Model.parsingPerson(data);
                             new PersonDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(6))){//员工
+                        } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
                             List<Labor> jobplans = Ig_Json_Model.parsingLabor(data);
                             new LaborDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(7))){//工种
+                        } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
                             List<Craftrate> craftrates = Ig_Json_Model.parsingCraftrate(data);
                             new CraftrateDao(DownloadActivity.this).create(craftrates);
-                        }else if(buttonText.equals(childArray.get(0).get(8))){//项目
+                        } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
                             List<Item> craftrates = Ig_Json_Model.parsingItem(data);
                             new ItemDao(DownloadActivity.this).create(craftrates);
-                        }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
+                        } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
                             List<Laborcraftrate> craftrates = Ig_Json_Model.parsingLaborcraftrate(data);
                             new LaborcraftrateDao(DownloadActivity.this).create(craftrates);
                         }
@@ -291,8 +291,8 @@ public class DownloadActivity extends BaseActivity{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else {
-                    Toast.makeText(DownloadActivity.this,"下载数据出现问题",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DownloadActivity.this, "下载数据出现问题", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -303,7 +303,7 @@ public class DownloadActivity extends BaseActivity{
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(DownloadActivity.this,"下载失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DownloadActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
             }
 
         });

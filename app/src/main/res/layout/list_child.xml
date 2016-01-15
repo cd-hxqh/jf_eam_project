@@ -9,17 +9,15 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
-        android:textSize="20sp"
-        android:text="无"/>
+        android:textSize="18sp"
+        />
     <Button
         android:id="@+id/download"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dimens_10_dp"
-        android:layout_marginBottom="@dimen/dimens_10_dp"
-        android:layout_marginRight="@dimen/dimens_10_dp"
+        android:layout_margin="@dimen/dimens_10_dp"
         android:text="@string/download"
         android:background="@drawable/btn_selector"
         android:textColor="@color/white"

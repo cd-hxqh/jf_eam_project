@@ -67,7 +67,14 @@ public final class Udinspojxxm_Jsonhelper
         if ("UDINSPOJXXMLINENUM".equals(fieldName)) {
             instance.udinspojxxmlinenum = jp.getValueAsString();
             return true;
-        } else if ("UDINSPOJXXM4".equals(fieldName)) {
+        } else if ("UDINSPOJXXMID".equals(fieldName)) {
+            instance.udinspojxxmid = jp.getValueAsInt();
+            return true;
+        }
+
+
+
+        else if ("UDINSPOJXXM4".equals(fieldName)) {
             instance.udinspojxxm4 = jp.getValueAsString();
             return true;
         } else if ("UDINSPOJXXM3".equals(fieldName)) {

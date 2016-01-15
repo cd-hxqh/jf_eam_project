@@ -19,6 +19,10 @@ public class Udinspojxxm extends Entity {
     @JsonIgnore
     public int id;
 
+    @DatabaseField(columnName = "udinspojxxmid")
+    @JsonField(fieldName = "udinspojxxmid")
+    public int udinspojxxmid;//唯一ID
+
     @DatabaseField(columnName = "udinspojxxmlinenum")
     @JsonField(fieldName = "udinspojxxmlinenum")
     public String udinspojxxmlinenum;//序号
@@ -63,6 +67,14 @@ public class Udinspojxxm extends Entity {
 
     public String type; //操作类型
 
+
+    public int getUdinspojxxmid() {
+        return udinspojxxmid;
+    }
+
+    public void setUdinspojxxmid(int udinspojxxmid) {
+        this.udinspojxxmid = udinspojxxmid;
+    }
 
     public int getId() {
         return id;

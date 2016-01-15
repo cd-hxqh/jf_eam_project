@@ -117,6 +117,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
         editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.edit_query);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
 
@@ -226,7 +227,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                     protected void onPostExecute(String s) {
                         super.onPostExecute(s);
                         mProgressDialog.dismiss();
-                        Log.i(TAG, "s=" + s);
 
                         try {
                             JSONObject jsonObject = new JSONObject(s);
@@ -264,6 +264,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         Udinspojxxm udinspojxxm1 = new Udinspojxxm();
         JSONObject json = new JSONObject();
+
+        udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
+        json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid+"");
         udinspojxxm1.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
         json.put("UDINSPOASSETNUM",udinspojxxm.udinspoassetnum);
         udinspojxxm1.setType(Constants.UPDATE);
@@ -302,7 +305,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         try {
             json3 = "[" + str + "]";
 
-            Log.i(TAG, "json3=" + json3);
             jsonArray = new JSONArray(json3);
         } catch (JSONException e) {
             e.printStackTrace();
