@@ -238,6 +238,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
+
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
