@@ -227,4 +227,8 @@ public class Constants {
     public static final String UPDATE = "update"; //更新
     public static final String DELETE = "delete"; //删除
 
+
+    /**刷新标识**/
+    public static final int REFRESH=10000;
+
 }

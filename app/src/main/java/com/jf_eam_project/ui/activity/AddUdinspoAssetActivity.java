@@ -324,27 +324,26 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      */
     private void submitDataInfo() {
 
-        final NormalEditTextDialog dialog = new NormalEditTextDialog(AddUdinspoAssetActivity.this);
+        final NormalDialog dialog = new NormalDialog(AddUdinspoAssetActivity.this);
         dialog.content("确定新增巡检备件吗？")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
 
         dialog.setOnBtnClickL(
-                new OnBtnEditClickL() {
+                new OnBtnClickL() {
 
 
                     @Override
-                    public void onBtnClick(String text) {
-                        Log.i(TAG,"text="+text);
+                    public void onBtnClick() {
                         dialog.dismiss();
                     }
                 },
-                new OnBtnEditClickL() {
+                new OnBtnClickL() {
                     @Override
-                    public void onBtnClick(String text) {
-                        Log.i(TAG,"text="+text);
-                        showProgressDialog(progressDialog, "数据提交中...");
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
                         dialog.dismiss();
                     }
                 });
@@ -364,7 +363,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                String result = getBaseApplication().getWsService().UpdatePO(data, "");
+                String result = getBaseApplication().getWsService().UpdatePO(data, insponum);
 
                 return result;
             }
@@ -372,21 +371,19 @@ public class AddUdinspoAssetActivity extends BaseActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                progressDialog.dismiss();
-                Log.i(TAG, "s=" + s);
-
+                closeProgressDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String success = jsonObject.getString("status");
                     String errorNo = jsonObject.getString("errorNo");
-                    Log.i(TAG, "success=" + success + ",errorNo=" + errorNo);
-                    if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                        MessageUtils.showMiddleToast(AddUdinspoAssetActivity.this, "数据更新成功");
-                    } else {
-                        MessageUtils.showMiddleToast(AddUdinspoAssetActivity.this, "数据更新失败");
-                    }
+                    MessageUtils.showMiddleToast(AddUdinspoAssetActivity.this, success);
+                    setResult(Constants.REFRESH);
+                    finish();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    setResult(Constants.REFRESH);
+                    finish();
                 }
 
 
@@ -401,20 +398,23 @@ public class AddUdinspoAssetActivity extends BaseActivity {
      */
     private String submitBtn() throws JSONException {
         String location = locationText.getText().toString();
+        String udinspoassetlinenum = udinspoassetlinenumText.getText().toString();
+        String udinspoassetnum = udinspoassetnumText.getText().toString();
         String assetnum = assetnumText.getText().toString();
         String childassetnum = childassetnumText.getText().toString();
 
         JSONObject json = new JSONObject();
         json.put("INSPONUM", insponum);
-        json.put("UDINSPOASSETNUM", udinspoasset.udinspoassetnum);
-        json.put("TYPE", Constants.UPDATE);
-        if (!location.equals(udinspoasset.location)) {
+        json.put("UDINSPOASSETNUM", udinspoassetnum);
+        json.put("UDINSPOASSETLINENUM", udinspoassetlinenum);
+        json.put("TYPE", Constants.ADD);
+        if (!location.equals("")) {
             json.put("LOCATION", location);
         }
-        if (!assetnum.equals(udinspoasset.assetnum)) {
+        if (!assetnum.equals("")) {
             json.put("ASSETNUM", assetnum);
         }
-        if (!childassetnum.equals(udinspoasset.childassetnum)) {
+        if (!childassetnum.equals("")) {
             json.put("CHILDASSETNUM", childassetnum);
         }
 
@@ -445,11 +445,6 @@ public class AddUdinspoAssetActivity extends BaseActivity {
         }
         return jsonArray;
     }
-
-
-
-
-
 
 
     /**

@@ -25,6 +25,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.ui.adapter.PrLineListAdapter;
@@ -236,5 +237,18 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     public void onRefresh() {
         page++;
         getData(searchText);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG,"requestCode="+requestCode+"resultCode="+resultCode);
+
+        switch (resultCode){
+            case Constants.REFRESH:
+                getData(searchText);
+                break;
+        }
+
     }
 }

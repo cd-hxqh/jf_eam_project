@@ -31,6 +31,9 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected SharedPreferences myshared;
     protected BaseApplication baseApplication;
 
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +113,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     /**
      * 加载进度条
      */
-    public void showProgressDialog(ProgressDialog progressDialog,String message) {
+    public void showProgressDialog(String message) {
 
 
 
@@ -126,9 +129,9 @@ public abstract class BaseActivity extends ActionBarActivity {
 
 
     /**关闭进度条**/
-    public void closeProgressDialog(ProgressDialog progressDialog){
+    public void closeProgressDialog(){
         if (progressDialog != null) {
-            progressDialog.cancel();
+            progressDialog.dismiss();
         }
     }
 

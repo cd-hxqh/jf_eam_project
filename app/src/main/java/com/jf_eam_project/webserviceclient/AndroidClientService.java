@@ -219,7 +219,7 @@ public class AndroidClientService {
      */
     public String UpdatePO(String string,String key){
 
-        Log.i(TAG,"string="+string);
+        Log.i(TAG,"string="+string+",key="+key);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
