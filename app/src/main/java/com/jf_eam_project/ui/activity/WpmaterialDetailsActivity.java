@@ -179,7 +179,6 @@ public class WpmaterialDetailsActivity extends BaseActivity{
                     ||!wpmaterial.storelocsite.equals(storelocsite.getText().toString())
                     ||!wpmaterial.requestby.equals(requestby.getText().toString())
                     ||!wpmaterial.requiredate.equals(requiredate.getText().toString())) {
-                wpmaterial = new Wpmaterial();
 //                wpmaterial.taskid = taskid.getText().toString();
                 wpmaterial.itemnum = itemnum.getText().toString();
                 wpmaterial.itemqty = itemqty.getText().toString();

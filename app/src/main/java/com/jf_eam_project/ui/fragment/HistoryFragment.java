@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.ui.activity.Udinspo_History_Activity;
+import com.jf_eam_project.ui.activity.Work_History_ListActivity;
 import com.jf_eam_project.ui.activity.Work_ListActivity;
 
 
@@ -63,7 +64,8 @@ public class HistoryFragment extends BaseFragment {
     private View.OnClickListener workorderOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(getActivity(), Work_History_ListActivity.class);
+            startActivityForResult(intent, 1);
         }
     };
     private View.OnClickListener udinspoOnClickListener = new View.OnClickListener() {

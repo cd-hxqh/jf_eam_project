@@ -20,6 +20,9 @@ public class Wplabor extends Entity{
     @JsonField(fieldName = "taskid")
     @DatabaseField(columnName = "taskid")
     public String taskid;//任务
+    @JsonField(fieldName = "wplaborid")
+    @DatabaseField(columnName = "wplaborid")
+    public String wplaborid;//任务id
     @JsonField(fieldName = "amcrew")
     @DatabaseField(columnName = "amcrew")
     public String amcrew;//班组

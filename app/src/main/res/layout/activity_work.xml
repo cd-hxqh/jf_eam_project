@@ -23,6 +23,7 @@
             android:layout_margin="@dimen/dimens_5_dip"
             android:background="@color/light_gray2"
             android:gravity="center"
+            android:inputType="number"
             android:imeOptions="actionSearch"
             android:maxLines="1"
             android:singleLine="true" />

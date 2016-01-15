@@ -112,7 +112,6 @@ public class AssignmentDetailsActivity extends BaseActivity {
             if (!assignment.laborhrs.equals(laborhrs.getText().toString())
                     || !assignment.laborcode.equals(laborcode.getText().toString())
                     || !assignment.craft.equals(craft.getText().toString())) {
-                assignment = new Assignment();
 //                assignment.taskid = taskid.getText().toString();
                 assignment.laborcode = laborcode.getText().toString();
                 assignment.craft = craft.getText().toString();

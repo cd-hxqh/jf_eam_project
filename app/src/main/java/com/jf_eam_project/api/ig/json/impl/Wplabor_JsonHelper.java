@@ -69,7 +69,10 @@ public final class Wplabor_JsonHelper
         if ("TASKID".equals(fieldName)) {
             instance.taskid = jp.getValueAsString();
             return true;
-        } else if ("AMCREW".equals(fieldName)) {
+        } else if ("WPLABORID".equals(fieldName)) {
+            instance.wplaborid = jp.getValueAsString();
+            return true;
+        }else if ("AMCREW".equals(fieldName)) {
             instance.amcrew = jp.getValueAsString();
             return true;
         } else if ("AMCREWTYPE".equals(fieldName)) {

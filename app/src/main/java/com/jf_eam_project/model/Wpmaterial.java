@@ -14,6 +14,8 @@ public class Wpmaterial extends Entity{
 
     @JsonField(fieldName = "itemnum")
     public String itemnum;//项目
+    @JsonField(fieldName = "wpitemid")
+    public String wpitemid;//物料id
     @JsonField(fieldName = "itemqty")
     public String itemqty;//数量
     @JsonField(fieldName = "location")

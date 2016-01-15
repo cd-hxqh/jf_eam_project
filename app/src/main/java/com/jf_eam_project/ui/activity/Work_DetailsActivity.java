@@ -241,7 +241,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (status.getText().toString().equals(Constants.WAIT_APPROVAL)) {
+            if (status.getText().toString().equals(Constants.WAIT_APPROVAL)||status.getText().toString().equals(Constants.APPROVALED)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Work_DetailsActivity.this);
                 builder.setMessage("确定修改工单吗").setTitle("提示")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -361,7 +361,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {//否
                     @Override
                     public void onBtnClick() {
-                        getwfstatus(isok);
+                        getwfstatus(isok,"不通过");
 //                        if (isstart) {
 //                            wfstart(workOrder.wonum);
 //                        } else {
@@ -389,7 +389,8 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-                        getwfstatus(isok);
+                        getwfstatus(isok,text);
+                        dialog.dismiss();
 //                        if (isstart) {
 //                            wfstart(workOrder.wonum);
 //                        } else {
@@ -411,10 +412,8 @@ public class Work_DetailsActivity extends BaseActivity {
      *
      * @return
      */
-    private void getwfstatus(final boolean isok) {
+    private void getwfstatus(final boolean isok, final String desc) {
         HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, workOrder.workorderid), new HttpRequestHandler<Results>() {
-            String result;
-
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -423,10 +422,10 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-                if (result.equals("N")) {
+                if (!result.equals("N")) {
                     wfstart(workOrder.wonum);
                 } else {
-                    wfgoon(workOrder.wonum, isok ? "1" : "0", isok ? "通过" : "不通过");
+                    wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
                 }
                 Log.i(TAG, "data=" + result);
             }
@@ -496,6 +495,7 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                    status.setText(s);
                 }
                 mProgressDialog.dismiss();
             }
@@ -610,9 +610,11 @@ public class Work_DetailsActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-//        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-//            realinfoLinearLayout.setVisibility(View.GONE);
-//        }
+        if (workOrder.status.equals(Constants.APPROVALED)) {
+            realinfoLinearLayout.setVisibility(View.VISIBLE);
+        }else {
+            realinfoLinearLayout.setVisibility(View.GONE);
+        }
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {

@@ -114,7 +114,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this);
+        workListAdapter = new WorkListAdapter(this,0);
         recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -145,9 +145,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                         if (items == null || items.isEmpty()) {
                             nodatalayout.setVisibility(View.VISIBLE);
                         } else {
-                            SaveData(items);
                             if (page == 1) {
-                                workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                                workListAdapter = new WorkListAdapter(Work_ListActivity.this,0);
                                 recyclerView.setAdapter(workListAdapter);
                             }
                             if (totalPages == page) {
@@ -189,7 +188,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                    workListAdapter = new WorkListAdapter(Work_ListActivity.this,0);
                     recyclerView.setAdapter(workListAdapter);
                     getData(searchText);
                     return true;
@@ -197,14 +196,6 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                 return false;
             }
         });
-    }
-
-    //保存工单数据到本地
-    private void SaveData(ArrayList<WorkOrder> workOrders) {
-        WorkOrderDao workOrderDao = new WorkOrderDao(Work_ListActivity.this);
-        for (int i = 0; i < workOrders.size(); i++) {
-            workOrderDao.create(workOrders.get(i));
-        }
     }
 
     //下拉刷新触发事件

@@ -123,7 +123,6 @@ public class WoactivityDetailsActivity extends BaseActivity{
                     &&woactivity.estdur.equals(estdur.getText().toString())) {//如果内容没有修改
                 intent.putExtra("woactivity",woactivity);
             }else {
-                woactivity = new Woactivity();
                 woactivity.setTaskid(taskid.getText().toString());
                 woactivity.setDescription(description.getText().toString());
                 woactivity.setTargstartdate(targstartdate.getText().toString());

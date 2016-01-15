@@ -69,10 +69,13 @@ public final class Wpmaterial_JsonHelper
         if ("ITEMNUM".equals(fieldName)) {
             instance.itemnum = jp.getValueAsString();
             return true;
+        } else if ("WPITEMID".equals(fieldName)) {
+            instance.wpitemid = jp.getValueAsString();
+            return true;
         } else if ("REQUESTBY".equals(fieldName)) {
             instance.requestby = jp.getValueAsString();
             return true;
-        }else if ("TASKID".equals(fieldName)) {
+        } else if ("TASKID".equals(fieldName)) {
             instance.taskid = jp.getValueAsString();
             return true;
         } else if ("ITEMQTY".equals(fieldName)) {

@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.jf_eam_project.Dao.LocationDao;
+import com.jf_eam_project.Dao.WorkOrderDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
@@ -39,6 +40,8 @@ import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.GetNowTime;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -278,6 +281,11 @@ public class Work_AddNewActivity extends BaseActivity {
                                 getString(R.string.inputing), true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
+                        if(NetWorkHelper.isNetwork(Work_AddNewActivity.this)){
+                            MessageUtils.showMiddleToast(Work_AddNewActivity.this, "暂无网络,现离线保存数据!");
+                            mProgressDialog.dismiss();
+                            saveWorkOrder();
+                        }else {
                         final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
                         new AsyncTask<String, String, String>() {
                             @Override
@@ -299,6 +307,7 @@ public class Work_AddNewActivity extends BaseActivity {
                                 mProgressDialog.dismiss();
                             }
                         }.execute();
+                    }
                     }
                 }).create().show();
             } else {
@@ -376,6 +385,10 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.reportedby = reportedby.getText().toString();
         workOrder.reportdate = reportdate.getText().toString();
         return workOrder;
+    }
+
+    private void saveWorkOrder(){
+        new WorkOrderDao(Work_AddNewActivity.this).Update(getWorkOrder());
     }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
@@ -504,9 +517,9 @@ public class Work_AddNewActivity extends BaseActivity {
             sb = new StringBuffer();
             monthOfYear = monthOfYear + 1;
             if (dayOfMonth < 10) {
-                sb.append(year % 100 + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
             } else {
-                sb.append(year % 100 + "-" + monthOfYear + "-" + dayOfMonth);
+                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
             timePickerDialog.show();
         }

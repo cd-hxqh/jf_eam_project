@@ -69,7 +69,10 @@ public final class Labtrans_JsonHelper
         if ("REGULARHRS".equals(fieldName)) {
             instance.regularhrs = jp.getValueAsString();
             return true;
-        } else if ("PAYRATE".equals(fieldName)) {
+        } else if ("LABTRANSID".equals(fieldName)) {
+            instance.labtransid = jp.getValueAsString();
+            return true;
+        }  else if ("PAYRATE".equals(fieldName)) {
             instance.payrate = jp.getValueAsString();
             return true;
         } else if ("CRAFT".equals(fieldName)) {

@@ -135,8 +135,6 @@ public class WplaborDetailsActivity extends BaseActivity {
             if (!wplabor.craft.equals(craft.getText().toString())
                     || !wplabor.quantity.equals(quantity.getText().toString())
                     || !wplabor.laborhrs.equals(laborhrs.getText().toString())) {
-                wplabor = new Wplabor();
-//                wplabor.taskid = taskid.getText().toString();
                 wplabor.craft = craft.getText().toString();
                 wplabor.quantity = quantity.getText().toString();
                 wplabor.laborhrs = laborhrs.getText().toString();

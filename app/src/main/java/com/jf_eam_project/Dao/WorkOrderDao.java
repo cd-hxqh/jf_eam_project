@@ -8,6 +8,7 @@ import com.jf_eam_project.model.WorkOrder;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Created by think on 2015/12/23.
@@ -50,10 +51,6 @@ public class WorkOrderDao {
     public void Update(WorkOrder workOrder) {
         try
         {
-            List<WorkOrder>workOrderList = WorkOrderDaoOpe.queryBuilder().where().eq("wonum",workOrder.wonum).query();
-            if(workOrderList.size()!=0){
-                WorkOrderDaoOpe.delete(workOrderList);
-            }
             WorkOrderDaoOpe.createOrUpdate(workOrder);
         } catch (SQLException e)
         {
@@ -76,12 +73,11 @@ public class WorkOrderDao {
 
     /**
      *
-     * @param udwotype
+     * @param wonum
      */
-    public List<WorkOrder> queryByUdwotype(String udwotype){
+    public List<WorkOrder> queryByWonum(String wonum){
         try {
-                return WorkOrderDaoOpe.queryBuilder().orderBy("date", false)
-                        .where().eq("udwotype", udwotype).query();
+                return WorkOrderDaoOpe.queryBuilder().where().like("wonum", "%" +wonum+"%").query();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,6 +92,25 @@ public class WorkOrderDao {
         try {
             WorkOrderDaoOpe.delete(WorkOrderDaoOpe.queryForAll());
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param list
+     */
+    public void deleteList(final List<WorkOrder> list) {
+        try {
+            WorkOrderDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (WorkOrder workOrder : list) {
+                        WorkOrderDaoOpe.delete(workOrder);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -69,7 +69,10 @@ public final class Assignment_JsonHelper
         if ("TASKID".equals(fieldName)) {
             instance.taskid = jp.getValueAsString();
             return true;
-        } else if ("LABORCODE".equals(fieldName)) {
+        } else if ("ASSIGNMENTID".equals(fieldName)) {
+            instance.assignmentid = jp.getValueAsString();
+            return true;
+        }else if ("LABORCODE".equals(fieldName)) {
             instance.laborcode = jp.getValueAsString();
             return true;
         } else if ("LABORHRS".equals(fieldName)) {

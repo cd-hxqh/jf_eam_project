@@ -20,6 +20,9 @@ public class Labtrans extends Entity{
     @JsonField(fieldName = "taskid")
     @DatabaseField(columnName = "taskid")
     public String taskid;//任务
+    @JsonField(fieldName = "labtransid")
+    @DatabaseField(columnName = "labtransid")
+    public String labtransid;//实际员工id
     @JsonField(fieldName = "regularhrs")
     @DatabaseField(columnName = "regularhrs")
     public String regularhrs;//常规时数

@@ -14,6 +14,8 @@ public class Assignment extends Entity {
 
     @JsonField(fieldName = "taskid")
     public String taskid;//任务
+    @JsonField(fieldName = "assignmentid")
+    public String assignmentid;//任务分配id
     @JsonField(fieldName = "laborcode")
     public String laborcode;//员工
     @JsonField(fieldName = "laborhrs")

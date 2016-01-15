@@ -271,6 +271,9 @@ public class JsonUtils {
                     if(!workOrder.isnew){
                         wplaborObj.put("TYPE",wplabors.get(i).type);
                     }
+                    if(wplabors.get(i).wplaborid!=null&&!wplabors.get(i).wplaborid.equals("")){
+                        wplaborObj.put("WPLABORID",wplabors.get(i).wplaborid);
+                    }
                     wplaborArray.put(wplaborObj);
                 }
                 jsonObject.put("WPLABOR", wplaborArray);
@@ -290,6 +293,9 @@ public class JsonUtils {
                     if(!workOrder.isnew){
                         wpmaterialObj.put("TYPE",wpmaterials.get(i).type);
                     }
+                    if(wpmaterials.get(i).wpitemid!=null&&!wpmaterials.get(i).wpitemid.equals("")){
+                        wpmaterialObj.put("WPITEMID",wpmaterials.get(i).wpitemid);
+                    }
                     wpmaterialArray.put(wpmaterialObj);
                 }
                 jsonObject.put("WPMATERIAL",wpmaterialArray);
@@ -305,6 +311,9 @@ public class JsonUtils {
                     assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
                     if(!workOrder.isnew){
                         assignmentObj.put("TYPE",assignments.get(i).type);
+                    }
+                    if(assignments.get(i).assignmentid!=null&&!assignments.get(i).assignmentid.equals("")){
+                        assignmentObj.put("ASSIGNMENTID",assignments.get(i).assignmentid);
                     }
                     assignmentArray.put(assignmentObj);
                 }
@@ -322,6 +331,9 @@ public class JsonUtils {
                     labtransObj.put("CRAFT",labtranses.get(i).craft);
                     labtransObj.put("PAYRATE",labtranses.get(i).payrate);
                     labtransArray.put(labtransObj);
+                    if(labtranses.get(i).labtransid!=null&&!labtranses.get(i).labtransid.equals("")){
+                        labtransObj.put("LABTRANSID",labtranses.get(i).labtransid);
+                    }
                 }
                 jsonObject.put("LABTRANS",labtransArray);
             }
