@@ -329,11 +329,15 @@ public class JsonUtils {
                     labtransObj.put("STARTDATE",labtranses.get(i).startdate);
                     labtransObj.put("REGULARHRS",labtranses.get(i).regularhrs);
                     labtransObj.put("CRAFT",labtranses.get(i).craft);
-                    labtransObj.put("PAYRATE",labtranses.get(i).payrate);
-                    labtransArray.put(labtransObj);
+                    labtransObj.put("PAYRATE","0");
                     if(labtranses.get(i).labtransid!=null&&!labtranses.get(i).labtransid.equals("")){
                         labtransObj.put("LABTRANSID",labtranses.get(i).labtransid);
                     }
+                    if(labtranses.get(i).type!=null&&!labtranses.get(i).type.equals("")){
+                        labtransObj.put("TYPE",labtranses.get(i).type);
+                    }
+                    labtransArray.put(labtransObj);
+
                 }
                 jsonObject.put("LABTRANS",labtransArray);
             }

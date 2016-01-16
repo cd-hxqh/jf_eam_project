@@ -46,7 +46,7 @@ public class LabtransAddNewActivity extends BaseActivity {
     private TextView startdate;//开始日期
     private TextView regularhrs;//常规时数
     private TextView craft;//工种
-    private TextView payrate;//费率
+//    private TextView payrate;//费率
     private Button ok;//确定
 
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class LabtransAddNewActivity extends BaseActivity {
 //        taskid = (TextView) findViewById(R.id.labtrans_taskid);
         laborcode = (TextView) findViewById(R.id.labtrans_laborcode);
         craft = (TextView) findViewById(R.id.labtrans_craft);
-        payrate = (TextView) findViewById(R.id.labtrans_payrate);
+//        payrate = (TextView) findViewById(R.id.labtrans_payrate);
         startdate = (TextView) findViewById(R.id.labtrans_startdate);
         regularhrs = (EditText) findViewById(R.id.labtrans_regularhrs);
         ok = (Button) findViewById(R.id.labtrans_ok);
@@ -119,7 +119,7 @@ public class LabtransAddNewActivity extends BaseActivity {
 //            labtrans.taskid = taskid.getText().toString();
             labtrans.laborcode = laborcode.getText().toString();
             labtrans.craft = craft.getText().toString();
-            labtrans.payrate = payrate.getText().toString();
+//            labtrans.payrate = payrate.getText().toString();
             labtrans.startdate = startdate.getText().toString();
             labtrans.regularhrs = regularhrs.getText().toString();
             labtrans.type = "add";

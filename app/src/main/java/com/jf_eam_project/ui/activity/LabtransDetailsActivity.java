@@ -52,7 +52,7 @@ public class LabtransDetailsActivity extends BaseActivity{
     private TextView startdate;//开始日期
     private TextView regularhrs;//常规时数
     private TextView craft;//工种
-    private TextView payrate;//费率
+//    private TextView payrate;//费率
     private Button ok;//确定
 
 //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class LabtransDetailsActivity extends BaseActivity{
 //        taskid = (TextView) findViewById(R.id.labtrans_taskid);
         laborcode = (TextView) findViewById(R.id.labtrans_laborcode);
         craft = (TextView) findViewById(R.id.labtrans_craft);
-        payrate = (TextView) findViewById(R.id.labtrans_payrate);
+//        payrate = (TextView) findViewById(R.id.labtrans_payrate);
         startdate = (TextView) findViewById(R.id.labtrans_startdate);
         regularhrs = (EditText) findViewById(R.id.labtrans_regularhrs);
         ok = (Button) findViewById(R.id.labtrans_ok);
@@ -108,7 +108,7 @@ public class LabtransDetailsActivity extends BaseActivity{
 //        taskid.setText(labtrans.taskid);
         laborcode.setText(labtrans.laborcode);
         craft.setText(labtrans.craft);
-        payrate.setText(labtrans.payrate);
+//        payrate.setText(labtrans.payrate);
         startdate.setText(labtrans.startdate);
         regularhrs.setText(labtrans.regularhrs);
 
@@ -121,6 +121,10 @@ public class LabtransDetailsActivity extends BaseActivity{
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         startdate.setOnClickListener(new MydateListener());
         ok.setOnClickListener(okOnClickListener);
+
+        if(labtrans.labtransid!=null&&!labtrans.labtransid.equals("")){
+            ok.setVisibility(View.GONE);
+        }
     }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
@@ -129,17 +133,16 @@ public class LabtransDetailsActivity extends BaseActivity{
             Intent intent = getIntent();
             if (!labtrans.laborcode.equals(laborcode.getText().toString())
                     || !labtrans.craft.equals(craft.getText().toString())
-                    || !labtrans.payrate.equals(payrate.getText().toString())
+//                    || !labtrans.payrate.equals(payrate.getText().toString())
                     || !labtrans.startdate.equals(startdate.getText().toString())
                     || !labtrans.regularhrs.equals(regularhrs.getText().toString())) {
                 labtrans = new Labtrans();
 //                labtrans.taskid = taskid.getText().toString();
                 labtrans.laborcode = laborcode.getText().toString();
                 labtrans.craft = craft.getText().toString();
-                labtrans.payrate = payrate.getText().toString();
+//                labtrans.payrate = payrate.getText().toString();
                 labtrans.startdate = startdate.getText().toString();
                 labtrans.regularhrs = regularhrs.getText().toString();
-                labtrans.type = "update";
             }
             intent.putExtra("labtrans", labtrans);
             intent.putExtra("position", position);

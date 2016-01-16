@@ -236,6 +236,7 @@ public class Work_DetailsActivity extends BaseActivity {
         } else {
             wfservice.setVisibility(View.GONE);
         }
+
     }
 
 
@@ -574,7 +575,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private ArrayList<Labtrans> getLabtransList() {
         ArrayList<Labtrans> labtranses = new ArrayList<>();
         for (int i = 0; i < labtransList.size(); i++) {
-            if (labtransList.get(i).type != null && !labtransList.get(i).type.equals("")) {//如果此条数据是变动后的
+            if (labtransList.get(i).type != null && labtransList.get(i).type.equals("add")) {//如果此条数据是变动后的
                 labtranses.add(labtransList.get(i));
             }
         }
