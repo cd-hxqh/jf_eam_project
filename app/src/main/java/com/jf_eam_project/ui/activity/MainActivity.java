@@ -20,6 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.HistoryFragment;
@@ -91,6 +96,10 @@ public class MainActivity extends BaseActivity
     private Setting_Fragment settingFragment;
 
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,10 +131,13 @@ public class MainActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.left_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.closeDrawer();
     }
 
     @Override
     protected void initView() {
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
         addImageView.setOnClickListener(addOnClickListner);
     }
 
@@ -212,24 +224,31 @@ public class MainActivity extends BaseActivity
      */
     public void showAlertDialog() {
 
-        CustomDialog.Builder builder = new CustomDialog.Builder(MainActivity.this);
-        builder.setMessage(getString(R.string.exit_dialog_hint));
-        builder.setTitle(getString(R.string.exit_dialog_title));
-        builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                AppManager.AppExit(MainActivity.this);
-            }
-        });
 
-        builder.setNegativeButton(getString(R.string.canel),
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+
+
+        final NormalDialog dialog = new NormalDialog(MainActivity.this);
+        dialog.content("确定退出程序吗")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+
+
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        AppManager.AppExit(MainActivity.this);
                         dialog.dismiss();
                     }
                 });
-
-        builder.create().show();
 
     }
 
