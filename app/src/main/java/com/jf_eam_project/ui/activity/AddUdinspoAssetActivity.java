@@ -302,7 +302,6 @@ public class AddUdinspoAssetActivity extends BaseActivity {
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
             if (insponum.equals("")) {
                 Udinspoasset udinspoasset = addUdinspoInfo();
                 Intent intent = getIntent();

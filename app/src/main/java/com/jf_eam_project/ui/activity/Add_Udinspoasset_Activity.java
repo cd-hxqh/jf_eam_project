@@ -251,6 +251,7 @@ public class Add_Udinspoasset_Activity extends BaseActivity implements SwipeRefr
             Intent intent = getIntent();
             intent.setClass(Add_Udinspoasset_Activity.this, AddUdinspoAssetActivity.class);
             intent.putExtra("udinspoassetlinenum", udinspoassetListAdapter.getItemCount());
+            intent.putExtra("insponum", "");
             startActivityForResult(intent, 0);
         }
     };
