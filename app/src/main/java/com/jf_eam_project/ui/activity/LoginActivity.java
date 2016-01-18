@@ -43,7 +43,6 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
 
     String imei; //imei
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
