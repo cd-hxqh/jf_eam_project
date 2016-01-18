@@ -248,18 +248,29 @@
             android:background="@drawable/line"></View>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="@dimen/dimen_40dp">
         <Button
             android:id="@+id/wpmaterial_ok"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/btn_selector"
             android:text="确定"
             android:textColor="@color/white"/>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/wpmaterial_delete"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_30dp"
+            android:visibility="gone"
+            android:background="@drawable/btn_selector"
+            android:text="删除"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 </LinearLayout>

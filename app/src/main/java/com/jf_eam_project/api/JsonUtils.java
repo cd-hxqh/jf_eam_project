@@ -62,12 +62,14 @@ public class JsonUtils {
         String woNum = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.getString("success").equals("成功")){
+            if(object.has("success")&&object.getString("success").equals("成功")){
                 if (object.has("wonum")) {
                     woNum = object.getString("wonum");
                 }else if(object.has("WONUM")){
                     woNum = object.getString("WONUM");
                 }
+            }else if(object.has("errorMsg")){
+                woNum = object.getString("errorMsg");
             }else {
                 woNum = "";
             }

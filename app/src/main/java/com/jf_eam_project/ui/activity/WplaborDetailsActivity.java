@@ -44,6 +44,7 @@ public class WplaborDetailsActivity extends BaseActivity {
     private TextView quantity;//数量
     private TextView laborhrs;//常规时数
     private Button ok;//确认
+    private Button delete;//删除
 
 //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
 //    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
@@ -79,6 +80,7 @@ public class WplaborDetailsActivity extends BaseActivity {
         quantity = (TextView) findViewById(R.id.wplabor_quantity);
         laborhrs = (TextView) findViewById(R.id.wplabor_laborhrs);
         ok = (Button) findViewById(R.id.wplabor_ok);
+        delete = (Button) findViewById(R.id.wplabor_delete);
     }
 
     @Override
@@ -102,7 +104,8 @@ public class WplaborDetailsActivity extends BaseActivity {
 //        taskid.setOnClickListener(taskidlayoutOnClickListener);
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
-
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(deleteOnClickListener);
     }
 
 //    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
@@ -138,12 +141,32 @@ public class WplaborDetailsActivity extends BaseActivity {
                 wplabor.craft = craft.getText().toString();
                 wplabor.quantity = quantity.getText().toString();
                 wplabor.laborhrs = laborhrs.getText().toString();
-                wplabor.type = "update";
+                if(wplabor.type==null||!wplabor.type.equals("add")) {
+                    wplabor.type = "update";
+                }
             }
             intent.putExtra("wplabor", wplabor);
             intent.putExtra("position", position);
             WplaborDetailsActivity.this.setResult(5, intent);
             finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(wplabor.type!=null&&wplabor.type.equals("add")){//本地新增任务
+                intent.putExtra("position",position);
+                WplaborDetailsActivity.this.setResult(9, intent);
+                finish();
+            }else if (wplabor.type==null){//服务器接收的任务
+                wplabor.type = "delete";
+                intent.putExtra("wplabor", wplabor);
+                intent.putExtra("position",position);
+                WplaborDetailsActivity.this.setResult(10,intent);
+                finish();
+            }
         }
     };
 

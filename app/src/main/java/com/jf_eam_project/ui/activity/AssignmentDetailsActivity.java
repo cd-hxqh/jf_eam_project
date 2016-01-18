@@ -44,6 +44,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
     private TextView craft;//工种
     private TextView laborhrs;//时数
     private Button ok;//确定
+    private Button delete;//删除
 
 //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
 //    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
@@ -79,6 +80,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
         craft = (TextView) findViewById(R.id.assignment_craft);
         laborhrs = (TextView) findViewById(R.id.assignment_laborhrs);
         ok = (Button) findViewById(R.id.assignment_ok);
+        delete = (Button) findViewById(R.id.assignment_delete);
     }
 
     @Override
@@ -103,6 +105,8 @@ public class AssignmentDetailsActivity extends BaseActivity {
         laborcode.setOnClickListener(new LayoutOnClickListener(Constants.LABORCRAFTRATE));
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(deleteOnClickListener);
     }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
@@ -116,12 +120,32 @@ public class AssignmentDetailsActivity extends BaseActivity {
                 assignment.laborcode = laborcode.getText().toString();
                 assignment.craft = craft.getText().toString();
                 assignment.laborhrs = laborhrs.getText().toString();
-                assignment.type = "update";
+                if (assignment.type == null || !assignment.type.equals("add")) {
+                    assignment.type = "update";
+                }
             }
             intent.putExtra("assignment", assignment);
             intent.putExtra("position", position);
             AssignmentDetailsActivity.this.setResult(0, intent);
             finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(assignment.type!=null&&assignment.type.equals("add")){//本地新增任务
+                intent.putExtra("position",position);
+                AssignmentDetailsActivity.this.setResult(2, intent);
+                finish();
+            }else if (assignment.type==null){//服务器接收的任务
+                assignment.type = "delete";
+                intent.putExtra("assignment", assignment);
+                intent.putExtra("position",position);
+                AssignmentDetailsActivity.this.setResult(3,intent);
+                finish();
+            }
         }
     };
 

@@ -123,7 +123,7 @@ public class LocationDao {
      */
     public List<Location> queryByLocation(String location){
         try {
-            return LocationDaoOpe.queryBuilder().where().eq("type","操作中").and().like("location", location).query();
+            return LocationDaoOpe.queryBuilder().where().eq("type","操作中").and().like("location", "%"+location+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,7 +137,7 @@ public class LocationDao {
      */
     public List<Location> queryByLocations(String location){
         try {
-            return LocationDaoOpe.queryBuilder().where().eq("type", "库房").and().like("location", location).query();
+            return LocationDaoOpe.queryBuilder().where().eq("type", "库房").and().like("location", "%"+location+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

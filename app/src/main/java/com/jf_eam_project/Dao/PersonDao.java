@@ -12,53 +12,50 @@ import java.util.concurrent.Callable;
 
 /**
  * Created by think on 2015/12/31.
- *人员
+ * 人员
  */
 public class PersonDao {
     private Context context;
     private Dao<Person, Integer> PersonDaoOpe;
     private DatabaseHelper helper;
 
-    public PersonDao(Context context)
-    {
+    public PersonDao(Context context) {
         this.context = context;
-        try
-        {
+        try {
             helper = DatabaseHelper.getHelper(context);
             PersonDaoOpe = helper.getDao(Person.class);
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *更新位置信息
+     * 更新位置信息
+     *
      * @param list
      */
     public void create(final List<Person> list) {
-            try {
-                deleteall();
-                PersonDaoOpe.callBatchTasks(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        for (Person person : list) {
-                            PersonDaoOpe.createOrUpdate(person);
-                        }
-                        return null;
+        try {
+            deleteall();
+            PersonDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Person person : list) {
+                        PersonDaoOpe.createOrUpdate(person);
                     }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     /**
-     *
      * @return
      */
-    public List<Person> queryForAll(){
+    public List<Person> queryForAll() {
         try {
             return PersonDaoOpe.queryForAll();
         } catch (SQLException e) {
@@ -70,7 +67,7 @@ public class PersonDao {
     /**
      *
      */
-    public void deleteall(){
+    public void deleteall() {
         try {
             PersonDaoOpe.delete(PersonDaoOpe.queryForAll());
         } catch (SQLException e) {
@@ -80,13 +77,12 @@ public class PersonDao {
 
 
     /**
-     *
      * @param personid
      * @return
      */
-    public List<Person> queryByPerson(String personid){
+    public List<Person> queryByPerson(String personid) {
         try {
-            return PersonDaoOpe.queryBuilder().where().like("personid",personid).query();
+            return PersonDaoOpe.queryBuilder().where().like("personid", "%" + personid + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,16 +90,15 @@ public class PersonDao {
     }
 
     /**
-     *
      * @param person
      * @return
      */
-    public boolean isexit(Person person){
+    public boolean isexit(Person person) {
         try {
-            List<Person>workOrderList = PersonDaoOpe.queryBuilder().where().eq("location",person.personid).query();
-            if(workOrderList.size()>0){
+            List<Person> workOrderList = PersonDaoOpe.queryBuilder().where().eq("location", person.personid).query();
+            if (workOrderList.size() > 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (SQLException e) {

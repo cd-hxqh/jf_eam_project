@@ -28,6 +28,7 @@ import java.util.List;
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
     Work_AssignmentActivity mContext;
     public List<Assignment> assignmentList = new ArrayList<>();
+    public ArrayList<Assignment> deleteList = new ArrayList<>();
 
     public AssignmentAdapter(Work_AssignmentActivity context) {
         this.mContext = context;
@@ -134,5 +135,16 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public void adddate(Assignment assignment) {
         assignmentList.add(assignment);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Assignment> getList(){
+        ArrayList<Assignment> list = new ArrayList<>();
+        if(assignmentList.size()!=0){
+            list.addAll(assignmentList);
+        }
+        if(deleteList.size()!=0){
+            list.addAll(deleteList);
+        }
+        return list;
     }
 }

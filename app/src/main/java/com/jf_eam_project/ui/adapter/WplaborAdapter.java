@@ -27,6 +27,7 @@ import java.util.List;
 public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHolder> {
     Work_PlanActivity mContext;
     public ArrayList<Wplabor> wplaborList = new ArrayList<>();
+    public ArrayList<Wplabor> deleteList = new ArrayList<>();
 
     public WplaborAdapter(Work_PlanActivity context) {
         this.mContext = context;
@@ -134,5 +135,16 @@ public class WplaborAdapter extends RecyclerView.Adapter<WplaborAdapter.ViewHold
     public void adddate(Wplabor wplabor) {
         wplaborList.add(wplabor);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Wplabor> getList(){
+        ArrayList<Wplabor> list = new ArrayList<>();
+        if(wplaborList.size()!=0){
+            list.addAll(wplaborList);
+        }
+        if(deleteList.size()!=0){
+            list.addAll(deleteList);
+        }
+        return list;
     }
 }

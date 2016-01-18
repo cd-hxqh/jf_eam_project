@@ -86,7 +86,7 @@ public class ItemDao {
      */
     public List<Item> queryByItem(String itemnum){
         try {
-            return ItemDaoOpe.queryBuilder().where().like("itemnum", itemnum).query();
+            return ItemDaoOpe.queryBuilder().where().like("itemnum", "%"+itemnum+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

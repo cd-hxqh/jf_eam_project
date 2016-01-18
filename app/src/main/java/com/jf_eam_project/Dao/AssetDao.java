@@ -85,7 +85,7 @@ public class AssetDao {
      */
     public List<Assets> queryByNum(String assetnum){
         try {
-            return AssetDaoOpe.queryBuilder().where().like("assetnum", assetnum).query();
+            return AssetDaoOpe.queryBuilder().where().like("assetnum", "%"+assetnum+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

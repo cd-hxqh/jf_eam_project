@@ -43,6 +43,7 @@ import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,25 +123,6 @@ public class Work_AddNewActivity extends BaseActivity {
     protected static final int F = 1;
     protected static final int YUZHI_S = 2;
     protected static final int YUZHI_F = 3;
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case S:
-                    mProgressDialog.dismiss();
-                    break;
-                case F:
-                    mProgressDialog.dismiss();
-                    break;
-                case YUZHI_S:
-                    mProgressDialog.dismiss();
-                    break;
-                case YUZHI_F:
-                    mProgressDialog.dismiss();
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,9 +237,9 @@ public class Work_AddNewActivity extends BaseActivity {
         problemcode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
         jpnum.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
 
-        if(workOrder.udwotype.equals(Constants.UNPLAN)){
+        if (workOrder.udwotype.equals(Constants.UNPLAN)) {
             wfservice.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             wfservice.setVisibility(View.GONE);
         }
     }
@@ -281,33 +263,35 @@ public class Work_AddNewActivity extends BaseActivity {
                                 getString(R.string.inputing), true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
-                        if(NetWorkHelper.isNetwork(Work_AddNewActivity.this)){
+                        if (NetWorkHelper.isNetwork(Work_AddNewActivity.this)) {
                             MessageUtils.showMiddleToast(Work_AddNewActivity.this, "暂无网络,现离线保存数据!");
                             mProgressDialog.dismiss();
                             saveWorkOrder();
-                        }else {
-                        final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
-                        new AsyncTask<String, String, String>() {
-                            @Override
-                            protected String doInBackground(String... strings) {
-                                addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
-                                return addresult;
-                            }
-
-                            @Override
-                            protected void onPostExecute(String s) {
-                                super.onPostExecute(s);
-                                if (s == null || s.equals("")) {
-                                    Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
-                                    wonumlayout.setVisibility(View.VISIBLE);
-                                    wonum.setText(s);
+                        } else {
+                            final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+                            new AsyncTask<String, String, String>() {
+                                @Override
+                                protected String doInBackground(String... strings) {
+                                    addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                                    return addresult;
                                 }
-                                mProgressDialog.dismiss();
-                            }
-                        }.execute();
-                    }
+
+                                @Override
+                                protected void onPostExecute(String s) {
+                                    super.onPostExecute(s);
+                                    if (s == null || s.equals("")) {
+                                        Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                                    } else if (!NumberUtils.isDigits(s)) {
+                                        Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
+                                        wonumlayout.setVisibility(View.VISIBLE);
+                                        wonum.setText(s);
+                                    }
+                                    mProgressDialog.dismiss();
+                                }
+                            }.execute();
+                        }
                     }
                 }).create().show();
             } else {
@@ -387,7 +371,7 @@ public class Work_AddNewActivity extends BaseActivity {
         return workOrder;
     }
 
-    private void saveWorkOrder(){
+    private void saveWorkOrder() {
         new WorkOrderDao(Work_AddNewActivity.this).Update(getWorkOrder());
     }
 
@@ -558,7 +542,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 assetnum.setText(option.getName());
                 assetdesc.setText(option.getDescription());
                 location.setText(option.getValue());
-                if(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue())!=null){
+                if (new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()) != null) {
                     locationdesc.setText(new LocationDao(Work_AddNewActivity.this).queryLocation(option.getValue()).description);
                 }
                 break;

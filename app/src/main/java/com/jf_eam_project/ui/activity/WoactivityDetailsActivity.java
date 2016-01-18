@@ -44,6 +44,7 @@ public class WoactivityDetailsActivity extends BaseActivity{
     private TextView actfinish;//实际结束时间
     private EditText estdur;//估计持续时间
     private Button ok;//确定
+    private Button delete;//删除
 
     private DatePickerDialog datePickerDialog;
     private CumTimePickerDialog timePickerDialog;
@@ -81,6 +82,7 @@ public class WoactivityDetailsActivity extends BaseActivity{
         estdur = (EditText) findViewById(R.id.woactivity_estdur);
 
         ok = (Button) findViewById(R.id.woactivity_ok);
+        delete = (Button) findViewById(R.id.woactivity_delete);
     }
 
     @Override
@@ -108,6 +110,8 @@ public class WoactivityDetailsActivity extends BaseActivity{
         actfinish.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(okOnClickListener);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(deleteOnClickListener);
     }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
@@ -130,12 +134,32 @@ public class WoactivityDetailsActivity extends BaseActivity{
                 woactivity.setActstart(actstart.getText().toString());
                 woactivity.setActfinish(actfinish.getText().toString());
                 woactivity.estdur = estdur.getText().toString();
-                woactivity.type = "update";
-                intent.putExtra("woactivity",woactivity);
+                if(woactivity.type==null||!woactivity.type.equals("add")) {
+                    woactivity.type = "update";
+                }
+                intent.putExtra("woactivity", woactivity);
             }
             intent.putExtra("position",position);
             WoactivityDetailsActivity.this.setResult(4,intent);
             finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(woactivity.type!=null&&woactivity.type.equals("add")){//本地新增任务
+                intent.putExtra("position",position);
+                WoactivityDetailsActivity.this.setResult(7, intent);
+                finish();
+            }else if (woactivity.type==null){//服务器接收的任务
+                woactivity.type = "delete";
+                intent.putExtra("woactivity", woactivity);
+                intent.putExtra("position",position);
+                WoactivityDetailsActivity.this.setResult(8,intent);
+                finish();
+            }
         }
     };
 

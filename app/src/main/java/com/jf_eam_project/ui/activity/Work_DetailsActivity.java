@@ -61,6 +61,10 @@ public class Work_DetailsActivity extends BaseActivity {
      */
     private TextView titlename;
     /**
+     * 编辑*
+     */
+    private ImageView editImageView;
+    /**
      * 菜单按钮*
      */
     private ImageView menuImageView;
@@ -119,6 +123,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
     private Button revise;//修改
     private Button wfservice;//工作流
+    private LinearLayout confirmBtn;
     private String reviseresult;
 
     private BaseAnimatorSet mBasIn;
@@ -145,6 +150,7 @@ public class Work_DetailsActivity extends BaseActivity {
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
+        editImageView = (ImageView) findViewById(R.id.title_edit);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         wonum = (TextView) findViewById(R.id.work_wonum);
@@ -171,6 +177,7 @@ public class Work_DetailsActivity extends BaseActivity {
         reportedby = (TextView) findViewById(R.id.work_reportedby);
         reportdate = (TextView) findViewById(R.id.work_reportdate);
 
+        confirmBtn = (LinearLayout) findViewById(R.id.buttom_layout);
         revise = (Button) findViewById(R.id.work_revise);
         wfservice = (Button) findViewById(R.id.wfservice);
     }
@@ -181,7 +188,8 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setOnClickListener(editImageViewOnClickListener);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,6 +222,21 @@ public class Work_DetailsActivity extends BaseActivity {
         reportedby.setText(workOrder.reportedby);
         reportdate.setText(workOrder.reportdate);
 
+        description.setFocusable(false);
+        description.setFocusableInTouchMode(false);
+        udwotype.setEnabled(false);
+        assetnum.setEnabled(false);
+        location.setEnabled(false);
+        lctype.setEnabled(false);
+        failurecode.setEnabled(false);
+        problemcode.setEnabled(false);
+        jpnum.setEnabled(false);
+        targstartdate.setEnabled(false);
+        targcompdate.setEnabled(false);
+        actstart.setEnabled(false);
+        actfinish.setEnabled(false);
+
+
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         setDataListener();
@@ -239,6 +262,32 @@ public class Work_DetailsActivity extends BaseActivity {
 
     }
 
+    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            confirmBtn.setVisibility(View.VISIBLE);
+            statusEdit();
+        }
+    };
+
+    /**
+     * 设置状态编辑*
+     */
+    private void statusEdit() {
+        description.setFocusable(true);
+        description.setFocusableInTouchMode(true);
+        udwotype.setEnabled(true);
+        assetnum.setEnabled(true);
+        location.setEnabled(true);
+        lctype.setEnabled(true);
+        failurecode.setEnabled(true);
+        problemcode.setEnabled(true);
+        jpnum.setEnabled(true);
+        targstartdate.setEnabled(true);
+        targcompdate.setEnabled(true);
+        actstart.setEnabled(true);
+        actfinish.setEnabled(true);
+    }
 
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
         @Override
@@ -364,11 +413,6 @@ public class Work_DetailsActivity extends BaseActivity {
                     @Override
                     public void onBtnClick() {
                         getwfstatus(isok,"不通过");
-//                        if (isstart) {
-//                            wfstart(workOrder.wonum);
-//                        } else {
-//                            wfgoon(workOrder.wonum, isok ? "1" : "0", isok ? "通过" : "不通过");
-//                        }
                         dialog.dismiss();
                     }
                 }
@@ -393,11 +437,6 @@ public class Work_DetailsActivity extends BaseActivity {
                     public void onBtnClick(String text) {
                         getwfstatus(isok,text);
                         dialog.dismiss();
-//                        if (isstart) {
-//                            wfstart(workOrder.wonum);
-//                        } else {
-//                            wfgoon(workOrder.wonum, isok ? "1" : "0", text);
-//                        }
                     }
                 },
                 new OnBtnEditClickL() {
@@ -424,12 +463,11 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-                if (!result.equals("N")) {
+                if (result!=null&&result.equals("Y")) {
                     wfstart(workOrder.wonum);
-                } else {
+                } else if(result!=null&&result.equals("N")){
                     wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
                 }
-                Log.i(TAG, "data=" + result);
             }
 
             @Override

@@ -28,6 +28,7 @@ import java.util.List;
 public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.ViewHolder> {
     Work_PlanActivity mContext;
     public ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
+    public ArrayList<Wpmaterial> deleteList = new ArrayList<>();
 
     public WpmaterialAdapter(Work_PlanActivity context) {
         this.mContext = context;
@@ -135,5 +136,16 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
     public void adddate(Wpmaterial wpmaterial) {
         wpmaterialList.add(wpmaterial);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Wpmaterial> getList(){
+        ArrayList<Wpmaterial> list = new ArrayList<>();
+        if(wpmaterialList.size()!=0){
+            list.addAll(wpmaterialList);
+        }
+        if (deleteList.size()!=0){
+            list.addAll(deleteList);
+        }
+        return list;
     }
 }

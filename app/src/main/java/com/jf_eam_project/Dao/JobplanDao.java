@@ -85,7 +85,7 @@ public class JobplanDao {
      */
     public List<Jobplan> queryByJobplan(String jpnum){
         try {
-            return JobplanDaoOpe.queryBuilder().where().like("jpnum", jpnum).query();
+            return JobplanDaoOpe.queryBuilder().where().like("jpnum", "%"+jpnum+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

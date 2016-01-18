@@ -85,7 +85,7 @@ public class FailurecodeDao {
      */
     public List<Failurecode> queryByFailurecode(String failurecode){
         try {
-            return FailurecodeDaoOpe.queryBuilder().where().like("failurecode",failurecode).query();
+            return FailurecodeDaoOpe.queryBuilder().where().like("failurecode","%"+failurecode+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -27,6 +27,7 @@ import java.util.List;
 public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.ViewHolder> {
     Work_PlanActivity mContext;
     public ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    public ArrayList<Woactivity> deleteList = new ArrayList<>();
 
     public WoactivityAdapter(Work_PlanActivity context) {
         this.mContext = context;
@@ -42,6 +43,7 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Woactivity woactivity = woactivityList.get(position);
+
         holder.itemNumTitle.setText("任务:");
         holder.itemDescTitle.setText("摘要:");
         holder.itemNum.setText(woactivity.taskid);
@@ -57,6 +59,11 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
                 mContext.startActivityForResult(intent, 4);
             }
         });
+        if(woactivity.type!=null&&woactivity.type.equals("delete")){
+            holder.cardView.setVisibility(View.GONE);
+            notifyDataSetChanged();
+        }
+
     }
 
     @Override
@@ -133,5 +140,16 @@ public class WoactivityAdapter extends RecyclerView.Adapter<WoactivityAdapter.Vi
     public void adddate(Woactivity woactivity) {
         woactivityList.add(woactivity);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Woactivity> getList(){
+        ArrayList<Woactivity> list = new ArrayList<>();
+        if(woactivityList.size()!=0) {
+            list.addAll(woactivityList);
+        }
+        if(deleteList.size()!=0) {
+            list.addAll(deleteList);
+        }
+        return list;
     }
 }

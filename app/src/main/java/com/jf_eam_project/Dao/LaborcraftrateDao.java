@@ -12,53 +12,50 @@ import java.util.concurrent.Callable;
 
 /**
  * Created by think on 2016/1/6.
- *员工工种表
+ * 员工工种表
  */
 public class LaborcraftrateDao {
     private Context context;
     private Dao<Laborcraftrate, Integer> LaborcraftrateDaoOpe;
     private DatabaseHelper helper;
 
-    public LaborcraftrateDao(Context context)
-    {
+    public LaborcraftrateDao(Context context) {
         this.context = context;
-        try
-        {
+        try {
             helper = DatabaseHelper.getHelper(context);
             LaborcraftrateDaoOpe = helper.getDao(Laborcraftrate.class);
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *更新位置信息
+     * 更新位置信息
+     *
      * @param list
      */
     public void create(final List<Laborcraftrate> list) {
-            try {
-                deleteall();
-                LaborcraftrateDaoOpe.callBatchTasks(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        for (Laborcraftrate laborcraftrate : list) {
-                            LaborcraftrateDaoOpe.createOrUpdate(laborcraftrate);
-                        }
-                        return null;
+        try {
+            deleteall();
+            LaborcraftrateDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Laborcraftrate laborcraftrate : list) {
+                        LaborcraftrateDaoOpe.createOrUpdate(laborcraftrate);
                     }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     /**
-     *
      * @return
      */
-    public List<Laborcraftrate> queryForAll(){
+    public List<Laborcraftrate> queryForAll() {
         try {
             return LaborcraftrateDaoOpe.queryForAll();
         } catch (SQLException e) {
@@ -70,7 +67,7 @@ public class LaborcraftrateDao {
     /**
      *
      */
-    public void deleteall(){
+    public void deleteall() {
         try {
             LaborcraftrateDaoOpe.delete(LaborcraftrateDaoOpe.queryForAll());
         } catch (SQLException e) {
@@ -80,13 +77,12 @@ public class LaborcraftrateDao {
 
 
     /**
-     *
      * @param laborcode
      * @return
      */
-    public List<Laborcraftrate> queryByLabor(String laborcode){
+    public List<Laborcraftrate> queryByLabor(String laborcode) {
         try {
-            return LaborcraftrateDaoOpe.queryBuilder().where().like("laborcode",laborcode).query();
+            return LaborcraftrateDaoOpe.queryBuilder().where().like("laborcode", "%" + laborcode + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,11 +90,10 @@ public class LaborcraftrateDao {
     }
 
     /**
-     *
      * @param craft
      * @return
      */
-    public List<Laborcraftrate> queryByCraft(String craft){
+    public List<Laborcraftrate> queryByCraft(String craft) {
         try {
             return LaborcraftrateDaoOpe.queryBuilder().where().eq("craft", craft).query();
         } catch (SQLException e) {
@@ -108,16 +103,15 @@ public class LaborcraftrateDao {
     }
 
     /**
-     *
      * @param labor
      * @return
      */
-    public boolean isexit(Laborcraftrate labor){
+    public boolean isexit(Laborcraftrate labor) {
         try {
-            List<Laborcraftrate>workOrderList = LaborcraftrateDaoOpe.queryBuilder().where().eq("location",labor.laborcode).query();
-            if(workOrderList.size()>0){
+            List<Laborcraftrate> workOrderList = LaborcraftrateDaoOpe.queryBuilder().where().eq("location", labor.laborcode).query();
+            if (workOrderList.size() > 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (SQLException e) {

@@ -120,7 +120,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("assignmentList", (Serializable) assignmentAdapter.assignmentList);
+            intent.putExtra("assignmentList", (Serializable) assignmentAdapter.getList());
             setResult(2000, intent);
             finish();
         }
@@ -190,9 +190,24 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             case 1://新增
                 if (data != null) {
                     Assignment assignment = (Assignment) data.getSerializableExtra("assignment");
-//                    assignmentList.add(assignment);
                     assignmentAdapter.adddate(assignment);
                     nodatalayout.setVisibility(View.GONE);
+                }
+                break;
+            case 2://本地任务分配删除
+                if(data != null){
+                    int position = data.getIntExtra("position", 0);
+                    assignmentAdapter.assignmentList.remove(position);
+                    assignmentAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 3://服务器任务分配删除
+                if(data != null){
+                    Assignment assignment1 = (Assignment) data.getSerializableExtra("assignment");
+                    int position = data.getIntExtra("position", 0);
+                    assignmentAdapter.deleteList.add(assignment1);
+                    assignmentAdapter.assignmentList.remove(position);
+                    assignmentAdapter.notifyDataSetChanged();
                 }
                 break;
             default:

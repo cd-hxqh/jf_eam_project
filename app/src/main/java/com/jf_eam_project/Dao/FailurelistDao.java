@@ -69,6 +69,19 @@ public class FailurelistDao {
 
     /**
      *
+     * @return
+     */
+    public List<Failurelist> queryByCodeForAll(String code){
+        try {
+            return FailurelistDaoOpe.queryBuilder().where().eq("failureclass",code).and().eq("type","问题").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *
      */
     public void deleteall(){
         try {
@@ -85,7 +98,7 @@ public class FailurelistDao {
      */
     public List<Failurelist> queryByFailurecode(String failurecode){
         try {
-            return FailurelistDaoOpe.queryBuilder().where().like("failurecode", failurecode).query();
+            return FailurelistDaoOpe.queryBuilder().where().like("failurecode", "%" + failurecode + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

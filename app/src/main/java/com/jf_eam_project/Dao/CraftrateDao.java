@@ -86,7 +86,7 @@ public class CraftrateDao {
      */
     public List<Craftrate> queryByCraft(String craft){
         try {
-            return CraftrateDaoOpe.queryBuilder().where().like("craft", craft).query();
+            return CraftrateDaoOpe.queryBuilder().where().like("craft", "%"+craft+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

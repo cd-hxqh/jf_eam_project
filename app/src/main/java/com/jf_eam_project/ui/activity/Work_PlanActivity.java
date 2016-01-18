@@ -139,9 +139,9 @@ public class Work_PlanActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("woactivityList", woactivityFragment.woactivityAdapter.woactivityList);
-            intent.putExtra("wplaborList", wplaborFragment.wplaborAdapter.wplaborList);
-            intent.putExtra("wpmaterialList", wpmaterialFragment.wpmaterialAdapter.wpmaterialList);
+            intent.putExtra("woactivityList", woactivityFragment.woactivityAdapter.getList());
+            intent.putExtra("wplaborList", wplaborFragment.wplaborAdapter.getList());
+            intent.putExtra("wpmaterialList", wpmaterialFragment.wpmaterialAdapter.getList());
             Work_PlanActivity.this.setResult(1000, intent);
             finish();
         }
@@ -314,7 +314,55 @@ public class Work_PlanActivity extends BaseActivity {
                     Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     int position = data.getIntExtra("position",0);
 //                    wpmaterialList.set(position,wpmaterial);
-                    wpmaterialFragment.wpmaterialAdapter.wpmaterialList.set(position,wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.wpmaterialList.set(position, wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 7://本地任务删除
+                if (data != null){
+                    int position = data.getIntExtra("position",0);
+                    woactivityFragment.woactivityAdapter.woactivityList.remove(position);
+                    woactivityFragment.woactivityAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 8://服务器任务删除操作
+                if (data != null){
+                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                    int position = data.getIntExtra("position",0);
+                    woactivityFragment.woactivityAdapter.deleteList.add(woactivity);
+                    woactivityFragment.woactivityAdapter.woactivityList.remove(position);
+                    woactivityFragment.woactivityAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 9://本地员工删除
+                if (data != null) {
+                    int position = data.getIntExtra("position", 0);
+                    wplaborFragment.wplaborAdapter.wplaborList.remove(position);
+                    wplaborFragment.wplaborAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 10://服务器员工删除
+                if(data != null){
+                    Wplabor wplabor = (Wplabor) data.getSerializableExtra("wplabor");
+                    int position = data.getIntExtra("position",0);
+                    wplaborFragment.wplaborAdapter.deleteList.add(wplabor);
+                    wplaborFragment.wplaborAdapter.wplaborList.remove(position);
+                    wplaborFragment.wplaborAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 11://本地物料删除
+                if(data != null){
+                    int position = data.getIntExtra("position", 0);
+                    wpmaterialFragment.wpmaterialAdapter.wpmaterialList.remove(position);
+                    wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
+                }
+                break;
+            case 12://服务器物料删除
+                if(data != null){
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
+                    int position = data.getIntExtra("position",0);
+                    wpmaterialFragment.wpmaterialAdapter.deleteList.add(wpmaterial);
+                    wpmaterialFragment.wpmaterialAdapter.wpmaterialList.remove(position);
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 break;

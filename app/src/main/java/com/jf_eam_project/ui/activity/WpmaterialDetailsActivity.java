@@ -55,6 +55,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
     private TextView requestby;//请求者
     private TextView requiredate;//要求日期
     private Button ok;//确认
+    private Button delete;//删除
 
 //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private int position;
@@ -99,6 +100,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         requiredate = (TextView) findViewById(R.id.wpmaterial_requiredate);
 
         ok = (Button) findViewById(R.id.wpmaterial_ok);
+        delete = (Button) findViewById(R.id.wpmaterial_delete);
     }
 
     @Override
@@ -129,6 +131,8 @@ public class WpmaterialDetailsActivity extends BaseActivity{
         requiredate.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(okOnClickListener);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(deleteOnClickListener);
     }
 
 //    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {
@@ -186,12 +190,32 @@ public class WpmaterialDetailsActivity extends BaseActivity{
                 wpmaterial.storelocsite = storelocsite.getText().toString();
                 wpmaterial.requestby = requestby.getText().toString();
                 wpmaterial.requiredate = requiredate.getText().toString();
-                wpmaterial.type = "update";
+                if(wpmaterial.type==null||!wpmaterial.type.equals("add")) {
+                    wpmaterial.type = "update";
+                }
             }
             intent.putExtra("wpmaterial",wpmaterial);
             intent.putExtra("position",position);
             WpmaterialDetailsActivity.this.setResult(6,intent);
             finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(wpmaterial.type!=null&&wpmaterial.type.equals("add")){//本地新增任务
+                intent.putExtra("position",position);
+                WpmaterialDetailsActivity.this.setResult(11, intent);
+                finish();
+            }else if (wpmaterial.type==null){//服务器接收的任务
+                wpmaterial.type = "delete";
+                intent.putExtra("wpmaterial", wpmaterial);
+                intent.putExtra("position",position);
+                WpmaterialDetailsActivity.this.setResult(12,intent);
+                finish();
+            }
         }
     };
 
