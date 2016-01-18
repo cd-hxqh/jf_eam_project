@@ -17,6 +17,7 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
+import com.umeng.update.UmengUpdateAgent;
 
 
 /**
@@ -46,6 +47,7 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        setUmeng();
 
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
                 .getDeviceId();
@@ -53,6 +55,13 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
         findViewById();
         initView();
     }
+
+    private void setUmeng() {
+        UmengUpdateAgent.update(this);
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.setDeltaUpdate(true);
+    }
+
     @Override
     protected void findViewById() {
         mUsername = (EditText) findViewById(R.id.user_login_id);

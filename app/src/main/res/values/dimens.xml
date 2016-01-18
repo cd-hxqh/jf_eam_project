@@ -22,4 +22,6 @@
     <dimen name="dimens_5">5dp</dimen>
     <dimen name="dimens_10dp">10dp</dimen>
     <dimen name="dimens_18sp">18sp</dimen>
+
+    <dimen name="text_size_small">14sp</dimen>
 </resources>
