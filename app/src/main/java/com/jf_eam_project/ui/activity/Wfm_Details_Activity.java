@@ -31,6 +31,7 @@ import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Wfassignment;
+import com.jf_eam_project.utils.MessageUtils;
 
 /**
  * 流程审批详情
@@ -250,11 +251,17 @@ public class Wfm_Details_Activity extends BaseActivity {
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
+                Log.i(TAG,"result="+result);
                 if (result != null && result.equals("Y")) {
 //                    wfstart(workOrder.wonum);
+                    MessageUtils.showMiddleToast(Wfm_Details_Activity.this,"流程审批成功");
+                    finish();
                 } else if (result != null && result.equals("N")) {
 //                    wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
+                    MessageUtils.showMiddleToast(Wfm_Details_Activity.this,"流程审批成功");
+                    finish();
                 }
+
             }
 
             @Override
