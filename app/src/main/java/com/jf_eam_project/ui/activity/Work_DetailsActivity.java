@@ -650,7 +650,7 @@ public class Work_DetailsActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-        if (workOrder.status.equals(Constants.APPROVALED)) {
+        if (workOrder.status.equals(Constants.APPROVALED)||workOrder.status.equals(Constants.APPDONE)) {
             realinfoLinearLayout.setVisibility(View.VISIBLE);
         }else {
             realinfoLinearLayout.setVisibility(View.GONE);

@@ -105,18 +105,17 @@ public class LabtransDetailsActivity extends BaseActivity{
             }
         });
 
-//        taskid.setText(labtrans.taskid);
         laborcode.setText(labtrans.laborcode);
         craft.setText(labtrans.craft);
-//        payrate.setText(labtrans.payrate);
         startdate.setText(labtrans.startdate);
         regularhrs.setText(labtrans.regularhrs);
 
-//        mBasIn = new BounceTopEnter();
-//        mBasOut = new SlideBottomExit();
-//        addTaskData();
+        laborcode.setEnabled(false);
+        craft.setEnabled(false);
+        startdate.setEnabled(false);
+        regularhrs.setEnabled(false);
+
         setDataListener();
-//        taskid.setOnClickListener(taskidlayoutOnClickListener);
         laborcode.setOnClickListener(new LayoutOnClickListener(Constants.LABORCRAFTRATE));
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         startdate.setOnClickListener(new MydateListener());
@@ -130,23 +129,6 @@ public class LabtransDetailsActivity extends BaseActivity{
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if (!labtrans.laborcode.equals(laborcode.getText().toString())
-                    || !labtrans.craft.equals(craft.getText().toString())
-//                    || !labtrans.payrate.equals(payrate.getText().toString())
-                    || !labtrans.startdate.equals(startdate.getText().toString())
-                    || !labtrans.regularhrs.equals(regularhrs.getText().toString())) {
-                labtrans = new Labtrans();
-//                labtrans.taskid = taskid.getText().toString();
-                labtrans.laborcode = laborcode.getText().toString();
-                labtrans.craft = craft.getText().toString();
-//                labtrans.payrate = payrate.getText().toString();
-                labtrans.startdate = startdate.getText().toString();
-                labtrans.regularhrs = regularhrs.getText().toString();
-            }
-            intent.putExtra("labtrans", labtrans);
-            intent.putExtra("position", position);
-            LabtransDetailsActivity.this.setResult(0, intent);
             finish();
         }
     };

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -35,7 +36,7 @@ import java.util.Calendar;
  * Created by think on 2015/12/7.
  * 计划物料新增页面
  */
-public class WpmaterialAddNewActivity extends BaseActivity{
+public class WpmaterialAddNewActivity extends BaseActivity {
     private Wpmaterial wpmaterial;
 
     /**
@@ -83,6 +84,7 @@ public class WpmaterialAddNewActivity extends BaseActivity{
     private void geiIntentData() {
         woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
     }
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
@@ -166,19 +168,27 @@ public class WpmaterialAddNewActivity extends BaseActivity{
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            wpmaterial = new Wpmaterial();
+            if (itemnum.getText().toString().equals("")) {
+                Toast.makeText(WpmaterialAddNewActivity.this,"请输入项目",Toast.LENGTH_SHORT).show();
+            } else if (itemqty.getText().toString().equals("")) {
+                Toast.makeText(WpmaterialAddNewActivity.this,"请输入数量",Toast.LENGTH_SHORT).show();
+            } else if(location.getText().toString().equals("")){
+                Toast.makeText(WpmaterialAddNewActivity.this,"请输入库房",Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = getIntent();
+                wpmaterial = new Wpmaterial();
 //            wpmaterial.taskid = taskid.getText().toString();
-            wpmaterial.itemnum = itemnum.getText().toString();
-            wpmaterial.itemqty = itemqty.getText().toString();
-            wpmaterial.location = location.getText().toString();
-            wpmaterial.storelocsite = storelocsite.getText().toString();
-            wpmaterial.requestby = requestby.getText().toString();
-            wpmaterial.requiredate = requiredate.getText().toString();
-            wpmaterial.type = "add";
-            intent.putExtra("wpmaterial",wpmaterial);
-            WpmaterialAddNewActivity.this.setResult(2,intent);
-            finish();
+                wpmaterial.itemnum = itemnum.getText().toString();
+                wpmaterial.itemqty = itemqty.getText().toString();
+                wpmaterial.location = location.getText().toString();
+                wpmaterial.storelocsite = storelocsite.getText().toString();
+                wpmaterial.requestby = requestby.getText().toString();
+                wpmaterial.requiredate = requiredate.getText().toString();
+                wpmaterial.type = "add";
+                intent.putExtra("wpmaterial", wpmaterial);
+                WpmaterialAddNewActivity.this.setResult(2, intent);
+                finish();
+            }
         }
     };
 

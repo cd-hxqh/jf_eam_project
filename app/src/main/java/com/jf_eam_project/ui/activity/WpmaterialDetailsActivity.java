@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -176,28 +177,36 @@ public class WpmaterialDetailsActivity extends BaseActivity{
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if(!wpmaterial.itemnum.equals(itemnum.getText().toString())
-                    ||!wpmaterial.itemqty.equals(itemqty.getText().toString())
-                    ||!wpmaterial.location.equals(location.getText().toString())
-                    ||!wpmaterial.storelocsite.equals(storelocsite.getText().toString())
-                    ||!wpmaterial.requestby.equals(requestby.getText().toString())
-                    ||!wpmaterial.requiredate.equals(requiredate.getText().toString())) {
+            if (itemnum.getText().toString().equals("")) {
+                Toast.makeText(WpmaterialDetailsActivity.this, "请输入项目", Toast.LENGTH_SHORT).show();
+            } else if (itemqty.getText().toString().equals("")) {
+                Toast.makeText(WpmaterialDetailsActivity.this,"请输入数量",Toast.LENGTH_SHORT).show();
+            } else if(location.getText().toString().equals("")){
+                Toast.makeText(WpmaterialDetailsActivity.this,"请输入库房",Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = getIntent();
+                if (!wpmaterial.itemnum.equals(itemnum.getText().toString())
+                        || !wpmaterial.itemqty.equals(itemqty.getText().toString())
+                        || !wpmaterial.location.equals(location.getText().toString())
+                        || !wpmaterial.storelocsite.equals(storelocsite.getText().toString())
+                        || !wpmaterial.requestby.equals(requestby.getText().toString())
+                        || !wpmaterial.requiredate.equals(requiredate.getText().toString())) {
 //                wpmaterial.taskid = taskid.getText().toString();
-                wpmaterial.itemnum = itemnum.getText().toString();
-                wpmaterial.itemqty = itemqty.getText().toString();
-                wpmaterial.location = location.getText().toString();
-                wpmaterial.storelocsite = storelocsite.getText().toString();
-                wpmaterial.requestby = requestby.getText().toString();
-                wpmaterial.requiredate = requiredate.getText().toString();
-                if(wpmaterial.type==null||!wpmaterial.type.equals("add")) {
-                    wpmaterial.type = "update";
+                    wpmaterial.itemnum = itemnum.getText().toString();
+                    wpmaterial.itemqty = itemqty.getText().toString();
+                    wpmaterial.location = location.getText().toString();
+                    wpmaterial.storelocsite = storelocsite.getText().toString();
+                    wpmaterial.requestby = requestby.getText().toString();
+                    wpmaterial.requiredate = requiredate.getText().toString();
+                    if (wpmaterial.type == null || !wpmaterial.type.equals("add")) {
+                        wpmaterial.type = "update";
+                    }
                 }
+                intent.putExtra("wpmaterial", wpmaterial);
+                intent.putExtra("position", position);
+                WpmaterialDetailsActivity.this.setResult(6, intent);
+                finish();
             }
-            intent.putExtra("wpmaterial",wpmaterial);
-            intent.putExtra("position",position);
-            WpmaterialDetailsActivity.this.setResult(6,intent);
-            finish();
         }
     };
 

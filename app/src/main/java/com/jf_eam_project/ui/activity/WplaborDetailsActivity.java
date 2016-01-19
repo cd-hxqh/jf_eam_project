@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -134,21 +135,25 @@ public class WplaborDetailsActivity extends BaseActivity {
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if (!wplabor.craft.equals(craft.getText().toString())
-                    || !wplabor.quantity.equals(quantity.getText().toString())
-                    || !wplabor.laborhrs.equals(laborhrs.getText().toString())) {
-                wplabor.craft = craft.getText().toString();
-                wplabor.quantity = quantity.getText().toString();
-                wplabor.laborhrs = laborhrs.getText().toString();
-                if(wplabor.type==null||!wplabor.type.equals("add")) {
-                    wplabor.type = "update";
+            if(quantity.getText().toString().equals("")){
+                Toast.makeText(WplaborDetailsActivity.this, "请输入数量", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = getIntent();
+                if (!wplabor.craft.equals(craft.getText().toString())
+                        || !wplabor.quantity.equals(quantity.getText().toString())
+                        || !wplabor.laborhrs.equals(laborhrs.getText().toString())) {
+                    wplabor.craft = craft.getText().toString();
+                    wplabor.quantity = quantity.getText().toString();
+                    wplabor.laborhrs = laborhrs.getText().toString();
+                    if (wplabor.type == null || !wplabor.type.equals("add")) {
+                        wplabor.type = "update";
+                    }
                 }
+                intent.putExtra("wplabor", wplabor);
+                intent.putExtra("position", position);
+                WplaborDetailsActivity.this.setResult(5, intent);
+                finish();
             }
-            intent.putExtra("wplabor", wplabor);
-            intent.putExtra("position", position);
-            WplaborDetailsActivity.this.setResult(5, intent);
-            finish();
         }
     };
 

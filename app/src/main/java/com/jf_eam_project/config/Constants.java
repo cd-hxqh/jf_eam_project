@@ -200,6 +200,7 @@ public class Constants {
 
     public static final String WAIT_APPROVAL = "等待核准";
     public static final String APPROVALED = "已核准";
+    public static final String APPDONE = "完成";
 
     /**设置数据库参数-开始**/
     /**
