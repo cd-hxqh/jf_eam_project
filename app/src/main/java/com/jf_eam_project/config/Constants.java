@@ -238,4 +238,8 @@ public class Constants {
     public static final int ENTRANCE_1=1000;
     public static final int ENTRANCE_2=1001;
 
+    /**修改**/
+    public static final int MODIFICATION_MARK=10001;
+    /**删除**/
+    public static final int DELETE_MARK=10002;
 }

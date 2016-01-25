@@ -351,8 +351,11 @@
                     android:gravity="center"
                     android:text="@string/confirm_btn"
                     android:textColor="@color/white"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    />
             </LinearLayout>
+
+
 
 
         </LinearLayout>

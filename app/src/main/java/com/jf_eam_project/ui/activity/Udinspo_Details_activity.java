@@ -86,7 +86,10 @@ public class Udinspo_Details_activity extends BaseActivity {
     private TextView lastrundateText; //本次生成日期
     private TextView nextrundateText; //下次运行时间
 
+
+
     private Button confirmBtn; //确认
+
 
 
     private Udinspo udinspo;
@@ -189,6 +192,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         inspodateText.setOnClickListener(inspodateOnClickListener);
 
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
+
     }
 
 
@@ -343,6 +347,15 @@ public class Udinspo_Details_activity extends BaseActivity {
             showPopupWindow(menuImageView);
         }
     };
+
+    /**删除操作**/
+    private View.OnClickListener deleteBtnOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
 
     /**
      * 显示PopupWindow*

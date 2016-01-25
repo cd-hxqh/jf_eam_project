@@ -90,6 +90,15 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
      * 保存按钮*
      */
     private Button submitBtn;
+    /**
+     * 删除*
+     */
+    private Button deleteBtn;
+
+    /**
+     * 判断修改与删除标识*
+     */
+    private int mark;
 
 
     private ProgressDialog mProgressDialog;
@@ -131,6 +140,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
 
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
+        deleteBtn = (Button) findViewById(R.id.delete_btn_id);
 
     }
 
@@ -166,6 +176,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         assetnumText.setOnClickListener(assetnumOnClickListener);
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
+        deleteBtn.setOnClickListener(deleteBtnOnClickListener);
 
 
         mBasIn = new BounceTopEnter();
@@ -177,6 +188,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         @Override
         public void onClick(View v) {
             submitBtn.setVisibility(View.VISIBLE);
+            deleteBtn.setVisibility(View.VISIBLE);
             //设置编辑状态
             statusEdit();
         }
@@ -199,18 +211,29 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            encapsulationData();
+            mark = Constants.MODIFICATION_MARK;
+            encapsulationData("确定更新巡检备件吗？", "数据提交中...");
         }
     };
 
+    /**
+     * 删除按钮*
+     */
+    private View.OnClickListener deleteBtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mark = Constants.DELETE_MARK;
+            encapsulationData("确定删除巡检备件吗？", "数据删除中...");
+        }
+    };
 
     /**
      * 数据封装*
      */
-    private void encapsulationData() {
+    private void encapsulationData(String message, final String progress) {
 
         final NormalDialog dialog = new NormalDialog(Udinspoasset_Details_Activity.this);
-        dialog.content("确定更新巡检单吗？")//
+        dialog.content(message)//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -227,7 +250,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("数据提交中...");
+                        showProgressDialog(progress);
                         startAsyncTask();
                         dialog.dismiss();
                     }
@@ -244,7 +267,11 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
             protected String doInBackground(String... strings) {
                 String data = null;
                 try {
-                    data = submitBtn();
+                    if (mark == Constants.MODIFICATION_MARK) {
+                        data = submitBtn();
+                    } else if (mark == Constants.DELETE_MARK) {
+                        data = deleteBtn();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -264,16 +291,19 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
                     String success = jsonObject.getString("status");
                     String errorNo = jsonObject.getString("errorNo");
                     if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新成功");
+                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据操作成功");
                         setResult(Constants.REFRESH);
                         finish();
                     } else {
-                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据更新失败");
+                        MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据操作失败");
                         setResult(Constants.REFRESH);
                         finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    MessageUtils.showMiddleToast(Udinspoasset_Details_Activity.this, "数据操作失败");
+                    setResult(Constants.REFRESH);
+                    finish();
                 }
 
 
@@ -319,6 +349,20 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         return jsonObject.toString();
     }
 
+    /**
+     * 删除数据*
+     */
+    private String deleteBtn() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("UDINSPOASSETNUM", udinspoasset.udinspoassetnum);
+        json.put("TYPE", Constants.DELETE);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CHILDREN", jsonUdinPoAssetInfo(json.toString()));
+
+
+        return jsonObject.toString();
+    }
+
 
     /**
      * 封装udinspoAsset信息*
@@ -330,7 +374,6 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         try {
             json3 = "[" + str + "]";
 
-            Log.i(TAG, "json3=" + json3);
             jsonArray = new JSONArray(json3);
         } catch (JSONException e) {
             e.printStackTrace();
