@@ -68,6 +68,21 @@ public class CraftrateDao {
     }
 
     /**
+     *分页查询
+     * @param count
+     * @param craft
+     * @return
+     */
+    public List<Craftrate> queryByCount(int count,String craft){
+        try {
+            return CraftrateDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("craft", "%"+craft+"%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall(){

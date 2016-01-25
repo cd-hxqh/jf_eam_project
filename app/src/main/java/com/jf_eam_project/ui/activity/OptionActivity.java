@@ -51,7 +51,7 @@ import java.util.List;
  * Created by think on 2015/12/28.
  * 通用选项查询界面
  */
-public class OptionActivity extends BaseActivity {
+public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private static final String TAG = "OptionActivity";
     /**
      * 标题*
@@ -72,6 +72,9 @@ public class OptionActivity extends BaseActivity {
     ArrayList<Option> list;
 
     private String CraftSearch;
+
+    private SwipeRefreshLayout refresh_layout = null;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class OptionActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
+        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
     }
 
     @Override
@@ -118,6 +122,13 @@ public class OptionActivity extends BaseActivity {
         optionAdapter = new OptionAdapter(this);
         recyclerView.setAdapter(optionAdapter);
 
+        refresh_layout.setColor(R.color.holo_blue_bright,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setOnRefreshListener(this);
+        refresh_layout.setOnLoadListener(this);
         setSearchEdit();
         getData(searchText);
     }
@@ -139,6 +150,8 @@ public class OptionActivity extends BaseActivity {
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
+                    optionAdapter = new OptionAdapter(OptionActivity.this);
+                    recyclerView.setAdapter(optionAdapter);
                     getData(searchText);
                     return true;
                 }
@@ -153,11 +166,11 @@ public class OptionActivity extends BaseActivity {
         switch (requestCode) {
             case Constants.ASSETCODE:
                 List<Assets> assets;
-                if (searchText.equals("")) {
-                    assets = new AssetDao(OptionActivity.this).queryForAll();
-                } else {
-                    assets = new AssetDao(OptionActivity.this).queryByNum(searchText);
-                }
+//                if (searchText.equals("")) {
+                assets = new AssetDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    assets = new AssetDao(OptionActivity.this).queryByNum(searchText);
+//                }
                 for (int i = 0; i < assets.size(); i++) {
                     option = new Option();
                     option.setName(assets.get(i).assetnum);
@@ -168,11 +181,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.LOCATIONCODE:
                 List<Location> locations;
-                if (searchText.equals("")) {
-                    locations = new LocationDao(OptionActivity.this).queryForAll();
-                } else {
-                    locations = new LocationDao(OptionActivity.this).queryByLocation(searchText);
-                }
+//                if (searchText.equals("")) {
+                locations = new LocationDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    locations = new LocationDao(OptionActivity.this).queryByLocation(searchText);
+//                }
                 for (int i = 0; i < locations.size(); i++) {
                     option = new Option();
                     option.setName(locations.get(i).location);
@@ -182,11 +195,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.FAILURECODE:
                 List<Failurecode> failurecodes;
-                if (searchText.equals("")) {
-                    failurecodes = new FailurecodeDao(OptionActivity.this).queryForAll();
-                } else {
-                    failurecodes = new FailurecodeDao(OptionActivity.this).queryByFailurecode(searchText);
-                }
+//                if (searchText.equals("")) {
+                failurecodes = new FailurecodeDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    failurecodes = new FailurecodeDao(OptionActivity.this).queryByFailurecode(searchText);
+//                }
                 for (int i = 0; i < failurecodes.size(); i++) {
                     option = new Option();
                     option.setName(failurecodes.get(i).failurecode);
@@ -196,11 +209,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.FAILURELIST:
                 List<Failurelist> failurelists;
-                if (searchText.equals("")) {
-                    failurelists = new FailurelistDao(OptionActivity.this).queryForAll();
-                } else {
-                    failurelists = new FailurelistDao(OptionActivity.this).queryByFailurecode(searchText);
-                }
+//                if (searchText.equals("")) {
+                failurelists = new FailurelistDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    failurelists = new FailurelistDao(OptionActivity.this).queryByFailurecode(searchText);
+//                }
                 for (int i = 0; i < failurelists.size(); i++) {
                     option = new Option();
                     option.setName(failurelists.get(i).failurecode);
@@ -210,11 +223,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.JOBPLAN:
                 List<Jobplan> jobplans;
-                if (searchText.equals("")) {
-                    jobplans = new JobplanDao(OptionActivity.this).queryForAll();
-                } else {
-                    jobplans = new JobplanDao(OptionActivity.this).queryByJobplan(searchText);
-                }
+//                if (searchText.equals("")) {
+                jobplans = new JobplanDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    jobplans = new JobplanDao(OptionActivity.this).queryByJobplan(searchText);
+//                }
                 for (int i = 0; i < jobplans.size(); i++) {
                     option = new Option();
                     option.setName(jobplans.get(i).jpnum);
@@ -224,11 +237,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.CRAFTRATE:
                 List<Craftrate> craftrates;
-                if (searchText.equals("")) {
-                    craftrates = new CraftrateDao(OptionActivity.this).queryForAll();
-                } else {
-                    craftrates = new CraftrateDao(OptionActivity.this).queryByCraft(searchText);
-                }
+//                if (searchText.equals("")) {
+                craftrates = new CraftrateDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    craftrates = new CraftrateDao(OptionActivity.this).queryByCraft(searchText);
+//                }
                 for (int i = 0; i < craftrates.size(); i++) {
                     option = new Option();
                     option.setName(craftrates.get(i).craft);
@@ -238,11 +251,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.ITEM:
                 List<Item> items;
-                if (searchText.equals("")) {
-                    items = new ItemDao(OptionActivity.this).queryForAll();
-                } else {
-                    items = new ItemDao(OptionActivity.this).queryByItem(searchText);
-                }
+//                if (searchText.equals("")) {
+                items = new ItemDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    items = new ItemDao(OptionActivity.this).queryByItem(searchText);
+//                }
                 for (int i = 0; i < items.size(); i++) {
                     option = new Option();
                     option.setName(items.get(i).itemnum);
@@ -252,11 +265,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.LOCATIONSCODE:
                 List<Location> locationses;
-                if (searchText.equals("")) {
-                    locationses = new LocationDao(OptionActivity.this).queryForLocations();
-                } else {
-                    locationses = new LocationDao(OptionActivity.this).queryByLocations(searchText);
-                }
+//                if (searchText.equals("")) {
+                locationses = new LocationDao(OptionActivity.this).queryByCountForLocations(page, searchText);
+//                } else {
+//                    locationses = new LocationDao(OptionActivity.this).queryByLocations(searchText);
+//                }
                 for (int i = 0; i < locationses.size(); i++) {
                     option = new Option();
                     option.setName(locationses.get(i).location);
@@ -267,11 +280,11 @@ public class OptionActivity extends BaseActivity {
 
             case Constants.PERSON:
                 List<Person> persons;
-                if (searchText.equals("")) {
-                    persons = new PersonDao(OptionActivity.this).queryForAll();
-                } else {
-                    persons = new PersonDao(OptionActivity.this).queryByPerson(searchText);
-                }
+//                if (searchText.equals("")) {
+                persons = new PersonDao(OptionActivity.this).queryByCount(page, searchText);
+//                } else {
+//                    persons = new PersonDao(OptionActivity.this).queryByPerson(searchText);
+//                }
                 for (int i = 0; i < persons.size(); i++) {
                     option = new Option();
                     option.setName(persons.get(i).personid);
@@ -283,12 +296,11 @@ public class OptionActivity extends BaseActivity {
                 break;
             case Constants.LABORCRAFTRATE:
                 List<Laborcraftrate> laborcraftrates;
-                if (searchText.equals("") && CraftSearch.equals("")) {
-                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryForAll();
-                } else if (searchText.equals("") && !CraftSearch.equals("")) {
-                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByCraft(CraftSearch);
+
+                if (searchText.equals("") && !CraftSearch.equals("")) {
+                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByCraft(page, searchText, CraftSearch);
                 } else {
-                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByLabor(searchText);
+                    laborcraftrates = new LaborcraftrateDao(OptionActivity.this).queryByCount(page, searchText);
                 }
                 for (int i = 0; i < laborcraftrates.size(); i++) {
                     option = new Option();
@@ -298,11 +310,17 @@ public class OptionActivity extends BaseActivity {
                 }
                 break;
         }
-        optionAdapter.update(list, true);
+        if (page == 1) {
+            optionAdapter = new OptionAdapter(OptionActivity.this);
+            recyclerView.setAdapter(optionAdapter);
+        }
+        optionAdapter.adddate(list);
         if (optionAdapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
+        refresh_layout.setLoading(false);
+        refresh_layout.setRefreshing(false);
     }
 
     public void responseData(Option option) {
@@ -310,5 +328,19 @@ public class OptionActivity extends BaseActivity {
         intent.putExtra("option", option);
         OptionActivity.this.setResult(requestCode, intent);
         finish();
+    }
+
+    //下拉刷新触发事件
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData(searchText);
+    }
+
+    //上拉加载
+    @Override
+    public void onLoad() {
+        page++;
+        getData(searchText);
     }
 }

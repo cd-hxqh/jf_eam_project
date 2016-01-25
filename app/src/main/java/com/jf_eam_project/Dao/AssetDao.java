@@ -12,55 +12,66 @@ import java.util.concurrent.Callable;
 
 /**
  * Created by think on 2015/12/28.
- *资产
+ * 资产
  */
 public class AssetDao {
     private Context context;
     private Dao<Assets, Integer> AssetDaoOpe;
     private DatabaseHelper helper;
 
-    public AssetDao(Context context)
-    {
+    public AssetDao(Context context) {
         this.context = context;
-        try
-        {
+        try {
             helper = DatabaseHelper.getHelper(context);
             AssetDaoOpe = helper.getDao(Assets.class);
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *更新位置信息
+     * 更新位置信息
+     *
      * @param list
      */
     public void create(final List<Assets> list) {
-            try {
-                deleteall();
-                AssetDaoOpe.callBatchTasks(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        for (Assets location : list) {
-                            AssetDaoOpe.createOrUpdate(location);
-                        }
-                        return null;
+        try {
+            deleteall();
+            AssetDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Assets location : list) {
+                        AssetDaoOpe.createOrUpdate(location);
                     }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     /**
+     * @return
+     */
+    public List<Assets> queryForAll() {
+        try {
+            return AssetDaoOpe.queryBuilder().limit(2000).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 分页查询
      *
      * @return
      */
-    public List<Assets> queryForAll(){
+    public List<Assets> queryByCount(int count,String assetnum) {
         try {
-            return AssetDaoOpe.queryForAll();
+            return AssetDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("assetnum", "%" + assetnum + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,7 +81,7 @@ public class AssetDao {
     /**
      *
      */
-    public void deleteall(){
+    public void deleteall() {
         try {
             AssetDaoOpe.delete(AssetDaoOpe.queryForAll());
         } catch (SQLException e) {
@@ -79,13 +90,12 @@ public class AssetDao {
     }
 
     /**
-     *
      * @param assetnum
      * @return
      */
-    public List<Assets> queryByNum(String assetnum){
+    public List<Assets> queryByNum(String assetnum) {
         try {
-            return AssetDaoOpe.queryBuilder().where().like("assetnum", "%"+assetnum+"%").query();
+            return AssetDaoOpe.queryBuilder().where().like("assetnum", "%" + assetnum + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,17 +103,16 @@ public class AssetDao {
     }
 
     /**
-     *
      * @param asset
      * @return
      */
-    public boolean isexit(Assets asset){
+    public boolean isexit(Assets asset) {
         try {
-            List<Assets>workOrderList = AssetDaoOpe.queryBuilder().where().eq("assetnum",asset.assetnum)
-                    .and().eq("description",asset.description).query();
-            if(workOrderList.size()>0){
+            List<Assets> workOrderList = AssetDaoOpe.queryBuilder().where().eq("assetnum", asset.assetnum)
+                    .and().eq("description", asset.description).query();
+            if (workOrderList.size() > 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (SQLException e) {

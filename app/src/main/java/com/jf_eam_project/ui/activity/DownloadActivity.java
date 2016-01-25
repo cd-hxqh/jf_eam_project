@@ -3,6 +3,8 @@ package com.jf_eam_project.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +49,10 @@ import java.util.List;
  * Created by think on 2015/12/25.
  * 基础数据下载页面
  */
-public class DownloadActivity extends BaseActivity{
+public class DownloadActivity extends BaseActivity {
 
-    private static final String TAG="DownloadActivity";
+    private static final String TAG = "DownloadActivity";
+    private static final int START = 0;
     /**
      * 标题*
      */
@@ -65,6 +68,52 @@ public class DownloadActivity extends BaseActivity{
     List<List<String>> childArray = new ArrayList<List<String>>();
 
     private ProgressDialog mProgressDialog;
+    private boolean isAll = false;
+    private int count = 0;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case START:
+                    if (count < 10) {
+                        mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
+                                getString(R.string.downloading1)+childArray.get(0).get(count), true, true);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setCancelable(false);
+                        if (count == 0) {//位置
+                            downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME),childArray.get(0).get(count));
+                        } else if (count == 1) {//资产
+                            downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), childArray.get(0).get(count));
+                        } else if (count == 2) {//故障类
+                            downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURECODE_NAME), childArray.get(0).get(count));
+                        } else if (count == 3) {//问题代码
+                            downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURELIST_NAME), childArray.get(0).get(count));
+                        } else if (count == 4) {//作业计划
+                            downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.JOBPLAN_NAME), childArray.get(0).get(count));
+                        } else if (count == 5) {//人员
+                            downloaddata(HttpManager.getUrl(Constants.PERSON_APPID, Constants.PERSON_NAME), childArray.get(0).get(count));
+                        } else if (count == 6) {//员工
+                            downloaddata(HttpManager.getUrl(Constants.LABOR_APPID, Constants.LABOR_NAME), childArray.get(0).get(count));
+                        } else if (count == 7) {//工种
+                            downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID, Constants.CRAFTRATE_NAME), childArray.get(0).get(count));
+                        } else if (count == 8) {//项目
+                            downloaddata(HttpManager.getUrl(Constants.ITEM_APPID, Constants.ITEM_NAME), childArray.get(0).get(count));
+                        } else if (count == 9) {//员工工种
+                            downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), childArray.get(0).get(count));
+                        }
+                        count++;
+                    } else if (count == 10) {
+                        mProgressDialog.dismiss();
+                    }
+                    break;
+//                case F:
+//                    mProgressDialog.dismiss();
+//                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,6 +224,7 @@ public class DownloadActivity extends BaseActivity{
                 groupHolder = (GroupHolder) convertView.getTag();
             }
             groupHolder.groupText.setText(groupArray.get(groupPosition));
+            groupHolder.downAll.setOnClickListener(new downloadAll(groupPosition));
             return convertView;
         }
 
@@ -194,7 +244,7 @@ public class DownloadActivity extends BaseActivity{
             }
             itemHolder.childText.setText(childArray.get(groupPosition).get(
                     childPosition));
-            itemHolder.down.setOnClickListener(new DownloadOnclickListener(groupPosition,childPosition,itemHolder.down));
+            itemHolder.down.setOnClickListener(new DownloadOnclickListener(groupPosition, childPosition, itemHolder.down));
             return convertView;
         }
 
@@ -219,34 +269,36 @@ public class DownloadActivity extends BaseActivity{
         int group;
         int child;
         Button button;
-        private DownloadOnclickListener(int group,int child,Button button){
+
+        private DownloadOnclickListener(int group, int child, Button button) {
             this.group = group;
             this.child = child;
             this.button = button;
         }
+
         @Override
         public void onClick(View view) {
             String buttonText = childArray.get(group).get(child);
-            if(buttonText.equals(childArray.get(0).get(0))){//位置
-                downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID,Constants.LOCATION_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(1))){//资产
-                downloaddata(HttpManager.getUrl(Constants.ASSET_APPID,Constants.ASSET_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(2))){//故障类
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.FAILURECODE_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(3))){//问题代码
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.FAILURELIST_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID,Constants.JOBPLAN_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(5))){//人员
-                downloaddata(HttpManager.getUrl(Constants.PERSON_APPID,Constants.PERSON_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(6))){//员工
-                downloaddata(HttpManager.getUrl(Constants.LABOR_APPID,Constants.LABOR_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(7))){//工种
-                downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID,Constants.CRAFTRATE_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(8))){//项目
-                downloaddata(HttpManager.getUrl(Constants.ITEM_APPID,Constants.ITEM_NAME),buttonText,button);
-            }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
-                downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID,Constants.LABORCRAFTRATE_NAME),buttonText,button);
+            if (buttonText.equals(childArray.get(0).get(0))) {//位置
+                downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
+                downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURECODE_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURELIST_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
+                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.JOBPLAN_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
+                downloaddata(HttpManager.getUrl(Constants.PERSON_APPID, Constants.PERSON_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
+                downloaddata(HttpManager.getUrl(Constants.LABOR_APPID, Constants.LABOR_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
+                downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID, Constants.CRAFTRATE_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
+                downloaddata(HttpManager.getUrl(Constants.ITEM_APPID, Constants.ITEM_NAME), buttonText, button);
+            } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
+                downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), buttonText, button);
             }
             mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
                     getString(R.string.downloading), true, true);
@@ -255,42 +307,40 @@ public class DownloadActivity extends BaseActivity{
         }
     }
 
-    private void downloaddata(String url, final String buttonText, final Button button){
+    private void downloaddata(String url, final String buttonText, final Button button) {
         HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
-
-                Log.i(TAG,"data="+data);
-                if(data != null) {
+                if (data != null) {
                     try {
-                        if(buttonText.equals(childArray.get(0).get(0))) {//位置
+                        if (buttonText.equals(childArray.get(0).get(0))) {//位置
                             List<Location> locations = Ig_Json_Model.parsingLocation(data);
                             new LocationDao(DownloadActivity.this).create(locations);
-                        }else if(buttonText.equals(childArray.get(0).get(1))){//资产
+                        } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
                             List<Assets> assets = Ig_Json_Model.parsingAsset(data);
                             new AssetDao(DownloadActivity.this).create(assets);
-                        }else if(buttonText.equals(childArray.get(0).get(2))){//故障类
+                        } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
                             List<Failurecode> failurecodes = Ig_Json_Model.parsingFailurecode(data);
                             new FailurecodeDao(DownloadActivity.this).create(failurecodes);
-                        }else if(buttonText.equals(childArray.get(0).get(3))){//问题代码
+                        } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
                             List<Failurelist> failurelists = Ig_Json_Model.parsingFailurelist(data);
                             new FailurelistDao(DownloadActivity.this).create(failurelists);
-                        }else if(buttonText.equals(childArray.get(0).get(4))){//作业计划
+                        } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
                             List<Jobplan> jobplans = Ig_Json_Model.parsingJobplan(data);
                             new JobplanDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(5))){//人员
+                        } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
                             List<Person> jobplans = Ig_Json_Model.parsingPerson(data);
                             new PersonDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(6))){//员工
+                        } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
                             List<Labor> jobplans = Ig_Json_Model.parsingLabor(data);
                             new LaborDao(DownloadActivity.this).create(jobplans);
-                        }else if(buttonText.equals(childArray.get(0).get(7))){//工种
+                        } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
                             List<Craftrate> craftrates = Ig_Json_Model.parsingCraftrate(data);
                             new CraftrateDao(DownloadActivity.this).create(craftrates);
-                        }else if(buttonText.equals(childArray.get(0).get(8))){//项目
+                        } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
                             List<Item> craftrates = Ig_Json_Model.parsingItem(data);
                             new ItemDao(DownloadActivity.this).create(craftrates);
-                        }else if(buttonText.equals(childArray.get(0).get(9))){//员工工种
+                        } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
                             List<Laborcraftrate> craftrates = Ig_Json_Model.parsingLaborcraftrate(data);
                             new LaborcraftrateDao(DownloadActivity.this).create(craftrates);
                         }
@@ -299,8 +349,8 @@ public class DownloadActivity extends BaseActivity{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else {
-                    Toast.makeText(DownloadActivity.this,"下载数据出现问题",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DownloadActivity.this, "下载数据出现问题", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                 }
             }
@@ -312,10 +362,87 @@ public class DownloadActivity extends BaseActivity{
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(DownloadActivity.this,"下载失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DownloadActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
             }
 
         });
+    }
+
+    private void downloaddata(String url, final String buttonText) {
+        HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
+            @Override
+            public void onSuccess(String data) {
+                if (data != null) {
+                    try {
+                        if (buttonText.equals(childArray.get(0).get(0))) {//位置
+                            List<Location> locations = Ig_Json_Model.parsingLocation(data);
+                            new LocationDao(DownloadActivity.this).create(locations);
+                        } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
+                            List<Assets> assets = Ig_Json_Model.parsingAsset(data);
+                            new AssetDao(DownloadActivity.this).create(assets);
+                        } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
+                            List<Failurecode> failurecodes = Ig_Json_Model.parsingFailurecode(data);
+                            new FailurecodeDao(DownloadActivity.this).create(failurecodes);
+                        } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
+                            List<Failurelist> failurelists = Ig_Json_Model.parsingFailurelist(data);
+                            new FailurelistDao(DownloadActivity.this).create(failurelists);
+                        } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
+                            List<Jobplan> jobplans = Ig_Json_Model.parsingJobplan(data);
+                            new JobplanDao(DownloadActivity.this).create(jobplans);
+                        } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
+                            List<Person> jobplans = Ig_Json_Model.parsingPerson(data);
+                            new PersonDao(DownloadActivity.this).create(jobplans);
+                        } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
+                            List<Labor> jobplans = Ig_Json_Model.parsingLabor(data);
+                            new LaborDao(DownloadActivity.this).create(jobplans);
+                        } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
+                            List<Craftrate> craftrates = Ig_Json_Model.parsingCraftrate(data);
+                            new CraftrateDao(DownloadActivity.this).create(craftrates);
+                        } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
+                            List<Item> craftrates = Ig_Json_Model.parsingItem(data);
+                            new ItemDao(DownloadActivity.this).create(craftrates);
+                        } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
+                            List<Laborcraftrate> craftrates = Ig_Json_Model.parsingLaborcraftrate(data);
+                            new LaborcraftrateDao(DownloadActivity.this).create(craftrates);
+                        }
+                        mHandler.sendEmptyMessage(START);
+                        mProgressDialog.dismiss();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(DownloadActivity.this, "下载数据出现问题", Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onSuccess(String data, int totalPages, int currentPage) {
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(DownloadActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    private class downloadAll implements View.OnClickListener {
+        int group;
+
+        private downloadAll(int group) {
+            this.group = group;
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (group == 0) {
+                isAll = true;
+                mHandler.sendEmptyMessage(START);
+            }
+        }
     }
 
 }

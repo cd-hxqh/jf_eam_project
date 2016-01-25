@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity
     private HistoryFragment historyFragment;
 
     /**
-     * 关于*
+     * 设置*
      */
     private Setting_Fragment settingFragment;
 
@@ -223,10 +223,6 @@ public class MainActivity extends BaseActivity
      * 退出程序
      */
     public void showAlertDialog() {
-
-
-
-
         final NormalDialog dialog = new NormalDialog(MainActivity.this);
         dialog.content("确定退出程序吗")//
                 .showAnim(mBasIn)//

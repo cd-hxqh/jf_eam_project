@@ -65,6 +65,20 @@ public class LaborcraftrateDao {
     }
 
     /**
+     * 分页查询
+     *
+     * @return
+     */
+    public List<Laborcraftrate> queryByCount(int count,String laborcode) {
+        try {
+            return LaborcraftrateDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("laborcode", "%" + laborcode + "%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall() {
@@ -93,9 +107,9 @@ public class LaborcraftrateDao {
      * @param craft
      * @return
      */
-    public List<Laborcraftrate> queryByCraft(String craft) {
+    public List<Laborcraftrate> queryByCraft(int count,String laborcode,String craft) {
         try {
-            return LaborcraftrateDaoOpe.queryBuilder().where().eq("craft", craft).query();
+            return LaborcraftrateDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().eq("craft", craft).and().like("laborcode", "%" + laborcode + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

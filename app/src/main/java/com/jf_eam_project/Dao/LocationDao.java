@@ -68,18 +68,46 @@ public class LocationDao {
     }
 
     /**
-     *  查询库房
+     *分页查询
+     * @param count
+     * @param location
      * @return
      */
-    public List<Location> queryForLocations(){
+    public List<Location> queryByCount(int count,String location){
         try {
-            return LocationDaoOpe.queryBuilder().where().eq("type","库房").query();
+            return LocationDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().eq("type", "操作中").and().like("location", "%" + location + "%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     *  查询库房
+     * @return
+     */
+    public List<Location> queryForLocations(){
+        try {
+            return LocationDaoOpe.queryBuilder().where().eq("type", "库房").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     *分页查询库房
+     * @param count
+     * @param location
+     * @return
+     */
+    public List<Location> queryByCountForLocations(int count,String location){
+        try {
+            return LocationDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().eq("type", "库房").and().like("location", "%" + location + "%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      *

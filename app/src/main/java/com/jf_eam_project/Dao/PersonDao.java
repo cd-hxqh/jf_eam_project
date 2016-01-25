@@ -65,6 +65,21 @@ public class PersonDao {
     }
 
     /**
+     *分页查询
+     * @param count
+     * @param personid
+     * @return
+     */
+    public List<Person> queryByCount(int count,String personid){
+        try {
+            return PersonDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("personid", "%" + personid + "%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall() {

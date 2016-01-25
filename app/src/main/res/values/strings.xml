@@ -94,7 +94,9 @@
     <string name="sure">确定</string>
     <string name="canel">取消</string>
     <string name="inputing">正在提交数据</string>
+    <string name="clearing">正在清除数据</string>
     <string name="downloading">正在下载数据</string>
+    <string name="downloading1">正在下载</string>
 
 
     <!--巡检管理-->
@@ -391,6 +393,7 @@
     <string name="ud_udinspojxxm4_title">巡检人员:</string>
 
     <!--数据下载-->
+    <string name="about">关于软件</string>
     <string name="setting_download">数据下载</string>
     <string name="setting_data_clear">清除缓存</string>
     <string name="data_download">数据下载</string>

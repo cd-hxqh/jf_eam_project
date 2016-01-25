@@ -68,6 +68,21 @@ public class FailurecodeDao {
     }
 
     /**
+     *分页查询
+     * @param count
+     * @param failurecode
+     * @return
+     */
+    public List<Failurecode> queryByCount(int count,String failurecode){
+        try {
+            return FailurecodeDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("failurecode","%"+failurecode+"%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall(){

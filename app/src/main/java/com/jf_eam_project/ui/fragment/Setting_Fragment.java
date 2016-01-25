@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.CraftrateDao;
+import com.jf_eam_project.Dao.FailurecodeDao;
+import com.jf_eam_project.Dao.FailurelistDao;
+import com.jf_eam_project.Dao.ItemDao;
+import com.jf_eam_project.Dao.JobplanDao;
+import com.jf_eam_project.Dao.LaborDao;
+import com.jf_eam_project.Dao.LaborcraftrateDao;
+import com.jf_eam_project.Dao.LocationDao;
+import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.ui.activity.DownloadActivity;
 import com.jf_eam_project.ui.activity.Invoice_Activity;
@@ -22,6 +33,8 @@ public class Setting_Fragment extends BaseFragment {
 
     private RelativeLayout downlayout;
     private RelativeLayout clearlayout;
+    private RelativeLayout about;
+    private ProgressDialog mProgressDialog;
     public Setting_Fragment() {
     }
 
@@ -47,6 +60,7 @@ public class Setting_Fragment extends BaseFragment {
     private void findByIdView(View view) {
         downlayout = (RelativeLayout) view.findViewById(R.id.setting_download);
         clearlayout = (RelativeLayout) view.findViewById(R.id.setting_data_clear);
+        about = (RelativeLayout) view.findViewById(R.id.about);
     }
 
     /**
@@ -69,16 +83,32 @@ public class Setting_Fragment extends BaseFragment {
 
                     break;
 
-//                case R.id.po_linear_order_id: //采购订单
-//                    Intent intent1 = new Intent(getActivity(), Po_order_Activity.class);
-//                    startActivityForResult(intent1, 0);
-//                    break;
-//                case R.id.po_linear_invoice_id: //发票
-//                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
-//                    startActivityForResult(intent2, 0);
-//                    break;
+                case R.id.setting_data_clear: //清除缓存
+                    clearData();
+                    break;
+                case R.id.about: //关于手机
+                    break;
 //
             }
         }
     };
+
+    //清除基础数据
+    private void clearData(){
+        mProgressDialog = ProgressDialog.show(getActivity(), null,
+                getString(R.string.clearing), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new LocationDao(getActivity()).deleteall();
+        new AssetDao(getActivity()).deleteall();
+        new FailurecodeDao(getActivity()).deleteall();
+        new FailurelistDao(getActivity()).deleteall();
+        new JobplanDao(getActivity()).deleteall();
+        new PersonDao(getActivity()).deleteall();
+        new LaborDao(getActivity()).deleteall();
+        new CraftrateDao(getActivity()).deleteall();
+        new ItemDao(getActivity()).deleteall();
+        new LaborcraftrateDao(getActivity()).deleteall();
+        mProgressDialog.dismiss();
+    }
 }

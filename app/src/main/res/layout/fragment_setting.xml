@@ -137,7 +137,7 @@
             android:background="@drawable/line"></View>
 
         <RelativeLayout
-            android:id="@+id/update_id"
+            android:id="@+id/about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -151,15 +151,14 @@
                 <!--android:layout_centerVertical="true"-->
                 <!--android:src="@drawable/ic_update" />-->
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginLeft="@dimen/dimens_10dp"-->
-                <!--android:layout_toRightOf="@+id/ic_update_id"-->
-                <!--android:text="@string/update_text"-->
-                <!--android:textColor="@color/gray"-->
-                <!--android:textSize="@dimen/dimens_18sp" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimens_10dp"
+                android:text="@string/about"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/dimens_18sp" />
 
             <ImageView
                 android:layout_width="wrap_content"

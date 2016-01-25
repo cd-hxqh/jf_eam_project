@@ -68,6 +68,21 @@ public class ItemDao {
     }
 
     /**
+     *分页查询
+     * @param count
+     * @param itemnum
+     * @return
+     */
+    public List<Item> queryByCount(int count,String itemnum){
+        try {
+            return ItemDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("itemnum", "%"+itemnum+"%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall(){

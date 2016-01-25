@@ -68,6 +68,21 @@ public class JobplanDao {
     }
 
     /**
+     *分页查询
+     * @param count
+     * @param jpnum
+     * @return
+     */
+    public List<Jobplan> queryByCount(int count,String jpnum){
+        try {
+            return JobplanDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("jpnum", "%"+jpnum+"%").query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall(){
