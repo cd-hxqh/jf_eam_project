@@ -68,7 +68,7 @@ public class DownloadActivity extends BaseActivity {
     List<List<String>> childArray = new ArrayList<List<String>>();
 
     private ProgressDialog mProgressDialog;
-    private boolean isAll = false;
+    private Button DownloadAll;
     private int count = 0;
 
     Handler mHandler = new Handler() {
@@ -103,8 +103,9 @@ public class DownloadActivity extends BaseActivity {
                             downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), childArray.get(0).get(count));
                         }
                         count++;
-                    } else if (count == 10) {
+                    } else if (count == 10) {//全部下载完成
                         mProgressDialog.dismiss();
+                        DownloadAll.setText(getResources().getString(R.string.downloaded));
                     }
                     break;
 //                case F:
@@ -224,7 +225,7 @@ public class DownloadActivity extends BaseActivity {
                 groupHolder = (GroupHolder) convertView.getTag();
             }
             groupHolder.groupText.setText(groupArray.get(groupPosition));
-            groupHolder.downAll.setOnClickListener(new downloadAll(groupPosition));
+            groupHolder.downAll.setOnClickListener(new downloadAll(groupPosition,groupHolder.downAll));
             return convertView;
         }
 
@@ -431,16 +432,17 @@ public class DownloadActivity extends BaseActivity {
 
     private class downloadAll implements View.OnClickListener {
         int group;
-
-        private downloadAll(int group) {
+        Button button;
+        private downloadAll(int group,Button button) {
             this.group = group;
+            this.button = button;
         }
 
         @Override
         public void onClick(View view) {
             if (group == 0) {
-                isAll = true;
                 mHandler.sendEmptyMessage(START);
+                DownloadAll = button;
             }
         }
     }

@@ -9,6 +9,7 @@ import com.jf_eam_project.model.WorkOrder;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 
 public class LabtransDao {
@@ -29,6 +30,26 @@ public class LabtransDao {
         }
     }
 
+    /**
+     * 批量存储
+     * @param list
+     */
+    public void create(final List<Labtrans> list) {
+        try {
+            deleteall();
+            LabtransDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Labtrans woactivity : list) {
+                        LabtransDaoOpe.createOrUpdate(woactivity);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void create(Labtrans labtrans) {
         try
@@ -68,6 +89,18 @@ public class LabtransDao {
     public List<Labtrans> queryForAll(){
         try {
             return LabtransDaoOpe.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * @param id
+     */
+    public List<Labtrans> queryByWonum(int id) {
+        try {
+            return LabtransDaoOpe.queryBuilder().where().eq("belongid", id ).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

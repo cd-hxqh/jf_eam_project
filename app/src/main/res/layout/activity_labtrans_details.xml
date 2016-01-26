@@ -319,20 +319,23 @@
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@drawable/line"></View>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="@dimen/dimen_40dp">
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginRight="@dimen/dimens_10_dp"
+            android:layout_marginLeft="@dimen/dimens_10_dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/labtrans_ok"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:background="@drawable/btn_selector"
-                android:text="确定"
+                android:gravity="center"
+                android:text="@string/confirm_btn"
                 android:textColor="@color/white"/>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

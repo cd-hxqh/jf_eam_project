@@ -28,7 +28,13 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
+import com.jf_eam_project.Dao.AssignmentDao;
+import com.jf_eam_project.Dao.LabtransDao;
 import com.jf_eam_project.Dao.LocationDao;
+import com.jf_eam_project.Dao.WoactivityDao;
+import com.jf_eam_project.Dao.WorkOrderDao;
+import com.jf_eam_project.Dao.WplaborDao;
+import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -44,6 +50,8 @@ import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -308,34 +316,39 @@ public class Work_DetailsActivity extends BaseActivity {
                                 getString(R.string.inputing), true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
-
-                        String updataInfo = null;
-                        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-                            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
-                        } else if (workOrder.status.equals(Constants.APPROVALED)) {
-                            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-                        }
-                        final String finalUpdataInfo = updataInfo;
-                        new AsyncTask<String, String, String>() {
-                            @Override
-                            protected String doInBackground(String... strings) {
-                                reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
-                                return reviseresult;
+                        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
+                            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
+                            mProgressDialog.dismiss();
+                            saveWorkOrder();
+                        } else {
+                            String updataInfo = null;
+                            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+                                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+                            } else if (workOrder.status.equals(Constants.APPROVALED)) {
+                                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
                             }
-
-                            @Override
-                            protected void onPostExecute(String s) {
-                                super.onPostExecute(s);
-                                if (s.equals("成功")) {
-                                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-                                } else if (s.equals("")) {
-                                    Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                            final String finalUpdataInfo = updataInfo;
+                            new AsyncTask<String, String, String>() {
+                                @Override
+                                protected String doInBackground(String... strings) {
+                                    reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
+                                    return reviseresult;
                                 }
-                                mProgressDialog.dismiss();
-                            }
-                        }.execute();
+
+                                @Override
+                                protected void onPostExecute(String s) {
+                                    super.onPostExecute(s);
+                                    if (s.equals("成功")) {
+                                        Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                                    } else if (s.equals("")) {
+                                        Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                                    }
+                                    mProgressDialog.dismiss();
+                                }
+                            }.execute();
+                        }
                     }
                 }).create().show();
             } else {
@@ -343,6 +356,44 @@ public class Work_DetailsActivity extends BaseActivity {
             }
         }
     };
+
+    private void saveWorkOrder() {
+        WorkOrder workOrder = getWorkOrder();
+        workOrder.ishistory = true;
+        int id = new WorkOrderDao(Work_DetailsActivity.this).Update(workOrder);
+        if (id != 0) {
+            if (woactivityList.size() != 0) {
+                for (Woactivity woactivity : woactivityList) {
+                    woactivity.belongid = id;
+                }
+                new WoactivityDao(Work_DetailsActivity.this).create(woactivityList);
+            }
+            if (wplaborList.size() != 0) {
+                for (Wplabor wplabor : wplaborList) {
+                    wplabor.belongid = id;
+                }
+                new WplaborDao(Work_DetailsActivity.this).create(wplaborList);
+            }
+            if (wpmaterialList.size() != 0) {
+                for (Wpmaterial wpmaterial : wpmaterialList) {
+                    wpmaterial.belongid = id;
+                }
+                new WpmeterialDao(Work_DetailsActivity.this).create(wpmaterialList);
+            }
+            if (assignmentList.size() != 0) {
+                for (Assignment assignment : assignmentList) {
+                    assignment.belongid = id;
+                }
+                new AssignmentDao(Work_DetailsActivity.this).create(assignmentList);
+            }
+            if (labtransList.size() != 0) {
+                for (Labtrans labtrans : labtransList) {
+                    labtrans.belongid = id;
+                }
+                new LabtransDao(Work_DetailsActivity.this).create(labtransList);
+            }
+        }
+    }
 
     private View.OnClickListener wfserviceOnClickListener = new View.OnClickListener() {
         @Override

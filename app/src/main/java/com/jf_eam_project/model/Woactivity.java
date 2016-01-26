@@ -2,51 +2,74 @@ package com.jf_eam_project.model;
 
 import com.instagram.common.json.annotation.JsonField;
 import com.instagram.common.json.annotation.JsonType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by think on 2015/12/3.
  * 工单任务
  */
 @JsonType
+@DatabaseTable(tableName = "Woactivity")
 public class Woactivity extends Entity{
     private static final String TAG = "Woactivity";
     private static final long serialVersionUID = 2015050105L;
 
     @JsonField(fieldName = "taskid")
+    @DatabaseField(columnName = "taskid")
     public String taskid;//任务
     @JsonField(fieldName = "description")
+    @DatabaseField(columnName = "description")
     public String description;//摘要
     @JsonField(fieldName = "assetnum")
+    @DatabaseField(columnName = "assetnum")
     public String assetnum;//资产
     @JsonField(fieldName = "assetdesc")
+    @DatabaseField(columnName = "assetdesc")
     public String assetdesc;//资产描述
     @JsonField(fieldName = "location")
+    @DatabaseField(columnName = "location")
     public String location;//位置
     @JsonField(fieldName = "locationdesc")
+    @DatabaseField(columnName = "locationdesc")
     public String locationdesc;//位置描述
     @JsonField(fieldName = "woclass")
+    @DatabaseField(columnName = "woclass")
     public String woclass;//记录类
     @JsonField(fieldName = "wosequence")
+    @DatabaseField(columnName = "wosequence")
     public String wosequence;//序号
     @JsonField(fieldName = "wonum")
+    @DatabaseField(columnName = "wonum")
     public String wonum;//工单号
     @JsonField(fieldName = "estdur")
+    @DatabaseField(columnName = "estdur")
     public String estdur;//估计持续时间
     @JsonField(fieldName = "status")
+    @DatabaseField(columnName = "status")
     public String status;//状态
     @JsonField(fieldName = "owner")
+    @DatabaseField(columnName = "owner")
     public String owner;//所有者
     @JsonField(fieldName = "ownergroup")
+    @DatabaseField(columnName = "ownergroup")
     public String ownergroup;//所有者组
     @JsonField(fieldName = "targstartdate")
+    @DatabaseField(columnName = "targstartdate")
     public String targstartdate;//目标开始时间
     @JsonField(fieldName = "targcompdate")
+    @DatabaseField(columnName = "targcompdate")
     public String targcompdate;//目标完成时间
     @JsonField(fieldName = "actstart")
+    @DatabaseField(columnName = "actstart")
     public String actstart;//实际开始时间
     @JsonField(fieldName = "actfinish")
+    @DatabaseField(columnName = "actfinish")
     public String actfinish;//实际完成时间
+    @DatabaseField(columnName = "type")
     public String type;//add/update
+    @DatabaseField(columnName = "belongid")
+    public int belongid;//所属工单本地存储id
 
     public String getTaskid() {
         return taskid;

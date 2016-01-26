@@ -25,10 +25,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.AssignmentDao;
+import com.jf_eam_project.Dao.LabtransDao;
+import com.jf_eam_project.Dao.WoactivityDao;
 import com.jf_eam_project.Dao.WorkOrderDao;
+import com.jf_eam_project.Dao.WplaborDao;
+import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.JsonUtils;
+import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
@@ -315,7 +325,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                             String result = null;
                             if (chooseList != null && chooseList.size() != 0) {
                                 for (int i = 0; i < chooseList.size(); i++) {
-                                    final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), null, null, null, null, null);
+                                    final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), getWoactivityList(chooseList.get(i).id),
+                                            getWplaborList(chooseList.get(i).id), getWpmaterialList(chooseList.get(i).id),
+                                            getAssignmentList(chooseList.get(i).id), getLabtransList(chooseList.get(i).id));
 
                                     result = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
                                 }
@@ -350,6 +362,26 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                 }
             }
         }).create().show();
+    }
+
+    private ArrayList<Woactivity> getWoactivityList(int workorderid){
+        return (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
+    }
+
+    private ArrayList<Wplabor> getWplaborList(int workorderid){
+        return (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
+    }
+
+    private ArrayList<Wpmaterial> getWpmaterialList(int workorderid){
+        return (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
+    }
+
+    private ArrayList<Assignment> getAssignmentList(int workorderid){
+        return (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
+    }
+
+    private ArrayList<Labtrans> getLabtransList(int workorderid){
+        return (ArrayList<Labtrans>) new LabtransDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     /**

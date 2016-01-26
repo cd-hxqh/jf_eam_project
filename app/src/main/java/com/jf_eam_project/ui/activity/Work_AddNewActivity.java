@@ -25,8 +25,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LocationDao;
+import com.jf_eam_project.Dao.WoactivityDao;
 import com.jf_eam_project.Dao.WorkOrderDao;
+import com.jf_eam_project.Dao.WplaborDao;
+import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
@@ -372,7 +376,35 @@ public class Work_AddNewActivity extends BaseActivity {
     }
 
     private void saveWorkOrder() {
-        new WorkOrderDao(Work_AddNewActivity.this).Update(getWorkOrder());
+        WorkOrder workOrder = getWorkOrder();
+        workOrder.ishistory = true;
+        int id = new WorkOrderDao(Work_AddNewActivity.this).Update(workOrder);
+        if (id != 0) {
+            if (woactivityList.size() != 0) {
+                for (Woactivity woactivity : woactivityList) {
+                    woactivity.belongid = id;
+                }
+                new WoactivityDao(Work_AddNewActivity.this).create(woactivityList);
+            }
+            if (wplaborList.size() != 0) {
+                for (Wplabor wplabor : wplaborList) {
+                    wplabor.belongid = id;
+                }
+                new WplaborDao(Work_AddNewActivity.this).create(wplaborList);
+            }
+            if (wpmaterialList.size() != 0) {
+                for (Wpmaterial wpmaterial : wpmaterialList) {
+                    wpmaterial.belongid = id;
+                }
+                new WpmeterialDao(Work_AddNewActivity.this).create(wpmaterialList);
+            }
+            if (assignmentList.size() != 0) {
+                for (Assignment assignment : assignmentList) {
+                    assignment.belongid = id;
+                }
+                new AssignmentDao(Work_AddNewActivity.this).create(assignmentList);
+            }
+        }
     }
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
