@@ -111,7 +111,7 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
 
         titlename.setText(getString(R.string.po_order_title));
         menuImageView.setImageResource(R.drawable.ic_drawer);
-        menuImageView.setVisibility(View.VISIBLE);
+//        menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
 

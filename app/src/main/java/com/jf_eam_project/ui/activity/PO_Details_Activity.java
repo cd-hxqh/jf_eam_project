@@ -169,7 +169,7 @@ public class PO_Details_Activity extends BaseActivity {
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popup_background_mtrl_mult));
+                R.drawable.abc_popup_background_mtrl_mult));
         popupWindow.showAsDropDown(view,0,-40);
 
         polineLinearLayout = (LinearLayout) contentView.findViewById(R.id.poline_linearlayout_id);

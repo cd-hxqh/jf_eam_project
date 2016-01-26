@@ -51,6 +51,7 @@ public class HistoryFragment extends BaseFragment {
 //        item_layout = (LinearLayout) view.findViewById(R.id.work_linear_item_id);
         workorder_layout = (LinearLayout) view.findViewById(R.id.work_order_linearlayout_id);
         udinspo_layout = (LinearLayout) view.findViewById(R.id.udinspo_linearlayout_id);
+        udinspo_layout.setVisibility(View.GONE);
     }
 
     /**

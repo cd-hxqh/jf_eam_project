@@ -113,7 +113,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
         titlename.setText(getString(R.string.pr_title_text));
         menuImageView.setImageResource(R.drawable.ic_drawer);
-        menuImageView.setVisibility(View.VISIBLE);
+//        menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
 
