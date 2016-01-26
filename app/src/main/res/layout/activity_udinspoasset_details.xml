@@ -104,7 +104,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:clickable="false"
-                    android:drawableRight="@drawable/in_ico"
                     android:gravity="center_vertical"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
@@ -171,7 +170,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:clickable="false"
-                    android:drawableRight="@drawable/in_ico"
                     android:gravity="center_vertical"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
@@ -226,7 +224,7 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/udinspoasset_childassetnum_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

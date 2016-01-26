@@ -256,11 +256,11 @@ public class MainActivity extends BaseActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("");
         titleText.setText(mTitle);
-        if (mSelectPos == 2) {
-            addImageView.setVisibility(View.VISIBLE);
-        } else {
-            addImageView.setVisibility(View.GONE);
-        }
+//        if (mSelectPos == 2) {
+//            addImageView.setVisibility(View.VISIBLE);
+//        } else {
+//            addImageView.setVisibility(View.GONE);
+//        }
     }
 
     @Override

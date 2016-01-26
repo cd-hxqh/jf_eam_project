@@ -136,7 +136,7 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspojxxmListAdapter = new UdinspojxxmListAdapter(this);
+        udinspojxxmListAdapter = new UdinspojxxmListAdapter(this,0);
         recyclerView.setAdapter(udinspojxxmListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -194,7 +194,7 @@ public class Add_Udinspojxxm_Activity extends BaseActivity implements SwipeRefre
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspojxxmListAdapter = new UdinspojxxmListAdapter(Add_Udinspojxxm_Activity.this);
+                            udinspojxxmListAdapter = new UdinspojxxmListAdapter(Add_Udinspojxxm_Activity.this,0);
                             recyclerView.setAdapter(udinspojxxmListAdapter);
                         }
                         if (totalPages == page) {

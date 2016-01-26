@@ -18,11 +18,15 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.UdinspoDao;
+import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +54,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private ImageView editImageView;
 
 
-
     /**
      * 界面信息显示*
      */
@@ -71,6 +74,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 保存按钮*
      */
     private Button submitBtn;
+    /**
+     * 删除按钮*
+     */
+    private Button deleteBtn;
 
 
     private ProgressDialog mProgressDialog;
@@ -108,6 +115,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         checkbyText = (EditText) findViewById(R.id.ud_udinspojxxm4_text);
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
+        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
 
     }
 
@@ -128,10 +136,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
             udinspojxxm3Text.setText(udinspojxxm.getUdinspojxxm3() == null ? "" : udinspojxxm.getUdinspojxxm3());
             udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
             fillmethodText.setText(udinspojxxm.getFillmethod() == null ? "" : udinspojxxm.getFillmethod());
-            executionText.setText(udinspojxxm.getExecution()== null ? "" : udinspojxxm.getExecution());
-            checkbyText.setText(udinspojxxm.getCheckby()== null ? "" : udinspojxxm.getCheckby());
+            executionText.setText(udinspojxxm.getExecution() == null ? "" : udinspojxxm.getExecution());
+            checkbyText.setText(udinspojxxm.getCheckby() == null ? "" : udinspojxxm.getCheckby());
         }
-
 
 
         descriptionText.setFocusable(false);
@@ -144,7 +151,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
     }
-
 
 
     private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
@@ -208,50 +214,63 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                         getString(R.string.inputing), true, true);
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.setCancelable(false);
-                new AsyncTask<String, String, String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        String data = null;
-                        try {
-                            data = submitBtn();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
-                        String result = getBaseApplication().getWsService().UpdatePO(data,"");
+                if (NetWorkHelper.isNetwork(Udinspojxxm_Details_Activity.this)) {
+                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "暂无网络,现离线保存数据!");
+                    mProgressDialog.dismiss();
+                    saveUdinspo();
+                    setResult(Constants.REFRESH);
+                    finish();
+                } else {
 
-                        return result;
-                    }
 
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        mProgressDialog.dismiss();
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            String success = jsonObject.getString("status");
-                            String errorNo = jsonObject.getString("errorNo");
-                            Log.i(TAG, "success=" + success + ",errorNo=" + errorNo);
-                            if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新成功");
-                            } else {
-                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            String data = null;
+                            try {
+                                data = submitBtn();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                            String result = getBaseApplication().getWsService().UpdatePO(data, "");
+
+                            return result;
                         }
 
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            mProgressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                String success = jsonObject.getString("status");
+                                String errorNo = jsonObject.getString("errorNo");
+                                if (success.equals("数据更新成功") && errorNo.equals("0")) {
+                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新成功");
 
-                    }
-                }.execute();
+                                } else {
+                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
+                                }
+                                setResult(Constants.REFRESH);
+                                finish();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
+                                setResult(Constants.REFRESH);
+                                finish();
+                            }
+
+
+                        }
+                    }.execute();
+                }
             }
         }).create().show();
 
 
     }
-
-
 
 
     /**
@@ -266,9 +285,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         JSONObject json = new JSONObject();
 
         udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
-        json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid+"");
+        json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
         udinspojxxm1.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
-        json.put("UDINSPOASSETNUM",udinspojxxm.udinspoassetnum);
+        json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
         udinspojxxm1.setType(Constants.UPDATE);
         json.put("TYPE", Constants.UPDATE);
         if (!description.equals(udinspojxxm.description)) {
@@ -293,8 +312,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     }
 
 
-
-
     /**
      * 封装udinspojxxm信息*
      */
@@ -314,11 +331,29 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     }
 
 
+    /**
+     * 将巡检信息保存至本地*
+     */
+    private void saveUdinspo() {
+        String description = descriptionText.getText().toString();
+        String execution = executionText.getText().toString();
+        String checkby = checkbyText.getText().toString();
+        Udinspojxxm udinspojxxm1 = new Udinspojxxm();
+        if (!description.equals(udinspojxxm.description)) {
+            udinspojxxm1.setDescription(description);
+        }
+        if (!execution.equals(udinspojxxm.execution)) {
+            udinspojxxm1.setExecution(execution);
+        }
+        if (!checkby.equals(udinspojxxm.checkby)) {
+            udinspojxxm1.setCheckby(checkby);
+        }
 
-
-
-
-
-
+        udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
+        udinspojxxm1.setUdinspojxxmlinenum(udinspojxxm.udinspojxxmlinenum);
+        udinspojxxm1.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
+        udinspojxxm1.setType(Constants.UPDATE);
+        new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).insert(udinspojxxm1);
+    }
 
 }

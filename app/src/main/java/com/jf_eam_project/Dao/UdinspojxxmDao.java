@@ -1,9 +1,11 @@
 package com.jf_eam_project.Dao;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 
@@ -97,7 +99,7 @@ public class UdinspojxxmDao {
      */
     public List<Udinspojxxm> queryByNum(String insponum){
         try {
-            return udinspojxxmDaoOpe.queryBuilder().where().like("insponum", insponum).query();
+            return udinspojxxmDaoOpe.queryBuilder().where().like("udinspoassetnum", insponum).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,7 +126,7 @@ public class UdinspojxxmDao {
         return false;
     }
 
-    /**根据新婚就设备单号查询检修项目标准**/
+    /**根据新增就设备单号查询检修项目标准**/
     public List<Udinspojxxm> findByudinspoassetnum(String udinspoassetnum){
         List<Udinspojxxm> udinspojxxms=null;
         try {
@@ -134,6 +136,42 @@ public class UdinspojxxmDao {
             e.printStackTrace();
         }
         return udinspojxxms;
+    }
+
+
+    /**
+     * 根据,巡检备件编号，描述查询udinspo信息*
+     */
+    public List<Udinspojxxm> queryByDesc(String desc) {
+        List<Udinspojxxm> list = null;
+        try {
+            list = udinspojxxmDaoOpe.queryBuilder().where().like("description", "%" + desc + "%").and().like("udinspoassetnum","%" + desc + "%").query();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    /**
+     * @param list
+     */
+    public void deleteList(final List<Udinspojxxm> list) {
+        try {
+            udinspojxxmDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Udinspojxxm udinspo : list) {
+                        udinspojxxmDaoOpe.delete(udinspo);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -249,6 +249,9 @@
             android:name=".ui.activity.Udinspo_History_Activity"
             android:label="巡检单历史"></activity>
         <activity
+            android:name=".ui.activity.Udinspojxxm_History_Activity"
+            android:label="巡检单历史"></activity>
+        <activity
             android:name=".ui.activity.Work_History_ListActivity"
             android:label="工单历史"></activity>
 

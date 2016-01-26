@@ -76,7 +76,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     private TextView locationDescText; //位置描述
     private TextView assetnumText; //设备
     private TextView assetnumDescText; //设备描述
-    private EditText childassetnumText; //设备部件
+    private TextView childassetnumText; //设备部件
 
 
     private Udinspoasset udinspoasset; //设备备件
@@ -136,7 +136,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         locationDescText = (TextView) findViewById(R.id.udinspoasset_location_description_text);
         assetnumText = (TextView) findViewById(R.id.udinspoasset_assetnum_text);
         assetnumDescText = (TextView) findViewById(R.id.udinspoasset_assetnum_desc_text);
-        childassetnumText = (EditText) findViewById(R.id.udinspoasset_childassetnum_text);
+        childassetnumText = (TextView) findViewById(R.id.udinspoasset_childassetnum_text);
 
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
@@ -149,7 +149,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getResources().getString(R.string.udinspoasset_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
 
@@ -459,9 +459,10 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     private View.OnClickListener udinspoassetOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Udinspoasset_Details_Activity.this, Udinspojxxm_Activity.class);
+            Intent intent = getIntent();
+            intent.setClass(Udinspoasset_Details_Activity.this, Udinspojxxm_Activity.class);
             intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent,0);
             popupWindow.dismiss();
         }
     };

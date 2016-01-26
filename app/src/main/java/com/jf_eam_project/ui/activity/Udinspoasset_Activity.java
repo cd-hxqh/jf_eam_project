@@ -108,7 +108,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
         titleView.setText(getResources().getString(R.string.udinspoasset_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
         addImageView.setImageResource(R.drawable.add_ico);
-        addImageView.setVisibility(View.VISIBLE);
+//        addImageView.setVisibility(View.VISIBLE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
         setSearchEdit();
 
@@ -242,8 +242,6 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG,"requestCode="+requestCode+"resultCode="+resultCode);
-
         switch (resultCode){
             case Constants.REFRESH:
                 getData(searchText);

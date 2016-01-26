@@ -49,7 +49,9 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
      * 返回
      */
     private ImageView backImageView;
-    /**新增**/
+    /**
+     * 历史数据*
+     */
     private ImageView addImageView;
 
 
@@ -95,7 +97,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-        addImageView=(ImageView)findViewById(R.id.title_add);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -108,7 +110,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
         titleView.setText(getResources().getString(R.string.udinspojxxm_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
-        addImageView.setImageResource(R.drawable.add_ico);
+        addImageView.setImageResource(R.drawable.ic_menu_recent_history);
         addImageView.setVisibility(View.VISIBLE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
 
@@ -120,7 +122,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspojxxmListAdapter = new UdinspojxxmListAdapter(this);
+        udinspojxxmListAdapter = new UdinspojxxmListAdapter(this, 0);
         recyclerView.setAdapter(udinspojxxmListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -146,7 +148,6 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspojxxm> items = null;
                 try {
-                    Log.i(TAG,"results="+results.getResultlist());
                     items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
@@ -154,7 +155,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspojxxmListAdapter = new UdinspojxxmListAdapter(Udinspojxxm_Activity.this);
+                            udinspojxxmListAdapter = new UdinspojxxmListAdapter(Udinspojxxm_Activity.this, 0);
                             recyclerView.setAdapter(udinspojxxmListAdapter);
                         }
                         if (totalPages == page) {
@@ -213,7 +214,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
+           finish();
         }
     };
 
@@ -231,30 +232,26 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     }
 
 
-
-
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
 
-            Intent intent = new Intent(Udinspojxxm_Activity.this, AddUdinspojxxmActivity.class);
+            Intent intent = new Intent(Udinspojxxm_Activity.this, Udinspojxxm_History_Activity.class);
             intent.putExtra("udinspoassetnum", udinspoassetnum);
-            intent.putExtra("udinspoassetlinenum", udinspojxxmListAdapter.getItemCount());
-            intent.putExtra("mark", Constants.ENTRANCE_1);
             startActivityForResult(intent, 0);
         }
     };
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG,"requestCode="+requestCode+"resultCode="+resultCode);
+        Log.i(TAG, "requestCode=" + requestCode + "resultCode=" + resultCode);
+        switch (resultCode) {
 
-        switch (resultCode){
             case Constants.REFRESH:
+                udinspojxxmListAdapter.removeAllData();
                 getData(searchText);
                 break;
         }

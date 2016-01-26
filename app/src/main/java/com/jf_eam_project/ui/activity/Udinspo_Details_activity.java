@@ -168,7 +168,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
         descriptionText.setFocusable(false);
         descriptionText.setFocusableInTouchMode(false);
