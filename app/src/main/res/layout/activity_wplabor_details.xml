@@ -180,29 +180,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dimen_40dp">
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_marginRight="@dimen/dimens_10_dp"
+        android:layout_marginLeft="@dimen/dimens_10_dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
         <Button
             android:id="@+id/wplabor_ok"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:background="@drawable/btn_selector"
-            android:text="确定"
-            android:textColor="@color/white"/>
-        <Button
-            android:id="@+id/wplabor_delete"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_30dp"
-            android:background="@drawable/btn_selector"
-            android:visibility="gone"
-            android:text="删除"
+            android:gravity="center"
+            android:text="@string/confirm_btn"
             android:textColor="@color/white"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_marginRight="@dimen/dimens_10_dp"
+        android:layout_marginLeft="@dimen/dimens_10_dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/wplabor_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_delete_selector"
+            android:gravity="center"
+            android:text="删除"
+            android:visibility="gone"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
 </LinearLayout>

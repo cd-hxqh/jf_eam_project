@@ -254,6 +254,9 @@
         <activity
             android:name=".ui.activity.Work_History_ListActivity"
             android:label="工单历史"></activity>
+        <activity
+            android:name=".ui.activity.About_us_Activity"
+            android:label="关于我们"></activity>
 
         <!-- Update Activitys Start -->
         <activity

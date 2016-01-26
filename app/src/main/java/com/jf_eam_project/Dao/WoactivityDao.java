@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.model.Woactivity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,33 +13,33 @@ import java.util.concurrent.Callable;
 /**
  * Created by think on 2015/12/23.
  */
-public class WorkOrderDao {
+public class WoactivityDao {
     private Context context;
-    private Dao<WorkOrder, Integer> WorkOrderDaoOpe;
+    private Dao<Woactivity, Integer> WoactivityDaoOpe;
     private DatabaseHelper helper;
 
-    public WorkOrderDao(Context context) {
+    public WoactivityDao(Context context) {
         this.context = context;
         try {
             helper = DatabaseHelper.getHelper(context);
-            WorkOrderDaoOpe = helper.getDao(WorkOrder.class);
+            WoactivityDaoOpe = helper.getDao(Woactivity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * 批量存储
+     * 批量存储任务
      * @param list
      */
-    public void create(final List<WorkOrder> list) {
+    public void create(final List<Woactivity> list) {
         try {
             deleteall();
-            WorkOrderDaoOpe.callBatchTasks(new Callable<Void>() {
+            WoactivityDaoOpe.callBatchTasks(new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
-                    for (WorkOrder workOrder : list) {
-                        WorkOrderDaoOpe.createOrUpdate(workOrder);
+                    for (Woactivity woactivity : list) {
+                        WoactivityDaoOpe.createOrUpdate(woactivity);
                     }
                     return null;
                 }
@@ -49,10 +49,10 @@ public class WorkOrderDao {
         }
     }
 
-    public void create(WorkOrder workOrder) {
+    public void create(Woactivity woactivity) {
         try {
-            if (!isexitByNum(workOrder.wonum)) {
-                WorkOrderDaoOpe.createOrUpdate(workOrder);
+            if (!isexitByNum(woactivity.wonum,woactivity.taskid)) {
+                WoactivityDaoOpe.createOrUpdate(woactivity);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,11 +60,11 @@ public class WorkOrderDao {
     }
 
     /**
-     * @param workOrder
+     * @param woactivity
      */
-    public int Update(WorkOrder workOrder) {
+    public int Update(Woactivity woactivity) {
         try {
-            return WorkOrderDaoOpe.create(workOrder);
+            return WoactivityDaoOpe.create(woactivity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,9 +74,9 @@ public class WorkOrderDao {
     /**
      * @return
      */
-    public List<WorkOrder> queryForAll() {
+    public List<Woactivity> queryForAll() {
         try {
-            return WorkOrderDaoOpe.queryForAll();
+            return WoactivityDaoOpe.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,12 +84,11 @@ public class WorkOrderDao {
     }
 
     /**
-     * @param wonum
+     * @param id
      */
-    public List<WorkOrder> queryByWonum(String wonum) {
+    public List<Woactivity> queryByWonum(int id) {
         try {
-            return WorkOrderDaoOpe.queryBuilder().where().like("wonum", "%" + wonum + "%").query();
-
+            return WoactivityDaoOpe.queryBuilder().where().eq("belongid", id ).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,7 +100,7 @@ public class WorkOrderDao {
      */
     public void deleteall() {
         try {
-            WorkOrderDaoOpe.delete(WorkOrderDaoOpe.queryForAll());
+            WoactivityDaoOpe.delete(WoactivityDaoOpe.queryForAll());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -110,13 +109,13 @@ public class WorkOrderDao {
     /**
      * @param list
      */
-    public void deleteList(final List<WorkOrder> list) {
+    public void deleteList(final List<Woactivity> list) {
         try {
-            WorkOrderDaoOpe.callBatchTasks(new Callable<Void>() {
+            WoactivityDaoOpe.callBatchTasks(new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
-                    for (WorkOrder workOrder : list) {
-                        WorkOrderDaoOpe.delete(workOrder);
+                    for (Woactivity woactivity : list) {
+                        WoactivityDaoOpe.delete(woactivity);
                     }
                     return null;
                 }
@@ -131,7 +130,7 @@ public class WorkOrderDao {
      */
     public void deleteByWonum(int wonum) {
         try {
-            WorkOrderDaoOpe.delete(WorkOrderDaoOpe.queryBuilder().where().eq("wonum", wonum).query());
+            WoactivityDaoOpe.delete(WoactivityDaoOpe.queryBuilder().where().eq("wonum", wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,9 +140,9 @@ public class WorkOrderDao {
      * @param id
      * @return
      */
-    public WorkOrder SearchByNum(int id) {
+    public Woactivity SearchByNum(int id) {
         try {
-            return WorkOrderDaoOpe.queryBuilder().where().eq("id", id).queryForFirst();
+            return WoactivityDaoOpe.queryBuilder().where().eq("id", id).queryForFirst();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -154,9 +153,9 @@ public class WorkOrderDao {
      * @param wonum
      * @return
      */
-    public boolean isexitByNum(String wonum) {
+    public boolean isexitByNum(String wonum,String taskid) {
         try {
-            List<WorkOrder> workOrderList = WorkOrderDaoOpe.queryBuilder().where().eq("wonum", wonum).query();
+            List<Woactivity> workOrderList = WoactivityDaoOpe.queryBuilder().where().eq("wonum", wonum).and().eq("taskid",taskid).query();
             if (workOrderList.size() > 0) {
                 return true;
             } else {

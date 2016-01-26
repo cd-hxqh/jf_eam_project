@@ -4,11 +4,11 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Created by think on 2015/12/23.
@@ -25,19 +25,39 @@ public class WplaborDao {
         try
         {
             helper = DatabaseHelper.getHelper(context);
-            WplaborDaoOpe = helper.getDao(WorkOrder.class);
+            WplaborDaoOpe = helper.getDao(Wplabor.class);
         } catch (SQLException e)
         {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 批量存储任务
+     * @param list
+     */
+    public void create(final List<Wplabor> list) {
+        try {
+            deleteall();
+            WplaborDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Wplabor wplabor : list) {
+                        WplaborDaoOpe.createOrUpdate(wplabor);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void create(Wplabor labtrans) {
+    public void create(Wplabor wplabor) {
         try
         {
-            if(!isexit(labtrans)){
-                WplaborDaoOpe.createOrUpdate(labtrans);
+            if(!isexit(wplabor)){
+                WplaborDaoOpe.createOrUpdate(wplabor);
             }
         } catch (SQLException e)
         {
@@ -71,6 +91,17 @@ public class WplaborDao {
         return null;
     }
 
+    /**
+     * @param id
+     */
+    public List<Wplabor> queryByWonum(int id) {
+        try {
+            return WplaborDaoOpe.queryBuilder().where().eq("belongid", id ).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void deleteall(){
         try {
