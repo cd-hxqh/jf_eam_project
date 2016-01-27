@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimens_10dp"
-                android:text="@string/about"
+                android:text="@string/about_us_title"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/dimens_18sp" />
 

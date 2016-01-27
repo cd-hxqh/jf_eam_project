@@ -41,7 +41,7 @@ public class About_us_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText("关于");
+        titleView.setText(getResources().getString(R.string.about_us_title));
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,8 @@ public class About_us_Activity extends BaseActivity {
             }
         });
         try {
-            version.setText(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName);
+
+            version.setText(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName + "");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

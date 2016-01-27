@@ -441,12 +441,7 @@
     <string name="umeng_example_home_hint_wait">敬请期待</string>
 
     <string name="intro"> 下面展示使用 js 调用友盟 自定义事件  APIs</string>
-
-
-
-
-
-
+    <string name="about_us_title">关于我们</string>
 
 
 </resources>
