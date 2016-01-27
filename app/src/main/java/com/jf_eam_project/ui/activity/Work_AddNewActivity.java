@@ -15,6 +15,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -25,6 +26,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.WoactivityDao;
@@ -128,6 +135,12 @@ public class Work_AddNewActivity extends BaseActivity {
     protected static final int YUZHI_S = 2;
     protected static final int YUZHI_F = 3;
 
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +149,9 @@ public class Work_AddNewActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+        addLctypeData();
     }
 
     /**
@@ -196,28 +212,7 @@ public class Work_AddNewActivity extends BaseActivity {
         reportedby.setText(getBaseApplication().getUsername());
         reportdate.setText(GetNowTime.getTime());
 
-        lctype.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int checked = 0;
-                if (lctype.getText().equals("电气")) {
-                    checked = 1;
-                }
-                new AlertDialog.Builder(Work_AddNewActivity.this).setTitle("单选框").setIcon(
-                        android.R.drawable.ic_dialog_info).setSingleChoiceItems(
-                        new String[]{"风机", "电气"}, checked,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0) {
-                                    lctype.setText("风机");
-                                } else {
-                                    lctype.setText("电气");
-                                }
-                                dialog.dismiss();
-                            }
-                        }).setNegativeButton("取消", null).show();
-            }
-        });
+        lctype.setOnClickListener(lctypeOnClickListener);
 
         addnew.setOnClickListener(addnewlistener);
         wfservice.setOnClickListener(wfserviceOnClickListener);
@@ -247,6 +242,44 @@ public class Work_AddNewActivity extends BaseActivity {
             wfservice.setVisibility(View.GONE);
         }
     }
+
+
+    private View.OnClickListener lctypeOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NormalListDialog();
+        }
+    };
+
+    private void NormalListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(Work_AddNewActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                lctype.setText(mMenuItems.get(position).mOperName);
+
+                dialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addLctypeData() {
+        String[] lctypes = getResources().getStringArray(R.array.lctype_tab_titles);
+
+        for (int i = 0; i < lctypes.length; i++)
+            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
+
+
+    }
+
 
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
         @Override
