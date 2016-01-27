@@ -442,6 +442,7 @@
 
     <string name="intro"> 下面展示使用 js 调用友盟 自定义事件  APIs</string>
     <string name="about_us_title">关于我们</string>
+    <string name="synchronous_data_text">同步基础数据</string>
 
 
 </resources>

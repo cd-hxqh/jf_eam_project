@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
@@ -31,6 +32,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/have_not_data_txt"
+            android:textSize="@dimen/abc_action_bar_content_inset_material" />
+        <Button
+            android:id="@+id/synchronous_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimens_10_dip"
+            android:background="@drawable/btn_selector"
+            android:text="@string/synchronous_data_text"
+            android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="@dimen/abc_action_bar_content_inset_material" />
     </LinearLayout>
 </FrameLayout>

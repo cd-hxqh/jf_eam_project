@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,7 +65,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
+    /**暂无数据**/
     private LinearLayout nodatalayout;
+    /**同步数据**/
+    private Button synchronousbtn;
     private OptionAdapter optionAdapter;
     private EditText search;
     private String searchText = "";
@@ -91,7 +95,6 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         if (requestCode == Constants.LABORCRAFTRATE) {
             CraftSearch = getIntent().getStringExtra("craft");
         }
-        Log.i(TAG, "requestCode=" + requestCode);
     }
 
     @Override
@@ -100,6 +103,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         backImage = (ImageView) findViewById(R.id.title_back_id);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
+        synchronousbtn = (Button) findViewById(R.id.synchronous_btn);
         search = (EditText) findViewById(R.id.search_edit);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
     }
@@ -131,6 +135,30 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         refresh_layout.setOnLoadListener(this);
         setSearchEdit();
         getData(searchText);
+
+        synchronousbtn.setOnClickListener(synchronousbtnOnClickListener);
+    }
+
+    /**同步数据**/
+    private View.OnClickListener synchronousbtnOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent =new Intent();
+            intent.setClass(OptionActivity.this,DownloadActivity.class);
+            startActivityForResult(intent,1000);
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode1, int resultCode, Intent data) {
+        super.onActivityResult(requestCode1, resultCode, data);
+        switch (requestCode1) {
+            case 1000:
+                Log.i(TAG,"requestCode="+requestCode1);
+                getData(searchText);
+                break;
+        }
     }
 
     private void setSearchEdit() {
@@ -163,6 +191,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
     private void getData(String searchText) {
         list = new ArrayList<Option>();
         Option option;
+        Log.i(TAG,"requestCode="+requestCode);
         switch (requestCode) {
             case Constants.ASSETCODE:
                 List<Assets> assets;
@@ -292,7 +321,6 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                     list.add(option);
                 }
 
-                Log.i(TAG, "这是人员");
                 break;
             case Constants.LABORCRAFTRATE:
                 List<Laborcraftrate> laborcraftrates;
@@ -310,14 +338,22 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                 }
                 break;
         }
+
+        Log.i(TAG,"ssssssssssssss");
         if (page == 1) {
             optionAdapter = new OptionAdapter(OptionActivity.this);
             recyclerView.setAdapter(optionAdapter);
         }
         optionAdapter.adddate(list);
+        optionAdapter.notifyDataSetChanged();
         if (optionAdapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
+            synchronousbtn.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+        }else{
+            nodatalayout.setVisibility(View.GONE);
+            synchronousbtn.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
         refresh_layout.setLoading(false);
         refresh_layout.setRefreshing(false);
