@@ -177,9 +177,6 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
         });
     }
 
-
-
-
     /**
      * 获取数据*
      */

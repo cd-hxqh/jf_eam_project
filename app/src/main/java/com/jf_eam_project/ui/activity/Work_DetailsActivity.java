@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -24,11 +25,14 @@ import android.widget.Toast;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
+import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
+import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LabtransDao;
 import com.jf_eam_project.Dao.LocationDao;
@@ -138,6 +142,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout confirmBtn;
     private String reviseresult;
 
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
 
@@ -251,7 +256,9 @@ public class Work_DetailsActivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+        addTaskData();
         setDataListener();
+        lctype.setOnClickListener(lctypeOnClickListener);
         targstartdate.setOnClickListener(new MydateListener());
         targcompdate.setOnClickListener(new MydateListener());
         actstart.setOnClickListener(new MydateListener());
@@ -272,6 +279,40 @@ public class Work_DetailsActivity extends BaseActivity {
             wfservice.setVisibility(View.GONE);
         }
 
+    }
+
+    private View.OnClickListener lctypeOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NormalListDialog();
+        }
+    };
+
+    private void NormalListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                lctype.setText(mMenuItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 添加任务数据*
+     */
+    private void addTaskData() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("风机");
+        list.add("电气");
+        for (int i = 0; i < list.size(); i++) {
+            mMenuItems.add(new DialogMenuItem(list.get(i), 0));
+        }
     }
 
     private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
@@ -870,7 +911,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 assetnum.setText(option.getName());
                 assetdesc.setText(option.getDescription());
                 location.setText(option.getValue());
-                locationdesc.setText(new LocationDao(Work_DetailsActivity.this).queryLocation(option.getValue()).description);
+                if (new LocationDao(Work_DetailsActivity.this).queryLocation(option.getValue()) != null) {
+                    locationdesc.setText(new LocationDao(Work_DetailsActivity.this).queryLocation(option.getValue()).description);
+                }
                 break;
             case Constants.LOCATIONCODE:
                 option = (Option) data.getSerializableExtra("option");

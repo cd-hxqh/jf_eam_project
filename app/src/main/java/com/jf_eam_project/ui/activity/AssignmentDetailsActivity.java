@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,10 @@ public class AssignmentDetailsActivity extends BaseActivity {
      */
     private TextView titlename;
     /**
+     * 编辑*
+     */
+    private ImageView editImageView;
+    /**
      * 返回*
      */
     private ImageView backImageView;
@@ -42,7 +47,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
 //    private TextView taskid;//任务
     private TextView laborcode;//员工
     private TextView craft;//工种
-    private TextView laborhrs;//时数
+    private EditText laborhrs;//时数
     private Button ok;//确定
     private Button delete;//删除
 
@@ -73,12 +78,13 @@ public class AssignmentDetailsActivity extends BaseActivity {
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
+        editImageView = (ImageView) findViewById(R.id.title_add);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
 //        taskid = (TextView) findViewById(R.id.assignment_taskid);
         laborcode = (TextView) findViewById(R.id.assignment_laborcode);
         craft = (TextView) findViewById(R.id.assignment_craft);
-        laborhrs = (TextView) findViewById(R.id.assignment_laborhrs);
+        laborhrs = (EditText) findViewById(R.id.assignment_laborhrs);
         ok = (Button) findViewById(R.id.assignment_ok);
         delete = (Button) findViewById(R.id.assignment_delete);
     }
@@ -86,6 +92,9 @@ public class AssignmentDetailsActivity extends BaseActivity {
     @Override
     protected void initView() {
         titlename.setText(R.string.title_activity_work_assignment_details);
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.edit_query);
+        editImageView.setOnClickListener(editImageViewOnClickListener);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +107,11 @@ public class AssignmentDetailsActivity extends BaseActivity {
         craft.setText(assignment.craft);
         laborhrs.setText(assignment.laborhrs);
 
+        laborcode.setEnabled(false);
+        laborhrs.setFocusable(false);
+        laborhrs.setFocusableInTouchMode(false);
+        laborhrs.setEnabled(false);
+
 //        mBasIn = new BounceTopEnter();
 //        mBasOut = new SlideBottomExit();
 //        addTaskData();
@@ -105,8 +119,27 @@ public class AssignmentDetailsActivity extends BaseActivity {
         laborcode.setOnClickListener(new LayoutOnClickListener(Constants.LABORCRAFTRATE));
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
-        delete.setVisibility(View.VISIBLE);
+        ok.setVisibility(View.GONE);
         delete.setOnClickListener(deleteOnClickListener);
+    }
+
+    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ok.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+            statusEdit();
+        }
+    };
+
+    /**
+     * 设置状态编辑*
+     */
+    private void statusEdit() {
+        laborcode.setEnabled(true);
+        laborhrs.setFocusable(true);
+        laborhrs.setFocusableInTouchMode(true);
+        laborhrs.setEnabled(true);
     }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
@@ -126,7 +159,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
             }
             intent.putExtra("assignment", assignment);
             intent.putExtra("position", position);
-            AssignmentDetailsActivity.this.setResult(0, intent);
+            AssignmentDetailsActivity.this.setResult(-1, intent);
             finish();
         }
     };

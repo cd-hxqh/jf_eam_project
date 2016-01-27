@@ -64,9 +64,15 @@
             <!--android:text="@string/work_wptool"-->
             <!--android:textColor="@drawable/text_selector" />-->
     </LinearLayout>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttom_layout">
+    </android.support.v4.view.ViewPager>
+    <include layout="@layout/work_buttom"/>
+    </RelativeLayout>
 </LinearLayout>

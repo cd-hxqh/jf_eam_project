@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,6 +56,10 @@ public class Work_PlanActivity extends BaseActivity {
 //    private WpserviceFragment wpserviceFragment;
 //    private WptoolFragment wptoolFragment;
 
+    private LinearLayout confirmBtn;
+    private Button revise;//
+    private Button wfservice;
+
     public WorkOrder workOrder;
     public ArrayList<Woactivity> woactivityList = new ArrayList<>();
     public ArrayList<Wplabor> wplaborList = new ArrayList<>();
@@ -98,6 +103,10 @@ public class Work_PlanActivity extends BaseActivity {
         wpmaterial = (Button) findViewById(R.id.work_wpmaterial);
 //        wptool = (Button) findViewById(R.id.work_wptool);
         mViewPager = (ViewPager) findViewById(R.id.pager);
+
+        confirmBtn = (LinearLayout) findViewById(R.id.buttom_layout);
+        revise = (Button) findViewById(R.id.work_revise);
+        wfservice = (Button) findViewById(R.id.wfservice);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -106,7 +115,12 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setCurrentItem(currentIndex);
         mViewPager.setOffscreenPageLimit(2);
         titlename.setText(getResources().getString(R.string.work_plan));
-        backimg.setOnClickListener(backOnClickListener);
+        backimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
@@ -133,6 +147,10 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));//设置ViewPager的适配器
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
         woactivity.performClick();
+
+        revise.setText(getResources().getString(R.string.ok));
+        revise.setOnClickListener(backOnClickListener);
+        wfservice.setVisibility(View.GONE);
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
@@ -265,15 +283,15 @@ public class Work_PlanActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         switch (resultCode) {
-            case 0:
+            case -1:
                 if (data != null) {
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
 //                    woactivityList.add(woactivity);
                     woactivityFragment.woactivityAdapter.adddate(woactivity);
                     woactivityFragment.nodatalayout.setVisibility(View.GONE);
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 if (data != null) {
@@ -282,6 +300,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.adddate(wplabor);
                     wplaborFragment.nodatalayout.setVisibility(View.GONE);
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 if (data != null) {
@@ -290,6 +309,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.adddate(wpmaterial);
                     wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 4:
                 if (data != null){
@@ -299,6 +319,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.woactivityList.set(position, woactivity);
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 5:
                 if(data != null){
@@ -308,6 +329,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.wplaborList.set(position,wplabor);
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 6:
                 if(data != null){
@@ -317,6 +339,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.wpmaterialList.set(position, wpmaterial);
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 7://本地任务删除
                 if (data != null){
@@ -324,6 +347,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.woactivityList.remove(position);
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 8://服务器任务删除操作
                 if (data != null){
@@ -333,6 +357,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.woactivityList.remove(position);
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 9://本地员工删除
                 if (data != null) {
@@ -340,6 +365,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.wplaborList.remove(position);
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 10://服务器员工删除
                 if(data != null){
@@ -349,6 +375,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.wplaborList.remove(position);
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 11://本地物料删除
                 if(data != null){
@@ -356,6 +383,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.wpmaterialList.remove(position);
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 12://服务器物料删除
                 if(data != null){
@@ -365,6 +393,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.wpmaterialList.remove(position);
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

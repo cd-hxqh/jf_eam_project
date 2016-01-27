@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
@@ -21,8 +22,10 @@ import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.utils.DataUtils;
 
 import java.sql.SQLException;
@@ -33,7 +36,7 @@ import java.util.Map;
  * Created by think on 2015/12/23.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 9;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
@@ -46,7 +49,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                          ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, WorkOrder.class);
+            TableUtils.createTable(connectionSource, Woactivity.class);
+            TableUtils.createTable(connectionSource, Wpmaterial.class);
             TableUtils.createTable(connectionSource, Wplabor.class);
+            TableUtils.createTable(connectionSource, Assignment.class);
             TableUtils.createTable(connectionSource, Labtrans.class);
             TableUtils.createTable(connectionSource, Location.class);
             TableUtils.createTable(connectionSource, Assets.class);
@@ -74,7 +80,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                           ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, WorkOrder.class, true);
+            TableUtils.dropTable(connectionSource, Woactivity.class, true);
             TableUtils.dropTable(connectionSource, Wplabor.class, true);
+            TableUtils.dropTable(connectionSource, Wpmaterial.class, true);
+            TableUtils.dropTable(connectionSource, Assignment.class, true);
             TableUtils.dropTable(connectionSource, Labtrans.class, true);
             TableUtils.dropTable(connectionSource, Location.class, true);
             TableUtils.dropTable(connectionSource, Assets.class, true);

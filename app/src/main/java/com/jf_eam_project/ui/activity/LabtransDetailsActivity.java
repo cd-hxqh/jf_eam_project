@@ -43,6 +43,10 @@ public class LabtransDetailsActivity extends BaseActivity{
      */
     private TextView titlename;
     /**
+     * 编辑*
+     */
+    private ImageView editImageView;
+    /**
      * 返回*
      */
     private ImageView backImageView;
@@ -50,7 +54,7 @@ public class LabtransDetailsActivity extends BaseActivity{
 //    private TextView taskid;//任务
     private TextView laborcode;//员工
     private TextView startdate;//开始日期
-    private TextView regularhrs;//常规时数
+    private EditText regularhrs;//常规时数
     private TextView craft;//工种
 //    private TextView payrate;//费率
     private Button ok;//确定
@@ -84,6 +88,7 @@ public class LabtransDetailsActivity extends BaseActivity{
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
+        editImageView = (ImageView) findViewById(R.id.title_add);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
 //        taskid = (TextView) findViewById(R.id.labtrans_taskid);
@@ -98,6 +103,9 @@ public class LabtransDetailsActivity extends BaseActivity{
     @Override
     protected void initView() {
         titlename.setText(R.string.title_activity_wplabor_details);
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.edit_query);
+        editImageView.setOnClickListener(editImageViewOnClickListener);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,17 +121,38 @@ public class LabtransDetailsActivity extends BaseActivity{
         laborcode.setEnabled(false);
         craft.setEnabled(false);
         startdate.setEnabled(false);
-        regularhrs.setEnabled(false);
+        regularhrs.setFocusable(false);
+        regularhrs.setFocusableInTouchMode(false);
 
         setDataListener();
         laborcode.setOnClickListener(new LayoutOnClickListener(Constants.LABORCRAFTRATE));
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         startdate.setOnClickListener(new MydateListener());
+        ok.setVisibility(View.GONE);
         ok.setOnClickListener(okOnClickListener);
 
         if(labtrans.labtransid!=null&&!labtrans.labtransid.equals("")){
-            ok.setVisibility(View.GONE);
+            editImageView.setVisibility(View.GONE);
         }
+    }
+
+    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ok.setVisibility(View.VISIBLE);
+            statusEdit();
+        }
+    };
+
+    /**
+     * 设置状态编辑*
+     */
+    private void statusEdit() {
+        laborcode.setEnabled(true);
+        craft.setEnabled(true);
+        startdate.setEnabled(true);
+        regularhrs.setFocusable(true);
+        regularhrs.setFocusableInTouchMode(true);
     }
 
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -46,6 +48,10 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
      * 菜单按钮*
      */
     private ImageView addimg;
+
+    private LinearLayout confirmBtn;
+    private Button revise;//
+    private Button wfservice;
     private WorkOrder workOrder;
     //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
     private ArrayList<Labtrans> labtransList = new ArrayList<>();
@@ -88,6 +94,10 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
 //        status = (TextView) findViewById(R.id.work_status);
 //        parent = (TextView) findViewById(R.id.work_parent);
 
+        confirmBtn = (LinearLayout) findViewById(R.id.buttom_layout);
+        revise = (Button) findViewById(R.id.work_revise);
+        wfservice = (Button) findViewById(R.id.wfservice);
+
     }
 
     @Override
@@ -103,12 +113,20 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
                 startActivityForResult(intent, 1);
             }
         });
+        if (workOrder.wonum!=null&&!workOrder.wonum.equals("")&&!workOrder.status.equals(Constants.WAIT_APPROVAL)){
+            addimg.setVisibility(View.GONE);
+        }
 
 //        wonum.setText(workOrder.wonum == null ? "" : workOrder.wonum);
 //        status.setText(workOrder.status == null ? "" : workOrder.status);
 //        parent.setText(workOrder.parent == null ? "" : workOrder.parent);
 
-        backImage.setOnClickListener(backOnClickListener);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -130,6 +148,10 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
+
+        revise.setText(getResources().getString(R.string.ok));
+        revise.setOnClickListener(backOnClickListener);
+        wfservice.setVisibility(View.GONE);
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
@@ -194,7 +216,7 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (resultCode) {
-            case 0://修改
+            case 2://修改
                 if (data != null) {
                     Labtrans labtrans = (Labtrans) data.getSerializableExtra("labtrans");
                     int position = data.getIntExtra("position", 0);
@@ -202,6 +224,7 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
                     labtransAdapter.labtransList.set(position, labtrans);
                     labtransAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 1://新增
                 if (data != null) {
@@ -210,6 +233,7 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
                     labtransAdapter.adddate(labtrans);
                     nodatalayout.setVisibility(View.GONE);
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

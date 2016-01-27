@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,14 +37,18 @@ public class WplaborDetailsActivity extends BaseActivity {
      */
     private TextView titlename;
     /**
+     * 编辑*
+     */
+    private ImageView editImageView;
+    /**
      * 返回*
      */
     private ImageView backImageView;
 
 //    private TextView taskid;//任务
     private TextView craft;//工种
-    private TextView quantity;//数量
-    private TextView laborhrs;//常规时数
+    private EditText quantity;//数量
+    private EditText laborhrs;//常规时数
     private Button ok;//确认
     private Button delete;//删除
 
@@ -74,12 +79,13 @@ public class WplaborDetailsActivity extends BaseActivity {
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
+        editImageView = (ImageView) findViewById(R.id.title_add);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
 //        taskid = (TextView) findViewById(R.id.wplabor_taskid);
         craft = (TextView) findViewById(R.id.wplabor_craft);
-        quantity = (TextView) findViewById(R.id.wplabor_quantity);
-        laborhrs = (TextView) findViewById(R.id.wplabor_laborhrs);
+        quantity = (EditText) findViewById(R.id.wplabor_quantity);
+        laborhrs = (EditText) findViewById(R.id.wplabor_laborhrs);
         ok = (Button) findViewById(R.id.wplabor_ok);
         delete = (Button) findViewById(R.id.wplabor_delete);
     }
@@ -87,6 +93,9 @@ public class WplaborDetailsActivity extends BaseActivity {
     @Override
     protected void initView() {
         titlename.setText(R.string.title_activity_wplabor_details);
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.edit_query);
+        editImageView.setOnClickListener(editImageViewOnClickListener);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,14 +108,40 @@ public class WplaborDetailsActivity extends BaseActivity {
         quantity.setText(wplabor.quantity);
         laborhrs.setText(wplabor.laborhrs);
 
+        craft.setEnabled(false);
+        quantity.setFocusable(false);
+        quantity.setFocusableInTouchMode(false);
+        laborhrs.setFocusable(false);
+        laborhrs.setFocusableInTouchMode(false);
+
 //        mBasIn = new BounceTopEnter();
 //        mBasOut = new SlideBottomExit();
 //        addTaskData();
 //        taskid.setOnClickListener(taskidlayoutOnClickListener);
         craft.setOnClickListener(new LayoutOnClickListener(Constants.CRAFTRATE));
         ok.setOnClickListener(okOnClickListener);
-        delete.setVisibility(View.VISIBLE);
+        ok.setVisibility(View.GONE);
         delete.setOnClickListener(deleteOnClickListener);
+    }
+
+    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ok.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+            statusEdit();
+        }
+    };
+
+    /**
+     * 设置状态编辑*
+     */
+    private void statusEdit() {
+        craft.setEnabled(true);
+        quantity.setFocusable(true);
+        quantity.setFocusableInTouchMode(true);
+        laborhrs.setFocusable(true);
+        laborhrs.setFocusableInTouchMode(true);
     }
 
 //    private View.OnClickListener taskidlayoutOnClickListener = new View.OnClickListener() {

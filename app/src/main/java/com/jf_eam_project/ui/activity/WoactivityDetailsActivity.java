@@ -32,12 +32,16 @@ public class WoactivityDetailsActivity extends BaseActivity{
      */
     private TextView titlename;
     /**
+     * 编辑*
+     */
+    private ImageView editImageView;
+    /**
      * 返回*
      */
     private ImageView backImageView;
 
     private TextView taskid;//任务
-    private TextView description;//摘要
+    private EditText description;//摘要
     private TextView targstartdate;//目标开始时间
     private TextView targcompdate;//目标结束时间
     private TextView actstart;//实际开始时间
@@ -71,10 +75,11 @@ public class WoactivityDetailsActivity extends BaseActivity{
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
+        editImageView = (ImageView) findViewById(R.id.title_add);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         taskid = (TextView) findViewById(R.id.woactivity_taskid);
-        description = (TextView) findViewById(R.id.woactivity_description);
+        description = (EditText) findViewById(R.id.woactivity_description);
         targstartdate = (TextView) findViewById(R.id.woactivity_targstartdate);
         targcompdate = (TextView) findViewById(R.id.woactivity_targcompdate);
         actstart = (TextView) findViewById(R.id.woactivity_actstart);
@@ -88,6 +93,9 @@ public class WoactivityDetailsActivity extends BaseActivity{
     @Override
     protected void initView() {
         titlename.setText(R.string.title_activity_woactivity_details);
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.edit_query);
+        editImageView.setOnClickListener(editImageViewOnClickListener);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +111,15 @@ public class WoactivityDetailsActivity extends BaseActivity{
         actfinish.setText(woactivity.actfinish);
         estdur.setText(woactivity.estdur);
 
+        description.setFocusable(false);
+        description.setFocusableInTouchMode(false);
+        estdur.setFocusable(false);
+        estdur.setFocusableInTouchMode(false);
+        targstartdate.setEnabled(false);
+        targcompdate.setEnabled(false);
+        actstart.setEnabled(false);
+        actfinish.setEnabled(false);
+
         setDataListener();
         targstartdate.setOnClickListener(new MydateListener());
         targcompdate.setOnClickListener(new MydateListener());
@@ -110,7 +127,7 @@ public class WoactivityDetailsActivity extends BaseActivity{
         actfinish.setOnClickListener(new MydateListener());
 
         ok.setOnClickListener(okOnClickListener);
-        delete.setVisibility(View.VISIBLE);
+        ok.setVisibility(View.GONE);
         delete.setOnClickListener(deleteOnClickListener);
     }
 
@@ -144,6 +161,29 @@ public class WoactivityDetailsActivity extends BaseActivity{
             finish();
         }
     };
+
+    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ok.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.VISIBLE);
+            statusEdit();
+        }
+    };
+
+    /**
+     * 设置状态编辑*
+     */
+    private void statusEdit() {
+        description.setFocusable(true);
+        description.setFocusableInTouchMode(true);
+        estdur.setFocusable(true);
+        estdur.setFocusableInTouchMode(true);
+        targstartdate.setEnabled(true);
+        targcompdate.setEnabled(true);
+        actstart.setEnabled(true);
+        actfinish.setEnabled(true);
+    }
 
     private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
         @Override

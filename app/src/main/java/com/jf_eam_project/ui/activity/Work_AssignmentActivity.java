@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -45,6 +47,11 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
      * 菜单按钮*
      */
     private ImageView addimg;
+
+    private LinearLayout confirmBtn;
+    private Button revise;//
+    private Button wfservice;
+
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
@@ -77,6 +84,10 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
+
+        confirmBtn = (LinearLayout) findViewById(R.id.buttom_layout);
+        revise = (Button) findViewById(R.id.work_revise);
+        wfservice = (Button) findViewById(R.id.wfservice);
     }
 
     @Override
@@ -91,8 +102,16 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                 startActivityForResult(intent, 1);
             }
         });
+        if (workOrder.wonum!=null&&!workOrder.wonum.equals("")&&!workOrder.status.equals(Constants.WAIT_APPROVAL)){
+            addimg.setVisibility(View.GONE);
+        }
 
-        backImage.setOnClickListener(backOnClickListener);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -114,6 +133,10 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         if (assignmentList.size() != 0) {
             assignmentAdapter.update(assignmentList, true);
         }
+
+        revise.setText(getResources().getString(R.string.ok));
+        revise.setOnClickListener(backOnClickListener);
+        wfservice.setVisibility(View.GONE);
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
@@ -178,7 +201,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (resultCode) {
-            case 0://修改
+            case -1://修改
                 if (data != null) {
                     Assignment assignment1 = (Assignment) data.getSerializableExtra("assignment");
                     int position = data.getIntExtra("position", 0);
@@ -186,6 +209,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.assignmentList.set(position, assignment1);
                     assignmentAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 1://新增
                 if (data != null) {
@@ -193,6 +217,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.adddate(assignment);
                     nodatalayout.setVisibility(View.GONE);
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 2://本地任务分配删除
                 if(data != null){
@@ -200,6 +225,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.assignmentList.remove(position);
                     assignmentAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             case 3://服务器任务分配删除
                 if(data != null){
@@ -209,6 +235,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.assignmentList.remove(position);
                     assignmentAdapter.notifyDataSetChanged();
                 }
+                confirmBtn.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

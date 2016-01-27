@@ -365,18 +365,22 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
     }
 
     private ArrayList<Woactivity> getWoactivityList(int workorderid){
+        ArrayList<Woactivity> list = (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Wplabor> getWplaborList(int workorderid){
+        ArrayList<Wplabor> list = (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Wpmaterial> getWpmaterialList(int workorderid){
+        ArrayList<Wpmaterial> list = (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Assignment> getAssignmentList(int workorderid){
+        ArrayList<Assignment> list = (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
