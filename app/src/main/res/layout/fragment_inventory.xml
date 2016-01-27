@@ -26,7 +26,7 @@
                     android:id="@+id/po_image_plan_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_pr" />
+                    android:src="@drawable/ic_inventory_" />
 
                 <TextView
                     android:id="@+id/po_text_plan_id"
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_po" />
+                    android:src="@drawable/ic_matrectrans" />
 
                 <TextView
                     android:id="@+id/po_text_order_id"
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_invoice" />
+                    android:src="@drawable/ic_matusetrans" />
 
                 <TextView
                     android:id="@+id/po_text_invoice_id"
