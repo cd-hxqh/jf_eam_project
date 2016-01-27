@@ -27,6 +27,7 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LabtransDao;
@@ -52,6 +53,9 @@ import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -301,61 +305,86 @@ public class Work_DetailsActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             if (status.getText().toString().equals(Constants.WAIT_APPROVAL)||status.getText().toString().equals(Constants.APPROVALED)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Work_DetailsActivity.this);
-                builder.setMessage("确定修改工单吗").setTitle("提示")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
-                                getString(R.string.inputing), true, true);
-                        mProgressDialog.setCanceledOnTouchOutside(false);
-                        mProgressDialog.setCancelable(false);
-                        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-                            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-                            mProgressDialog.dismiss();
-                            saveWorkOrder();
-                        } else {
-                            String updataInfo = null;
-                            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-                                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
-                            } else if (workOrder.status.equals(Constants.APPROVALED)) {
-                                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-                            }
-                            final String finalUpdataInfo = updataInfo;
-                            new AsyncTask<String, String, String>() {
-                                @Override
-                                protected String doInBackground(String... strings) {
-                                    reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
-                                    return reviseresult;
-                                }
-
-                                @Override
-                                protected void onPostExecute(String s) {
-                                    super.onPostExecute(s);
-                                    if (s.equals("成功")) {
-                                        Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-                                    } else if (s.equals("")) {
-                                        Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
-                                    }
-                                    mProgressDialog.dismiss();
-                                }
-                            }.execute();
-                        }
-                    }
-                }).create().show();
+                submitDataInfo();
             } else {
-                Toast.makeText(Work_DetailsActivity.this, "工单状态不允许修改", Toast.LENGTH_SHORT).show();
+                MessageUtils.showMiddleToast(Work_DetailsActivity.this, "工单状态不允许修改");
             }
         }
     };
+
+
+
+
+
+    /**
+     * 提交数据*
+     */
+    private void submitDataInfo() {
+
+        final NormalDialog dialog = new NormalDialog(Work_DetailsActivity.this);
+        dialog.content("确定修改工单吗?")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+
+
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+
+
+    /**
+     * 提交数据*
+     */
+    private void startAsyncTask() {
+
+        String updataInfo = null;
+        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+        } else if (workOrder.status.equals(Constants.APPROVALED)) {
+            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
+        }
+        final String finalUpdataInfo = updataInfo;
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s.equals("成功")) {
+                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                } else if (s.equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                }
+                closeProgressDialog();
+            }
+        }.execute();
+
+
+    }
+
+
 
     private void saveWorkOrder() {
         WorkOrder workOrder = getWorkOrder();

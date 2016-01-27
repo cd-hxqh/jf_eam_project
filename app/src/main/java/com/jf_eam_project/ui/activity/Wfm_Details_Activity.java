@@ -169,7 +169,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnClickL() {//不通过
                     @Override
                     public void onBtnClick() {
-                        Toast.makeText(Wfm_Details_Activity.this, "不通过", Toast.LENGTH_SHORT).show();
+                        MessageUtils.showMiddleToast(Wfm_Details_Activity.this, "不通过");
                         MaterialDialogOneBtn1(false);
                         dialog.dismiss();
                     }
@@ -250,6 +250,7 @@ public class Wfm_Details_Activity extends BaseActivity {
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
+                Log.i(TAG,"results.getResultlist()="+results.getResultlist());
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
                 Log.i(TAG,"result="+result);
                 if (result != null && result.equals("Y")) {
