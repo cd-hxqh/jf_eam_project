@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -34,7 +35,7 @@ import java.util.Calendar;
  * Created by think on 2015/12/22.
  * 实际员工详情页面
  */
-public class LabtransDetailsActivity extends BaseActivity{
+public class LabtransDetailsActivity extends BaseActivity {
     private Labtrans labtrans;
     private int position;
 
@@ -56,8 +57,9 @@ public class LabtransDetailsActivity extends BaseActivity{
     private TextView startdate;//开始日期
     private EditText regularhrs;//常规时数
     private TextView craft;//工种
-//    private TextView payrate;//费率
+    //    private TextView payrate;//费率
     private Button ok;//确定
+    private Button delete;//删除
 
 //    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
 //    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
@@ -85,6 +87,7 @@ public class LabtransDetailsActivity extends BaseActivity{
         labtrans = (Labtrans) getIntent().getSerializableExtra("labtrans");
         position = getIntent().getIntExtra("position", 0);
     }
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
@@ -98,6 +101,7 @@ public class LabtransDetailsActivity extends BaseActivity{
         startdate = (TextView) findViewById(R.id.labtrans_startdate);
         regularhrs = (EditText) findViewById(R.id.labtrans_regularhrs);
         ok = (Button) findViewById(R.id.labtrans_ok);
+        delete = (Button) findViewById(R.id.labtrans_delete);
     }
 
     @Override
@@ -130,8 +134,9 @@ public class LabtransDetailsActivity extends BaseActivity{
         startdate.setOnClickListener(new MydateListener());
         ok.setVisibility(View.GONE);
         ok.setOnClickListener(okOnClickListener);
+        delete.setOnClickListener(deleteOnClickListener);
 
-        if(labtrans.labtransid!=null&&!labtrans.labtransid.equals("")){
+        if (labtrans.labtransid != null && !labtrans.labtransid.equals("")) {
             editImageView.setVisibility(View.GONE);
         }
     }
@@ -158,7 +163,37 @@ public class LabtransDetailsActivity extends BaseActivity{
     private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent intent = getIntent();
+            if (!labtrans.laborcode.equals(laborcode.getText().toString())
+                    || !labtrans.craft.equals(craft.getText().toString())
+                    || !labtrans.startdate.equals(startdate.getText().toString())
+                    || !labtrans.regularhrs.equals(regularhrs.getText().toString())) {
+//                assignment.taskid = taskid.getText().toString();
+                labtrans.laborcode = laborcode.getText().toString();
+                labtrans.craft = craft.getText().toString();
+                labtrans.startdate = startdate.getText().toString();
+                labtrans.regularhrs = regularhrs.getText().toString();
+            }
+            intent.putExtra("labtrans", labtrans);
+            intent.putExtra("position", position);
+            LabtransDetailsActivity.this.setResult(2, intent);
+            Toast.makeText(LabtransDetailsActivity.this, "实际员工修改成功", Toast.LENGTH_SHORT).show();
             finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(labtrans.type!=null&&labtrans.type.equals("add")){//本地新增任务
+                intent.putExtra("position",position);
+                LabtransDetailsActivity.this.setResult(3, intent);
+                Toast.makeText(LabtransDetailsActivity.this, "实际员工删除成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }else if (labtrans.type==null){//服务器接收的任务
+                Toast.makeText(LabtransDetailsActivity.this, "已有实际员工不能删除!", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
@@ -155,9 +156,10 @@ public class WoactivityDetailsActivity extends BaseActivity{
                     woactivity.type = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
+                Toast.makeText(WoactivityDetailsActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
             }
-            intent.putExtra("position",position);
-            WoactivityDetailsActivity.this.setResult(4,intent);
+            intent.putExtra("position", position);
+            WoactivityDetailsActivity.this.setResult(4, intent);
             finish();
         }
     };
@@ -192,12 +194,14 @@ public class WoactivityDetailsActivity extends BaseActivity{
             if(woactivity.type!=null&&woactivity.type.equals("add")){//本地新增任务
                 intent.putExtra("position",position);
                 WoactivityDetailsActivity.this.setResult(7, intent);
+                Toast.makeText(WoactivityDetailsActivity.this, "任务删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }else if (woactivity.type==null){//服务器接收的任务
                 woactivity.type = "delete";
                 intent.putExtra("woactivity", woactivity);
                 intent.putExtra("position",position);
-                WoactivityDetailsActivity.this.setResult(8,intent);
+                WoactivityDetailsActivity.this.setResult(8, intent);
+                Toast.makeText(WoactivityDetailsActivity.this, "任务本地删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

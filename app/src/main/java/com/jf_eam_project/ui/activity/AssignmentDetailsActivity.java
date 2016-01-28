@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -155,6 +156,7 @@ public class AssignmentDetailsActivity extends BaseActivity {
                 assignment.laborhrs = laborhrs.getText().toString();
                 if (assignment.type == null || !assignment.type.equals("add")) {
                     assignment.type = "update";
+                    Toast.makeText(AssignmentDetailsActivity.this, "任务分配本地修改成功", Toast.LENGTH_SHORT).show();
                 }
             }
             intent.putExtra("assignment", assignment);
@@ -171,12 +173,14 @@ public class AssignmentDetailsActivity extends BaseActivity {
             if(assignment.type!=null&&assignment.type.equals("add")){//本地新增任务
                 intent.putExtra("position",position);
                 AssignmentDetailsActivity.this.setResult(2, intent);
+                Toast.makeText(AssignmentDetailsActivity.this, "任务分配删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }else if (assignment.type==null){//服务器接收的任务
                 assignment.type = "delete";
                 intent.putExtra("assignment", assignment);
                 intent.putExtra("position",position);
-                AssignmentDetailsActivity.this.setResult(3,intent);
+                AssignmentDetailsActivity.this.setResult(3, intent);
+                Toast.makeText(AssignmentDetailsActivity.this, "任务分配本地删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

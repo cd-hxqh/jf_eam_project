@@ -182,6 +182,7 @@ public class WplaborDetailsActivity extends BaseActivity {
                     wplabor.laborhrs = laborhrs.getText().toString();
                     if (wplabor.type == null || !wplabor.type.equals("add")) {
                         wplabor.type = "update";
+                        Toast.makeText(WplaborDetailsActivity.this, "计划员工本地修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }
                 intent.putExtra("wplabor", wplabor);
@@ -199,12 +200,14 @@ public class WplaborDetailsActivity extends BaseActivity {
             if(wplabor.type!=null&&wplabor.type.equals("add")){//本地新增任务
                 intent.putExtra("position",position);
                 WplaborDetailsActivity.this.setResult(9, intent);
+                Toast.makeText(WplaborDetailsActivity.this, "计划员工删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }else if (wplabor.type==null){//服务器接收的任务
                 wplabor.type = "delete";
                 intent.putExtra("wplabor", wplabor);
                 intent.putExtra("position",position);
-                WplaborDetailsActivity.this.setResult(10,intent);
+                WplaborDetailsActivity.this.setResult(10, intent);
+                Toast.makeText(WplaborDetailsActivity.this, "计划员工本地删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

@@ -138,6 +138,7 @@ public class WplaborAddNewActivity extends BaseActivity {
                 wplabor.type = "add";
                 intent.putExtra("wplabor", wplabor);
                 WplaborAddNewActivity.this.setResult(1, intent);
+                Toast.makeText(WplaborAddNewActivity.this, "计划员工本地新增成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

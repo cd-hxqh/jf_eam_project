@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Woactivity;
@@ -112,7 +113,8 @@ public class WoactivityAddNewActivity extends BaseActivity{
                 woactivity.estdur = estdur.getText().toString();
                 woactivity.type = "add";
                 intent.putExtra("woactivity",woactivity);
-                WoactivityAddNewActivity.this.setResult(-1,intent);
+                WoactivityAddNewActivity.this.setResult(-1, intent);
+                Toast.makeText(WoactivityAddNewActivity.this,"任务本地新增成功",Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

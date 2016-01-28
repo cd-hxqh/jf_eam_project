@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -124,7 +125,8 @@ public class LabtransAddNewActivity extends BaseActivity {
             labtrans.regularhrs = regularhrs.getText().toString();
             labtrans.type = "add";
             intent.putExtra("labtrans",labtrans);
-            LabtransAddNewActivity.this.setResult(1,intent);
+            LabtransAddNewActivity.this.setResult(1, intent);
+            Toast.makeText(LabtransAddNewActivity.this, "实际员工本地新增成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     };

@@ -30,7 +30,9 @@ import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LocationDao;
@@ -217,12 +219,7 @@ public class Work_AddNewActivity extends BaseActivity {
         addnew.setOnClickListener(addnewlistener);
         wfservice.setOnClickListener(wfserviceOnClickListener);
 
-        backlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backlayout.setOnClickListener(backOnClickListener);
 
         setDataListener();
         targstartdate.setOnClickListener(new MydateListener());
@@ -243,8 +240,37 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
+    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (wonumlayout.getVisibility()==View.GONE) {
+                final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
+                dialog.content("确定放弃新增吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
 
-    private View.OnClickListener lctypeOnClickListener=new View.OnClickListener() {
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                dialog.dismiss();
+                            }
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+//                                dialog.dismiss();
+                                Work_AddNewActivity.this.finish();
+                            }
+                        });
+            }else {
+                Work_AddNewActivity.this.finish();
+            }
+        }
+    };
+
+    private View.OnClickListener lctypeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             NormalListDialog();
@@ -284,55 +310,72 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener addnewlistener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (wonumlayout.getVisibility() == View.GONE) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
-                builder.setMessage("确定新增工单吗").setTitle("提示")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            if (targstartdate.getText().equals("") || targcompdate.getText().equals("")
+                    || actstart.getText().equals("") || actfinish.getText().equals("")) {
+                Toast.makeText(Work_AddNewActivity.this, "请输入日期时间", Toast.LENGTH_SHORT).show();
+            } else {
+                final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
+                dialog.content("确定新增工单吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
+                            public void onBtnClick() {
+                                dialog.dismiss();
                             }
-                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        mProgressDialog = ProgressDialog.show(Work_AddNewActivity.this, null,
-                                getString(R.string.inputing), true, true);
-                        mProgressDialog.setCanceledOnTouchOutside(false);
-                        mProgressDialog.setCancelable(false);
-                        if (NetWorkHelper.isNetwork(Work_AddNewActivity.this)) {
-                            MessageUtils.showMiddleToast(Work_AddNewActivity.this, "暂无网络,现离线保存数据!");
-                            mProgressDialog.dismiss();
-                            saveWorkOrder();
-                        } else {
-                            final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
-                            new AsyncTask<String, String, String>() {
-                                @Override
-                                protected String doInBackground(String... strings) {
-                                    addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
-                                    return addresult;
-                                }
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                showProgressDialog("数据提交中...");
+                                startAsyncTask();
+                                dialog.dismiss();
+                            }
+                        });
+            }
+        }
 
-                                @Override
-                                protected void onPostExecute(String s) {
-                                    super.onPostExecute(s);
-                                    if (s == null || s.equals("")) {
-                                        Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
-                                    } else if (!NumberUtils.isDigits(s)) {
-                                        Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
-                                        wonumlayout.setVisibility(View.VISIBLE);
-                                        wonum.setText(s);
-                                    }
-                                    mProgressDialog.dismiss();
-                                }
-                            }.execute();
+        ;
+
+        /**
+         * 提交数据*
+         */
+        private void startAsyncTask() {
+            if (wonumlayout.getVisibility() == View.GONE) {
+                if (NetWorkHelper.isNetwork(Work_AddNewActivity.this)) {
+                    MessageUtils.showMiddleToast(Work_AddNewActivity.this, "暂无网络,现离线保存数据!");
+                    saveWorkOrder();
+                    closeProgressDialog();
+                } else {
+                    final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                            return addresult;
                         }
-                    }
-                }).create().show();
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+                            if (s == null || s.equals("")) {
+                                Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                            } else if (!NumberUtils.isDigits(s)) {
+                                Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
+                                wonumlayout.setVisibility(View.VISIBLE);
+                                wonum.setText(s);
+                            }
+                            closeProgressDialog();
+                        }
+                    }.execute();
+                }
             } else {
                 Toast.makeText(Work_AddNewActivity.this, "工单已新增", Toast.LENGTH_SHORT).show();
+                closeProgressDialog();
             }
         }
     };
@@ -343,42 +386,47 @@ public class Work_AddNewActivity extends BaseActivity {
             if (wonumlayout.getVisibility() == View.GONE && (wonum.getText().toString() == null || wonum.getText().toString().equals(""))) {
                 Toast.makeText(Work_AddNewActivity.this, "请先新增工单", Toast.LENGTH_SHORT).show();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Work_AddNewActivity.this);
-                builder.setMessage("确定开始工作流吗").setTitle("提示")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        mProgressDialog = ProgressDialog.show(Work_AddNewActivity.this, null,
-                                getString(R.string.inputing), true, true);
-                        mProgressDialog.setCanceledOnTouchOutside(false);
-                        mProgressDialog.setCancelable(false);
-                        new AsyncTask<String, String, String>() {
-                            @Override
-                            protected String doInBackground(String... strings) {
-                                result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", addresult, "WONUM");
-                                return result;
-                            }
+                final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
+                dialog.content("确定开始工作流吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
 
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
                             @Override
-                            protected void onPostExecute(String s) {
-                                super.onPostExecute(s);
-                                if (s == null || s.equals("")) {
-                                    Toast.makeText(Work_AddNewActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
-                                    Work_AddNewActivity.this.finish();
-                                }
-                                mProgressDialog.dismiss();
+                            public void onBtnClick() {
+                                dialog.dismiss();
                             }
-                        }.execute();
-                    }
-                }).create().show();
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                showProgressDialog("数据提交中...");
+                                new AsyncTask<String, String, String>() {
+                                    @Override
+                                    protected String doInBackground(String... strings) {
+                                        result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", addresult, "WONUM");
+                                        return result;
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(String s) {
+                                        super.onPostExecute(s);
+                                        if (s == null || s.equals("")) {
+                                            Toast.makeText(Work_AddNewActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                                        } else if (s.equals("工作流启动成功")){
+                                            Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
+                                            Work_AddNewActivity.this.finish();
+                                        }else {
+                                            Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
+                                        }
+                                        mProgressDialog.dismiss();
+                                    }
+                                }.execute();
+                                dialog.dismiss();
+                            }
+                        });
             }
         }
     };

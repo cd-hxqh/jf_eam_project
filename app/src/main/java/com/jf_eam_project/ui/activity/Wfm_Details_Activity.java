@@ -282,9 +282,9 @@ public class Wfm_Details_Activity extends BaseActivity {
                 if(wfm.getOwnertable().equals("WORKORDER")){
                     key = "WORKORDERID";
                 }else if (wfm.getOwnertable().equals("PO")){
-                    key = "";
+                    key = "POID";
                 }
-                String result = getBaseApplication().getWfService().startwf(wfm.getProcessname(), wfm.getOwnertable(), id, "WONUM");
+                String result = getBaseApplication().getWfService().startwf(wfm.getProcessname(), wfm.getOwnertable(), id, key);
                 return result;
             }
 
@@ -293,9 +293,11 @@ public class Wfm_Details_Activity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.equals("")) {
                     Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.equals("工作流启动成功")){
+                    Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
+                    Wfm_Details_Activity.this.finish();
                 } else {
                     Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
-
                 }
                 mProgressDialog.dismiss();
             }

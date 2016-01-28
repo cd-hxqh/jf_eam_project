@@ -107,7 +107,7 @@ public class JsonUtils {
         String result = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.getString("errorMsg").equals("工作流启动成功")){
+            if(object.has("errorMsg")){
                 result = object.getString("errorMsg");
             }else {
                 result = "";

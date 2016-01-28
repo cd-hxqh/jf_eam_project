@@ -234,6 +234,7 @@ public class WpmaterialDetailsActivity extends BaseActivity{
                     wpmaterial.requiredate = requiredate.getText().toString();
                     if (wpmaterial.type == null || !wpmaterial.type.equals("add")) {
                         wpmaterial.type = "update";
+                        Toast.makeText(WpmaterialDetailsActivity.this, "计划物料本地修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }
                 intent.putExtra("wpmaterial", wpmaterial);
@@ -251,12 +252,14 @@ public class WpmaterialDetailsActivity extends BaseActivity{
             if(wpmaterial.type!=null&&wpmaterial.type.equals("add")){//本地新增任务
                 intent.putExtra("position",position);
                 WpmaterialDetailsActivity.this.setResult(11, intent);
+                Toast.makeText(WpmaterialDetailsActivity.this, "计划物料删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }else if (wpmaterial.type==null){//服务器接收的任务
                 wpmaterial.type = "delete";
                 intent.putExtra("wpmaterial", wpmaterial);
                 intent.putExtra("position",position);
-                WpmaterialDetailsActivity.this.setResult(12,intent);
+                WpmaterialDetailsActivity.this.setResult(12, intent);
+                Toast.makeText(WpmaterialDetailsActivity.this, "计划物料本地删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

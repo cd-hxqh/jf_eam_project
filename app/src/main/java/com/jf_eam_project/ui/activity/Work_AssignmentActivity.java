@@ -13,6 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -58,6 +63,9 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
     private SwipeRefreshLayout refresh_layout = null;
     private AssignmentAdapter assignmentAdapter;
     private int page = 1;
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
 
     private WorkOrder workOrder;
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
@@ -106,12 +114,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             addimg.setVisibility(View.GONE);
         }
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backImage.setOnClickListener(backOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -134,12 +137,41 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
             assignmentAdapter.update(assignmentList, true);
         }
 
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
         revise.setText(getResources().getString(R.string.ok));
-        revise.setOnClickListener(backOnClickListener);
+        revise.setOnClickListener(okOnClickListener);
         wfservice.setVisibility(View.GONE);
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            final NormalDialog dialog = new NormalDialog(Work_AssignmentActivity.this);
+            dialog.content("确定放弃修改吗?")//
+                    .showAnim(mBasIn)//
+                    .dismissAnim(mBasOut)//
+                    .show();
+
+            dialog.setOnBtnClickL(
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            dialog.dismiss();
+                        }
+                    },
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            Work_AssignmentActivity.this.finish();
+//                            dialog.dismiss();
+                        }
+                    });
+        }
+    };
+
+    private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
@@ -197,6 +229,14 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
         }
     }
 
+    private void setNodataLayout() {
+        if (assignmentAdapter.getItemCount()==0) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        }else {
+            nodatalayout.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -210,6 +250,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 1://新增
                 if (data != null) {
@@ -218,6 +259,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     nodatalayout.setVisibility(View.GONE);
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 2://本地任务分配删除
                 if(data != null){
@@ -226,6 +268,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 3://服务器任务分配删除
                 if(data != null){
@@ -236,6 +279,7 @@ public class Work_AssignmentActivity extends BaseActivity implements SwipeRefres
                     assignmentAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             default:
                 break;

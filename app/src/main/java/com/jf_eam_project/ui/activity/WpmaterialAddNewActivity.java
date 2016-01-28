@@ -187,6 +187,7 @@ public class WpmaterialAddNewActivity extends BaseActivity {
                 wpmaterial.type = "add";
                 intent.putExtra("wpmaterial", wpmaterial);
                 WpmaterialAddNewActivity.this.setResult(2, intent);
+                Toast.makeText(WpmaterialAddNewActivity.this, "计划物料本地新增成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

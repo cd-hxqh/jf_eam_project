@@ -12,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -66,6 +71,9 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
     private LabtransAdapter labtransAdapter;
     private int page = 1;
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +106,9 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         revise = (Button) findViewById(R.id.work_revise);
         wfservice = (Button) findViewById(R.id.wfservice);
 
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
     }
 
     @Override
@@ -121,12 +132,7 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
 //        status.setText(workOrder.status == null ? "" : workOrder.status);
 //        parent.setText(workOrder.parent == null ? "" : workOrder.parent);
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backImage.setOnClickListener(backOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -150,11 +156,39 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         refresh_layout.setOnLoadListener(this);
 
         revise.setText(getResources().getString(R.string.ok));
-        revise.setOnClickListener(backOnClickListener);
+        revise.setOnClickListener(okOnClickListener);
         wfservice.setVisibility(View.GONE);
+
+        setNodataLayout();
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            final NormalDialog dialog = new NormalDialog(Work_LabtransActivity.this);
+            dialog.content("确定放弃修改吗?")//
+                    .showAnim(mBasIn)//
+                    .dismissAnim(mBasOut)//
+                    .show();
+
+            dialog.setOnBtnClickL(
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            dialog.dismiss();
+                        }
+                    },
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            Work_LabtransActivity.this.finish();
+//                            dialog.dismiss();
+                        }
+                    });
+        }
+    };
+
+    private View.OnClickListener okOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
@@ -212,6 +246,14 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
         }
     }
 
+    private void setNodataLayout() {
+        if (labtransAdapter.getItemCount()==0) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        }else {
+            nodatalayout.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -234,6 +276,16 @@ public class Work_LabtransActivity extends BaseActivity implements SwipeRefreshL
                     nodatalayout.setVisibility(View.GONE);
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
+                break;
+            case 3://本地员工删除
+                if (data != null){
+                    int position = data.getIntExtra("position",0);
+                    labtransAdapter.labtransList.remove(position);
+                    labtransAdapter.notifyDataSetChanged();
+                }
+                confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             default:
                 break;

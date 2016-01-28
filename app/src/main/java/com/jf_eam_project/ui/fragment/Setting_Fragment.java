@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jf_eam_project.Dao.AssetDao;
+import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.CraftrateDao;
 import com.jf_eam_project.Dao.FailurecodeDao;
 import com.jf_eam_project.Dao.FailurelistDao;
@@ -18,11 +19,16 @@ import com.jf_eam_project.Dao.ItemDao;
 import com.jf_eam_project.Dao.JobplanDao;
 import com.jf_eam_project.Dao.LaborDao;
 import com.jf_eam_project.Dao.LaborcraftrateDao;
+import com.jf_eam_project.Dao.LabtransDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.Dao.UdinspoDao;
+import com.jf_eam_project.Dao.WoactivityDao;
 import com.jf_eam_project.Dao.WorkOrderDao;
+import com.jf_eam_project.Dao.WplaborDao;
+import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.ui.activity.About_us_Activity;
 import com.jf_eam_project.ui.activity.DownloadActivity;
 import com.jf_eam_project.ui.activity.Invoice_Activity;
@@ -117,7 +123,11 @@ public class Setting_Fragment extends BaseFragment {
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setCancelable(false);
         new WorkOrderDao(getActivity()).deleteall();
-        new UdinspoDao(getActivity()).deleteall();
+        new WoactivityDao(getActivity()).deleteall();
+        new WplaborDao(getActivity()).deleteall();
+        new WpmeterialDao(getActivity()).deleteall();
+        new AssignmentDao(getActivity()).deleteall();
+        new LabtransDao(getActivity()).deleteall();
         mProgressDialog.dismiss();
     }
 

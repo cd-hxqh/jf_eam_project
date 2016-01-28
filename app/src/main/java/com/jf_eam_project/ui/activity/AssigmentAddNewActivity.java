@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -97,7 +98,8 @@ public class AssigmentAddNewActivity extends BaseActivity{
             assignment.laborhrs = laborhrs.getText().toString();
             assignment.type = "add";
             intent.putExtra("assignment",assignment);
-            AssigmentAddNewActivity.this.setResult(1,intent);
+            AssigmentAddNewActivity.this.setResult(1, intent);
+            Toast.makeText(AssigmentAddNewActivity.this, "任务分配新增成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     };

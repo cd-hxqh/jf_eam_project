@@ -207,12 +207,7 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
-        backImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backImageView.setOnClickListener(backOnClickListener);
 
         wonum.setText(workOrder.wonum);
         workOrder.isnew = false;
@@ -281,6 +276,36 @@ public class Work_DetailsActivity extends BaseActivity {
 
     }
 
+    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+                final NormalDialog dialog = new NormalDialog(Work_DetailsActivity.this);
+                dialog.content("确定放弃修改吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
+
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                dialog.dismiss();
+                            }
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                finish();
+//                                dialog.dismiss();
+                            }
+                        });
+        }
+    };
+
+    private void ActivityFinish(){
+        Work_DetailsActivity.this.finish();
+    }
+
     private View.OnClickListener lctypeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -345,16 +370,16 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener reviseOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (status.getText().toString().equals(Constants.WAIT_APPROVAL)||status.getText().toString().equals(Constants.APPROVALED)) {
+            if (targstartdate.getText().equals("") || targcompdate.getText().equals("")
+                    || actstart.getText().equals("") || actfinish.getText().equals("")) {
+                Toast.makeText(Work_DetailsActivity.this, "请输入日期时间", Toast.LENGTH_SHORT).show();
+            } else if (status.getText().toString().equals(Constants.WAIT_APPROVAL) || status.getText().toString().equals(Constants.APPROVALED)) {
                 submitDataInfo();
             } else {
                 MessageUtils.showMiddleToast(Work_DetailsActivity.this, "工单状态不允许修改");
             }
         }
     };
-
-
-
 
 
     /**
@@ -388,43 +413,44 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
 
-
     /**
      * 提交数据*
      */
     private void startAsyncTask() {
-
-        String updataInfo = null;
-        if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
-        } else if (workOrder.status.equals(Constants.APPROVALED)) {
-            updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-        }
-        final String finalUpdataInfo = updataInfo;
-        new AsyncTask<String, String, String>() {
-            @Override
-            protected String doInBackground(String... strings) {
-                reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
-                return reviseresult;
+        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
+            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
+            saveWorkOrder();
+        } else {
+            String updataInfo = null;
+            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+            } else if (workOrder.status.equals(Constants.APPROVALED)) {
+                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
             }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                if (s.equals("成功")) {
-                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-                } else if (s.equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+            final String finalUpdataInfo = updataInfo;
+            new AsyncTask<String, String, String>() {
+                @Override
+                protected String doInBackground(String... strings) {
+                    reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
+                    return reviseresult;
                 }
-                closeProgressDialog();
-            }
-        }.execute();
 
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (s.equals("成功")) {
+                        Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                    } else if (s.equals("")) {
+                        Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                    closeProgressDialog();
+                }
+            }.execute();
+        }
 
     }
-
 
 
     private void saveWorkOrder() {
@@ -533,7 +559,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {//否
                     @Override
                     public void onBtnClick() {
-                        getwfstatus(isok,"不通过");
+                        getwfstatus(isok, "不通过");
                         dialog.dismiss();
                     }
                 }
@@ -556,7 +582,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-                        getwfstatus(isok,text);
+                        getwfstatus(isok, text);
                         dialog.dismiss();
                     }
                 },
@@ -584,9 +610,9 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-                if (result!=null&&result.equals("Y")) {
+                if (result != null && result.equals("Y")) {
                     wfstart(workOrder.wonum);
-                } else if(result!=null&&result.equals("N")){
+                } else if (result != null && result.equals("N")) {
                     wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
                 }
             }
@@ -624,7 +650,6 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Work_DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
-
                 }
                 mProgressDialog.dismiss();
             }
@@ -771,9 +796,9 @@ public class Work_DetailsActivity extends BaseActivity {
         taskLinearLayout.setOnClickListener(taskOnClickListener);
         realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 
-        if (workOrder.status.equals(Constants.APPROVALED)||workOrder.status.equals(Constants.APPDONE)) {
+        if (workOrder.status.equals(Constants.APPROVALED) || workOrder.status.equals(Constants.APPDONE)) {
             realinfoLinearLayout.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             realinfoLinearLayout.setVisibility(View.GONE);
         }
     }

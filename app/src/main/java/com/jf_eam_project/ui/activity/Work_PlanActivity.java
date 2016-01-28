@@ -15,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Woactivity;
@@ -75,6 +80,9 @@ public class Work_PlanActivity extends BaseActivity {
         this.wpmaterialList = list;
     }
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,12 +123,7 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setCurrentItem(currentIndex);
         mViewPager.setOffscreenPageLimit(2);
         titlename.setText(getResources().getString(R.string.work_plan));
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backimg.setOnClickListener(backOnClickListener);
         menuImageView.setImageResource(R.drawable.add_ico);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
@@ -148,12 +151,43 @@ public class Work_PlanActivity extends BaseActivity {
         mViewPager.setOnPageChangeListener(new MyPagerOnPageChangeListener());
         woactivity.performClick();
 
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
         revise.setText(getResources().getString(R.string.ok));
-        revise.setOnClickListener(backOnClickListener);
+        revise.setOnClickListener(OkOnClickListener);
         wfservice.setVisibility(View.GONE);
+
+//        setNodataLayout();
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            final NormalDialog dialog = new NormalDialog(Work_PlanActivity.this);
+            dialog.content("确定放弃修改吗?")//
+                    .showAnim(mBasIn)//
+                    .dismissAnim(mBasOut)//
+                    .show();
+
+            dialog.setOnBtnClickL(
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            dialog.dismiss();
+                        }
+                    },
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            Work_PlanActivity.this.finish();
+//                            dialog.dismiss();
+                        }
+                    });
+        }
+    };
+
+    private View.OnClickListener OkOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
@@ -281,6 +315,28 @@ public class Work_PlanActivity extends BaseActivity {
         wpmaterial.setBackground(getResources().getDrawable(R.color.light_gray));
     }
 
+    private void setNodataLayout(){
+        if(currentIndex==0){
+            if (woactivityFragment.woactivityAdapter.getItemCount()==0) {
+                woactivityFragment.nodatalayout.setVisibility(View.VISIBLE);
+            }else {
+                woactivityFragment.nodatalayout.setVisibility(View.GONE);
+            }
+        }else if (currentIndex==1){
+            if (wplaborFragment.wplaborAdapter.getItemCount()==0) {
+                wplaborFragment.nodatalayout.setVisibility(View.VISIBLE);
+            }else {
+                wplaborFragment.nodatalayout.setVisibility(View.GONE);
+            }
+        }else if (currentIndex==2){
+            if (wpmaterialFragment.wpmaterialAdapter.getItemCount()==0) {
+                wpmaterialFragment.nodatalayout.setVisibility(View.VISIBLE);
+            }else {
+                wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
@@ -292,6 +348,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 1:
                 if (data != null) {
@@ -301,6 +358,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 2:
                 if (data != null) {
@@ -310,6 +368,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.nodatalayout.setVisibility(View.GONE);
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 4:
                 if (data != null){
@@ -320,6 +379,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 5:
                 if(data != null){
@@ -330,6 +390,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 6:
                 if(data != null){
@@ -340,6 +401,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 7://本地任务删除
                 if (data != null){
@@ -348,6 +410,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 8://服务器任务删除操作
                 if (data != null){
@@ -358,6 +421,7 @@ public class Work_PlanActivity extends BaseActivity {
                     woactivityFragment.woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 9://本地员工删除
                 if (data != null) {
@@ -366,6 +430,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 10://服务器员工删除
                 if(data != null){
@@ -376,6 +441,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wplaborFragment.wplaborAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 11://本地物料删除
                 if(data != null){
@@ -384,6 +450,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             case 12://服务器物料删除
                 if(data != null){
@@ -394,6 +461,7 @@ public class Work_PlanActivity extends BaseActivity {
                     wpmaterialFragment.wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmBtn.setVisibility(View.VISIBLE);
+                setNodataLayout();
                 break;
             default:
                 break;
