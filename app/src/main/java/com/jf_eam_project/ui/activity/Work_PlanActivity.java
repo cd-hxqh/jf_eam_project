@@ -164,26 +164,30 @@ public class Work_PlanActivity extends BaseActivity {
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            final NormalDialog dialog = new NormalDialog(Work_PlanActivity.this);
-            dialog.content("确定放弃修改吗?")//
-                    .showAnim(mBasIn)//
-                    .dismissAnim(mBasOut)//
-                    .show();
+            if (confirmBtn.getVisibility() == View.VISIBLE) {
+                final NormalDialog dialog = new NormalDialog(Work_PlanActivity.this);
+                dialog.content("确定放弃修改吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
 
-            dialog.setOnBtnClickL(
-                    new OnBtnClickL() {
-                        @Override
-                        public void onBtnClick() {
-                            dialog.dismiss();
-                        }
-                    },
-                    new OnBtnClickL() {
-                        @Override
-                        public void onBtnClick() {
-                            Work_PlanActivity.this.finish();
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                dialog.dismiss();
+                            }
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                Work_PlanActivity.this.finish();
 //                            dialog.dismiss();
-                        }
-                    });
+                            }
+                        });
+            }else {
+                Work_PlanActivity.this.finish();
+            }
         }
     };
 

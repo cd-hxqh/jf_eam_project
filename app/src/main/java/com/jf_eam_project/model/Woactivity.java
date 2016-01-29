@@ -15,6 +15,8 @@ public class Woactivity extends Entity{
     private static final String TAG = "Woactivity";
     private static final long serialVersionUID = 2015050105L;
 
+    @DatabaseField(generatedId = true)
+    public int id;
     @JsonField(fieldName = "taskid")
     @DatabaseField(columnName = "taskid")
     public String taskid;//任务

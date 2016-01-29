@@ -111,10 +111,29 @@ public class WplaborDao {
         }
     }
 
+    /**
+     * @param list
+     */
+    public void deleteList(final List<Wplabor> list) {
+        try {
+            WplaborDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (Wplabor wplabor : list) {
+                        WplaborDaoOpe.delete(wplabor);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void deleteByWonum(int wonum){
         try {
-            WplaborDaoOpe.delete(WplaborDaoOpe.queryBuilder().where().eq("wonum",wonum).query());
+            WplaborDaoOpe.delete(WplaborDaoOpe.queryBuilder().where().eq("belongid",wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

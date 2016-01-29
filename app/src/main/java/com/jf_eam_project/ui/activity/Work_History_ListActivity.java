@@ -25,6 +25,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.AssignmentDao;
 import com.jf_eam_project.Dao.LabtransDao;
 import com.jf_eam_project.Dao.WoactivityDao;
@@ -107,6 +112,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
     ArrayList<WorkOrder> list = new ArrayList<>();
     ArrayList<WorkOrder> chooseList = new ArrayList<WorkOrder>();
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,6 +179,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         allTextView.setOnClickListener(allOnClickListener);
         uploadTextView.setOnClickListener(uploadOnClickListener);
         deleteTextView.setOnClickListener(deleteOnClickListener);
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
     }
 
     private void getData(String search) {
@@ -297,90 +308,98 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
      * 数据封装*
      */
     private void encapsulationData(int size) {
+        final NormalDialog dialog = new NormalDialog(Work_History_ListActivity.this);
+        dialog.content("已选择" + size + "条记录，确定上传吗？")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Work_History_ListActivity.this);
-        builder.setMessage("已选择" + size + "条记录，确定上传吗？").setTitle("提示")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onBtnClick() {
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                mProgressDialog = ProgressDialog.show(Work_History_ListActivity.this, null,
-                        getString(R.string.inputing), true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                        mProgressDialog = ProgressDialog.show(Work_History_ListActivity.this, null,
+                                getString(R.string.inputing), true, true);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setCancelable(false);
 
-                if (NetWorkHelper.isNetwork(Work_History_ListActivity.this)) {
-                    MessageUtils.showMiddleToast(Work_History_ListActivity.this, "暂无网络,上传失败");
-                    mProgressDialog.dismiss();
-                } else {
-
-                    new AsyncTask<String, String, String>() {
-                        @Override
-                        protected String doInBackground(String... strings) {
-                            String result = null;
-                            if (chooseList != null && chooseList.size() != 0) {
-                                for (int i = 0; i < chooseList.size(); i++) {
-                                    final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), getWoactivityList(chooseList.get(i).id),
-                                            getWplaborList(chooseList.get(i).id), getWpmaterialList(chooseList.get(i).id),
-                                            getAssignmentList(chooseList.get(i).id), getLabtransList(chooseList.get(i).id));
-
-                                    result = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
-                                }
-                            }
-                            return result;
-                        }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-                            super.onPostExecute(s);
+                        if (NetWorkHelper.isNetwork(Work_History_ListActivity.this)) {
+                            MessageUtils.showMiddleToast(Work_History_ListActivity.this, "暂无网络,上传失败");
                             mProgressDialog.dismiss();
+                        } else {
 
-                            if (s!=null&&!s.equals("")) {
-                                MessageUtils.showMiddleToast(Work_History_ListActivity.this, "工单"+s+"提交成功");
-                                workOrderDao.deleteList(chooseList);
-
-                                workListAdapter.removeAllData();
-
-                                ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
-                                if (list1 == null && list1.size() == 0) {
-                                    nodatalayout.setVisibility(View.VISIBLE);
+                            new AsyncTask<String, String, String>() {
+                                @Override
+                                protected String doInBackground(String... strings) {
+                                    String result = null;
+                                    if (chooseList != null && chooseList.size() != 0) {
+                                        for (int i = 0; i < chooseList.size(); i++) {
+                                            final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), getWoactivityList(chooseList.get(i).id),
+                                                    getWplaborList(chooseList.get(i).id), getWpmaterialList(chooseList.get(i).id),
+                                                    getAssignmentList(chooseList.get(i).id), getLabtransList(chooseList.get(i).id));
+                                            result = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                                        }
+                                    }
+                                    return result;
                                 }
-                                workListAdapter.adddate(list1);
-                                workListAdapter.notifyDataSetChanged();
-                            } else {
-                                MessageUtils.showMiddleToast(Work_History_ListActivity.this, "提交失败");
-                            }
 
+                                @Override
+                                protected void onPostExecute(String s) {
+                                    super.onPostExecute(s);
+                                    mProgressDialog.dismiss();
 
+                                    if (s != null && !s.equals("")) {
+                                        MessageUtils.showMiddleToast(Work_History_ListActivity.this, "工单" + s + "提交成功");
+                                        deleteList(chooseList);
+                                        workListAdapter.removeAllData();
+                                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
+                                        if (list1 == null && list1.size() == 0) {
+                                            nodatalayout.setVisibility(View.VISIBLE);
+                                        }
+                                        workListAdapter.adddate(list1);
+                                        workListAdapter.notifyDataSetChanged();
+
+                                    } else {
+                                        MessageUtils.showMiddleToast(Work_History_ListActivity.this, "提交失败");
+                                    }
+                                }
+                            }.execute();
                         }
-                    }.execute();
-                }
-            }
-        }).create().show();
+                    }
+                });
+    }
+
+    private void deleteList(ArrayList<WorkOrder> list){
+        for (int i = 0; i < list.size(); i++) {
+            new WoactivityDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
+            new WplaborDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
+            new WpmeterialDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
+            new AssignmentDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
+            new LabtransDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
+        }
+        new WorkOrderDao(Work_History_ListActivity.this).deleteList(list);
     }
 
     private ArrayList<Woactivity> getWoactivityList(int workorderid){
-        ArrayList<Woactivity> list = (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Wplabor> getWplaborList(int workorderid){
-        ArrayList<Wplabor> list = (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Wpmaterial> getWpmaterialList(int workorderid){
-        ArrayList<Wpmaterial> list = (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
     private ArrayList<Assignment> getAssignmentList(int workorderid){
-        ArrayList<Assignment> list = (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
         return (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
@@ -389,38 +408,41 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
     }
 
     /**
-     * 数据删除
+     * 数据删除  已选择" + size + "条记录，确定删除吗吗？
      */
     private void deleteData(int size) {
+        final NormalDialog dialog = new NormalDialog(Work_History_ListActivity.this);
+        dialog.content("已选择" + size + "条记录，确定删除吗？")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Work_History_ListActivity.this);
-        builder.setMessage("已选择" + size + "条记录，确定删除吗吗？").setTitle("提示")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onBtnClick() {
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                mProgressDialog = ProgressDialog.show(Work_History_ListActivity.this, null, "删除中...", true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
-                Log.i(TAG, "chooseList size=" + chooseList.size());
-                workOrderDao.deleteList(chooseList);
-
-                workListAdapter.removeAllData();
-
-                ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
-                if (list1 == null && list1.size() == 0) {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
-                workListAdapter.adddate(list1);
-                workListAdapter.notifyDataSetChanged();
-                mProgressDialog.dismiss();
-            }
-        }).create().show();
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                        mProgressDialog = ProgressDialog.show(Work_History_ListActivity.this, null, "删除中...", true, true);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setCancelable(false);
+                        Log.i(TAG, "chooseList size=" + chooseList.size());
+                        deleteList(chooseList);
+                        workListAdapter.removeAllData();
+                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
+                        if (list1 == null && list1.size() == 0) {
+                            nodatalayout.setVisibility(View.VISIBLE);
+                        }
+                        workListAdapter.adddate(list1);
+                        workListAdapter.notifyDataSetChanged();
+                        mProgressDialog.dismiss();
+                    }
+                });
 
 
     }

@@ -459,31 +459,36 @@ public class Work_AddNewActivity extends BaseActivity {
     private void saveWorkOrder() {
         WorkOrder workOrder = getWorkOrder();
         workOrder.ishistory = true;
-        int id = new WorkOrderDao(Work_AddNewActivity.this).Update(workOrder);
+        new WorkOrderDao(Work_AddNewActivity.this).Update(workOrder);
+        int id = workOrder.id;
         if (id != 0) {
             if (woactivityList.size() != 0) {
                 for (Woactivity woactivity : woactivityList) {
                     woactivity.belongid = id;
                 }
                 new WoactivityDao(Work_AddNewActivity.this).create(woactivityList);
+                ArrayList<Woactivity> list = (ArrayList<Woactivity>) new WoactivityDao(Work_AddNewActivity.this).queryForAll();
             }
             if (wplaborList.size() != 0) {
                 for (Wplabor wplabor : wplaborList) {
                     wplabor.belongid = id;
                 }
                 new WplaborDao(Work_AddNewActivity.this).create(wplaborList);
+                ArrayList<Wplabor> list = (ArrayList<Wplabor>) new WplaborDao(Work_AddNewActivity.this).queryForAll();
             }
             if (wpmaterialList.size() != 0) {
                 for (Wpmaterial wpmaterial : wpmaterialList) {
                     wpmaterial.belongid = id;
                 }
                 new WpmeterialDao(Work_AddNewActivity.this).create(wpmaterialList);
+                ArrayList<Wpmaterial> list = (ArrayList<Wpmaterial>) new WpmeterialDao(Work_AddNewActivity.this).queryForAll();
             }
             if (assignmentList.size() != 0) {
                 for (Assignment assignment : assignmentList) {
                     assignment.belongid = id;
                 }
                 new AssignmentDao(Work_AddNewActivity.this).create(assignmentList);
+                ArrayList<Assignment> list = (ArrayList<Assignment>) new AssignmentDao(Work_AddNewActivity.this).queryForAll();
             }
         }
     }

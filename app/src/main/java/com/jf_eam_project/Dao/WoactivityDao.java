@@ -130,7 +130,7 @@ public class WoactivityDao {
      */
     public void deleteByWonum(int wonum) {
         try {
-            WoactivityDaoOpe.delete(WoactivityDaoOpe.queryBuilder().where().eq("wonum", wonum).query());
+            WoactivityDaoOpe.delete(WoactivityDaoOpe.queryBuilder().where().eq("belongid", wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

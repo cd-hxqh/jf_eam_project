@@ -95,7 +95,7 @@ public class WpmeterialDao {
 
     public void deleteByWonum(int wonum){
         try {
-            WpmaterialDaoOpe.delete(WpmaterialDaoOpe.queryBuilder().where().eq("wonum",wonum).query());
+            WpmaterialDaoOpe.delete(WpmaterialDaoOpe.queryBuilder().where().eq("belongid", wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

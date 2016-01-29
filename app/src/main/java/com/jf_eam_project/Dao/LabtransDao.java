@@ -5,7 +5,6 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
 import com.jf_eam_project.model.Labtrans;
-import com.jf_eam_project.model.WorkOrder;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +22,7 @@ public class LabtransDao {
         try
         {
             helper = DatabaseHelper.getHelper(context);
-            LabtransDaoOpe = helper.getDao(WorkOrder.class);
+            LabtransDaoOpe = helper.getDao(Labtrans.class);
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -123,7 +122,7 @@ public class LabtransDao {
      */
     public void deleteByWonum(int wonum){
         try {
-            LabtransDaoOpe.delete(LabtransDaoOpe.queryBuilder().where().eq("wonum",wonum).query());
+            LabtransDaoOpe.delete(LabtransDaoOpe.queryBuilder().where().eq("belongid",wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

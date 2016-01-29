@@ -62,13 +62,12 @@ public class WorkOrderDao {
     /**
      * @param workOrder
      */
-    public int Update(WorkOrder workOrder) {
+    public void Update(WorkOrder workOrder) {
         try {
-            return WorkOrderDaoOpe.create(workOrder);
+            WorkOrderDaoOpe.create(workOrder);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
     /**

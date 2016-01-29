@@ -95,7 +95,7 @@ public class AssignmentDao {
 
     public void deleteByWonum(int wonum){
         try {
-            AssignmentDaoOpe.delete(AssignmentDaoOpe.queryBuilder().where().eq("wonum",wonum).query());
+            AssignmentDaoOpe.delete(AssignmentDaoOpe.queryBuilder().where().eq("belongid",wonum).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

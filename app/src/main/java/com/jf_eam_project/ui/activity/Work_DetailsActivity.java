@@ -273,12 +273,24 @@ public class Work_DetailsActivity extends BaseActivity {
         } else {
             wfservice.setVisibility(View.GONE);
         }
+        if(workOrder.id!=0){
+            getLocationData(workOrder.id);
+        }
+    }
 
+    //如果为历史数据，则获取本地子表信息
+    private void getLocationData(int id){
+        woactivityList = (ArrayList<Woactivity>) new WoactivityDao(Work_DetailsActivity.this).queryByWonum(id);
+        wplaborList = (ArrayList<Wplabor>) new WplaborDao(Work_DetailsActivity.this).queryByWonum(id);
+        wpmaterialList = (ArrayList<Wpmaterial>) new WpmeterialDao(Work_DetailsActivity.this).queryByWonum(id);
+        assignmentList = (ArrayList<Assignment>) new AssignmentDao(Work_DetailsActivity.this).queryByWonum(id);
+        labtransList = (ArrayList<Labtrans>) new LabtransDao(Work_DetailsActivity.this).queryByWonum(id);
     }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (confirmBtn.getVisibility()==View.VISIBLE) {
                 final NormalDialog dialog = new NormalDialog(Work_DetailsActivity.this);
                 dialog.content("确定放弃修改吗?")//
                         .showAnim(mBasIn)//
@@ -299,6 +311,9 @@ public class Work_DetailsActivity extends BaseActivity {
 //                                dialog.dismiss();
                             }
                         });
+            }else {
+                finish();
+            }
         }
     };
 
@@ -456,7 +471,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private void saveWorkOrder() {
         WorkOrder workOrder = getWorkOrder();
         workOrder.ishistory = true;
-        int id = new WorkOrderDao(Work_DetailsActivity.this).Update(workOrder);
+        new WorkOrderDao(Work_DetailsActivity.this).Update(workOrder);
+        int id = workOrder.id;
         if (id != 0) {
             if (woactivityList.size() != 0) {
                 for (Woactivity woactivity : woactivityList) {
@@ -961,12 +977,15 @@ public class Work_DetailsActivity extends BaseActivity {
                 woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
                 wplaborList = (ArrayList<Wplabor>) data.getSerializableExtra("wplaborList");
                 wpmaterialList = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
+                editImageView.performClick();
                 break;
             case 2000:
                 assignmentList = (ArrayList<Assignment>) data.getSerializableExtra("assignmentList");
+                editImageView.performClick();
                 break;
             case 3000:
                 labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");
+                editImageView.performClick();
                 break;
             default:
                 break;
