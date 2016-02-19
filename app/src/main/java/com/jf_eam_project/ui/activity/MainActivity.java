@@ -299,12 +299,13 @@ public class MainActivity extends BaseActivity
             return;
         }
 
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(this, getResources().getString(R.string.exit_text), Toast.LENGTH_LONG).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            AppManager.AppExit(MainActivity.this);
-        }
+//        if ((System.currentTimeMillis() - exitTime) > 2000) {
+//            Toast.makeText(this, getResources().getString(R.string.exit_text), Toast.LENGTH_LONG).show();
+//            exitTime = System.currentTimeMillis();
+//        } else {
+//            AppManager.AppExit(MainActivity.this);
+//        }
+        showAlertDialog();
     }
 
 

@@ -71,11 +71,11 @@ public class HttpManager {
     /**
      * 设置流程审批*
      */
-    public static String getWfmUrl(String vlaue, int curpage, int showcount) {
+    public static String getWfmUrl(String persionid,String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSIGNCODE':'" + persionid + "'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue +"','ASSIGNCODE':'" + persionid + "'}}";
         }
     }
 

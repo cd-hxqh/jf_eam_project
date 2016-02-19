@@ -34,6 +34,7 @@ import com.jf_eam_project.ui.activity.Pr_Activity;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
 import com.jf_eam_project.ui.adapter.WfmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -181,7 +182,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWfmUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWfmUrl(AccountUtils.getUserName(getActivity()),search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
