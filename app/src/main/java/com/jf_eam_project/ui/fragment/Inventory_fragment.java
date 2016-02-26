@@ -81,14 +81,14 @@ public class Inventory_fragment extends BaseFragment {
 
                     break;
 
-                case R.id.inventory_linear_inbound_id: //入库
-                    Intent intent1 = new Intent(getActivity(), Po_order_Activity.class);
-                    startActivityForResult(intent1, 0);
-                    break;
-                case R.id.inventory_linear_outbound_id: //出库
-                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
-                    startActivityForResult(intent2, 0);
-                    break;
+//                case R.id.inventory_linear_inbound_id: //入库
+//                    Intent intent1 = new Intent(getActivity(), Po_order_Activity.class);
+//                    startActivityForResult(intent1, 0);
+//                    break;
+//                case R.id.inventory_linear_outbound_id: //出库
+//                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
+//                    startActivityForResult(intent2, 0);
+//                    break;
 
             }
         }

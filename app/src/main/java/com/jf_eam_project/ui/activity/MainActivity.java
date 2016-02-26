@@ -32,6 +32,7 @@ import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
+import com.jf_eam_project.ui.fragment.QrCode_Fragment;
 import com.jf_eam_project.ui.fragment.Setting_Fragment;
 import com.jf_eam_project.ui.fragment.Udinspo_fragment;
 import com.jf_eam_project.ui.fragment.Wfment_fragment;
@@ -89,6 +90,10 @@ public class MainActivity extends BaseActivity
      * 本地历史*
      */
     private HistoryFragment historyFragment;
+
+    /**二维码/条码**/
+    private QrCode_Fragment qrCodeFragment;
+
 
     /**
      * 设置*
@@ -203,6 +208,14 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, historyFragment).commit();
                 break;
             case 6:
+                if (qrCodeFragment == null) {
+                    qrCodeFragment = new QrCode_Fragment();
+                    Bundle bundle = new Bundle();
+                    qrCodeFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, qrCodeFragment).commit();
+                break;
+            case 7:
                 if (settingFragment == null) {
                     settingFragment = new Setting_Fragment();
                     Bundle bundle = new Bundle();
@@ -210,7 +223,7 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, settingFragment).commit();
                 break;
-            case 7:
+            case 8:
                 mNavigationDrawerFragment.closeDrawer();
                 showAlertDialog();
                 break;

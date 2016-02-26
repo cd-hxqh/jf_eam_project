@@ -168,6 +168,14 @@ public final class WorkOrder_JsonHelper
             instance.reportedby = jp.getValueAsString();
             return true;
         }
+        else if ("UDDEPTDESCRIPTION".equals(fieldName)) {
+            instance.uddeptdescription = jp.getValueAsString();
+            return true;
+        }
+        else if ("UDBELONG".equals(fieldName)) {
+            instance.udbelong = jp.getValueAsString();
+            return true;
+        }
 
 
         return false;

@@ -107,7 +107,7 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
         setSearchEdit();
 
 
-        titlename.setText(getString(R.string.inventory_title));
+        titlename.setText(getString(R.string.inventory_title_1));
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
 

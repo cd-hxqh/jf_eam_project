@@ -25,7 +25,7 @@ import java.net.URI;
  * Created by apple on 15/5/27.
  */
 public class HttpManager {
-
+    
     private static BaseApplication mApp = BaseApplication.getInstance();
     private static AsyncHttpClient sClient = null;
     private static final String TAG = "HttpManager";

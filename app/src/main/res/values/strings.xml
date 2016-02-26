@@ -348,6 +348,7 @@
 
     <!--入库管理-->
     <string name="inventory_title">入库</string>
+    <string name="inventory_title_1">库存</string>
     <string name="inventory_itemnum_title">项目:</string>
     <string name="inventory_location_title">库房:</string>
     <string name="inventory_lottype_title">批次类型:</string>
@@ -444,6 +445,11 @@
     <string name="intro"> 下面展示使用 js 调用友盟 自定义事件  APIs</string>
     <string name="about_us_title">关于我们</string>
     <string name="synchronous_data_text">同步基础数据</string>
+    <string name="work_plan_type">计划工单</string>
+    <string name="work_unplan_type">非计划工单</string>
 
+    <!--二维码扫描-->
+    <string name="scan_text">将二维码/条码放入框内,即可自动扫描</string>
+    <string name="scanning_text">二维码/条码</string>
 
 </resources>

@@ -121,6 +121,14 @@ public class WorkOrder extends Entity {
     public boolean isnew;//是否是新增工单
     @DatabaseField(columnName = "ishistory")
     public boolean ishistory;//是否是本地历史工单
+    @JsonField(fieldName = "uddeptdescription")
+    @DatabaseField(columnName = "uddeptdescription")
+    public String uddeptdescription;//分公司
+    @JsonField(fieldName = "udbelong")
+    @DatabaseField(columnName = "udbelong")
+    public String udbelong;//风电场
+
+
 
 
     public String getWonum() {
@@ -282,4 +290,6 @@ public class WorkOrder extends Entity {
     public void setWorktype(String worktype) {
         this.worktype = worktype;
     }
+
+
 }

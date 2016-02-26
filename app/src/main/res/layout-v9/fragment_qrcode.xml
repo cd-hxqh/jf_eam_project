@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/white"
+    >
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimens_10_dip"
+        android:text="二维码/条码扫描"
+        android:id="@+id/qr_button"
+        android:background="@drawable/btn_selector"
+        android:textColor="@color/white"
+        android:layout_gravity="center_vertical" />
+</LinearLayout>

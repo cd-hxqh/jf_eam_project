@@ -26,6 +26,7 @@ public class DrawerAdapter extends BaseAdapter {
             R.drawable.ic_inventory,
             R.drawable.ic_purchase,
             R.drawable.ic_history ,
+            R.drawable.ic_qrcode,
             R.drawable.ic_setting,
             R.drawable.ic_exit
 

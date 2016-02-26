@@ -42,6 +42,87 @@
 
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_issue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="物资发放"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_material" />
+
+                <TextView
+                    android:id="@+id/po_text_invoice_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="领料单"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:id="@+id/uditemreq_linear_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_uditemreq" />
+
+                <TextView
+                    android:id="@+id/uditemreq_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="编码申请"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/inventory_linear_inbound_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_matrectrans" />
+                    android:src="@drawable/ic_out" />
 
                 <TextView
                     android:id="@+id/po_text_order_id"
@@ -63,7 +144,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dimens_10_dp"
-                    android:text="入库"
+                    android:text="调出单"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_18_sp" />
 
@@ -82,16 +163,94 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_matusetrans" />
+                    android:src="@drawable/ic_in" />
 
                 <TextView
-                    android:id="@+id/po_text_invoice_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dimens_10_dp"
-                    android:text="出库"
+                    android:text="调入单"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+
+        <TableRow android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_udbr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="借用归还"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_monthsum" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="库存月结"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_matusetrans" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="调入单"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_18_sp" />
 

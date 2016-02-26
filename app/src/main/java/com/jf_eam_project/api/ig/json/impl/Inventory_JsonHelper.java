@@ -77,7 +77,7 @@ public final class Inventory_JsonHelper
         } else if ("INVENTORYID".equals(fieldName)) {
             instance.inventoryid = jp.getValueAsString();
             return true;
-        }else if ("DESCRIPTION".equals(fieldName)) {
+        }else if ("ITEM.DESCRIPTION".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
         } else if ("SITEID".equals(fieldName)) {
@@ -97,7 +97,7 @@ public final class Inventory_JsonHelper
         } else if ("CURBAL".equals(fieldName)) {
             instance.curbal = jp.getValueAsString();
             return true;
-        } else if ("LOTTYPE".equals(fieldName)) {
+        } else if ("ITEM.LOTTYPE".equals(fieldName)) {
             instance.lottype = jp.getValueAsString();
             return true;
         }

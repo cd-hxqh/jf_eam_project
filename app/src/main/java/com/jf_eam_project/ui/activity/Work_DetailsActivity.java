@@ -128,6 +128,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView problemcode; //问题代码
     private TextView displayname; //创建人
     private TextView createdate; //创建时间
+    private TextView uddescription; //分公司
+    private TextView udbelong; //风电场
 
     private TextView jpnum; //作业计划
     private TextView targstartdate;//计划开始时间
@@ -186,6 +188,10 @@ public class Work_DetailsActivity extends BaseActivity {
         problemcode = (TextView) findViewById(R.id.work_problemcode);
         displayname = (TextView) findViewById(R.id.work_displayname);
         createdate = (TextView) findViewById(R.id.work_createdate);
+        uddescription=(TextView)findViewById(R.id.uddeptdescription_id);
+        udbelong=(TextView)findViewById(R.id.work_udbelong_id);
+
+
         jpnum = (TextView) findViewById(R.id.work_jpnum);
         targstartdate = (TextView) findViewById(R.id.work_targstartdate);
         targcompdate = (TextView) findViewById(R.id.work_targcompdate);
@@ -213,7 +219,12 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.isnew = false;
         description.setText(workOrder.description);
 //        parent.setText(workOrder.parent);
-        udwotype.setText(workOrder.udwotype);
+        if(workOrder.udwotype.equals("PLAN")){
+            udwotype.setText(getString(R.string.work_plan_type));
+        }else if(workOrder.udwotype.equals("UNPLAN")){
+            udwotype.setText(getString(R.string.work_unplan_type));
+        }
+
         assetnum.setText(workOrder.assetnum);
         assetdesc.setText(workOrder.assetdesc);
         location.setText(workOrder.location);
@@ -226,6 +237,10 @@ public class Work_DetailsActivity extends BaseActivity {
         problemcode.setText(workOrder.problemcode);
         displayname.setText(workOrder.displayname);
         createdate.setText(workOrder.createdate);
+        uddescription.setText(workOrder.uddeptdescription);
+        udbelong.setText(workOrder.udbelong);
+
+
         jpnum.setText(workOrder.jpnum);
         targstartdate.setText(workOrder.targstartdate);
         targcompdate.setText(workOrder.targcompdate);
@@ -963,11 +978,13 @@ public class Work_DetailsActivity extends BaseActivity {
                 break;
             case Constants.FAILURECODE:
                 option = (Option) data.getSerializableExtra("option");
-                failurecode.setText(option.getName());
+//                failurecode.setText(option.getName());
+                failurecode.setText(option.getDescription());
                 break;
             case Constants.FAILURELIST:
                 option = (Option) data.getSerializableExtra("option");
-                problemcode.setText(option.getName());
+//                problemcode.setText(option.getName());
+                problemcode.setText(option.getDescription());
                 break;
             case Constants.JOBPLAN:
                 option = (Option) data.getSerializableExtra("option");
