@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.utils.MessageUtils;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -95,6 +98,13 @@ public class Results_Activity extends BaseActivity {
 
         assetBtn.setOnClickListener(assetBtnOnClickListener);
         checkBtn.setOnClickListener(checkBtnOnClickListener);
+
+        if (result.indexOf("资产:") == -1) {
+            assetBtn.setVisibility(View.GONE);
+            checkBtn.setVisibility(View.GONE);
+
+            MessageUtils.showMiddleToast(Results_Activity.this,"格式不是标准的资产二维码格式");
+        }
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -143,16 +153,16 @@ public class Results_Activity extends BaseActivity {
      */
     private Assets parsingAssets(String result) {
 
-        String[] sourceStrArray = result.split(",");
-        String assetNum = sourceStrArray[0].replace("资产:", "");
-        String assetdesc = sourceStrArray[1].replace("描述:", "");
-        String assetLocation = sourceStrArray[2].replace("位置:", "");
+            String[] sourceStrArray = result.split(",");
+            String assetNum = sourceStrArray[0].replace("资产:", "");
+            String assetdesc = sourceStrArray[1].replace("描述:", "");
+            String assetLocation = sourceStrArray[2].replace("位置:", "");
 
-        Log.i(TAG, "assetNum=" + assetNum + ",assetdesc=" + assetdesc + ",assetLocation=" + assetLocation);
-        Assets assets = new Assets();
-        assets.setAssetnum(assetNum);
-        assets.setDescription(assetdesc);
-        assets.setLocation(assetLocation);
+            assets = new Assets();
+            assets.setAssetnum(assetNum);
+            assets.setDescription(assetdesc);
+            assets.setLocation(assetLocation);
+
 
         return assets;
     }
