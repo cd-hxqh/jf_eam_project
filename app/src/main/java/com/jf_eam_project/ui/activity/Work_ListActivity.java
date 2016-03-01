@@ -40,6 +40,8 @@ import java.util.ArrayList;
  * 工单列表界面
  */
 public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+
+    private static final String TAG="Work_ListActivity";
     /**
      * 标题*
      */
@@ -63,6 +65,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     private String searchText = "";
     private int page = 1;
 
+    /**资产编号**/
+    private String assetsNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +79,10 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     private void getIntentData() {
         worktype = getIntent().getStringExtra("worktype");
+        assetsNum = getIntent().getStringExtra("assetnum");
+
+        Log.i(TAG,"assetsNum="+assetsNum+",worktype="+worktype);
+
     }
 
     @Override
@@ -128,10 +136,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search,assetsNum, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override

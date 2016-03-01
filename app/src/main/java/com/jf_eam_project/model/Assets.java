@@ -30,4 +30,45 @@ public class Assets extends Entity {
     @JsonField(fieldName = "location")
     @DatabaseField(columnName = "location")
     public String location;//位置
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAssetnum() {
+        return assetnum;
+    }
+
+    public void setAssetnum(String assetnum) {
+        this.assetnum = assetnum;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSiteid() {
+        return siteid;
+    }
+
+    public void setSiteid(String siteid) {
+        this.siteid = siteid;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

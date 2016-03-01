@@ -273,6 +273,9 @@
         <activity
             android:name=".ui.activity.Results_Activity"
             android:label="结果"></activity>
+        <activity
+            android:name=".ui.activity.AssetsDetailActivity"
+            android:label="@string/assets_title_text"></activity>
 
         <!-- Update Activitys Start -->
         <activity

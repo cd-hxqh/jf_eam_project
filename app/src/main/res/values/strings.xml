@@ -452,4 +452,12 @@
     <string name="scan_text">将二维码/条码放入框内,即可自动扫描</string>
     <string name="scanning_text">二维码/条码</string>
 
+
+    <!--资产详情-->
+    <string name="asset_num_text">资产编号:</string>
+    <string name="asset_description_text">资产描述:</string>
+    <string name="asset_sited_text">地点:</string>
+    <string name="asset_loction_text">位置:</string>
+    <string name="assets_title_text">资产详情</string>
+
 </resources>

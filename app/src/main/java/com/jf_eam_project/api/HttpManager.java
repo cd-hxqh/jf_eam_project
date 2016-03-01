@@ -117,11 +117,15 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
-        if (search.equals("")) {
+    public static String getworkorderUrl(String type, String search,String assetNum, int curpage, int showcount) {
+        if (search.equals("")&&assetNum==null) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'=" + type + "'}}";
-        } else {
+        } else if(!search.equals("")&&assetNum!=null) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'=" + search + "','ASSETNUM':'" + search + "'}}";
+
+        }else{
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'=" + type + "','WONUM':'" + search + "'}}";
         }
