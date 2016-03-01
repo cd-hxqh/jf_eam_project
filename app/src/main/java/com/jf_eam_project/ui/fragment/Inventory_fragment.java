@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import com.jf_eam_project.R;
 import com.jf_eam_project.ui.activity.Inventory_Activity;
 import com.jf_eam_project.ui.activity.Invoice_Activity;
+import com.jf_eam_project.ui.activity.Location_Activity;
+import com.jf_eam_project.ui.activity.Material_ListActivity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
 
@@ -23,14 +25,11 @@ public class Inventory_fragment extends BaseFragment {
      * 库存
      */
     private LinearLayout inventory_layout;
+
     /**
-     * 入库
+     * 领料单
      */
-    private LinearLayout matrectrans_layout;
-    /**
-     * 出库
-     */
-    private LinearLayout matusetrans_layout;
+    private LinearLayout material_layout;
 
 
 
@@ -55,8 +54,7 @@ public class Inventory_fragment extends BaseFragment {
      */
     private void findByIdView(View view) {
         inventory_layout = (LinearLayout) view.findViewById(R.id.inventory_linear_id);
-        matrectrans_layout = (LinearLayout) view.findViewById(R.id.inventory_linear_inbound_id);
-        matusetrans_layout = (LinearLayout) view.findViewById(R.id.inventory_linear_outbound_id);
+        material_layout = (LinearLayout) view.findViewById(R.id.material_layout_id);
     }
 
     /**
@@ -64,8 +62,7 @@ public class Inventory_fragment extends BaseFragment {
      */
     private void setListener() {
         inventory_layout.setOnClickListener(onClickListener);
-        matrectrans_layout.setOnClickListener(onClickListener);
-        matusetrans_layout.setOnClickListener(onClickListener);
+        material_layout.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -81,10 +78,10 @@ public class Inventory_fragment extends BaseFragment {
 
                     break;
 
-//                case R.id.inventory_linear_inbound_id: //入库
-//                    Intent intent1 = new Intent(getActivity(), Po_order_Activity.class);
-//                    startActivityForResult(intent1, 0);
-//                    break;
+                case R.id.material_layout_id: //领料单
+                    Intent intent1 = new Intent(getActivity(), Material_ListActivity.class);
+                    startActivityForResult(intent1, 0);
+                    break;
 //                case R.id.inventory_linear_outbound_id: //出库
 //                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
 //                    startActivityForResult(intent2, 0);

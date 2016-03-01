@@ -25,7 +25,7 @@ import java.net.URI;
  * Created by apple on 15/5/27.
  */
 public class HttpManager {
-    
+
     private static BaseApplication mApp = BaseApplication.getInstance();
     private static AsyncHttpClient sClient = null;
     private static final String TAG = "HttpManager";
@@ -71,16 +71,16 @@ public class HttpManager {
     /**
      * 设置流程审批*
      */
-    public static String getWfmUrl(String persionid,String vlaue, int curpage, int showcount) {
+    public static String getWfmUrl(String persionid, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSIGNCODE':'" + persionid + "'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue +"','ASSIGNCODE':'" + persionid + "'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "'}}";
         }
     }
 
     /**
-     * 设置巡检管理*
+
      */
     public static String getUdinspourl(String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
@@ -117,15 +117,17 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(String type, String search,String assetNum, int curpage, int showcount) {
-        if (search.equals("")&&assetNum==null) {
+    public static String getworkorderUrl(String type, String search, String assetNum, int curpage, int showcount) {
+        if (search.equals("") && assetNum == null) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'=" + type + "'}}";
-        } else if(!search.equals("")&&assetNum!=null) {
+        } else if (search.equals("") && assetNum != null) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'=" + search + "','ASSETNUM':'" + search + "'}}";
-
-        }else{
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETNUM':'" + assetNum + "'}}";
+        } else if (!search.equals("") && assetNum == null) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'=" + search + "','ASSETNUM':'" + assetNum + "'}}";
+        } else {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDWOTYPE':'=" + type + "','WONUM':'" + search + "'}}";
         }
@@ -135,8 +137,8 @@ public class HttpManager {
     /**
      * 设置计划任务接口*
      */
-    public static String getwoactivityUrl(String parent,int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getwoactivityUrl(String parent, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "'}}";
     }
 
@@ -152,8 +154,8 @@ public class HttpManager {
     /**
      * 设置计划物料接口*
      */
-    public static String getWpmaterialUrl(int curpage, int showcount,String wonum) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getWpmaterialUrl(int curpage, int showcount, String wonum) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
@@ -176,8 +178,8 @@ public class HttpManager {
     /**
      * 设置任务分配接口*
      */
-    public static String getAssignmentUrl(int curpage, int showcount,String wonum) {
-        return "{'appid':'" + Constants.UDWOCM_APPID +  "','objectname':'" +
+    public static String getAssignmentUrl(int curpage, int showcount, String wonum) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                 Constants.ASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
@@ -192,7 +194,7 @@ public class HttpManager {
     /**
      * 设置获取工作流状态接口*
      */
-    public static String getWfStatusUrl(int curpage, int showcount,String ownerid) {
+    public static String getWfStatusUrl(int curpage, int showcount, String ownerid) {
         return "{'appid':'" + Constants.WFINSTANCE_NAME + "','objectname':'" +
                 Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'UDWO','OWNERTABLE':'WORKORDER','OWNERID':'" + ownerid + "'}}";
     }
@@ -293,6 +295,37 @@ public class HttpManager {
                     showcount + ",'option':'read','condition':{'PONUM':'" + vlaue + "','POLINENUM':'" + search + "'}}";
         }
     }
+
+    /**获取物资发放的接口**/
+
+
+    public static String getLocationUrl(String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" +
+                    Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'type':'库房'}}";
+        } else {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" +
+                    Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" +
+                    showcount + ",'option':'read','condition':{'LOCATION':'" + vlaue + "','type':'库房'}}";
+        }
+    }
+
+
+    /**
+     * 设置领料单接口*
+     */
+    public static String getMaterialUrl(String search, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM DESC'}";
+        } else {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "'}}";
+        }
+
+    }
+
 
     /**
      * 设置基础数据接口

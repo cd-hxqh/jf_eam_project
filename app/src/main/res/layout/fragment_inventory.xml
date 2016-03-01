@@ -42,32 +42,7 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_issue" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="@dimen/dimens_10_dp"
-                    android:text="物资发放"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_18_sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/material_layout_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -92,9 +67,6 @@
                     android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
-        </TableRow>
-
-        <TableRow android:layout_marginTop="30dp">
 
             <LinearLayout
                 android:id="@+id/uditemreq_linear_id"
@@ -120,6 +92,10 @@
                     android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
+
+        </TableRow>
+
+        <TableRow android:layout_marginTop="30dp">
 
 
             <LinearLayout
@@ -176,10 +152,6 @@
                     android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
-        </TableRow>
-
-
-        <TableRow android:layout_marginTop="30dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -203,59 +175,8 @@
                     android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_monthsum" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="@dimen/dimens_10_dp"
-                    android:text="库存月结"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_18_sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="invisible">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_matusetrans" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="@dimen/dimens_10_dp"
-                    android:text="调入单"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_18_sp" />
-
-            </LinearLayout>
         </TableRow>
+
 
     </TableLayout>
 

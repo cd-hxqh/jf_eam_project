@@ -53,6 +53,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
      * 选中事件*
      */
     public OnCheckedChangeListener onCheckedChangeListener;
+
     public WorkListAdapter(Context context, int cMark) {
 
         this.mContext = context;
@@ -69,7 +70,11 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final WorkOrder workOrder = workOrderList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
+        if (cMark == 2) { //领料单
+            holder.itemNumTitle.setText(mContext.getString(R.string.requisition_text));
+        } else {
+            holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
+        }
         holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
         holder.itemNum.setText(workOrder.getWonum());
         holder.itemDesc.setText(workOrder.getDescription());
@@ -158,8 +163,8 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
 
-            itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
-            itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);
+            itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
+            itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
@@ -187,11 +192,12 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         workOrderList = data;
         notifyDataSetChanged();
     }
-//
-    public void adddate(ArrayList<WorkOrder> data){
-        if(data.size()>0){
-            for(int i = 0;i < data.size();i++){
-                if(!workOrderList.contains(data.get(i))){
+
+    //
+    public void adddate(ArrayList<WorkOrder> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
+                if (!workOrderList.contains(data.get(i))) {
                     workOrderList.add(data.get(i));
                 }
             }

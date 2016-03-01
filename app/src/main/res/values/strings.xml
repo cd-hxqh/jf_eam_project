@@ -459,5 +459,11 @@
     <string name="asset_sited_text">地点:</string>
     <string name="asset_loction_text">位置:</string>
     <string name="assets_title_text">资产详情</string>
+    <!--物资发放-->
+    <string name="commodity_issue_text">物资发放</string>
+
+    <!--领料单-->
+    <string name="material_title_text">领料单</string>
+    <string name="requisition_text">领料单号</string>
 
 </resources>
