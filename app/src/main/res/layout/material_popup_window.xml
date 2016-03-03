@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/poline_linearlayout_id"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:padding="@dimen/dimens_10">
+
+
+        <TextView
+            android:id="@+id/wpmaterial_popup_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="物料"
+            android:textSize="@dimen/dimens_16dp" />
+
+        <View
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/wptool_popup_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="工具"
+            android:textSize="@dimen/dimens_16dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

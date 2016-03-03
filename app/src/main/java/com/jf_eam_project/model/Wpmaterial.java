@@ -51,4 +51,17 @@ public class Wpmaterial extends Entity{
     public String type;//add/update
     @DatabaseField(columnName = "belongid")
     public int belongid;//
+
+
+    @DatabaseField(columnName = "DESCRIPTION")
+    public String description;//描述
+    @DatabaseField(columnName = "LINETYPE")
+    public String linetype;//行类型
+    @DatabaseField(columnName = "ORDERUNIT")
+    public String orderunit;//订购单位
+    @DatabaseField(columnName = "LINECOST")
+    public String linecost;//行成本
+
+
+
 }

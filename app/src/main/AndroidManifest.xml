@@ -283,6 +283,15 @@
         <activity
             android:name=".ui.activity.Material_ListActivity"
             android:label="@string/material_title_text"/>
+        <activity
+            android:name=".ui.activity.Material_Details_Activity"
+            android:label="@string/material_detail_text"/>
+        <activity
+            android:name=".ui.activity.Wpmaterial_ListActivity"
+            android:label="物料"/>
+        <activity
+            android:name=".ui.activity.Wpmaterial_DetailsActivity"
+            android:label="物料详情"/>
 
         <!-- Update Activitys Start -->
         <activity

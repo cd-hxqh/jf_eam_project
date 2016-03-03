@@ -154,9 +154,14 @@ public class HttpManager {
     /**
      * 设置计划物料接口*
      */
-    public static String getWpmaterialUrl(int curpage, int showcount, String wonum) {
-        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
-                Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
+    public static String getWpmaterialUrl(String search,int curpage, int showcount, String wonum) {
+        if(search.equals("")) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
+                    Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
+        }else{
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
+                    Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'ITEMNUM':'" + search + "'}}";
+        }
     }
 
     /**

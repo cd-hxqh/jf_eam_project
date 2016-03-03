@@ -107,7 +107,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl(page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl("",page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);

@@ -291,5 +291,35 @@ public class WorkOrder extends Entity {
         this.worktype = worktype;
     }
 
+    public String getCreatedate() {
+        return createdate;
+    }
 
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+
+    public String getUddeptdescription() {
+        return uddeptdescription;
+    }
+
+    public void setUddeptdescription(String uddeptdescription) {
+        this.uddeptdescription = uddeptdescription;
+    }
+
+    public String getUdbelong() {
+        return udbelong;
+    }
+
+    public void setUdbelong(String udbelong) {
+        this.udbelong = udbelong;
+    }
+
+    public String getReportedby() {
+        return reportedby;
+    }
+
+    public void setReportedby(String reportedby) {
+        this.reportedby = reportedby;
+    }
 }

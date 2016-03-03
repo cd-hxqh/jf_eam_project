@@ -16,6 +16,7 @@ import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.activity.Work_PlanActivity;
 import com.jf_eam_project.ui.activity.WpmaterialDetailsActivity;
+import com.jf_eam_project.ui.activity.Wpmaterial_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,16 @@ import java.util.List;
  * 物料
  */
 public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.ViewHolder> {
-    Work_PlanActivity mContext;
+    Work_PlanActivity mContext=null;
+    Context mContext1;
     public ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
     public ArrayList<Wpmaterial> deleteList = new ArrayList<>();
 
     public WpmaterialAdapter(Work_PlanActivity context) {
         this.mContext = context;
+    }
+    public WpmaterialAdapter(Context context) {
+        this.mContext1 = context;
     }
 
 
@@ -51,13 +56,24 @@ public class WpmaterialAdapter extends RecyclerView.Adapter<WpmaterialAdapter.Vi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, WpmaterialDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("wpmaterial", wpmaterial);
-                bundle.putSerializable("woactivityList", mContext.woactivityList);
-                bundle.putSerializable("position", position);
-                intent.putExtras(bundle);
-                mContext.startActivityForResult(intent,6);
+
+                if(mContext!=null) {
+                    Intent intent = new Intent(mContext, WpmaterialDetailsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("wpmaterial", wpmaterial);
+                    bundle.putSerializable("position", position);
+                    bundle.putSerializable("woactivityList", mContext.woactivityList);
+                    intent.putExtras(bundle);
+                    mContext.startActivityForResult(intent,6);
+                }else{
+                    Intent intent = new Intent(mContext1, Wpmaterial_DetailsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("wpmaterial", wpmaterial);
+                    intent.putExtras(bundle);
+                    mContext1.startActivity(intent);
+                }
+
+
             }
         });
     }
