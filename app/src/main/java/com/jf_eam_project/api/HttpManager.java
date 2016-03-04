@@ -331,6 +331,35 @@ public class HttpManager {
 
     }
 
+    /**
+     * 设置物资调出单*
+     */
+    public static String getMaterialUpUrl(String search, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udapptype':'UDTRANSOUT'}}";
+        } else {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "','udapptype':'UDTRANSOUT'}}";
+        }
+
+    }
+
+    /**
+     * 设置物资借用归还*
+     */
+    public static String getUdbrUrl(String search, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBR_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBR_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "','udapptype':'UDTRANSOUT'}}";
+        }
+
+    }
+
+
 
     /**
      * 设置基础数据接口

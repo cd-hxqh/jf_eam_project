@@ -153,6 +153,16 @@ public class Constants {
 
     //库存查询的表名
     public static final String INVENTORY_NAME = "INVENTORY";
+
+
+    /**物资借用归还主表**/
+    //物资借用归还主表appid
+    public static final String UDITEM_APPID = "UDITEM";
+    //物资借用归还主表
+    public static final String UDBR_NAME = "UDBR";
+
+
+
     /**
      * -----------表名配置--结束*
      */

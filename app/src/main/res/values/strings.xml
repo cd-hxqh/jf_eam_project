@@ -473,4 +473,14 @@
     <string name="state_text">状态:</string>
     <string name="material_detail_text">领料单详情</string>
 
+    <!--物资调出单-->
+    <string name="materials_up_title">物资调出单</string>
+    <string name="materrial_up_num_text">物资调出单:</string>
+    <string name="uddeptdescription_text">调出分公司:</string>
+    <string name="udtargetbranch_text">调入分公司:</string>
+    <string name="udtargetbelong_text">调入风电场:</string>
+    <string name="udjsr_text">物料接收人:</string>
+    <string name="status_text">状态:</string>
+    <string name="material_up_detail_text">物资调出单详情</string>
+
 </resources>

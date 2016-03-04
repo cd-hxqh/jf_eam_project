@@ -99,7 +99,7 @@
 
 
             <LinearLayout
-                android:id="@+id/inventory_linear_inbound_id"
+                android:id="@+id/material_up_layout_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -107,14 +107,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/po_image_order_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_out" />
 
                 <TextView
-                    android:id="@+id/po_text_order_id"
+                    android:id="@+id/material_up_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

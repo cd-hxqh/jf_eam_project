@@ -292,6 +292,12 @@
         <activity
             android:name=".ui.activity.Wpmaterial_DetailsActivity"
             android:label="物料详情"/>
+        <activity
+            android:name=".ui.activity.Materials_up_ListActivity"
+            android:label="@string/materials_up_title"/>
+        <activity
+            android:name=".ui.activity.Material_Up_Details_Activity"
+            android:label="@string/material_up_detail_text"/>
 
         <!-- Update Activitys Start -->
         <activity

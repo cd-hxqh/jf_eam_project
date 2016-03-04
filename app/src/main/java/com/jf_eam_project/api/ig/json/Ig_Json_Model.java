@@ -23,6 +23,7 @@ import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Person_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Udbr_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspojxxm_Jsonhelper;
@@ -52,6 +53,7 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
+import com.jf_eam_project.model.Udbr;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
@@ -254,25 +256,25 @@ public class Ig_Json_Model {
 
     /**解析员工**/
     public static ArrayList<Labor> parsingLabor(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Labor_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析工种**/
     public static ArrayList<Craftrate> parsingCraftrate(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Craftrate_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析项目**/
     public static ArrayList<Item> parsingItem(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Item_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析员工工种**/
     public static ArrayList<Laborcraftrate> parsingLaborcraftrate(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Laborcraftrate_JsonHelper.parseFromJsonList(input);
+    }
+    /**解析物资借用归还主表**/
+    public static ArrayList<Udbr> parsingUdbr(String input) throws IOException {
+        return Udbr_JsonHelper.parseFromJsonList(input);
     }
 }

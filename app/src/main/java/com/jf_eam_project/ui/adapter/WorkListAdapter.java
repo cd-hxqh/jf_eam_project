@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.activity.Material_Details_Activity;
+import com.jf_eam_project.ui.activity.Material_Up_Details_Activity;
 import com.jf_eam_project.ui.activity.Work_DetailsActivity;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         final WorkOrder workOrder = workOrderList.get(position);
         if (cMark == 2) { //领料单
             holder.itemNumTitle.setText(mContext.getString(R.string.requisition_text));
-        } else {
+        } else if(cMark == 3){
+            holder.itemNumTitle.setText(mContext.getString(R.string.materrial_up_num_text));
+        }else{
             holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
         }
         holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
@@ -84,6 +87,12 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
             public void onClick(View view) {
                 if(cMark == 2){
                     Intent intent = new Intent(mContext, Material_Details_Activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("workOrder", workOrder);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }else if(cMark == 3){
+                    Intent intent = new Intent(mContext, Material_Up_Details_Activity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("workOrder", workOrder);
                     intent.putExtras(bundle);

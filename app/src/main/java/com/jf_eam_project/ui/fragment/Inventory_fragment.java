@@ -12,6 +12,7 @@ import com.jf_eam_project.ui.activity.Inventory_Activity;
 import com.jf_eam_project.ui.activity.Invoice_Activity;
 import com.jf_eam_project.ui.activity.Location_Activity;
 import com.jf_eam_project.ui.activity.Material_ListActivity;
+import com.jf_eam_project.ui.activity.Materials_up_ListActivity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
 
@@ -30,6 +31,12 @@ public class Inventory_fragment extends BaseFragment {
      * 领料单
      */
     private LinearLayout material_layout;
+
+
+    /**
+     * 调出单
+     */
+    private LinearLayout material_up_layout;
 
 
 
@@ -55,6 +62,7 @@ public class Inventory_fragment extends BaseFragment {
     private void findByIdView(View view) {
         inventory_layout = (LinearLayout) view.findViewById(R.id.inventory_linear_id);
         material_layout = (LinearLayout) view.findViewById(R.id.material_layout_id);
+        material_up_layout = (LinearLayout) view.findViewById(R.id.material_up_layout_id);
     }
 
     /**
@@ -63,6 +71,7 @@ public class Inventory_fragment extends BaseFragment {
     private void setListener() {
         inventory_layout.setOnClickListener(onClickListener);
         material_layout.setOnClickListener(onClickListener);
+        material_up_layout.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -82,10 +91,10 @@ public class Inventory_fragment extends BaseFragment {
                     Intent intent1 = new Intent(getActivity(), Material_ListActivity.class);
                     startActivityForResult(intent1, 0);
                     break;
-//                case R.id.inventory_linear_outbound_id: //出库
-//                    Intent intent2 = new Intent(getActivity(), Invoice_Activity.class);
-//                    startActivityForResult(intent2, 0);
-//                    break;
+                case R.id.material_up_layout_id: //调出单
+                    Intent intent2 = new Intent(getActivity(), Materials_up_ListActivity.class);
+                    startActivityForResult(intent2, 0);
+                    break;
 
             }
         }

@@ -95,6 +95,18 @@ public final class Wpmaterial_JsonHelper
         } else if ("UNITCOST".equals(fieldName)) {
             instance.unitcost = jp.getValueAsString();
             return true;
+        }else if ("DESCRIPTION".equals(fieldName)) {
+            instance.description = jp.getValueAsString();
+            return true;
+        }else if ("LINETYPE".equals(fieldName)) {
+            instance.linetype = jp.getValueAsString();
+            return true;
+        }else if ("ORDERUNIT".equals(fieldName)) {
+            instance.orderunit = jp.getValueAsString();
+            return true;
+        }else if ("LINECOST".equals(fieldName)) {
+            instance.linecost = jp.getValueAsString();
+            return true;
         }
 
 
