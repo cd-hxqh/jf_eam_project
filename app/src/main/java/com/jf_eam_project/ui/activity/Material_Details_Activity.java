@@ -164,6 +164,7 @@ public class Material_Details_Activity extends BaseActivity {
             Intent intent = new Intent(Material_Details_Activity.this, Wpmaterial_ListActivity.class);
             intent.putExtra("wonum", workOrder.getWonum());
             startActivityForResult(intent, 0);
+            popupWindow.dismiss();
         }
     };
 

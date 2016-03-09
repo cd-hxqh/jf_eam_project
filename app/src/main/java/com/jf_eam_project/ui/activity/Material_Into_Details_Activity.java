@@ -10,14 +10,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.WorkOrder;
 
 /**
- * 物资调出单详情
+ * 物资调入单详情
  */
-public class Material_Up_Details_Activity extends BaseActivity {
+public class Material_Into_Details_Activity extends BaseActivity {
 
-    private static final String TAG = "Material_Up_Details_Activity";
+    private static final String TAG = "Material_Into_Details_Activity";
 
     /**
      * 标题*
@@ -36,36 +37,34 @@ public class Material_Up_Details_Activity extends BaseActivity {
     /**
      * 界面信息显示*
      */
-    private TextView wonumText; //物资调出单
+    private TextView ponumText; //物资调入单
     private TextView descriptionText; //描述
-    private TextView displaynameText; //申请人
-    private TextView createdateText; //创建时间
-    private TextView udescriptionText; //调出分公司
-    private TextView udescription1Text; //风电场
-    private TextView udtargetbranchText; //调入分公司
-    private TextView udtargetbelongText; //调入风电场
-    private TextView udjsrText; //物料接收人
-
+    private TextView siteidText; //地点
     private TextView statusText; //状态
+    private TextView purchaseagentText; //接收人
+    private TextView orderdateText; //创建日期
+    private TextView udtargetbranchText; //分公司
+    private TextView udtargetbelongText; //风电场
+    private TextView pretaxtotalText; //税前总计
+    private TextView totaltax1Text; //税款总计
+    private TextView totalcostText; //成本总计
+
+    private TextView currencycodeText; //货币
 
 
-    private WorkOrder workOrder; //领料单
+    private Po po; //物资调入单
 
     private PopupWindow popupWindow;
 
     /**
-     * 物料*
+     * 调入物料明细*
      */
     private TextView wpmaterialText;
-    /**
-     * 工具*
-     */
-    private TextView wptooltext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_up_details);
+        setContentView(R.layout.activity_material_in_details);
         initData();
         findViewById();
         initView();
@@ -75,7 +74,7 @@ public class Material_Up_Details_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        po = (Po) getIntent().getSerializableExtra("po");
     }
 
     @Override
@@ -84,24 +83,26 @@ public class Material_Up_Details_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        wonumText = (TextView) findViewById(R.id.materrial_up_num_text_id);
-        descriptionText = (TextView) findViewById(R.id.materrial_up_description_id);
-        displaynameText = (TextView) findViewById(R.id.material_up_displayname_text_id);
-        createdateText = (TextView) findViewById(R.id.createdate_text_id);
-        udescriptionText = (TextView) findViewById(R.id.uddeptdescription_text_id);
-        udescription1Text = (TextView) findViewById(R.id.uddept_description_text_id);
-        udtargetbranchText = (TextView) findViewById(R.id.udtargetbranch_text_id);
-        udtargetbelongText = (TextView) findViewById(R.id.udtargetbelong_text_id);
-        udjsrText = (TextView) findViewById(R.id.udjsr_text_id);
-
-
+        ponumText = (TextView) findViewById(R.id.ponum_text_id);
+        descriptionText = (TextView) findViewById(R.id.description_text_id);
+        siteidText = (TextView) findViewById(R.id.siteid_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
+        purchaseagentText = (TextView) findViewById(R.id.purchaseagent_text_id);
+        orderdateText = (TextView) findViewById(R.id.orderdate_text_id);
+        udtargetbranchText = (TextView) findViewById(R.id.uddept_description_text_id);
+        udtargetbelongText = (TextView) findViewById(R.id.udtargetbelong_text_id);
+        pretaxtotalText = (TextView) findViewById(R.id.pretaxtotal_text_id);
+        totaltax1Text = (TextView) findViewById(R.id.totaltax1_text);
+        totalcostText = (TextView) findViewById(R.id.totalcost_text_id);
+
+
+        currencycodeText = (TextView) findViewById(R.id.currencycode_text_id);
 
     }
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.material_up_detail_text));
+        titleView.setText(getString(R.string.material_into_details_text));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
@@ -109,14 +110,19 @@ public class Material_Up_Details_Activity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 
-        if (workOrder != null) {
-            wonumText.setText(workOrder.getWonum() == null ? "" : workOrder.getWonum());
-            descriptionText.setText(workOrder.getDescription() == null ? "" : workOrder.getDescription());
-            displaynameText.setText(workOrder.getReportedby() == null ? "" : workOrder.getReportedby());
-            createdateText.setText(workOrder.getCreatedate() == null ? "" : workOrder.getCreatedate());
-            udescriptionText.setText(workOrder.getUddeptdescription() == null ? "" : workOrder.getUddeptdescription());
-            udescription1Text.setText(workOrder.getUdbelong() == null ? "" : workOrder.getUdbelong());
-            statusText.setText(workOrder.getStatus() == null ? "" : workOrder.getStatus());
+        if (po != null) {
+            ponumText.setText(po.ponum == null ? "" : po.ponum);
+            descriptionText.setText(po.description == null ? "" : po.description);
+            siteidText.setText(po.siteid == null ? "" : po.siteid);
+            statusText.setText(po.status == null ? "" : po.status);
+            purchaseagentText.setText(po.purchaseagent == null ? "" : po.purchaseagent);
+            orderdateText.setText(po.orderdate == null ? "" : po.orderdate);
+//            udtargetbranchText.setText(po.u == null ? "" : workOrder.getStatus());
+//            udtargetbelongText.setText(po.u == null ? "" : workOrder.getStatus());
+            pretaxtotalText.setText(po.pretaxtotal == null ? "" : po.pretaxtotal);
+            totaltax1Text.setText(po.totaltax1 == null ? "" : po.totaltax1);
+            totalcostText.setText(po.totalcost == null ? "" : po.totalcost);
+            currencycodeText.setText(po.currencycode == null ? "" : po.currencycode);
         }
 
 
@@ -147,7 +153,7 @@ public class Material_Up_Details_Activity extends BaseActivity {
      */
     private void showPopupWindow(View view) {
 
-        View contentView = LayoutInflater.from(Material_Up_Details_Activity.this).inflate(
+        View contentView = LayoutInflater.from(Material_Into_Details_Activity.this).inflate(
                 R.layout.material_popup_window, null);
 
 
@@ -161,6 +167,7 @@ public class Material_Up_Details_Activity extends BaseActivity {
         popupWindow.showAsDropDown(view, 0, 20);
 
         wpmaterialText = (TextView) contentView.findViewById(R.id.wpmaterial_popup_text_id);
+        wpmaterialText.setText(getString(R.string.material_into_poline_text));
         wpmaterialText.setOnClickListener(wpmaterialTextOnClickListener);
 
     }
@@ -168,10 +175,13 @@ public class Material_Up_Details_Activity extends BaseActivity {
     private View.OnClickListener wpmaterialTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Material_Up_Details_Activity.this, Wpmaterial_ListActivity.class);
-            intent.putExtra("wonum", workOrder.getWonum());
+            Intent intent = new Intent(Material_Into_Details_Activity.this, Poline_Activity.class);
+
+            intent.putExtra("mark", 1);
+            intent.putExtra("ponum", po.ponum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
+
         }
     };
 

@@ -73,6 +73,7 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
     private String searchText = "";
     private int page = 1;
 
+    private int mark = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
      */
     private void initData() {
         ponum = getIntent().getExtras().getString("ponum");
+        mark = getIntent().getExtras().getInt("mark");
         Log.i(TAG, "ponum=" + ponum);
     }
 
@@ -105,7 +107,11 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.title_activity_poline));
+        if (mark == 1) {
+            titleView.setText(getString(R.string.material_into_poline_text));
+        } else {
+            titleView.setText(getString(R.string.title_activity_poline));
+        }
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         setSearchEdit();
@@ -116,7 +122,7 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        poLineListAdapter = new PoLineListAdapter(this);
+        poLineListAdapter = new PoLineListAdapter(this,mark);
         recyclerView.setAdapter(poLineListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -149,7 +155,7 @@ public class Poline_Activity extends BaseActivity implements SwipeRefreshLayout.
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            poLineListAdapter = new PoLineListAdapter(Poline_Activity.this);
+                            poLineListAdapter = new PoLineListAdapter(Poline_Activity.this,mark);
                             recyclerView.setAdapter(poLineListAdapter);
                         }
                         if (totalPages == page) {

@@ -483,4 +483,19 @@
     <string name="status_text">状态:</string>
     <string name="material_up_detail_text">物资调出单详情</string>
 
+    <!--物资调入单-->
+    <string name="materials_into_text">物资调入单</string>
+    <string name="ponum_text">调入单号:</string>
+    <string name="siteid_text">地点:</string>
+    <string name="purchaseagent_text">接收人:</string>
+    <string name="orderdate_text">创建日期:</string>
+    <string name="pretaxtotal_text">税前总计:</string>
+    <string name="totaltax1_text">税款总计:</string>
+    <string name="totalcost_text">成本总计:</string>
+    <string name="currencycode_text">货币:</string>
+    <string name="material_into_details_text">物资调入单详情</string>
+    <string name="material_into_poline_text">物料明细</string>
+    <!--物资借用归还-->
+    <string name="udbr_title_text">借用归还</string>
+
 </resources>

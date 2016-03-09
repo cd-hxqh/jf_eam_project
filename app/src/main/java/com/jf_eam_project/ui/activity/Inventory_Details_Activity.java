@@ -101,7 +101,7 @@ public class Inventory_Details_Activity extends BaseActivity {
             locationText.setText(inventory.getLocation() == null ? "" : inventory.getLocation());
             lottypeText.setText(inventory.getLottype() == null ? "" : inventory.getLottype());
             statusText.setText(inventory.getStatus() == null ? "" : inventory.getStatus() );
-            siteidText.setText(inventory.getStatus() == null ? "" : inventory.getStatus());
+            siteidText.setText(inventory.getSiteid() == null ? "" : inventory.getSiteid());
             issueunitsText.setText(inventory.getIssueunit() == null ? "" : inventory.getIssueunit());
         }
 

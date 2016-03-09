@@ -12,7 +12,9 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 
-/**采购订单行详情**/
+/**
+ * 采购订单行详情*
+ */
 public class PoLine_Details_Activity extends BaseActivity {
     private static final String TAG = "PoLine_Details_Activity";
 
@@ -24,7 +26,9 @@ public class PoLine_Details_Activity extends BaseActivity {
      * 返回按钮*
      */
     private ImageView backImageView;
-    /**界面信息显示**/
+    /**
+     * 界面信息显示*
+     */
     private TextView polinenumText; //行
     private TextView linetypeText; //行类型
     private TextView itemnumText; //项目
@@ -39,8 +43,12 @@ public class PoLine_Details_Activity extends BaseActivity {
     private TextView shiptoattnText; //接收人
     private TextView tositeidText; //交货地点
 
-    /**采购订单行**/
+    /**
+     * 采购订单行*
+     */
     private PoLine poLine;
+
+    private int mark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class PoLine_Details_Activity extends BaseActivity {
 
     private void initData() {
         poLine = (PoLine) getIntent().getSerializableExtra("poLine");
+        mark = getIntent().getExtras().getInt("mark");
     }
 
     @Override
@@ -78,22 +87,26 @@ public class PoLine_Details_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getResources().getString(R.string.title_activity_po_line_details));
+        if (mark == 1) {
+            titleView.setText("物料详情");
+        } else {
+            titleView.setText(getResources().getString(R.string.title_activity_po_line_details));
+        }
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        if(poLine!=null){
-            polinenumText.setText(poLine.getPolinenum()==null?"":poLine.getPolinenum());
-            linetypeText.setText(poLine.getLinetype()==null?"":poLine.getLinetype());
-            itemnumText.setText(poLine.getItemnum()==null?"":poLine.getItemnum());
+        if (poLine != null) {
+            polinenumText.setText(poLine.getPolinenum() == null ? "" : poLine.getPolinenum());
+            linetypeText.setText(poLine.getLinetype() == null ? "" : poLine.getLinetype());
+            itemnumText.setText(poLine.getItemnum() == null ? "" : poLine.getItemnum());
             descriptionText.setText(poLine.getDescription() == null ? "" : poLine.getDescription());
             conversionText.setText(poLine.getConversion() == null ? "" : poLine.getConversion());
-            categoryText.setText(poLine.getCategory()==null?"":poLine.getCategory());
-            orderqtyText.setText(poLine.getOrderqty()==null?"":poLine.getOrderqty());
-            orderunitText.setText(poLine.getOrderunit()==null?"":poLine.getOrderunit());
-            enterbyText.setText(poLine.getEnterby()==null?"":poLine.getEnterby());
-            enterdateText.setText(poLine.getEnterdate()==null?"":poLine.getEnterdate());
-            requestedbyText.setText(poLine.getRequestedby()==null?"":poLine.getRequestedby());
-            shiptoattnText.setText(poLine.getShiptoattn()==null?"":poLine.getShiptoattn());
-            tositeidText.setText(poLine.getTositeid()==null?"":poLine.getTositeid());
+            categoryText.setText(poLine.getCategory() == null ? "" : poLine.getCategory());
+            orderqtyText.setText(poLine.getOrderqty() == null ? "" : poLine.getOrderqty());
+            orderunitText.setText(poLine.getOrderunit() == null ? "" : poLine.getOrderunit());
+            enterbyText.setText(poLine.getEnterby() == null ? "" : poLine.getEnterby());
+            enterdateText.setText(poLine.getEnterdate() == null ? "" : poLine.getEnterdate());
+            requestedbyText.setText(poLine.getRequestedby() == null ? "" : poLine.getRequestedby());
+            shiptoattnText.setText(poLine.getShiptoattn() == null ? "" : poLine.getShiptoattn());
+            tositeidText.setText(poLine.getTositeid() == null ? "" : poLine.getTositeid());
         }
 
 

@@ -345,6 +345,26 @@ public class HttpManager {
 
     }
 
+
+    /**
+     * 设置物资调入单*
+     */
+    public static String getMaterialInUrl(String search, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udappname':'UDTRANSIN'}}";
+        } else {
+            return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PONUM':'" + search + "','udappname':'UDTRANSIN'}}";
+        }
+
+    }
+
+
+
+
+
+
     /**
      * 设置物资借用归还*
      */
@@ -354,7 +374,7 @@ public class HttpManager {
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
             return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBR_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "','udapptype':'UDTRANSOUT'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRNUM':'" + search + "'}}";
         }
 
     }

@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,79 +24,58 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Po;
+import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
+import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * 采购订单Acitivity*
+ * Created by think on 2015/11/20.
+ * 物资调入单
  */
-public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Materials_Into_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Po_order_Activity";
-
-
+    private static final String TAG="Materials_Into_ListActivity";
     /**
      * 标题*
      */
     private TextView titlename;
     /**
-     * 返回按钮*
+     * 返回*
      */
-    private ImageView backImageView;
+    private ImageView backImage;
 
     /**
      * 菜单按钮*
      */
-    private ImageView menuImageView;
-
-
     LinearLayoutManager layoutManager;
-
-
-    /**
-     * RecyclerView*
-     */
     public RecyclerView recyclerView;
-    /**
-     * 暂无数据*
-     */
     private LinearLayout nodatalayout;
-    /**
-     * 界面刷新*
-     */
     private SwipeRefreshLayout refresh_layout = null;
-    /**
-     * 适配器*
-     */
     private PoListAdapter poListAdapter;
-    /**
-     * 编辑框*
-     */
     private EditText search;
-    /**
-     * 查询条件*
-     */
     private String searchText = "";
     private int page = 1;
 
-
+    /**资产编号**/
+    private String assetsNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
+
         findViewById();
         initView();
     }
 
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        menuImageView = (ImageView) findViewById(R.id.title_add);
-
+        backImage = (ImageView) findViewById(R.id.title_back_id);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
@@ -107,20 +85,21 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void initView() {
         setSearchEdit();
+        titlename.setText(getString(R.string.materials_into_text));
 
 
-        titlename.setText(getString(R.string.po_order_title));
-        menuImageView.setImageResource(R.drawable.ic_drawer);
-//        menuImageView.setVisibility(View.VISIBLE);
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-
-
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        poListAdapter = new PoListAdapter(this,0);
+        poListAdapter = new PoListAdapter(this,1);
         recyclerView.setAdapter(poListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -133,27 +112,47 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    private void getData(String search) {
+        HttpManager.getDataPagingInfo(this, HttpManager.getMaterialInUrl(search, page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+            }
 
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                ArrayList<Po> items = null;
+                if (totalPages != 0 && currentPage != 0) {
+                    try {
+                        items = Ig_Json_Model.parseFromString(results.getResultlist());
+                        refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
+                        if (items == null || items.isEmpty()) {
+                            nodatalayout.setVisibility(View.VISIBLE);
+                        } else {
+                            if (page == 1) {
+                                poListAdapter = new PoListAdapter(Materials_Into_ListActivity.this,1);
+                                recyclerView.setAdapter(poListAdapter);
+                            }
+                            if (totalPages == page) {
+                                poListAdapter.adddate(items);
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    refresh_layout.setRefreshing(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+            }
 
-    @Override
-    public void onLoad() {
-        page = 1;
-
-        getData(searchText);
+            @Override
+            public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
-
-    @Override
-    public void onRefresh() {
-        page++;
-        getData(searchText);
-    }
-
 
     private void setSearchEdit() {
         SpannableString msp = new SpannableString("XX搜索");
@@ -169,14 +168,12 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Po_order_Activity.this.getCurrentFocus()
+                                    Materials_Into_ListActivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    poListAdapter.removeAllData();
-                    nodatalayout.setVisibility(View.GONE);
-                    refresh_layout.setRefreshing(true);
-                    page = 1;
+                    poListAdapter = new PoListAdapter(Materials_Into_ListActivity.this,1);
+                    recyclerView.setAdapter(poListAdapter);
                     getData(searchText);
                     return true;
                 }
@@ -185,49 +182,17 @@ public class Po_order_Activity extends BaseActivity implements SwipeRefreshLayou
         });
     }
 
-    /**
-     * 获取数据*
-     */
-    private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getPoUrl(search, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
+    //下拉刷新触发事件
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData(search.getText().toString());
+    }
 
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-
-                Log.i(TAG, "results=" + results.getResultlist());
-
-                ArrayList<Po> items = null;
-                try {
-                    items = Ig_Json_Model.parseFromString(results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (items == null || items.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
-                    } else {
-                        if (page == 1) {
-                            poListAdapter = new PoListAdapter(Po_order_Activity.this,0);
-                            recyclerView.setAdapter(poListAdapter);
-                        }
-                        if (totalPages == page) {
-                            poListAdapter.adddate(items);
-                        }
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
+    //上拉加载
+    @Override
+    public void onLoad() {
+        page++;
+        getData(searchText);
     }
 }

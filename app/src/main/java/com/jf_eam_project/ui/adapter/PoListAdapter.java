@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
+import com.jf_eam_project.ui.activity.Material_Into_Details_Activity;
 import com.jf_eam_project.ui.activity.PO_Details_Activity;
 
 import java.util.ArrayList;
@@ -26,9 +27,10 @@ import java.util.List;
 public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder> {
     Context mContext;
     List<Po> poList = new ArrayList<>();
-
-    public PoListAdapter(Context context) {
+    private int mark;
+    public PoListAdapter(Context context,int mark) {
         this.mContext = context;
+        this.mark=mark;
     }
 
 
@@ -41,14 +43,23 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Po po = poList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.po_number_text));
+        if(mark==0) {
+            holder.itemNumTitle.setText(mContext.getString(R.string.po_number_text));
+        }else{
+            holder.itemNumTitle.setText(mContext.getString(R.string.ponum_text));
+        }
         holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
         holder.itemNum.setText(po.getPonum());
         holder.itemDesc.setText(po.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PO_Details_Activity.class);
+                Intent intent=null;
+                if(mark==0) {
+                    intent  = new Intent(mContext, PO_Details_Activity.class);
+                }else{
+                    intent  = new Intent(mContext, Material_Into_Details_Activity.class);
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("po", po);
                 intent.putExtras(bundle);

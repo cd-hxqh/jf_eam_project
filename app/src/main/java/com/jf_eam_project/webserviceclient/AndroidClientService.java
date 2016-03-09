@@ -113,6 +113,8 @@ public class AndroidClientService {
      * @return
      */
     public String startwf(String processname,String mbo,String keyValue,String key){
+
+        Log.i(TAG,"processname="+processname+",mbo="+mbo+",keyValue="+keyValue+",key="+key);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -146,6 +148,8 @@ public class AndroidClientService {
      * @return
      */
     public String wfGoOn(String processname,String mbo,String keyValue,String key,String zx,String desc){
+
+        Log.i(TAG,"processname="+processname+",mbo="+mbo+",keyValue="+keyValue+",key="+key+",zx="+zx+",desc="+desc);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -161,9 +165,9 @@ public class AndroidClientService {
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         } catch (XmlPullParserException e) {
-            e.printStackTrace();
+            return null;
         }
         String obj = null;
         String result = null;
@@ -171,7 +175,7 @@ public class AndroidClientService {
             obj = soapEnvelope.getResponse().toString();
             result = JsonUtils.parsingwfserviceGoOnResult(obj);
         } catch (SoapFault soapFault) {
-            soapFault.printStackTrace();
+            return null;
         }
         return result;
     }

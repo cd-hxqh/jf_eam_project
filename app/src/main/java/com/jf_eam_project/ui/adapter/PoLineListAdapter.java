@@ -26,9 +26,10 @@ import java.util.List;
 public class PoLineListAdapter extends RecyclerView.Adapter<PoLineListAdapter.ViewHolder> {
     Context mContext;
     List<PoLine> polineList = new ArrayList<>();
-
-    public PoLineListAdapter(Context context) {
+    private int mark;
+    public PoLineListAdapter(Context context,int mark) {
         this.mContext = context;
+        this.mark=mark;
     }
 
 
@@ -51,6 +52,7 @@ public class PoLineListAdapter extends RecyclerView.Adapter<PoLineListAdapter.Vi
                 Intent intent = new Intent(mContext, PoLine_Details_Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("poLine", poline);
+                bundle.putInt("mark", mark);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }

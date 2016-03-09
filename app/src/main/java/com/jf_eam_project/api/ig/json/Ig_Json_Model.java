@@ -157,7 +157,6 @@ public class Ig_Json_Model {
      * 解析计划任务*
      */
     public static ArrayList<Woactivity> parsingWoactivity(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Woactivity_JsonHelper.parseFromJsonList(input);
     }
 
@@ -165,7 +164,6 @@ public class Ig_Json_Model {
      * 解析计划员工*
      */
     public static ArrayList<Wplabor> parsingWplabor(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Wplabor_JsonHelper.parseFromJsonList(input);
     }
 
@@ -173,7 +171,6 @@ public class Ig_Json_Model {
      * 解析计划物料*
      */
     public static ArrayList<Wpmaterial> parsingWpmaterial(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Wpmaterial_JsonHelper.parseFromJsonList(input);
     }
 
@@ -181,7 +178,6 @@ public class Ig_Json_Model {
      * 解析计划服务*
      */
     public static ArrayList<Wpservice> parsingWpservice(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Wpservice_JsonHelper.parseFromJsonList(input);
     }
 

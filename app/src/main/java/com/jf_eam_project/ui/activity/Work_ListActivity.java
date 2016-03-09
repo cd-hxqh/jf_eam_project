@@ -155,6 +155,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                             if (page == 1) {
                                 workListAdapter = new WorkListAdapter(Work_ListActivity.this,0);
                                 recyclerView.setAdapter(workListAdapter);
+                                nodatalayout.setVisibility(View.GONE);
                             }
                             if (totalPages == page) {
                                 workListAdapter.adddate(items);
@@ -194,6 +195,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                     Work_ListActivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
+                    refresh_layout.setRefreshing(true);
                     searchText = search.getText().toString();
                     workListAdapter = new WorkListAdapter(Work_ListActivity.this,0);
                     recyclerView.setAdapter(workListAdapter);

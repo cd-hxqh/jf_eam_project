@@ -85,7 +85,7 @@ public class Udbr_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(getString(R.string.materials_up_title));
+        titlename.setText(getString(R.string.udbr_title_text));
 
 
         backImage.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +113,7 @@ public class Udbr_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getMaterialUpUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdbrUrl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -132,6 +132,7 @@ public class Udbr_ListActivity extends BaseActivity implements SwipeRefreshLayou
                             if (page == 1) {
                                 udbrListAdapter = new UdbrListAdapter(Udbr_ListActivity.this);
                                 recyclerView.setAdapter(udbrListAdapter);
+                                nodatalayout.setVisibility(View.GONE);
                             }
                             if (totalPages == page) {
                                 udbrListAdapter.adddate(items);
@@ -171,6 +172,7 @@ public class Udbr_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                     Udbr_ListActivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
+                    refresh_layout.setRefreshing(true);
                     searchText = search.getText().toString();
                     udbrListAdapter = new UdbrListAdapter(Udbr_ListActivity.this);
                     recyclerView.setAdapter(udbrListAdapter);

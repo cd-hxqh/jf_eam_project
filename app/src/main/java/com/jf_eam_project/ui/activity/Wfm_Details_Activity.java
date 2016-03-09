@@ -135,18 +135,19 @@ public class Wfm_Details_Activity extends BaseActivity {
     private View.OnClickListener approveOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            MaterialDialogOneBtn();
+            MaterialDialogOneBtn1();
         }
     };
 
-    private void MaterialDialogOneBtn() {
+
+    private void MaterialDialogOneBtn1() {//审批工作流
         final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
                 .btnNum(2)
-                .content("是否启动工作流")//
-                .btnText("是", "否")//
+                .content("是否填写输入意见")//
+                .btnText("是", "否，直接提交")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
                 .show();
@@ -155,122 +156,59 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnClickL() {//是
                     @Override
                     public void onBtnClick() {
-                        wfstart(wfm.getOwnerid());
+                        EditDialog(true);
                         dialog.dismiss();
                     }
                 },
-                new OnBtnClickL() {//取消
+                new OnBtnClickL() {//否
                     @Override
                     public void onBtnClick() {
+//                        getwfstatus(false,"不通过");
                         dialog.dismiss();
                     }
                 }
         );
     }
 
-//    private void MaterialDialogOneBtn1(final boolean isok) {//是否输入审核意见
-//        final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
-//        dialog.setCancelable(false);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.isTitleShow(false)//
-//                .btnNum(2)
-//                .content("是否填写输入意见")//
-//                .btnText("是", "否，直接提交")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)
-//                .show();
-//
-//        dialog.setOnBtnClickL(
-//                new OnBtnClickL() {//是
-//                    @Override
-//                    public void onBtnClick() {
-//                        EditDialog(isok);
-//                        dialog.dismiss();
-//                    }
-//                },
-//                new OnBtnClickL() {//否
-//                    @Override
-//                    public void onBtnClick() {
-//                        getwfstatus(isok,"不通过");
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//    }
-//
-//    private void EditDialog(final boolean isok) {//输入审核意见
-//        final NormalEditTextDialog dialog = new NormalEditTextDialog(Wfm_Details_Activity.this);
-//        dialog.setCancelable(false);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.isTitleShow(false)//
-//                .btnNum(2)
-//                .content(isok ? "通过" : "不通过")//
-//                .btnText("提交", "取消")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)
-//                .show();
-//
-//        dialog.setOnBtnClickL(
-//                new OnBtnEditClickL() {
-//                    @Override
-//                    public void onBtnClick(String text) {
-//                        getwfstatus(isok,text);
-//                        dialog.dismiss();
-//                    }
-//                },
-//                new OnBtnEditClickL() {
-//                    @Override
-//                    public void onBtnClick(String text) {
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//    }
-//
-//    /**
-//     * 判断工作流是否已启动
-//     *
-//     * @return
-//     */
-//    private void getwfstatus(final boolean isok, final String desc) {
-//        HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, ""), new HttpRequestHandler<Results>() {
-//            @Override
-//            public void onSuccess(Results results) {
-//                Log.i(TAG, "data=" + results);
-//            }
-//
-//            @Override
-//            public void onSuccess(Results results, int totalPages, int currentPage) {
-//                Log.i(TAG,"results.getResultlist()="+results.getResultlist());
-//                String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-//                Log.i(TAG,"result="+result);
-//                if (result != null && result.equals("Y")) {
-////                    wfstart(workOrder.wonum);
-//                    MessageUtils.showMiddleToast(Wfm_Details_Activity.this,"流程审批成功");
-//                    finish();
-//                } else if (result != null && result.equals("N")) {
-////                    wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
-//                    MessageUtils.showMiddleToast(Wfm_Details_Activity.this,"流程审批成功");
-//                    finish();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                Toast.makeText(Wfm_Details_Activity.this, "查询工作流状态失败，审核中止", Toast.LENGTH_SHORT).show();
-//                mProgressDialog.dismiss();
-//            }
-//        });
-//
-//    }
+    private void EditDialog(final boolean isok) {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Wfm_Details_Activity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content(isok ? "通过" : "不通过")//
+                .btnText("提交", "取消")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon(wfm.getOwnerid(),"1",text);
+
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+
 
     /**
-     * 开始工作流
+     * 审批工作流
      *
      * @param id
+     * @param zx
      */
-    private void wfstart(final String id) {
+    private void wfgoon(final String id, final String zx, final String desc) {
         mProgressDialog = ProgressDialog.show(Wfm_Details_Activity.this, null,
                 getString(R.string.inputing), true, true);
         mProgressDialog.setCanceledOnTouchOutside(false);
@@ -278,13 +216,7 @@ public class Wfm_Details_Activity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String key = null;
-                if(wfm.getOwnertable().equals("WORKORDER")){
-                    key = "WORKORDERID";
-                }else if (wfm.getOwnertable().equals("PO")){
-                    key = "POID";
-                }
-                String result = getBaseApplication().getWfService().startwf(wfm.getProcessname(), wfm.getOwnertable(), id, key);
+                String result = getBaseApplication().getWfService().wfGoOn(wfm.getProcessname(), wfm.getOwnertable(), id,wfm.getOwnertable()+"ID" , zx, desc);
                 return result;
             }
 
@@ -293,47 +225,13 @@ public class Wfm_Details_Activity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.equals("")) {
                     Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                } else if (s.equals("工作流启动成功")){
-                    Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
-                    Wfm_Details_Activity.this.finish();
                 } else {
                     Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
+                    Wfm_Details_Activity.this.finish();
                 }
                 mProgressDialog.dismiss();
             }
         }.execute();
     }
-
-//    /**
-//     * 审批工作流
-//     *
-//     * @param wonum
-//     * @param zx
-//     */
-//    private void wfgoon(final String wonum, final String zx, final String desc) {
-//        mProgressDialog = ProgressDialog.show(Wfm_Details_Activity.this, null,
-//                getString(R.string.inputing), true, true);
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.setCancelable(false);
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                String result = getBaseApplication().getWfService().wfGoOn("UDFJHWO", "WORKORDER", wonum, "WONUM", zx, desc);
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                if (s == null || s.equals("")) {
-//                    Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
-//                    Wfm_Details_Activity.this.finish();
-//                }
-//                mProgressDialog.dismiss();
-//            }
-//        }.execute();
-//    }
 
 }

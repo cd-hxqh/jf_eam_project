@@ -298,6 +298,15 @@
         <activity
             android:name=".ui.activity.Material_Up_Details_Activity"
             android:label="@string/material_up_detail_text"/>
+        <activity
+            android:name=".ui.activity.Materials_Into_ListActivity"
+            android:label="@string/materials_into_text"/>
+        <activity
+            android:name=".ui.activity.Material_Into_Details_Activity"
+            android:label="@string/material_into_details_text"/>
+        <activity
+            android:name=".ui.activity.Udbr_ListActivity"
+            android:label="@string/udbr_title_text"/>
 
         <!-- Update Activitys Start -->
         <activity
