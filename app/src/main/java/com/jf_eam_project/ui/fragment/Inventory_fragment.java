@@ -17,6 +17,7 @@ import com.jf_eam_project.ui.activity.Materials_up_ListActivity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
 import com.jf_eam_project.ui.activity.Udbr_ListActivity;
+import com.jf_eam_project.ui.activity.Uditemreq_listactivity;
 
 
 /**
@@ -33,6 +34,11 @@ public class Inventory_fragment extends BaseFragment {
      * 领料单
      */
     private LinearLayout material_layout;
+
+    /**
+     * 物资编码测试
+     */
+    private LinearLayout uditemreq_layout;
 
 
     /**
@@ -73,6 +79,7 @@ public class Inventory_fragment extends BaseFragment {
     private void findByIdView(View view) {
         inventory_layout = (LinearLayout) view.findViewById(R.id.inventory_linear_id);
         material_layout = (LinearLayout) view.findViewById(R.id.material_layout_id);
+        uditemreq_layout = (LinearLayout) view.findViewById(R.id.uditemreq_linear_id);
         material_up_layout = (LinearLayout) view.findViewById(R.id.material_up_layout_id);
         material_into_layout = (LinearLayout) view.findViewById(R.id.material_in_layout_id);
         udbr_layout = (LinearLayout) view.findViewById(R.id.udbr_linearlayout_id);
@@ -84,6 +91,7 @@ public class Inventory_fragment extends BaseFragment {
     private void setListener() {
         inventory_layout.setOnClickListener(onClickListener);
         material_layout.setOnClickListener(onClickListener);
+        uditemreq_layout.setOnClickListener(onClickListener);
         material_up_layout.setOnClickListener(onClickListener);
         material_into_layout.setOnClickListener(onClickListener);
         udbr_layout.setOnClickListener(onClickListener);
@@ -101,22 +109,28 @@ public class Inventory_fragment extends BaseFragment {
                     startActivityForResult(intent, 0);
 
                     break;
+                case R.id.uditemreq_linear_id: //物资编码申请
+
+                    Intent intent1 = new Intent(getActivity(), Uditemreq_listactivity.class);
+                    startActivityForResult(intent1, 0);
+
+                    break;
 
                 case R.id.material_layout_id: //领料单
-                    Intent intent1 = new Intent(getActivity(), Material_ListActivity.class);
-                    startActivityForResult(intent1, 0);
-                    break;
-                case R.id.material_up_layout_id: //调出单
-                    Intent intent2 = new Intent(getActivity(), Materials_up_ListActivity.class);
+                    Intent intent2 = new Intent(getActivity(), Material_ListActivity.class);
                     startActivityForResult(intent2, 0);
                     break;
-                case R.id.material_in_layout_id: //调入单
-                    Intent intent3 = new Intent(getActivity(), Materials_Into_ListActivity.class);
+                case R.id.material_up_layout_id: //调出单
+                    Intent intent3 = new Intent(getActivity(), Materials_up_ListActivity.class);
                     startActivityForResult(intent3, 0);
                     break;
-                case R.id.udbr_linearlayout_id: //物资借用归还
-                    Intent intent4 = new Intent(getActivity(), Udbr_ListActivity.class);
+                case R.id.material_in_layout_id: //调入单
+                    Intent intent4 = new Intent(getActivity(), Materials_Into_ListActivity.class);
                     startActivityForResult(intent4, 0);
+                    break;
+                case R.id.udbr_linearlayout_id: //物资借用归还
+                    Intent intent5 = new Intent(getActivity(), Udbr_ListActivity.class);
+                    startActivityForResult(intent5, 0);
                     break;
 
             }

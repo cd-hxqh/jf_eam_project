@@ -287,6 +287,12 @@
             android:name=".ui.activity.Material_Details_Activity"
             android:label="@string/material_detail_text"/>
         <activity
+            android:name=".ui.activity.Uditemreq_listactivity"
+            android:label="@string/uditemreq_title_text"/>
+        <activity
+            android:name=".ui.activity.Uditemreq_Details_Activity"
+            android:label="@string/uditemreq_detail_text"/>
+        <activity
             android:name=".ui.activity.Wpmaterial_ListActivity"
             android:label="物料"/>
         <activity

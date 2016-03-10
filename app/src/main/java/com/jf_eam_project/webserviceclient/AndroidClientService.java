@@ -23,7 +23,11 @@ import java.io.IOException;
 public class AndroidClientService {
     private static final String TAG = "AndroidClientService";
     public String NAMESPACE = "http://www.ibm.com/maximo";
-    public String url = "http://61.49.28.246:7001/meaweb/services/WOSERVICE";
+    /**旧**/
+//    public String url = "http://1.202.243.112:7001/meaweb/services/WOSERVICE";
+    public String url = "http://1.202.243.112:7001/meaweb/wsdl/WFSERVICE.wsdl";
+    /**新**/
+//    public String url = "http://10.1.29.155:7001/meaweb/services/WFSERVICE";
     public int timeOut = 1200000;
 
     public AndroidClientService() {
@@ -165,6 +169,7 @@ public class AndroidClientService {
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
+            Log.i(TAG,"232123212");
             return null;
         } catch (XmlPullParserException e) {
             return null;

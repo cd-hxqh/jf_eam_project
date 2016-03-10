@@ -497,5 +497,11 @@
     <string name="material_into_poline_text">物料明细</string>
     <!--物资借用归还-->
     <string name="udbr_title_text">借用归还</string>
+    <string name="uditemreq_title_text">编码申请</string>
+    <string name="uditemreqnum_text">申请单号:</string>
+    <string name="reason_text">申请原因:</string>
+    <string name="alndomain_description_text">状态:</string>
+    <string name="person_displayname_text">创建人:</string>
+    <string name="uditemreq_detail_text">申请编码详情</string>
 
 </resources>

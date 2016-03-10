@@ -11,7 +11,10 @@ import com.jf_eam_project.model.Uditemreq;
 
 import java.io.IOException;
 import java.util.ArrayList;
-/**物资编码申请**/
+
+/**
+ * 物资编码申请*
+ */
 
 public final class Uditemreq_JsonHelper
         implements JsonHelper<Uditemreq> {
@@ -80,10 +83,10 @@ public final class Uditemreq_JsonHelper
         } else if ("ALNDOMAIN_DESCRIPTION".equals(fieldName)) {
             instance.alndomain_description = jp.getValueAsString();
             return true;
-        } else if ("BRANCH".equals(fieldName)) {
+        } else if ("BRANCH_DESCRIPTION".equals(fieldName)) {
             instance.branch = jp.getValueAsString();
             return true;
-        } else if ("UDBELONG".equals(fieldName)) {
+        } else if ("UDBELONG_DESCRIPTION".equals(fieldName)) {
             instance.udbelong = jp.getValueAsString();
             return true;
         } else if ("PERSON_DISPLAYNAME".equals(fieldName)) {
@@ -92,8 +95,10 @@ public final class Uditemreq_JsonHelper
         } else if ("CREATEDATE".equals(fieldName)) {
             instance.createdate = jp.getValueAsString();
             return true;
+        } else if ("STATUS_DESCRIPTION".equals(fieldName)) {
+            instance.alndomain_description = jp.getValueAsString();
+            return true;
         }
-
 
         return false;
     }

@@ -330,6 +330,19 @@ public class HttpManager {
         }
 
     }
+    /**
+     * 设置物资编码申请接口*
+     */
+    public static String getUditemreqUrl(String search, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQ_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQ_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDITEMREQNUM':'" + search + "'}}";
+        }
+
+    }
 
     /**
      * 设置物资调出单*

@@ -10,8 +10,10 @@ public class Constants {
     /**
      * 基础接口*
      */
-//    public static final String HTTP_API_URL = "http://61.49.28.246:7001/maximo/mobile/";
+//    public static final String HTTP_API_URL = "http://1.202.243.112/maximo/mobile/";
+    /**旧**/
     public static final String HTTP_API_URL = "http://1.202.243.112:7001/maximo/mobile/";
+    /**新**/
 //    public static final String HTTP_API_URL = "http://10.1.29.155:7001/maximo/mobile/";
 
     /**
@@ -23,11 +25,20 @@ public class Constants {
     /**
      *工单URL*
      */
+    /**旧**/
     public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
+    /**新**/
+//    public static String webserviceURL = "http://10.1.29.155:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**巡检Url**/
+    /**旧**/
     public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
+    /**新**/
+//    public static String webserviceUdinsPoURL = "http://10.1.29.155:7001/meaweb/services/COSERVICE";//巡检单接口地址
     /**工作流审批地址**/
+    /**旧**/
     public static String webserviceWfserviceURL = "http://1.202.243.112:7001/meaweb/services/WFSERVICE";//审批工作流地址
+    /**新**/
+//    public static String webserviceWfserviceURL = "http://10.1.29.155:7001/meaweb/services/WFSERVICE";//审批工作流地址
 
 
     /**
@@ -155,7 +166,11 @@ public class Constants {
     //库存查询的表名
     public static final String INVENTORY_NAME = "INVENTORY";
 
-
+    /**物资编码申请**/
+    //物资编码申请appid
+    public static final String UDITEMREQ_APPID = "UDITEM";
+    //物资编码申请主表
+    public static final String UDITEMREQ_NAME = "UDITEMREQ";
     /**物资借用归还主表**/
     //物资借用归还主表appid
     public static final String UDITEM_APPID = "UDITEM";
