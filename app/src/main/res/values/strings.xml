@@ -502,6 +502,34 @@
     <string name="reason_text">申请原因:</string>
     <string name="alndomain_description_text">状态:</string>
     <string name="person_displayname_text">创建人:</string>
+    <!--物资编码申请-->
     <string name="uditemreq_detail_text">申请编码详情</string>
+    <string name="uditemreqline_text">申请行表</string>
+    <string name="udlinenum_text">序号:</string>
+    <string name="name_text">物资名称:</string>
+    <string name="udunit_text">单位:</string>
+    <string name="uditemreqline1_text">生产厂家:</string>
+    <string name="specify_text">物资型号:</string>
+    <string name="udunitcost_text">预估单价:</string>
+    <string name="classstructureid_text">物资分类:</string>
+    <string name="itemnum_text">物资编码:</string>
+    <string name="memo_text">备注:</string>
+    <string name="uditemreqline_details_title">申请行表详情</string>
+    <string name="udbrnum_text">编号:</string>
+    <string name="displayname_text">借用人:</string>
+    <string name="createdate_text_1">借用日期:</string>
+    <string name="frombranch_text">借出分公司:</string>
+    <string name="frombelong_text">借出风电场:</string>
+    <!--物资借用归还详情-->
+    <string name="udbr_details_text">借用归还详情</string>
+    <string name="udbrline_details_text">申请行</string>
+    <string name="udbrlinenum_text">行号:</string>
+    <string name="fromstoreloc_text">借出仓库:</string>
+    <string name="fromstoreloc_1_text">借出库房:</string>
+    <string name="itemnum_1_text">物资编码:</string>
+    <string name="orderunit_text">单位:</string>
+    <string name="borrowqty_text">借用数量:</string>
+    <string name="returnqty_text">归还数量:</string>
+    <string name="udbrline_text">申请行详情</string>
 
 </resources>

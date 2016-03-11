@@ -171,13 +171,16 @@ public class Constants {
     public static final String UDITEMREQ_APPID = "UDITEM";
     //物资编码申请主表
     public static final String UDITEMREQ_NAME = "UDITEMREQ";
+    //物资编码申请主表
+    public static final String UDITEMREQLINE_NAME = "UDITEMREQLINE";
+
     /**物资借用归还主表**/
     //物资借用归还主表appid
     public static final String UDITEM_APPID = "UDITEM";
     //物资借用归还主表
     public static final String UDBR_NAME = "UDBR";
-
-
+    //物资借用归还主表
+    public static final String UDBRLINE_NAME = "UDBRLINE";
 
     /**
      * -----------表名配置--结束*

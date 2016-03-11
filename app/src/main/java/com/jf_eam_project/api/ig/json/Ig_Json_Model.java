@@ -23,11 +23,13 @@ import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Person_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PoLine_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.UdbrLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udbr_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspo_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspojxxm_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Uditemreq_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Uditemreqline_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -55,10 +57,12 @@ import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.PoLine;
 import com.jf_eam_project.model.Udbr;
+import com.jf_eam_project.model.Udbrline;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Uditemreq;
+import com.jf_eam_project.model.Uditemreqline;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -275,8 +279,16 @@ public class Ig_Json_Model {
     public static ArrayList<Uditemreq> parsingUditemreq(String input) throws IOException {
         return Uditemreq_JsonHelper.parseFromJsonList(input);
     }
+    /**解析物资编码申请行表**/
+    public static ArrayList<Uditemreqline> parsingUditemreqline(String input) throws IOException {
+        return Uditemreqline_JsonHelper.parseFromJsonList(input);
+    }
     /**解析物资借用归还主表**/
     public static ArrayList<Udbr> parsingUdbr(String input) throws IOException {
         return Udbr_JsonHelper.parseFromJsonList(input);
+    }
+    /**解析物资借用归还行表**/
+    public static ArrayList<Udbrline> parsingUdbrline(String input) throws IOException {
+        return UdbrLine_JsonHelper.parseFromJsonList(input);
     }
 }

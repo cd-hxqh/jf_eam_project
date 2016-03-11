@@ -1,0 +1,298 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="cdhxqh.shekou.ui.activity.Wfassig_DetailsActivity">
+
+    <include layout="@layout/title_main" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_relativelayout_id">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="@dimen/dimens_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/udlinenum_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/udlinenum_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_1_id"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/num_linearlayout_id"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/name_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/name_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_2_id"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/num_linearlayout_id"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/udunit_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/udunit_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_3_id"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/num_linearlayout_id"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/uditemreqline1_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/uditemreqline1_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/specify_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/specify_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/udunitcost_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/udunitcost_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/classstructureid_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/classstructureid_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/itemnum_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/itemnum_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/memo_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/memo_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

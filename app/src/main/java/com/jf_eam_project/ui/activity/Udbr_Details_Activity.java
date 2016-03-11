@@ -10,14 +10,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Udbr;
 import com.jf_eam_project.model.Uditemreq;
 
 /**
- * 物资申请编码详情
+ * 物资借用归还详情
  */
-public class Uditemreq_Details_Activity extends BaseActivity {
+public class Udbr_Details_Activity extends BaseActivity {
 
-    private static final String TAG = "Uditemreq_Details_Activity";
+    private static final String TAG = "Udbr_Details_Activity";
 
     /**
      * 标题*
@@ -36,30 +37,31 @@ public class Uditemreq_Details_Activity extends BaseActivity {
     /**
      * 界面信息显示*
      */
-    private TextView uditemreqnumText; //申请单号
+    private TextView udbrnumText; //编号
     private TextView descriptionText; //描述
-    private TextView reasonText; //申请原因
-    private TextView adescriptionText; //状态
     private TextView branchText; //分公司
     private TextView udbelongText; //风电场
-    private TextView person_displaynameText; //创建人
-    private TextView createdateText; //创建日期
+    private TextView displaynameText; //借用人
+    private TextView createdateText; //借用日期
+    private TextView frombranchText; //借出分公司
+    private TextView frombelongText; // 借出风电场
+    private TextView statusText; // 状态
 
 
-    private Uditemreq uditemreq; //物资编码申请
+    private Udbr udbr; //物资借用归还
 
     private PopupWindow popupWindow;
 
     /**
      * 申请行表
      */
-    private TextView uditemreqlineText;
+    private TextView udbrlineText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_uditemreq_details);
+        setContentView(R.layout.activity_udbr_details);
         initData();
         findViewById();
         initView();
@@ -69,7 +71,7 @@ public class Uditemreq_Details_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        uditemreq = (Uditemreq) getIntent().getSerializableExtra("uditemreq");
+        udbr = (Udbr) getIntent().getSerializableExtra("udbr");
     }
 
     @Override
@@ -78,20 +80,21 @@ public class Uditemreq_Details_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        uditemreqnumText = (TextView) findViewById(R.id.uditemreqnum_text_id);
-        descriptionText = (TextView) findViewById(R.id.desc_text_id);
-        reasonText = (TextView) findViewById(R.id.reason_text_id);
-        adescriptionText = (TextView) findViewById(R.id.alndomain_description_text_id);
-        branchText = (TextView) findViewById(R.id.description_text_id);
-        udbelongText = (TextView) findViewById(R.id.uddept_description_text_id);
-        person_displaynameText = (TextView) findViewById(R.id.person_displayname_text_id);
+        udbrnumText = (TextView) findViewById(R.id.udbrnum_text_id);
+        descriptionText = (TextView) findViewById(R.id.description_text_id);
+        branchText = (TextView) findViewById(R.id.branch_text_id);
+        udbelongText = (TextView) findViewById(R.id.udbelong_text_id);
+        displaynameText = (TextView) findViewById(R.id.displayname_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
+        frombranchText = (TextView) findViewById(R.id.frombranch_text_id);
+        frombelongText = (TextView) findViewById(R.id.frombelong_text_id);
+        statusText = (TextView) findViewById(R.id.status_text_id);
 
     }
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.uditemreq_detail_text));
+        titleView.setText(getString(R.string.udbr_details_text));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
@@ -99,15 +102,16 @@ public class Uditemreq_Details_Activity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 
-        if (uditemreq != null) {
-            uditemreqnumText.setText(uditemreq.uditemreqnum == null ? "" : uditemreq.uditemreqnum);
-            descriptionText.setText(uditemreq.description == null ? "" : uditemreq.description);
-            reasonText.setText(uditemreq.reason == null ? "" : uditemreq.reason);
-            adescriptionText.setText(uditemreq.alndomain_description == null ? "" : uditemreq.alndomain_description);
-            branchText.setText(uditemreq.branch == null ? "" : uditemreq.branch);
-            udbelongText.setText(uditemreq == null ? "" : uditemreq.udbelong);
-            person_displaynameText.setText(uditemreq.person_displayname == null ? "" : uditemreq.person_displayname);
-            createdateText.setText(uditemreq.createdate == null ? "" : uditemreq.createdate);
+        if (udbr != null) {
+            udbrnumText.setText(udbr.udbrnum == null ? "" : udbr.udbrnum);
+            descriptionText.setText(udbr.description == null ? "" : udbr.description);
+            branchText.setText(udbr.branch == null ? "" : udbr.branch);
+            udbelongText.setText(udbr.udbelong == null ? "" : udbr.udbelong);
+            displaynameText.setText(udbr.person_displayname == null ? "" : udbr.person_displayname);
+            createdateText.setText(udbr.createdate == null ? "" : udbr.createdate);
+            frombranchText.setText(udbr.frombranch == null ? "" : udbr.frombranch);
+            frombelongText.setText(udbr.frombelong == null ? "" : udbr.frombelong);
+            statusText.setText(udbr.status == null ? "" : udbr.frombelong);
         }
 
 
@@ -138,7 +142,7 @@ public class Uditemreq_Details_Activity extends BaseActivity {
      */
     private void showPopupWindow(View view) {
 
-        View contentView = LayoutInflater.from(Uditemreq_Details_Activity.this).inflate(
+        View contentView = LayoutInflater.from(Udbr_Details_Activity.this).inflate(
                 R.layout.material_popup_window, null);
 
 
@@ -151,17 +155,17 @@ public class Uditemreq_Details_Activity extends BaseActivity {
                 R.drawable.abc_popup_background_mtrl_mult));
         popupWindow.showAsDropDown(view, 0, 20);
 
-        uditemreqlineText = (TextView) contentView.findViewById(R.id.wpmaterial_popup_text_id);
-        uditemreqlineText.setText(getString(R.string.uditemreqline_text));
-        uditemreqlineText.setOnClickListener(uditemreqlineTextOnClickListener);
+        udbrlineText = (TextView) contentView.findViewById(R.id.wpmaterial_popup_text_id);
+        udbrlineText.setText(getString(R.string.udbrline_details_text));
+        udbrlineText.setOnClickListener(uditemreqlineTextOnClickListener);
 
     }
 
     private View.OnClickListener uditemreqlineTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Uditemreq_Details_Activity.this, UditemreqLine_listactivity.class);
-            intent.putExtra("uditemreqnum", uditemreq.uditemreqnum);
+            Intent intent = new Intent(Udbr_Details_Activity.this, UdbrLine_ListActivity.class);
+            intent.putExtra("udbrnum", udbr.udbrnum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }

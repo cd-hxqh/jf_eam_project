@@ -9,18 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udbr;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.ui.activity.Material_Details_Activity;
-import com.jf_eam_project.ui.activity.Material_Up_Details_Activity;
+import com.jf_eam_project.model.Udbrline;
+import com.jf_eam_project.ui.activity.UdbrLine_Details_Activity;
 import com.jf_eam_project.ui.activity.Udbr_Details_Activity;
-import com.jf_eam_project.ui.activity.Work_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +27,12 @@ import java.util.List;
  * Created by think on 2015/11/26.
  * 物资借用归还
  */
-public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHolder> {
+public class UdbrLineListAdapter extends RecyclerView.Adapter<UdbrLineListAdapter.ViewHolder> {
     Context mContext;
-    List<Udbr> udbrList = new ArrayList<>();
+    List<Udbrline> udbrList = new ArrayList<>();
 
 
-    public UdbrListAdapter(Context context) {
+    public UdbrLineListAdapter(Context context) {
 
         this.mContext = context;
     }
@@ -50,17 +47,17 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        final Udbr udbr = udbrList.get(position);
-        holder.itemNumTitle.setText("编号:");
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
-        holder.itemNum.setText(udbr.udbrnum);
-        holder.itemDesc.setText(udbr.description);
+        final Udbrline udbrline = udbrList.get(position);
+        holder.itemNumTitle.setText(mContext.getString(R.string.udbrlinenum_text));
+        holder.itemDescTitle.setText(mContext.getString(R.string.fromstoreloc_text));
+        holder.itemNum.setText(udbrline.udbrlinenum);
+        holder.itemDesc.setText(udbrline.fromstoreloc);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udbr_Details_Activity.class);
+                Intent intent = new Intent(mContext, UdbrLine_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udbr", udbr);
+                bundle.putSerializable("udbrline", udbrline);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -120,19 +117,19 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
         }
     }
 
-    public void update(ArrayList<Udbr> data, boolean merge) {
+    public void update(ArrayList<Udbrline> data, boolean merge) {
         if (merge && udbrList.size() > 0) {
             for (int i = 0; i < udbrList.size(); i++) {
-                Udbr workOrder = udbrList.get(i);
+                Udbrline udbrline = udbrList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == workOrder) {
+                    if (data.get(j) == udbrline) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(workOrder);
+                data.add(udbrline);
             }
         }
         udbrList = data;
@@ -140,7 +137,7 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
     }
 
     //
-    public void adddate(ArrayList<Udbr> data) {
+    public void adddate(ArrayList<Udbrline> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
                 if (!udbrList.contains(data.get(i))) {

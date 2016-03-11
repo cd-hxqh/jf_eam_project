@@ -91,7 +91,7 @@ public class Inventory_Details_Activity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
-        menuImageView.setVisibility(View.VISIBLE);
+//        menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 

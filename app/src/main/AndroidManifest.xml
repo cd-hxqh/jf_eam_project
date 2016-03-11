@@ -293,6 +293,12 @@
             android:name=".ui.activity.Uditemreq_Details_Activity"
             android:label="@string/uditemreq_detail_text"/>
         <activity
+            android:name=".ui.activity.UditemreqLine_listactivity"
+            android:label="@string/uditemreq_title_text"/>
+        <activity
+            android:name=".ui.activity.Uditemreqline_Details_Activity"
+            android:label="@string/uditemreqline_details_title"/>
+        <activity
             android:name=".ui.activity.Wpmaterial_ListActivity"
             android:label="物料"/>
         <activity
@@ -313,6 +319,15 @@
         <activity
             android:name=".ui.activity.Udbr_ListActivity"
             android:label="@string/udbr_title_text"/>
+        <activity
+            android:name=".ui.activity.Udbr_Details_Activity"
+            android:label="@string/udbr_details_text"/>
+        <activity
+            android:name=".ui.activity.UdbrLine_ListActivity"
+            android:label="@string/udbrline_details_text"/>
+        <activity
+            android:name=".ui.activity.UdbrLine_Details_Activity"
+            android:label="@string/udbrline_text"/>
 
         <!-- Update Activitys Start -->
         <activity

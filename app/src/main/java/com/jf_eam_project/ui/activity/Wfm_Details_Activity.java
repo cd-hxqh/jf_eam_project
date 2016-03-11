@@ -107,7 +107,6 @@ public class Wfm_Details_Activity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
 
-
         if (wfm != null) {
             ownertableText.setText(wfm.getOwnertable() == null ? "" : wfm.getOwnertable());
             descriptionText.setText(wfm.getDescription() == null ? "" : wfm.getDescription());
@@ -163,7 +162,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnClickL() {//否
                     @Override
                     public void onBtnClick() {
-//                        getwfstatus(false,"不通过");
+                        wfgoon(wfm.getOwnerid(), "1", "");
                         dialog.dismiss();
                     }
                 }
@@ -186,7 +185,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-                        wfgoon(wfm.getOwnerid(),"1",text);
+                        wfgoon(wfm.getOwnerid(), "1", text);
 
                         dialog.dismiss();
                     }
@@ -194,12 +193,12 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
+
                         dialog.dismiss();
                     }
                 }
         );
     }
-
 
 
     /**
@@ -216,7 +215,7 @@ public class Wfm_Details_Activity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String result = getBaseApplication().getWfService().wfGoOn(wfm.getProcessname(), wfm.getOwnertable(), id,wfm.getOwnertable()+"ID" , zx, desc);
+                String result = getBaseApplication().getWfService().wfGoOn(wfm.getProcessname(), wfm.getOwnertable(), id, wfm.getOwnertable() + "ID", zx, desc);
                 return result;
             }
 

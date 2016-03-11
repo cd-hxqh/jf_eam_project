@@ -343,6 +343,19 @@ public class HttpManager {
         }
 
     }
+    /**
+     * 设置物资编码申请行表接口*
+     */
+    public static String getUditemreqlineUrl(String search, String uditemreqnum,int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQLINE_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDITEMREQNUM':'" + uditemreqnum + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQLINE_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDITEMREQNUM':'" + uditemreqnum + "','NAME':'" + search + "'}}";
+        }
+
+    }
 
     /**
      * 设置物资调出单*
@@ -379,7 +392,7 @@ public class HttpManager {
 
 
     /**
-     * 设置物资借用归还*
+     * 设置物资借用归还主表*
      */
     public static String getUdbrUrl(String search, int curpage, int showcount) {
         if (search.equals("") ) {
@@ -388,6 +401,19 @@ public class HttpManager {
         } else {
             return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBR_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRNUM':'" + search + "'}}";
+        }
+
+    }
+    /**
+     * 设置物资借用归还行表*
+     */
+    public static String getUdbrLineUrl(String search,String udbrnum, int curpage, int showcount) {
+        if (search.equals("") ) {
+            return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBRLINE_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRNUM':'" + udbrnum + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBRLINE_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRLINENUM':'" + search +  "','UDBRNUM':'" + udbrnum + "'}}";
         }
 
     }

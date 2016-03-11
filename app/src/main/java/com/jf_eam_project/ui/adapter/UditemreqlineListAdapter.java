@@ -9,18 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Udbr;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.ui.activity.Material_Details_Activity;
-import com.jf_eam_project.ui.activity.Material_Up_Details_Activity;
-import com.jf_eam_project.ui.activity.Udbr_Details_Activity;
-import com.jf_eam_project.ui.activity.Work_DetailsActivity;
+import com.jf_eam_project.model.Uditemreqline;
+import com.jf_eam_project.ui.activity.Uditemreqline_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +23,14 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 物资借用归还
+ * 物资编码申请行表
  */
-public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHolder> {
+public class UditemreqlineListAdapter extends RecyclerView.Adapter<UditemreqlineListAdapter.ViewHolder> {
     Context mContext;
-    List<Udbr> udbrList = new ArrayList<>();
+    List<Uditemreqline> udbrList = new ArrayList<>();
 
 
-    public UdbrListAdapter(Context context) {
+    public UditemreqlineListAdapter(Context context) {
 
         this.mContext = context;
     }
@@ -50,17 +45,17 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        final Udbr udbr = udbrList.get(position);
-        holder.itemNumTitle.setText("编号:");
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
-        holder.itemNum.setText(udbr.udbrnum);
-        holder.itemDesc.setText(udbr.description);
+        final Uditemreqline uditemreqline = udbrList.get(position);
+        holder.itemNumTitle.setText("序号:");
+        holder.itemDescTitle.setText("名称:");
+        holder.itemNum.setText(uditemreqline.udlinenum);
+        holder.itemDesc.setText(uditemreqline.name);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udbr_Details_Activity.class);
+                Intent intent = new Intent(mContext, Uditemreqline_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udbr", udbr);
+                bundle.putSerializable("uditemreqLine", uditemreqline);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -120,19 +115,19 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
         }
     }
 
-    public void update(ArrayList<Udbr> data, boolean merge) {
+    public void update(ArrayList<Uditemreqline> data, boolean merge) {
         if (merge && udbrList.size() > 0) {
             for (int i = 0; i < udbrList.size(); i++) {
-                Udbr workOrder = udbrList.get(i);
+                Uditemreqline uditemreqline = udbrList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == workOrder) {
+                    if (data.get(j) == uditemreqline) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(workOrder);
+                data.add(uditemreqline);
             }
         }
         udbrList = data;
@@ -140,7 +135,7 @@ public class UdbrListAdapter extends RecyclerView.Adapter<UdbrListAdapter.ViewHo
     }
 
     //
-    public void adddate(ArrayList<Udbr> data) {
+    public void adddate(ArrayList<Uditemreqline> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
                 if (!udbrList.contains(data.get(i))) {
