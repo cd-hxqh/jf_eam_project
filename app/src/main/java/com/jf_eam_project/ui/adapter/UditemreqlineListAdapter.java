@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Uditemreqline;
-import com.jf_eam_project.ui.activity.Uditemreqline_Details_Activity;
+import com.jf_eam_project.ui.activity.UditemreqLine_Detail_activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class UditemreqlineListAdapter extends RecyclerView.Adapter<Uditemreqline
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Uditemreqline_Details_Activity.class);
+                Intent intent = new Intent(mContext, UditemreqLine_Detail_activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("uditemreqLine", uditemreqline);
                 intent.putExtras(bundle);
