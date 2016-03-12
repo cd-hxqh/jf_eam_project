@@ -31,12 +31,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_num_title"
+                    android:text="@string/invoicelinenum_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_ponum_text"
+                    android:id="@+id/invoicelinenum_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -63,12 +63,12 @@
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/po_description_text"
+                    android:text="@string/invoicenum_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_description_text"
+                    android:id="@+id/invoicenum_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -82,7 +82,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/num_linearlayout_id"
-                android:visibility="gone"
                 android:background="@drawable/line"></View>
 
             <LinearLayout
@@ -90,19 +89,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/po_siteid_title"
+                    android:text="@string/linetype_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_siteid_text"
+                    android:id="@+id/linetype_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -129,12 +127,12 @@
                     android:layout_width="100dp"
                     android:layout_height="@dimen/dimen_40dp"
                     android:gravity="center_vertical"
-                    android:text="@string/po_status_title"
+                    android:text="@string/invoiceline_itemnum_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_status_text"
+                    android:id="@+id/invoiceline_itemnum_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -158,12 +156,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_potype_title"
+                    android:text="@string/inv_description_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_potype_text"
+                    android:id="@+id/inv_description_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -187,12 +185,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_buyercompany_title"
+                    android:text="@string/invoice_enterby_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_buyercompany_text"
+                    android:id="@+id/enterby_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -216,12 +214,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_purchaseagent_title"
+                    android:text="@string/invoice_enterdate_title"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_purchaseagent_text"
+                    android:id="@+id/enterdate_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -241,49 +239,17 @@
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_priority_title"
+                    android:text="@string/category_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_priority_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:hint="@string/have_not_data"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@drawable/line" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/po_statedate_title"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
-
-                <TextView
-                    android:id="@+id/po_statedate_text"
+                    android:id="@+id/category_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -297,6 +263,7 @@
                 android:layout_height="1dp"
                 android:background="@drawable/line" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
@@ -307,12 +274,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_orderdate_title"
+                    android:text="@string/qtyforui_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_orderdate_text"
+                    android:id="@+id/qtyforui_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -336,12 +303,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_requireddate_title"
+                    android:text="@string/invoiceunit_text_id"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_requireddate_text"
+                    android:id="@+id/invoiceunit_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -365,12 +332,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_vendeliverydate_title"
+                    android:text="@string/inventory_issueunit_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_vendeliverydate_text"
+                    android:id="@+id/inventory_issueunit_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -394,12 +361,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_pretaxtotal_title"
+                    android:text="@string/conversion_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_pretaxtotal_text"
+                    android:id="@+id/conversion_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -423,12 +390,71 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_totaltax1_title"
+                    android:text="@string/unitcost_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_totaltax1_text"
+                    android:id="@+id/unitcost_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LINECOSTFORUI_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/linecostforui_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tax1forui_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/tax1forui_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -452,12 +478,12 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_totalcost_title"
+                    android:text="@string/proratecost_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_totalcost_text"
+                    android:id="@+id/proratecost_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
@@ -470,7 +496,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/line" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
@@ -481,12 +506,40 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/po_currencycode_title"
+                    android:text="@string/poline_storeloc_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
                 <TextView
-                    android:id="@+id/po_currencycode_text"
+                    android:id="@+id/poline_storeloc_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoicecost_tositeidnonper_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp" />
+
+                <TextView
+                    android:id="@+id/invoicecost_tositeidnonper_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"

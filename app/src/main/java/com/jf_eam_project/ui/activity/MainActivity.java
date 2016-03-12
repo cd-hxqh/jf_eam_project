@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,8 +92,8 @@ public class MainActivity extends BaseActivity
      */
     private HistoryFragment historyFragment;
 
-    /**二维码/条码**/
-    private QrCode_Fragment qrCodeFragment;
+//    /**二维码/条码**/
+//    private QrCode_Fragment qrCodeFragment;
 
 
     /**
@@ -208,12 +209,16 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, historyFragment).commit();
                 break;
             case 6:
-                if (qrCodeFragment == null) {
-                    qrCodeFragment = new QrCode_Fragment();
-                    Bundle bundle = new Bundle();
-                    qrCodeFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, qrCodeFragment).commit();
+//                if (qrCodeFragment == null) {
+//                    qrCodeFragment = new QrCode_Fragment();
+//                    Bundle bundle = new Bundle();
+//                    qrCodeFragment.setArguments(bundle);
+//                }
+//                fragmentTransaction.replace(R.id.container, qrCodeFragment).commit();
+
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, MipcaActivityCapture.class);
+                startActivityForResult(intent, 0);
                 break;
             case 7:
                 if (settingFragment == null) {
@@ -269,20 +274,15 @@ public class MainActivity extends BaseActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("");
         titleText.setText(mTitle);
-//        if (mSelectPos == 2) {
-//            addImageView.setVisibility(View.VISIBLE);
-//        } else {
-//            addImageView.setVisibility(View.GONE);
-//        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            if (mSelectPos == 3) {
-//                getMenuInflater().inflate(R.menu.menu_main, menu);
+            if (mSelectPos == 6) {
+            }else {
+                restoreActionBar();
             }
-            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);

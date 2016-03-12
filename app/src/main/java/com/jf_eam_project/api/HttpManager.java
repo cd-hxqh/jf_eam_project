@@ -73,9 +73,9 @@ public class HttpManager {
      */
     public static String getWfmUrl(String persionid, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSIGNCODE':'" + persionid + "'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'活动'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'活动'}}";
         }
     }
 
@@ -154,11 +154,11 @@ public class HttpManager {
     /**
      * 设置计划物料接口*
      */
-    public static String getWpmaterialUrl(String search,int curpage, int showcount, String wonum) {
-        if(search.equals("")) {
+    public static String getWpmaterialUrl(String search, int curpage, int showcount, String wonum) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                     Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'}}";
-        }else{
+        } else {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" +
                     Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + wonum + "'ITEMNUM':'" + search + "'}}";
         }
@@ -254,6 +254,17 @@ public class HttpManager {
         }
     }
 
+    /**
+     * 设置发票行数据*
+     */
+    public static String getInvoiceLineUrl(String vlaue, String invoicenum, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.INVOICE_APPID + "','objectname':'" + Constants.INVOICELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVOICENUM':'" + invoicenum + "'}}";
+        } else {
+            return "{'appid':'" + Constants.INVOICE_APPID + "','objectname':'" + Constants.INVOICELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVOICENUM':'" + invoicenum + "','INVOICELINENUM':'" + vlaue + "'}}";
+        }
+    }
+
 
     /**
      * 设置采购订单接口*
@@ -301,7 +312,9 @@ public class HttpManager {
         }
     }
 
-    /**获取物资发放的接口**/
+    /**
+     * 获取物资发放的接口*
+     */
 
 
     public static String getLocationUrl(String vlaue, int curpage, int showcount) {
@@ -321,7 +334,7 @@ public class HttpManager {
      * 设置领料单接口*
      */
     public static String getMaterialUrl(String search, int curpage, int showcount) {
-        if (search.equals("") ) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM DESC'}";
         } else {
@@ -330,11 +343,12 @@ public class HttpManager {
         }
 
     }
+
     /**
      * 设置物资编码申请接口*
      */
     public static String getUditemreqUrl(String search, int curpage, int showcount) {
-        if (search.equals("") ) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQ_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
@@ -343,11 +357,12 @@ public class HttpManager {
         }
 
     }
+
     /**
      * 设置物资编码申请行表接口*
      */
-    public static String getUditemreqlineUrl(String search, String uditemreqnum,int curpage, int showcount) {
-        if (search.equals("") ) {
+    public static String getUditemreqlineUrl(String search, String uditemreqnum, int curpage, int showcount) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDITEMREQ_APPID + "','objectname':'" + Constants.UDITEMREQLINE_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDITEMREQNUM':'" + uditemreqnum + "'}}";
         } else {
@@ -361,7 +376,7 @@ public class HttpManager {
      * 设置物资调出单*
      */
     public static String getMaterialUpUrl(String search, int curpage, int showcount) {
-        if (search.equals("") ) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udapptype':'UDTRANSOUT'}}";
         } else {
@@ -376,7 +391,7 @@ public class HttpManager {
      * 设置物资调入单*
      */
     public static String getMaterialInUrl(String search, int curpage, int showcount) {
-        if (search.equals("") ) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.PO_APPID + "','objectname':'" + Constants.PO_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udappname':'UDTRANSIN'}}";
         } else {
@@ -387,15 +402,11 @@ public class HttpManager {
     }
 
 
-
-
-
-
     /**
      * 设置物资借用归还主表*
      */
     public static String getUdbrUrl(String search, int curpage, int showcount) {
-        if (search.equals("") ) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBR_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
@@ -404,20 +415,20 @@ public class HttpManager {
         }
 
     }
+
     /**
      * 设置物资借用归还行表*
      */
-    public static String getUdbrLineUrl(String search,String udbrnum, int curpage, int showcount) {
-        if (search.equals("") ) {
+    public static String getUdbrLineUrl(String search, String udbrnum, int curpage, int showcount) {
+        if (search.equals("")) {
             return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBRLINE_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRNUM':'" + udbrnum + "'}}";
         } else {
             return "{'appid':'" + Constants.UDITEM_APPID + "','objectname':'" + Constants.UDBRLINE_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRLINENUM':'" + search +  "','UDBRNUM':'" + udbrnum + "'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDBRLINENUM':'" + search + "','UDBRNUM':'" + udbrnum + "'}}";
         }
 
     }
-
 
 
     /**
@@ -532,10 +543,15 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.i(TAG, "statusCode" + "responseString=" + responseString);
-                Results result = JsonUtils.parsingResults(cxt, responseString);
+                Results  result = JsonUtils.parsingResults(cxt, responseString);
+                if(result.getResultlist()==null){
+                    SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
+                }else {
 
-                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
+                    SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
+                }
+
+
             }
         });
     }

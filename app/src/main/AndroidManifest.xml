@@ -204,6 +204,12 @@
         <activity
             android:name=".ui.activity.Invoice_Details_Activity"
             android:label="@string/invoice_details_title"></activity>
+        <activity
+            android:name=".ui.activity.InvoiceLine_Activity"
+            android:label="@string/invoiceline_text"></activity>
+        <activity
+            android:name=".ui.activity.InvoiceLine_Details_Activity"
+            android:label="@string/invoiceline_details_text"></activity>
 
         <!-- 下载 -->
         <activity

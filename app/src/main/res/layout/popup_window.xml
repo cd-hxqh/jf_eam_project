@@ -12,10 +12,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/dimens_10">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_inventory_cost" />
+
 
         <TextView
             android:id="@+id/popup_text_id"

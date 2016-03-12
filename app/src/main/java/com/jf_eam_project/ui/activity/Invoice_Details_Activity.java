@@ -59,7 +59,8 @@ public class Invoice_Details_Activity extends BaseActivity {
 
     private PopupWindow popupWindow;
 
-    private LinearLayout polineLinearLayout; //采购单行
+
+    private TextView invoicelineText; //发票行
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,11 +168,12 @@ public class Invoice_Details_Activity extends BaseActivity {
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popup_background_mtrl_mult));
-        popupWindow.showAsDropDown(view,0,-40);
+                R.drawable.abc_popup_background_mtrl_mult));
+        popupWindow.showAsDropDown(view,0,20);
 
-        polineLinearLayout = (LinearLayout) contentView.findViewById(R.id.poline_linearlayout_id);
-        polineLinearLayout.setOnClickListener(polineOnClickListener);
+        invoicelineText = (TextView) contentView.findViewById(R.id.popup_text_id);
+        invoicelineText.setText(getString(R.string.invoiceline_text));
+        invoicelineText.setOnClickListener(polineOnClickListener);
 
     }
 
@@ -179,7 +181,7 @@ public class Invoice_Details_Activity extends BaseActivity {
     private View.OnClickListener polineOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Invoice_Details_Activity.this, Poline_Activity.class);
+            Intent intent = new Intent(Invoice_Details_Activity.this, InvoiceLine_Activity.class);
             intent.putExtra("invoicenum", invoice.invoicenum);
             startActivityForResult(intent, 0);
             popupWindow.dismiss();

@@ -155,6 +155,8 @@ public class Constants {
 
     //发票的表名
     public static final String INVOICE_NAME = "INVOICE";
+    //发票的行表名
+    public static final String INVOICELINE_NAME = "INVOICELINE";
 
 
     /**

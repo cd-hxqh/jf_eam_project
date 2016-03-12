@@ -531,5 +531,24 @@
     <string name="borrowqty_text">借用数量:</string>
     <string name="returnqty_text">归还数量:</string>
     <string name="udbrline_text">申请行详情</string>
+    <!--发票行-->
+    <string name="invoiceline_text">发票行</string>
+    <string name="invoicelinenum_text">行:</string>
+    <string name="invoiceline_itemnum_text">项目:</string>
+    <string name="invoicenum_text">发票编号:</string>
+    <string name="linetype_text">行类型:</string>
+    <string name="inv_description_text">描述：</string>
+    <string name="category_text">类别:</string>
+    <string name="qtyforui_text">数量:</string>
+    <string name="invoiceunit_text_id">订购单位:</string>
+    <string name="inventory_issueunit_text">发放单位:</string>
+    <string name="conversion_text">换算系数:</string>
+    <string name="unitcost_text">单位成本:</string>
+    <string name="LINECOSTFORUI_text">行成本:</string>
+    <string name="tax1forui_text">税:</string>
+    <string name="proratecost_text">摊派成本:</string>
+    <string name="poline_storeloc_text">库房:</string>
+    <string name="invoicecost_tositeidnonper_text">地点:</string>
+    <string name="invoiceline_details_text">发票行详情</string>
 
 </resources>

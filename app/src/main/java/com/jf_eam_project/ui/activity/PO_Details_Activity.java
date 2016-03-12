@@ -59,7 +59,7 @@ public class PO_Details_Activity extends BaseActivity {
 
     private PopupWindow popupWindow;
 
-    private LinearLayout polineLinearLayout; //采购单行
+    private TextView poLineTextView; //采购单行
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +172,8 @@ public class PO_Details_Activity extends BaseActivity {
                 R.drawable.abc_popup_background_mtrl_mult));
         popupWindow.showAsDropDown(view,0,20);
 
-        polineLinearLayout = (LinearLayout) contentView.findViewById(R.id.poline_linearlayout_id);
-        polineLinearLayout.setOnClickListener(polineOnClickListener);
+        poLineTextView = (TextView) contentView.findViewById(R.id.popup_text_id);
+        poLineTextView.setOnClickListener(polineOnClickListener);
 
     }
 

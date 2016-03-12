@@ -11,6 +11,7 @@ import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.InvoiceLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Item_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
@@ -45,6 +46,7 @@ import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
+import com.jf_eam_project.model.InvoiceLine;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
@@ -142,6 +144,12 @@ public class Ig_Json_Model {
      */
     public static ArrayList<Invoice> parseFromInvoiceString(String input) throws IOException {
         return Invoice_JsonHelper.parseFromJsonList(input);
+    }
+    /**
+     * 解析发票行*
+     */
+    public static ArrayList<InvoiceLine> parseFromInvoiceLineString(String input) throws IOException {
+        return InvoiceLine_JsonHelper.parseFromJsonList(input);
     }
 
     /**
