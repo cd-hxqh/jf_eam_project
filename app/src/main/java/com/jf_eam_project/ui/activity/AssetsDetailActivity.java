@@ -34,13 +34,19 @@ import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
+import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.ui.adapter.InventoryListAdapter;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
@@ -51,6 +57,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -89,12 +96,55 @@ public class AssetsDetailActivity extends BaseActivity {
      * 位置*
      */
     private TextView locationText;
+    /**
+     * 设备类型
+     */
+    private TextView udassettypeText;
+    /**
+     * 大类
+     */
+    private TextView firstclassText;
+
+    /**
+     * 中类
+     */
+    private TextView secondclassText;
+
+    /**
+     * 小类
+     */
+    private TextView thirdclassText;
+
+    /**
+     * 安装日期
+     */
+    private TextView azrqText;
+
+    /**
+     * 保修到期日
+     */
+    private TextView bxdqrText;
+    /**
+     * 采购价格
+     */
+    private TextView purchasepriceText;
+
+    /**
+     * 投运日期
+     */
+    private TextView tyrqText;
+
+    /**
+     * 已使用年限
+     */
+    private TextView ysynxText;
 
 
-
-    private ProgressDialog mProgressDialog;
-
-    /**Asset**/
+    /**资产编号**/
+    private String assetnum;
+    /**
+     * Asset*
+     */
     private Assets assets;
 
     @Override
@@ -102,14 +152,55 @@ public class AssetsDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assets_detail);
         initData();
+        showProgressDialog("正在加载...");
+
+        getData();
         findViewById();
         initView();
-//        showProgressDialog("正在加载...");
+
 
     }
 
+
+    /**获取基础数据**/
+    private void getData() {
+            HttpManager.getDataPagingInfo(this, HttpManager.getAssetUrl(assetnum), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    Log.i(TAG, "data=" + results);
+                }
+
+                @Override
+                public void onSuccess(Results results, int totalPages, int currentPage) {
+
+                    Log.i(TAG, "results=" + results.getResultlist());
+                    closeProgressDialog();
+                    ArrayList<Assets> items = null;
+                    try {
+                        items = Ig_Json_Model.parsingAsset(results.getResultlist());
+                        if (items == null || items.isEmpty()) {
+                            Log.i(TAG,"is null");
+                        } else {
+
+                            assets=items.get(0);
+                            setData();
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    closeProgressDialog();
+                }
+            });
+    }
+
     private void initData() {
-        assets = (Assets) getIntent().getSerializableExtra("assets");
+        assetnum =  getIntent().getStringExtra("assetnum");
     }
 
 
@@ -124,6 +215,16 @@ public class AssetsDetailActivity extends BaseActivity {
         siteidText = (TextView) findViewById(R.id.asset_sited_text_id);
         locationText = (TextView) findViewById(R.id.asset_loction_text_id);
 
+        udassettypeText = (TextView) findViewById(R.id.udassettype_text_id);
+        firstclassText = (TextView) findViewById(R.id.firstclass_text_id);
+        secondclassText = (TextView) findViewById(R.id.secondclass_text_id);
+        thirdclassText = (TextView) findViewById(R.id.thirdclass_text_id);
+        azrqText = (TextView) findViewById(R.id.azrq_text_id);
+        bxdqrText = (TextView) findViewById(R.id.bxdqr_text_id);
+        purchasepriceText = (TextView) findViewById(R.id.purchaseprice_text_id);
+        tyrqText = (TextView) findViewById(R.id.tyrq_text_id);
+        ysynxText = (TextView) findViewById(R.id.ysynx_text_id);
+
     }
 
     @Override
@@ -132,14 +233,31 @@ public class AssetsDetailActivity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
 
-        if(assets!=null){
-            assetnumText.setText(assets.getAssetnum() == null ? "" : assets.getAssetnum());
-            descriptionText.setText(assets.getDescription() == null ? "" : assets.getDescription());
-            siteidText.setText(assets.getSiteid() == null ? "" : assets.getSiteid());
-            locationText.setText(assets.getLocation() == null ? "" : assets.getLocation());
+
+        setData();
+
+    }
+
+    private void setData() {
+
+
+        if (assets != null) {
+            assetnumText.setText(assets.assetnum == null ? "" : assets.assetnum);
+            descriptionText.setText(assets.description == null ? "" : assets.description);
+            siteidText.setText(assets.siteid == null ? "" : assets.siteid);
+            locationText.setText(assets.location == null ? "" : assets.location);
+
+
+            udassettypeText.setText(assets.udassettype == null ? "" : assets.udassettype);
+            firstclassText.setText(assets.firstclass == null ? "" : assets.firstclass);
+            secondclassText.setText(assets.secondclass == null ? "" : assets.secondclass);
+            thirdclassText.setText(assets.thirdclass == null ? "" : assets.thirdclass);
+            azrqText.setText(assets.azrq == null ? "" : assets.azrq);
+            bxdqrText.setText(assets.bxdqr == null ? "" : assets.bxdqr);
+            purchasepriceText.setText(assets.purchaseprice == null ? "" : assets.purchaseprice);
+            tyrqText.setText(assets.tyrq == null ? "" : assets.tyrq);
+            ysynxText.setText(assets.ysynx == null ? "" : assets.ysynx);
         }
-
-
     }
 
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {

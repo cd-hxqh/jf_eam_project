@@ -31,6 +31,25 @@ public class Assets extends Entity {
     @DatabaseField(columnName = "location")
     public String location;//位置
 
+    @JsonField(fieldName = "AZRQ")
+    public String azrq;//安装日期
+    @JsonField(fieldName = "BXDQR")
+    public String bxdqr;//保修到期日
+    @JsonField(fieldName = "FIRSTCLASS")
+    public String firstclass; //大类
+    @JsonField(fieldName = "PURCHASEPRICE")
+    public String purchaseprice; //采购价格
+    @JsonField(fieldName = "SECONDCLASS")
+    public String secondclass; //中类
+    @JsonField(fieldName = "THIRDCLASS")
+    public String thirdclass; //小类
+    @JsonField(fieldName = "TYRQ")
+    public String tyrq; //投运日期
+    @JsonField(fieldName = "UDASSETTYPE")
+    public String udassettype; //设备类型
+    @JsonField(fieldName = "YSYNX")
+    public String ysynx; //已使用年限
+
 
     public int getId() {
         return id;

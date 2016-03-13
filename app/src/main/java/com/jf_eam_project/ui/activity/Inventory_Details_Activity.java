@@ -45,9 +45,10 @@ public class Inventory_Details_Activity extends BaseActivity {
     private TextView statusText; //状态
     private TextView siteidText; //地点
     private TextView issueunitsText; //发放单位
+    private TextView curbaltotalText; //余量
 
 
-    private Inventory inventory; //发票
+    private Inventory inventory; //库存
 
 //    private PopupWindow popupWindow;
 //
@@ -82,6 +83,7 @@ public class Inventory_Details_Activity extends BaseActivity {
         statusText = (TextView) findViewById(R.id.inventory_status_text);
         siteidText = (TextView) findViewById(R.id.inventory_siteid_text);
         issueunitsText = (TextView) findViewById(R.id.inventory_issueunit_text);
+        curbaltotalText = (TextView) findViewById(R.id.curbaltotal_text_id);
 
     }
 
@@ -103,6 +105,7 @@ public class Inventory_Details_Activity extends BaseActivity {
             statusText.setText(inventory.getStatus() == null ? "" : inventory.getStatus() );
             siteidText.setText(inventory.getSiteid() == null ? "" : inventory.getSiteid());
             issueunitsText.setText(inventory.getIssueunit() == null ? "" : inventory.getIssueunit());
+            curbaltotalText.setText(inventory.curbal == null ? "" : inventory.curbal);
         }
 
 

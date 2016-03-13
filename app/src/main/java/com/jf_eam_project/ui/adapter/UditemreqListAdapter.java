@@ -48,7 +48,7 @@ public class UditemreqListAdapter extends RecyclerView.Adapter<UditemreqListAdap
 
         final Uditemreq uditemreq = udbrList.get(position);
         holder.itemNumTitle.setText("申请单号:");
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
+        holder.itemDescTitle.setText(mContext.getString(R.string.po_description_text));
         holder.itemNum.setText(uditemreq.uditemreqnum);
         holder.itemDesc.setText(uditemreq.description);
         holder.cardView.setOnClickListener(new View.OnClickListener() {

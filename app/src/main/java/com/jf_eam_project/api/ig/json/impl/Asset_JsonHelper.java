@@ -76,6 +76,24 @@ public final class Asset_JsonHelper
             instance.siteid = jp.getValueAsString();
         } else if ("ASSETNUM".equals(fieldName)) {
             instance.assetnum = jp.getValueAsString();
+        }else if ("AZRQ".equals(fieldName)) {
+            instance.azrq = jp.getValueAsString();
+        }else if ("BXDQR".equals(fieldName)) {
+            instance.bxdqr = jp.getValueAsString();
+        }else if ("FIRSTCLASS".equals(fieldName)) {
+            instance.firstclass = jp.getValueAsString();
+        }else if ("PURCHASEPRICE".equals(fieldName)) {
+            instance.purchaseprice = jp.getValueAsString();
+        }else if ("SECONDCLASS".equals(fieldName)) {
+            instance.secondclass = jp.getValueAsString();
+        }else if ("THIRDCLASS".equals(fieldName)) {
+            instance.thirdclass = jp.getValueAsString();
+        }else if ("TYRQ".equals(fieldName)) {
+            instance.tyrq = jp.getValueAsString();
+        }else if ("UDASSETTYPE".equals(fieldName)) {
+            instance.udassettype = jp.getValueAsString();
+        }else if ("YSYNX".equals(fieldName)) {
+            instance.ysynx = jp.getValueAsString();
         }
         return false;
     }

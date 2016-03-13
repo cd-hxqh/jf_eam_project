@@ -125,7 +125,7 @@ public class Results_Activity extends BaseActivity {
             Assets assets = parsingAssets(result);
             Intent intent = new Intent(Results_Activity.this, AssetsDetailActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("assets", assets);
+            bundle.putSerializable("assetnum", assets.getAssetnum());
             intent.putExtras(bundle);
             startActivityForResult(intent, 0);
         }

@@ -295,8 +295,12 @@
         <activity
             android:name=".ui.activity.Uditemreq_listactivity"
             android:label="@string/uditemreq_title_text"/>
+
         <activity
             android:name=".ui.activity.UditemreqLine_Detail_activity"
+            android:label="@string/uditemreqline_details_title"/>
+        <activity
+            android:name=".ui.activity.Uditemreq_Details_Activity"
             android:label="@string/uditemreq_detail_text"/>
         <activity
             android:name=".ui.activity.UditemreqLine_listactivity"

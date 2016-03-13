@@ -142,7 +142,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        page++;
+//        page++;
         getData(searchText);
     }
 
@@ -200,6 +200,9 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
+                        if(wfmListAdapter.getItemCount()!=0){
+                            wfmListAdapter.removeAllData();
+                        }
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {

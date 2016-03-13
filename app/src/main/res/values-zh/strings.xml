@@ -109,8 +109,8 @@
 
     <!---->
     <!--工单页面-->
-    <string name="work_wonum">工单号</string>
-    <string name="work_desc">描述</string>
+    <string name="work_wonum">工单号:</string>
+    <string name="work_desc">描述:</string>
     <string name="work_description_hint">请输入相关描述</string>
     <string name="work_udwotype">工单类型</string>
     <string name="work_udwotypedesc">工单类型描述</string>

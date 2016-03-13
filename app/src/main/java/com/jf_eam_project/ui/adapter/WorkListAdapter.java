@@ -79,7 +79,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         }else{
             holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
         }
-        holder.itemDescTitle.setText(mContext.getString(R.string.work_desc));
+        holder.itemDescTitle.setText(mContext.getString(R.string.po_description_text));
         holder.itemNum.setText(workOrder.getWonum());
         holder.itemDesc.setText(workOrder.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {

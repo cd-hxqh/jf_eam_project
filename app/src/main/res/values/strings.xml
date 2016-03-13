@@ -112,8 +112,8 @@
 
     <!---->
     <!--工单页面-->
-    <string name="work_wonum">工单号</string>
-    <string name="work_desc">描述</string>
+    <string name="work_wonum">工单号:</string>
+    <string name="work_desc">描述:</string>
     <string name="work_description_hint">请输入相关描述</string>
     <string name="work_udwotype">工单类型</string>
     <string name="work_udwotypedesc">工单类型描述</string>
@@ -464,7 +464,7 @@
 
     <!--领料单-->
     <string name="material_title_text">领料单</string>
-    <string name="requisition_text">领料单号</string>
+    <string name="requisition_text">领料单号:</string>
     <string name="material_title_1_text">领料单:</string>
     <string name="material_displayname_text">申请人:</string>
     <string name="createdate_text">创建时间:</string>
@@ -550,5 +550,15 @@
     <string name="poline_storeloc_text">库房:</string>
     <string name="invoicecost_tositeidnonper_text">地点:</string>
     <string name="invoiceline_details_text">发票行详情</string>
+    <string name="udassettype_text">设备类型:</string>
+    <string name="firstclass_text">大类:</string>
+    <string name="secondclass_text">中类:</string>
+    <string name="thirdclass_text">小类:</string>
+    <string name="azrq_text">安装日期:</string>
+    <string name="bxdqr_text">保修到期日:</string>
+    <string name="purchaseprice_text">采购价格:</string>
+    <string name="tyrq_text">投运日期:</string>
+    <string name="ysynx_text">已使用年限：</string>
+    <string name="curbaltotal_text">余量:</string>
 
 </resources>

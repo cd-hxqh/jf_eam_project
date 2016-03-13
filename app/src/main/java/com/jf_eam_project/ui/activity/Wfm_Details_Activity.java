@@ -225,8 +225,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 if (s == null || s.equals("")) {
                     Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Wfm_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
-                    Wfm_Details_Activity.this.finish();
+                    Toast.makeText(Wfm_Details_Activity.this, "审批成功", Toast.LENGTH_SHORT).show();
                 }
                 mProgressDialog.dismiss();
             }
