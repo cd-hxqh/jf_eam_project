@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity
     /**
      * 巡检管理*
      */
-    private Udinspo_fragment udinspo_fragment;
+    private Polling_Fragment polling_fragment;
     /**
      * 库存管理*
      */
@@ -175,12 +175,12 @@ public class MainActivity extends BaseActivity
                 break;
             case 2: //巡检管理
 
-                if (udinspo_fragment == null) {
-                    udinspo_fragment = new Udinspo_fragment();
+                if (polling_fragment == null) {
+                    polling_fragment = new Polling_Fragment();
                     Bundle bundle = new Bundle();
-                    udinspo_fragment.setArguments(bundle);
+                    polling_fragment.setArguments(bundle);
                 }
-                fragmentTransaction.replace(R.id.container, udinspo_fragment).commit();
+                fragmentTransaction.replace(R.id.container, polling_fragment).commit();
 
                 break;
             case 3:

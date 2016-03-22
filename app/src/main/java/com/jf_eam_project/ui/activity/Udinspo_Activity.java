@@ -1,7 +1,6 @@
-package com.jf_eam_project.ui.fragment;
+package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,12 +11,11 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,26 +25,35 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Po;
-import com.jf_eam_project.model.Wfassignment;
-import com.jf_eam_project.ui.activity.Invoice_Activity;
-import com.jf_eam_project.ui.activity.Po_order_Activity;
-import com.jf_eam_project.ui.activity.Pr_Activity;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
-import com.jf_eam_project.ui.adapter.WfmListAdapter;
+import com.jf_eam_project.ui.adapter.UdinspoListadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
-import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
- * 流程审批的fragment
+ * 巡检单列表
  */
-public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener{
+public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+
+    private static final String TAG = "Udinspo_Activity";
 
 
-    private static final String TAG="Wfment_fragment";
+    /**
+     * 标题*
+     */
+    private TextView titlename;
+    /**
+     * 返回按钮*
+     */
+    private ImageView backImageView;
+
+    /**
+     * 菜单按钮*
+     */
+    private ImageView menuImageView;
 
 
     LinearLayoutManager layoutManager;
@@ -67,7 +74,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     /**
      * 适配器*
      */
-    private WfmListAdapter wfmListAdapter;
+    private UdinspoListadapter udinspoListadapter;
     /**
      * 编辑框*
      */
@@ -78,60 +85,82 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     private String searchText = "";
     private int page = 1;
 
+    /**获取巡检单标题**/
+    private String title;
+    /**巡检单类型**/
+    private String inspotype;
+    /**assettype**/
+    private String assettype;
+    /**checktype**/
+    private String checktype;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_work);
+        initData();
+        findViewById();
+        initView();
+    }
+
+    /**获取巡检单**/
+    private void initData() {
+        title=getIntent().getStringExtra("title");
+        inspotype=getIntent().getStringExtra("inspotype");
+        if(inspotype.equals("05")){
+            assettype=getIntent().getStringExtra("assettype");
+            checktype=getIntent().getStringExtra("checktype");
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wfm, container,
-                false);
+    protected void findViewById() {
+        titlename = (TextView) findViewById(R.id.title_name);
+        backImageView = (ImageView) findViewById(R.id.title_back_id);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        findByIdView(view);
-        initView();
-        return view;
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
+        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
+        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
+        search = (EditText) findViewById(R.id.search_edit);
     }
 
-
-    /**
-     * 初始化界面组件*
-     */
-    private void findByIdView(View view) {
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) view.findViewById(R.id.have_not_data_id);
-        search = (EditText) view.findViewById(R.id.search_edit);
-    }
-
-
-    /**
-     * 设置事件监听*
-     */
-    private void initView() {
+    @Override
+    protected void initView() {
         setSearchEdit();
 
-        layoutManager = new LinearLayoutManager(getActivity());
+
+        titlename.setText(title);
+        menuImageView.setImageResource(R.drawable.ic_drawer);
+//        menuImageView.setVisibility(View.VISIBLE);
+        backImageView.setOnClickListener(backImageViewOnClickListener);
+
+
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        wfmListAdapter = new WfmListAdapter(getActivity());
-        recyclerView.setAdapter(wfmListAdapter);
+        udinspoListadapter = new UdinspoListadapter(this,0);
+        recyclerView.setAdapter(udinspoListadapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
+        getData(searchText);
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
-
-        getData(searchText);
     }
+
+    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
+
 
     @Override
     public void onLoad() {
@@ -142,10 +171,9 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-//        page++;
+        page++;
         getData(searchText);
     }
-
 
 
     private void setSearchEdit() {
@@ -162,11 +190,11 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    getActivity().getCurrentFocus()
+                                    Udinspo_Activity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    wfmListAdapter.removeAllData();
+                    udinspoListadapter.removeAllData();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -178,12 +206,11 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
         });
     }
 
-
     /**
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWfmUrl(AccountUtils.getUserName(getActivity()),search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype,assettype,checktype,search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -192,24 +219,22 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
+                Log.i(TAG, "results=" + results.getResultlist());
 
-                ArrayList<Wfassignment> items = null;
+                ArrayList<Udinspo> items = null;
                 try {
-                    items = Ig_Json_Model.parseWfmFromString(results.getResultlist());
+                    items = Ig_Json_Model.parseUdinspoString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
-                        if(wfmListAdapter.getItemCount()!=0){
-                            wfmListAdapter.removeAllData();
-                        }
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            wfmListAdapter = new WfmListAdapter(getActivity());
-                            recyclerView.setAdapter(wfmListAdapter);
+                            udinspoListadapter = new UdinspoListadapter(Udinspo_Activity.this,0);
+                            recyclerView.setAdapter(udinspoListadapter);
                         }
                         if (totalPages == page) {
-                            wfmListAdapter.adddate(items);
+                            udinspoListadapter.adddate(items);
                         }
                     }
 
@@ -226,15 +251,4 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
-
 }

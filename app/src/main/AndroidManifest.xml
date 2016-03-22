@@ -240,6 +240,9 @@
             android:name=".ui.activity.Udinspoasset_Details_Activity"
             android:label="@string/udinspoasset_detail_title"></activity>
         <activity
+            android:name=".ui.activity.Udinspo_Activity"
+            android:label="@string/udinspo_title"/>
+        <activity
             android:name=".ui.activity.AddUdinspoActivity"
             android:label="@string/title_activity_add_udinspo"></activity>
         <activity

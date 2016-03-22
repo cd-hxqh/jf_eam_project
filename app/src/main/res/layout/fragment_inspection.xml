@@ -1,0 +1,259 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="cdhxqh.shekou.ui.fragment.WorkFragment">
+
+    <TableLayout
+        android:id="@+id/tablelayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+
+        <TableRow android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:id="@+id/udinspo_dqdjd_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_inventory_" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="电气定检单"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/udinspo_fjdjd_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_material" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="风机定检单"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/udinspo_fjxjd_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_uditemreq" />
+
+                <TextView
+                    android:id="@+id/uditemreq_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="风机巡检单"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow android:layout_marginTop="30dp">
+
+
+            <LinearLayout
+                android:id="@+id/udinspo_jdxl_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_out" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="集电线路"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/udinspo_xtb_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_in" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="箱台变"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/udinspo_qtsb_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_udbr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="其他设备"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="30dp">
+
+
+            <LinearLayout
+                android:id="@+id/udinspo_rcxj_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_out" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="日常巡检"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_in" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="日常巡检"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/udbr_linearlayout_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_udbr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimens_10_dp"
+                    android:text="箱台变"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+
+    </TableLayout>
+
+</LinearLayout>

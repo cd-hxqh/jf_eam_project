@@ -560,5 +560,12 @@
     <string name="tyrq_text">投运日期:</string>
     <string name="ysynx_text">已使用年限：</string>
     <string name="curbaltotal_text">余量:</string>
+    <string name="dqdjd_text">电气定检单</string>
+    <string name="fjdjd_text">风机定检单</string>
+    <string name="fjxjd_text">风机巡检单</string>
+    <string name="jdxl_text">集电线路</string>
+    <string name="qtsb_text">其它设备</string>
+    <string name="udinspo_title">巡检单列表</string>
+    <string name="rcxj_text">日常巡检</string>
 
 </resources>
