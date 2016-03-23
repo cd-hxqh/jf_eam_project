@@ -15,10 +15,8 @@ public class NetWorkHelper {
 	 *  true 表示没有网络
 	 */
 	public static boolean isNetwork(Context paramContext) {
-		Log.i(TAG,"network="+getNetType(paramContext)[0]);
 		return "Unknown".equals(getNetType(paramContext)[0]);
 	}
-
 
 
 	/**

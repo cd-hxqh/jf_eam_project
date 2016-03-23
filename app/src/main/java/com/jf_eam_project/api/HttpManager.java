@@ -15,10 +15,6 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-
-import java.io.IOException;
-import java.net.URI;
 
 
 /**
@@ -510,9 +506,7 @@ public class HttpManager {
             public void onProgress(long bytesWritten, long totalSize) {
                 super.onProgress(bytesWritten, totalSize);
 
-                Log.i(TAG, "bytesWritten=" + bytesWritten + ",totalSize=" + totalSize);
                 int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
-                Log.i(TAG, "count=" + count);
             }
 
 
@@ -541,9 +535,7 @@ public class HttpManager {
             @Override
             public void onProgress(long bytesWritten, long totalSize) {
                 super.onProgress(bytesWritten, totalSize);
-                Log.i(TAG, "bytesWritten=" + bytesWritten + ",totalSize=" + totalSize);
                 int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
-                Log.i(TAG, "count=" + count);
             }
 
             @Override

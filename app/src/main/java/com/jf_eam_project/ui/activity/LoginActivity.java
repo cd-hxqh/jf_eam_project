@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,13 +18,14 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 import com.umeng.update.UmengUpdateAgent;
 
 
 /**
  * 登录界面
  */
-public class LoginActivity extends BaseActivity  implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
 
     private static final String TAG = "Activity_Login";
@@ -74,10 +76,10 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
     protected void initView() {
 
         boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
-        if (isChecked) {
+//        if (isChecked) {
             mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
             mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
-        }
+//        }
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
     }
@@ -100,7 +102,15 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
                     mPassword.setError(getString(R.string.login_error_empty_passwd));
                     mPassword.requestFocus();
                 } else {
-                    login();
+                    userName = mUsername.getText().toString();
+                    userPassWorld = mPassword.getText().toString();
+                    /**判断网络条件**/
+                    if (NetWorkHelper.isNetwork(LoginActivity.this)) {
+                        localLogin();
+                    } else {
+                        login();
+                    }
+
                 }
                 break;
 
@@ -108,9 +118,31 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
     }
 
 
+    /**
+     * 离线登陆
+     */
+    private void localLogin() {
+        String username = AccountUtils.getUserName(LoginActivity.this);
+        String password = AccountUtils.getUserPassword(LoginActivity.this);
+        if (TextUtils.isEmpty(username) && TextUtils.isEmpty(password)) {
+            // SharedPreferences中数据为空：首次登陆，必须访问网络
+            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.offline_login_text));
+            return;
+        }
+        if (username.equals(userName) && password.equals(userPassWorld)
+                ) {
+            // 密码校验正确，跳转到主页面
+            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_text));
+            startIntent();
+        } else {
+            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.username_or_password_error));
+        }
+
+    }
+
 
     /**
-     * ��½*
+     * 登录界面
      */
     private void login() {
         mProgressDialog = ProgressDialog.show(LoginActivity.this, null,
@@ -125,10 +157,10 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
 
                         MessageUtils.showMiddleToast(LoginActivity.this, data);
                         mProgressDialog.dismiss();
-                        if (isRemember) {
+//                        if (isRemember) {
                             AccountUtils.setChecked(LoginActivity.this, isRemember);
                             AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
-                        }
+//                        }
                         getBaseApplication().setUsername(mUsername.getText().toString());
                         startIntent();
 
@@ -171,7 +203,6 @@ public class LoginActivity extends BaseActivity  implements View.OnClickListener
             AppManager.AppExit(LoginActivity.this);
         }
     }
-
 
 
 }

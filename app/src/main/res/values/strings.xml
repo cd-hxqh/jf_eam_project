@@ -70,6 +70,9 @@
 
     <!--登录信息提示-->
     <string name="login_successful_hint">登陆成功</string>
+    <string name="offline_login_text">首次登陆,必须访问网络</string>
+
+    <string name="username_or_password_error">用户名或密码错误</string>
     <!--获取信息提示-->
     <string name="get_data_info_fail">获取信息失败</string>
     <string name="have_not_data_txt">暂无相关数据</string>
@@ -567,5 +570,7 @@
     <string name="qtsb_text">其它设备</string>
     <string name="udinspo_title">巡检单列表</string>
     <string name="rcxj_text">日常巡检</string>
+    <string name="login_successful_text">离线登录成功</string>
+
 
 </resources>
