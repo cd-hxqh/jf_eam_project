@@ -142,7 +142,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private void initData() {
         udinspojxxm = (Udinspojxxm) getIntent().getSerializableExtra("Udinspojxxm");
         writemethod = udinspojxxm.writemethod;
-        Log.i(TAG, "writemethod=" + writemethod);
     }
 
     @Override
@@ -189,10 +188,12 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setImageResource(R.drawable.edit_query);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
+
+        submitBtn.setVisibility(View.VISIBLE);
 
         if (writemethod.equals("01")) {
             udinspojxxm2View.setVisibility(View.VISIBLE);
@@ -233,16 +234,16 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         }
 
 
-        executionText.setFocusable(false);
-        executionText.setFocusableInTouchMode(false);
-        udinspojxxm1Text.setFocusable(false);
-        udinspojxxm1Text.setFocusableInTouchMode(false);
-        udinspojxxm2Text.setFocusable(false);
-        udinspojxxm2Text.setFocusableInTouchMode(false);
-        udinspojxxm3Text.setFocusable(false);
-        udinspojxxm3Text.setFocusableInTouchMode(false);
-        udinspojxxm4Text.setFocusable(false);
-        udinspojxxm4Text.setFocusableInTouchMode(false);
+//        executionText.setFocusable(false);
+//        executionText.setFocusableInTouchMode(false);
+//        udinspojxxm1Text.setFocusable(false);
+//        udinspojxxm1Text.setFocusableInTouchMode(false);
+//        udinspojxxm2Text.setFocusable(false);
+//        udinspojxxm2Text.setFocusableInTouchMode(false);
+//        udinspojxxm3Text.setFocusable(false);
+//        udinspojxxm3Text.setFocusableInTouchMode(false);
+//        udinspojxxm4Text.setFocusable(false);
+//        udinspojxxm4Text.setFocusableInTouchMode(false);
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 

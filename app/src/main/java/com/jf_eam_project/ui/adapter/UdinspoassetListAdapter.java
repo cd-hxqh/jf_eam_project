@@ -16,6 +16,7 @@ import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.ui.activity.PRLine_Details_Activity;
 import com.jf_eam_project.ui.activity.Udinspoasset_Details_Activity;
+import com.jf_eam_project.ui.activity.Udinspojxxm_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +44,15 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Udinspoasset udinspoasset = udinspoassetList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
-        holder.itemDescTitle.setText(mContext.getString(R.string.udinspoasset_location_title));
+        holder.itemDescTitle.setText(mContext.getString(R.string.udinspojxxm_desciption_text));
         holder.itemNum.setText(udinspoasset.udinspoassetlinenum);
-        holder.itemDesc.setText(udinspoasset.location);
+        holder.itemDesc.setText(udinspoasset.childassetnum);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udinspoasset_Details_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Udinspoasset", udinspoasset);
-                intent.putExtras(bundle);
+                Intent intent = new Intent();
+                intent.setClass(mContext, Udinspojxxm_Activity.class);
+                intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
                 mContext.startActivity(intent);
             }
         });

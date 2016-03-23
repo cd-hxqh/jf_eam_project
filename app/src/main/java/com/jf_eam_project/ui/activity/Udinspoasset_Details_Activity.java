@@ -1,26 +1,19 @@
 package com.jf_eam_project.ui.activity;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -29,17 +22,12 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.PR;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.utils.MessageUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * 设备备件详情

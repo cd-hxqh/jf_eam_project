@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation" >
     <string name="app_name">金风移动</string>
 
 
@@ -69,6 +70,9 @@
 
     <!--登录信息提示-->
     <string name="login_successful_hint">登陆成功</string>
+    <string name="offline_login_text">首次登陆,必须访问网络</string>
+
+    <string name="username_or_password_error">用户名或密码错误</string>
     <!--获取信息提示-->
     <string name="get_data_info_fail">获取信息失败</string>
     <string name="have_not_data_txt">暂无相关数据</string>
@@ -94,7 +98,9 @@
     <string name="sure">确定</string>
     <string name="canel">取消</string>
     <string name="inputing">正在提交数据</string>
+    <string name="clearing">正在清除数据</string>
     <string name="downloading">正在下载数据</string>
+    <string name="downloading1">正在下载</string>
 
 
     <!--巡检管理-->
@@ -345,6 +351,7 @@
 
     <!--入库管理-->
     <string name="inventory_title">入库</string>
+    <string name="inventory_title_1">库存</string>
     <string name="inventory_itemnum_title">项目:</string>
     <string name="inventory_location_title">库房:</string>
     <string name="inventory_lottype_title">批次类型:</string>
@@ -361,12 +368,14 @@
     <string name="udinspo_createdate_title">创建时间:</string>
     <string name="udinspo_inspoby_title">巡检人:</string>
     <string name="udinspo_inspodate_title">巡检日期:</string>
+    <string name="enddate_text">完成时间:</string>
     <string name="udinspo_lastrundate_title">本次生成日期:</string>
     <string name="udinspo_nextrundate_title">下次运行时间:</string>
     <string name="udinspo_detail_title">巡检单详情</string>
-    <string name="udinspoasset_title">设备及部件</string>
+    <string name="udinspoasset_title">设备及检修项目</string>
     <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
+
 
 
     <string name="udinspoasset_location_description_title">位置描述:</string>
@@ -390,7 +399,16 @@
     <string name="udinspojxxm_execution_title">巡检情况描述:</string>
     <string name="ud_udinspojxxm4_title">巡检人员:</string>
 
+    <string name="udinspojxxm_desciption_text">检查项目:</string>
+    <string name="udinspojxxm7_text">检查内容:</string>
+    <string name="udinspojxxm9_text">检查标准:</string>
+    <string name="udinspojxxm8_text">检查方法:</string>
+    <string name="execution_text">描述:</string>
+    <string name="udinspojxxm1_text">正常异常:</string>
+
     <!--数据下载-->
+    <string name="about">关于</string>
+    <string name="update">检查更新</string>
     <string name="setting_download">数据下载</string>
     <string name="setting_data_clear">清除缓存</string>
     <string name="data_download">数据下载</string>
@@ -404,6 +422,7 @@
     <string name="add_udinspoasset_title">新建备件</string>
     <string name="add_udinspojxxm_title">新建检修项目标准</string>
     <string name="confirm_btn">确定</string>
+    <string name="delete_btn">删除</string>
     <string name="history_udinspo_title">巡检单</string>
     <string name="add_udinspo_title">新建巡检单</string>
 
@@ -436,11 +455,132 @@
     <string name="umeng_example_home_hint_wait">敬请期待</string>
 
     <string name="intro"> 下面展示使用 js 调用友盟 自定义事件  APIs</string>
+    <string name="about_us_title">关于我们</string>
+    <string name="synchronous_data_text">同步基础数据</string>
+    <string name="work_plan_type">计划工单</string>
+    <string name="work_unplan_type">非计划工单</string>
+
+    <!--二维码扫描-->
+    <string name="scan_text">将二维码/条码放入框内,即可自动扫描</string>
+    <string name="scanning_text">二维码/条码</string>
 
 
+    <!--资产详情-->
+    <string name="asset_num_text">资产编号:</string>
+    <string name="asset_description_text">资产描述:</string>
+    <string name="asset_sited_text">地点:</string>
+    <string name="asset_loction_text">位置:</string>
+    <string name="assets_title_text">资产详情</string>
+    <!--物资发放-->
+    <string name="commodity_issue_text">物资发放</string>
 
 
+    <!--领料单-->
+    <string name="material_title_text">领料单</string>
+    <string name="requisition_text">领料单号:</string>
+    <string name="material_title_1_text">领料单:</string>
+    <string name="material_displayname_text">申请人:</string>
+    <string name="createdate_text">创建时间:</string>
+    <string name="description_text">分公司:</string>
+    <string name="uddept_description_text">风电场:</string>
+    <string name="state_text">状态:</string>
+    <string name="material_detail_text">领料单详情</string>
 
+    <!--物资调出单-->
+    <string name="materials_up_title">物资调出单</string>
+    <string name="materrial_up_num_text">物资调出单:</string>
+    <string name="uddeptdescription_text">调出分公司:</string>
+    <string name="udtargetbranch_text">调入分公司:</string>
+    <string name="udtargetbelong_text">调入风电场:</string>
+    <string name="udjsr_text">物料接收人:</string>
+    <string name="status_text">状态:</string>
+    <string name="material_up_detail_text">物资调出单详情</string>
+
+    <!--物资调入单-->
+    <string name="materials_into_text">物资调入单</string>
+    <string name="ponum_text">调入单号:</string>
+    <string name="siteid_text">地点:</string>
+    <string name="purchaseagent_text">接收人:</string>
+    <string name="orderdate_text">创建日期:</string>
+    <string name="pretaxtotal_text">税前总计:</string>
+    <string name="totaltax1_text">税款总计:</string>
+    <string name="totalcost_text">成本总计:</string>
+    <string name="currencycode_text">货币:</string>
+    <string name="material_into_details_text">物资调入单详情</string>
+    <string name="material_into_poline_text">物料明细</string>
+    <!--物资借用归还-->
+    <string name="udbr_title_text">借用归还</string>
+    <string name="uditemreq_title_text">编码申请</string>
+    <string name="uditemreqnum_text">申请单号:</string>
+    <string name="reason_text">申请原因:</string>
+    <string name="alndomain_description_text">状态:</string>
+    <string name="person_displayname_text">创建人:</string>
+    <!--物资编码申请-->
+    <string name="uditemreq_detail_text">申请编码详情</string>
+    <string name="uditemreqline_text">申请行表</string>
+    <string name="udlinenum_text">序号:</string>
+    <string name="name_text">物资名称:</string>
+    <string name="udunit_text">单位:</string>
+    <string name="uditemreqline1_text">生产厂家:</string>
+    <string name="specify_text">物资型号:</string>
+    <string name="udunitcost_text">预估单价:</string>
+    <string name="classstructureid_text">物资分类:</string>
+    <string name="itemnum_text">物资编码:</string>
+    <string name="memo_text">备注:</string>
+    <string name="uditemreqline_details_title">申请行表详情</string>
+    <string name="udbrnum_text">编号:</string>
+    <string name="displayname_text">借用人:</string>
+    <string name="createdate_text_1">借用日期:</string>
+    <string name="frombranch_text">借出分公司:</string>
+    <string name="frombelong_text">借出风电场:</string>
+    <!--物资借用归还详情-->
+    <string name="udbr_details_text">借用归还详情</string>
+    <string name="udbrline_details_text">申请行</string>
+    <string name="udbrlinenum_text">行号:</string>
+    <string name="fromstoreloc_text">借出仓库:</string>
+    <string name="fromstoreloc_1_text">借出库房:</string>
+    <string name="itemnum_1_text">物资编码:</string>
+    <string name="orderunit_text">单位:</string>
+    <string name="borrowqty_text">借用数量:</string>
+    <string name="returnqty_text">归还数量:</string>
+    <string name="udbrline_text">申请行详情</string>
+    <!--发票行-->
+    <string name="invoiceline_text">发票行</string>
+    <string name="invoicelinenum_text">行:</string>
+    <string name="invoiceline_itemnum_text">项目:</string>
+    <string name="invoicenum_text">发票编号:</string>
+    <string name="linetype_text">行类型:</string>
+    <string name="inv_description_text">描述：</string>
+    <string name="category_text">类别:</string>
+    <string name="qtyforui_text">数量:</string>
+    <string name="invoiceunit_text_id">订购单位:</string>
+    <string name="inventory_issueunit_text">发放单位:</string>
+    <string name="conversion_text">换算系数:</string>
+    <string name="unitcost_text">单位成本:</string>
+    <string name="LINECOSTFORUI_text">行成本:</string>
+    <string name="tax1forui_text">税:</string>
+    <string name="proratecost_text">摊派成本:</string>
+    <string name="poline_storeloc_text">库房:</string>
+    <string name="invoicecost_tositeidnonper_text">地点:</string>
+    <string name="invoiceline_details_text">发票行详情</string>
+    <string name="udassettype_text">设备类型:</string>
+    <string name="firstclass_text">大类:</string>
+    <string name="secondclass_text">中类:</string>
+    <string name="thirdclass_text">小类:</string>
+    <string name="azrq_text">安装日期:</string>
+    <string name="bxdqr_text">保修到期日:</string>
+    <string name="purchaseprice_text">采购价格:</string>
+    <string name="tyrq_text">投运日期:</string>
+    <string name="ysynx_text">已使用年限：</string>
+    <string name="curbaltotal_text">余量:</string>
+    <string name="dqdjd_text">电气定检单</string>
+    <string name="fjdjd_text">风机定检单</string>
+    <string name="fjxjd_text">风机巡检单</string>
+    <string name="jdxl_text">集电线路</string>
+    <string name="qtsb_text">其它设备</string>
+    <string name="udinspo_title">巡检单列表</string>
+    <string name="rcxj_text">日常巡检</string>
+    <string name="login_successful_text">离线登录成功</string>
 
 
 
