@@ -368,12 +368,14 @@
     <string name="udinspo_createdate_title">创建时间:</string>
     <string name="udinspo_inspoby_title">巡检人:</string>
     <string name="udinspo_inspodate_title">巡检日期:</string>
+    <string name="enddate_text">完成时间:</string>
     <string name="udinspo_lastrundate_title">本次生成日期:</string>
     <string name="udinspo_nextrundate_title">下次运行时间:</string>
     <string name="udinspo_detail_title">巡检单详情</string>
     <string name="udinspoasset_title">设备及部件</string>
     <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
+
 
 
     <string name="udinspoasset_location_description_title">位置描述:</string>
@@ -396,6 +398,13 @@
     <string name="udinspojxxm_fillmethod_title">计量单位:</string>
     <string name="udinspojxxm_execution_title">巡检情况描述:</string>
     <string name="ud_udinspojxxm4_title">巡检人员:</string>
+
+    <string name="udinspojxxm_desciption_text">检查项目:</string>
+    <string name="udinspojxxm7_text">检查内容:</string>
+    <string name="udinspojxxm9_text">检查标准:</string>
+    <string name="udinspojxxm8_text">检查方法:</string>
+    <string name="execution_text">描述:</string>
+    <string name="udinspojxxm1_text">正常异常:</string>
 
     <!--数据下载-->
     <string name="about">关于</string>
@@ -572,6 +581,7 @@
     <string name="udinspo_title">巡检单列表</string>
     <string name="rcxj_text">日常巡检</string>
     <string name="login_successful_text">离线登录成功</string>
+
 
 
 </resources>

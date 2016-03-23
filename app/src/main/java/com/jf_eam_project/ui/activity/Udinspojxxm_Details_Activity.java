@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -58,13 +60,51 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 界面信息显示*
      */
     private TextView udinspoassetlinenumText; //序号
-    private EditText descriptionText; //巡检项目标准
-    private TextView udinspojxxm2Text; //数值A
-    private TextView udinspojxxm3Text; //数值B
+
+    private TextView descriptionText; //检查项目
+
+    private TextView udinspojxxm7Text; //检查内容
+
+    private TextView udinspojxxm9Text; //检查标准
+
+    private TextView udinspojxxm8Text; //检查方法
+
+
+    /**
+     * 描述*
+     */
+    private View executionView;
+    private LinearLayout executionLinearLayout;
+    private EditText executionText;
+
+    /**
+     * 正常异常*
+     */
+    private View udinspojxxm1View;
+    private LinearLayout udinspojxxm1LinearLayout;
+    private TextView udinspojxxm1Text;
+
+
+    /**
+     * 数值A*
+     */
+    private View udinspojxxm2View;
+    private LinearLayout udinspojxxm2LinearLayout;
+    private TextView udinspojxxm2Text;
+
+    /**
+     * 数值B*
+     */
+    private View udinspojxxm3View;
+    private LinearLayout udinspojxxm3LinearLayout;
+    private TextView udinspojxxm3Text;
+
+    /**
+     * 数值C*
+     */
+    private View udinspojxxm4View;
+    private LinearLayout udinspojxxm4LinearLayout;
     private TextView udinspojxxm4Text; //数值C
-    private TextView fillmethodText; //计量单位
-    private EditText executionText; //巡检情况描述
-    private EditText checkbyText; //巡检人员
 
 
     private Udinspojxxm udinspojxxm; //设备备件
@@ -82,6 +122,11 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private ProgressDialog mProgressDialog;
 
+    /**
+     * 填写方式*
+     */
+    private String writemethod;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +141,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      */
     private void initData() {
         udinspojxxm = (Udinspojxxm) getIntent().getSerializableExtra("Udinspojxxm");
+        writemethod = udinspojxxm.writemethod;
+        Log.i(TAG, "writemethod=" + writemethod);
     }
 
     @Override
@@ -106,16 +153,34 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
         udinspoassetlinenumText = (TextView) findViewById(R.id.udinspoasset_udinspoassetlinenum_text);
-        descriptionText = (EditText) findViewById(R.id.udinspojxxm_description_text);
-        udinspojxxm2Text = (TextView) findViewById(R.id.udinspojxxm_udinspojxxm2_text);
-        udinspojxxm3Text = (TextView) findViewById(R.id.udinspojxxm_udinspojxxm3_text);
-        udinspojxxm4Text = (TextView) findViewById(R.id.udinspojxxm_udinspojxxm4_text);
-        fillmethodText = (TextView) findViewById(R.id.udinspojxxm_fillmethod_text);
-        executionText = (EditText) findViewById(R.id.udinspojxxm_execution_text);
-        checkbyText = (EditText) findViewById(R.id.ud_udinspojxxm4_text);
+        descriptionText = (TextView) findViewById(R.id.udinspojxxm_description_text);
+        udinspojxxm7Text = (TextView) findViewById(R.id.udinspojxxm7_text);
+        udinspojxxm9Text = (TextView) findViewById(R.id.udinspojxxm9_text);
+        udinspojxxm8Text = (TextView) findViewById(R.id.udinspojxxm8_text);
+
+        executionView = (View) findViewById(R.id.execution_view);
+        executionLinearLayout = (LinearLayout) findViewById(R.id.execution_linearlayout);
+        executionText = (EditText) findViewById(R.id.execution_text);
+
+        udinspojxxm1View = (View) findViewById(R.id.udinspojxxm1_view);
+        udinspojxxm1LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm1_linearlayout);
+        udinspojxxm1Text = (EditText) findViewById(R.id.udinspojxxm_udinspojxxm1_text);
+
+
+        udinspojxxm2View = (View) findViewById(R.id.udinspojxxm2_view);
+        udinspojxxm2LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm2_linearlayout);
+        udinspojxxm2Text = (EditText) findViewById(R.id.udinspojxxm2_text);
+
+        udinspojxxm3View = (View) findViewById(R.id.udinspojxxm3_view);
+        udinspojxxm3LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm3_linearlayout);
+        udinspojxxm3Text = (EditText) findViewById(R.id.udinspojxxm3_text);
+
+        udinspojxxm4View = (View) findViewById(R.id.udinspojxxm4_view);
+        udinspojxxm4LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm4_linearlayout);
+        udinspojxxm4Text = (EditText) findViewById(R.id.udinspojxxm4_text);
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
-        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
+//        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
 
     }
 
@@ -129,24 +194,55 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
 
-        if (udinspojxxm != null) {
-            udinspoassetlinenumText.setText(udinspojxxm.getUdinspojxxmlinenum() == null ? "" : udinspojxxm.getUdinspojxxmlinenum());
-            descriptionText.setText(udinspojxxm.getDescription() == null ? "" : udinspojxxm.getDescription());
-            udinspojxxm2Text.setText(udinspojxxm.getUdinspojxxm2() == null ? "" : udinspojxxm.getUdinspojxxm2());
-            udinspojxxm3Text.setText(udinspojxxm.getUdinspojxxm3() == null ? "" : udinspojxxm.getUdinspojxxm3());
-            udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
-            fillmethodText.setText(udinspojxxm.getFillmethod() == null ? "" : udinspojxxm.getFillmethod());
-            executionText.setText(udinspojxxm.getExecution() == null ? "" : udinspojxxm.getExecution());
-            checkbyText.setText(udinspojxxm.getCheckby() == null ? "" : udinspojxxm.getCheckby());
+        if (writemethod.equals("01")) {
+            udinspojxxm2View.setVisibility(View.VISIBLE);
+            udinspojxxm2LinearLayout.setVisibility(View.VISIBLE);
+        } else if (writemethod.equals("02")) {
+            udinspojxxm2View.setVisibility(View.VISIBLE);
+            udinspojxxm2LinearLayout.setVisibility(View.VISIBLE);
+            udinspojxxm3View.setVisibility(View.VISIBLE);
+            udinspojxxm3LinearLayout.setVisibility(View.VISIBLE);
+        } else if (writemethod.equals("03")) {
+            udinspojxxm2View.setVisibility(View.VISIBLE);
+            udinspojxxm2LinearLayout.setVisibility(View.VISIBLE);
+            udinspojxxm3View.setVisibility(View.VISIBLE);
+            udinspojxxm3LinearLayout.setVisibility(View.VISIBLE);
+            udinspojxxm4View.setVisibility(View.VISIBLE);
+            udinspojxxm4LinearLayout.setVisibility(View.VISIBLE);
+        } else if (writemethod.equals("04")) {
+            udinspojxxm1View.setVisibility(View.VISIBLE);
+            udinspojxxm1LinearLayout.setVisibility(View.VISIBLE);
+        } else if (writemethod.equals("05")) {
+            executionView.setVisibility(View.VISIBLE);
+            executionLinearLayout.setVisibility(View.VISIBLE);
         }
 
 
-        descriptionText.setFocusable(false);
-        descriptionText.setFocusableInTouchMode(false);
+        if (udinspojxxm != null) {
+            udinspoassetlinenumText.setText(udinspojxxm.getUdinspojxxmlinenum() == null ? "" : udinspojxxm.getUdinspojxxmlinenum());
+            descriptionText.setText(udinspojxxm.getDescription() == null ? "" : udinspojxxm.getDescription());
+            udinspojxxm7Text.setText(udinspojxxm.getUdinspojxxm7() == null ? "" : udinspojxxm.getUdinspojxxm7());
+            udinspojxxm8Text.setText(udinspojxxm.getUdinspojxxm8() == null ? "" : udinspojxxm.getUdinspojxxm8());
+            udinspojxxm9Text.setText(udinspojxxm.getUdinspojxxm9() == null ? "" : udinspojxxm.getUdinspojxxm9());
+            executionText.setText(udinspojxxm.getExecution() == null ? "" : udinspojxxm.getExecution());
+
+
+//            udinspojxxm2Text.setText(udinspojxxm.getUdinspojxxm2() == null ? "" : udinspojxxm.getUdinspojxxm2());
+//            udinspojxxm3Text.setText(udinspojxxm.getUdinspojxxm3() == null ? "" : udinspojxxm.getUdinspojxxm3());
+//            udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
+        }
+
+
         executionText.setFocusable(false);
         executionText.setFocusableInTouchMode(false);
-        checkbyText.setFocusable(false);
-        checkbyText.setFocusableInTouchMode(false);
+        udinspojxxm1Text.setFocusable(false);
+        udinspojxxm1Text.setFocusableInTouchMode(false);
+        udinspojxxm2Text.setFocusable(false);
+        udinspojxxm2Text.setFocusableInTouchMode(false);
+        udinspojxxm3Text.setFocusable(false);
+        udinspojxxm3Text.setFocusableInTouchMode(false);
+        udinspojxxm4Text.setFocusable(false);
+        udinspojxxm4Text.setFocusableInTouchMode(false);
 
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
@@ -164,12 +260,16 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private void statusEdit() {
 
-        descriptionText.setFocusable(true);
-        descriptionText.setFocusableInTouchMode(true);
         executionText.setFocusable(true);
         executionText.setFocusableInTouchMode(true);
-        checkbyText.setFocusable(true);
-        checkbyText.setFocusableInTouchMode(true);
+        udinspojxxm1Text.setFocusable(true);
+        udinspojxxm1Text.setFocusableInTouchMode(true);
+        udinspojxxm2Text.setFocusable(true);
+        udinspojxxm2Text.setFocusableInTouchMode(true);
+        udinspojxxm3Text.setFocusable(true);
+        udinspojxxm3Text.setFocusableInTouchMode(true);
+        udinspojxxm4Text.setFocusable(true);
+        udinspojxxm4Text.setFocusableInTouchMode(true);
     }
 
 
@@ -241,6 +341,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
                         @Override
                         protected void onPostExecute(String s) {
+
+                            Log.i(TAG,"s="+s);
                             super.onPostExecute(s);
                             mProgressDialog.dismiss();
                             try {
@@ -277,9 +379,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 保存数据*
      */
     private String submitBtn() throws JSONException {
-        String description = descriptionText.getText().toString();
-        String execution = executionText.getText().toString();
-        String checkby = checkbyText.getText().toString();
 
         Udinspojxxm udinspojxxm1 = new Udinspojxxm();
         JSONObject json = new JSONObject();
@@ -290,17 +389,60 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
         udinspojxxm1.setType(Constants.UPDATE);
         json.put("TYPE", Constants.UPDATE);
-        if (!description.equals(udinspojxxm.description)) {
-            udinspojxxm1.setDescription(description);
-            json.put("DESCRIPTION", description);
+
+
+        if (writemethod.equals("01")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+                json.put("UDINSPOJXXM2", udinspojxxm2);
+            }
+
+        }else if (writemethod.equals("02")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+                json.put("UDINSPOJXXM2", udinspojxxm2);
+            }
+            String udinspojxxm3 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
+                json.put("UDINSPOJXXM3", udinspojxxm3);
+            }
         }
-        if (!execution.equals(udinspojxxm.execution)) {
-            udinspojxxm1.setExecution(execution);
-            json.put("EXECUTION", execution);
+        else if (writemethod.equals("03")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+                json.put("UDINSPOJXXM2", udinspojxxm2);
+            }
+            String udinspojxxm3 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
+                json.put("UDINSPOJXXM3", udinspojxxm3);
+            }
+            String udinspojxxm4 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && TextUtils.isEmpty(udinspojxxm4)) {
+                udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
+                json.put("UDINSPOJXXM4", udinspojxxm4);
+            }
         }
-        if (!checkby.equals(udinspojxxm.checkby)) {
-            udinspojxxm1.setCheckby(checkby);
-            json.put("CHECKBY", checkby);
+
+        else if (writemethod.equals("04")) {
+            String udinspojxxm = udinspojxxm1Text.getText().toString();
+            if (!udinspojxxm.equals(udinspojxxm1.udinspojxxm1) && TextUtils.isEmpty(udinspojxxm)) {
+                udinspojxxm1.setUdinspojxxm1(udinspojxxm);
+                json.put("UDINSPOJXXM1", udinspojxxm);
+            }
+
+        }
+        else if (writemethod.equals("05")) {
+            String execution = executionText.getText().toString();
+            if (!execution.equals(udinspojxxm1.execution) && TextUtils.isEmpty(execution)) {
+                udinspojxxm1.setExecution(execution);
+                json.put("EXECUTION", execution);
+            }
+
         }
 
 
@@ -335,18 +477,51 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 将巡检信息保存至本地*
      */
     private void saveUdinspo() {
-        String description = descriptionText.getText().toString();
-        String execution = executionText.getText().toString();
-        String checkby = checkbyText.getText().toString();
         Udinspojxxm udinspojxxm1 = new Udinspojxxm();
-        if (!description.equals(udinspojxxm.description)) {
-            udinspojxxm1.setDescription(description);
+        if (writemethod.equals("01")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+            }
+
+        }else if (writemethod.equals("02")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+            }
+            String udinspojxxm3 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
+            }
         }
-        if (!execution.equals(udinspojxxm.execution)) {
-            udinspojxxm1.setExecution(execution);
+        else if (writemethod.equals("03")) {
+            String udinspojxxm2 = udinspojxxm2Text.getText().toString();
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+            }
+            String udinspojxxm3 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
+            }
+            String udinspojxxm4 = udinspojxxm3Text.getText().toString();
+            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && TextUtils.isEmpty(udinspojxxm4)) {
+                udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
+            }
         }
-        if (!checkby.equals(udinspojxxm.checkby)) {
-            udinspojxxm1.setCheckby(checkby);
+
+        else if (writemethod.equals("04")) {
+            String udinspojxxm = udinspojxxm1Text.getText().toString();
+            if (!udinspojxxm.equals(udinspojxxm1.udinspojxxm1) && TextUtils.isEmpty(udinspojxxm)) {
+                udinspojxxm1.setUdinspojxxm1(udinspojxxm);
+            }
+
+        }
+        else if (writemethod.equals("05")) {
+            String execution = executionText.getText().toString();
+            if (!execution.equals(udinspojxxm1.execution) && TextUtils.isEmpty(execution)) {
+                udinspojxxm1.setExecution(execution);
+            }
+
         }
 
         udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);

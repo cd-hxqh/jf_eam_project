@@ -65,16 +65,32 @@ public class Udinspojxxm extends Entity {
     @JsonField(fieldName = "checkby")
     public String checkby;//巡检人员
 
+
+    @DatabaseField(columnName = "writemethod")
+    @JsonField(fieldName = "writemethod")
+    public String writemethod;//填写方式
+
+
+    @DatabaseField(columnName = "udinspojxxm1")
+    @JsonField(fieldName = "udinspojxxm1")
+    public String udinspojxxm1;//正常异常
+
+
+    @DatabaseField(columnName = "udinspojxxm7")
+    @JsonField(fieldName = "udinspojxxm7")
+    public String udinspojxxm7;//检查内容
+
+    @DatabaseField(columnName = "udinspojxxm8")
+    @JsonField(fieldName = "udinspojxxm8")
+    public String udinspojxxm8;//检查标准
+
+
+    @DatabaseField(columnName = "udinspojxxm9")
+    @JsonField(fieldName = "udinspojxxm9")
+    public String udinspojxxm9;//检查标准
+
     public String type; //操作类型
 
-
-    public int getUdinspojxxmid() {
-        return udinspojxxmid;
-    }
-
-    public void setUdinspojxxmid(int udinspojxxmid) {
-        this.udinspojxxmid = udinspojxxmid;
-    }
 
     public int getId() {
         return id;
@@ -84,12 +100,12 @@ public class Udinspojxxm extends Entity {
         this.id = id;
     }
 
-    public String getCheckby() {
-        return checkby;
+    public int getUdinspojxxmid() {
+        return udinspojxxmid;
     }
 
-    public void setCheckby(String checkby) {
-        this.checkby = checkby;
+    public void setUdinspojxxmid(int udinspojxxmid) {
+        this.udinspojxxmid = udinspojxxmid;
     }
 
     public String getUdinspojxxmlinenum() {
@@ -156,6 +172,54 @@ public class Udinspojxxm extends Entity {
         this.description = description;
     }
 
+    public String getCheckby() {
+        return checkby;
+    }
+
+    public void setCheckby(String checkby) {
+        this.checkby = checkby;
+    }
+
+    public String getWritemethod() {
+        return writemethod;
+    }
+
+    public void setWritemethod(String writemethod) {
+        this.writemethod = writemethod;
+    }
+
+    public String getUdinspojxxm1() {
+        return udinspojxxm1;
+    }
+
+    public void setUdinspojxxm1(String udinspojxxm1) {
+        this.udinspojxxm1 = udinspojxxm1;
+    }
+
+    public String getUdinspojxxm7() {
+        return udinspojxxm7;
+    }
+
+    public void setUdinspojxxm7(String udinspojxxm7) {
+        this.udinspojxxm7 = udinspojxxm7;
+    }
+
+
+    public String getUdinspojxxm8() {
+        return udinspojxxm8;
+    }
+
+    public void setUdinspojxxm8(String udinspojxxm8) {
+        this.udinspojxxm8 = udinspojxxm8;
+    }
+
+    public String getUdinspojxxm9() {
+        return udinspojxxm9;
+    }
+
+    public void setUdinspojxxm9(String udinspojxxm9) {
+        this.udinspojxxm9 = udinspojxxm9;
+    }
 
     public String getType() {
         return type;

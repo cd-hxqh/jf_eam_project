@@ -104,6 +104,9 @@ public final class Udinspo_JsonHelper
         } else if ("UDINSPPLAN.DESCRIPTION".equals(fieldName)) {
             instance.udinspplandescription = jp.getValueAsString();
             return true;
+        } else if ("ENDDATE".equals(fieldName)) {
+            instance.enddate = jp.getValueAsString();
+            return true;
         }
 
         return false;

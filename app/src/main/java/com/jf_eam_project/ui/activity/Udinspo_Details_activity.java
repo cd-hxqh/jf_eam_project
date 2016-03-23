@@ -83,8 +83,7 @@ public class Udinspo_Details_activity extends BaseActivity {
     private TextView createdateText; //创建时间
     private TextView inspobyText; //巡检人
     private TextView inspodateText; //巡检日期
-    private TextView lastrundateText; //本次生成日期
-    private TextView nextrundateText; //下次运行时间
+    private TextView enddateText; //完成时间
 
 
 
@@ -114,6 +113,9 @@ public class Udinspo_Details_activity extends BaseActivity {
     StringBuffer sb;
     private DatePickerDialog datePickerDialog;
     private CumTimePickerDialog timePickerDialog;
+
+    /**日期选择标识**/
+    private int dateMark=0;
 
 
     @Override
@@ -152,8 +154,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         createdateText = (TextView) findViewById(R.id.udinspo_createdate_text);
         inspobyText = (TextView) findViewById(R.id.udinspo_inspoby_text);
         inspodateText = (TextView) findViewById(R.id.udinspo_inspodate_text);
-        lastrundateText = (TextView) findViewById(R.id.udinspo_lastrundate_text);
-        nextrundateText = (TextView) findViewById(R.id.udinspo_nextrundate_text);
+        enddateText = (TextView) findViewById(R.id.udinspo_enddate_text);
 
 
         confirmBtn = (Button) findViewById(R.id.submit_btn_id);
@@ -168,7 +169,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-//        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
         descriptionText.setFocusable(false);
         descriptionText.setFocusableInTouchMode(false);
@@ -181,15 +182,16 @@ public class Udinspo_Details_activity extends BaseActivity {
             createdateText.setText(udinspo.getCreatedate() == null ? "" : udinspo.getCreatedate());
             inspobyText.setText(udinspo.getInspoby() == null ? "" : udinspo.getInspoby());
             inspodateText.setText(udinspo.getInspodate() == null ? "" : udinspo.getInspodate());
-            lastrundateText.setText(udinspo.getLastrundate() == null ? "" : udinspo.getLastrundate());
-            nextrundateText.setText(udinspo.getNextrundate() == null ? "" : udinspo.getNextrundate());
+            enddateText.setText(udinspo.getEnddate() == null ? "" : udinspo.getEnddate());
         }
 
-        inspotypeText.setOnClickListener(inspotypeOnClickListener);
+//        inspotypeText.setOnClickListener(inspotypeOnClickListener);
 
         inspobyText.setOnClickListener(inspobyOnClickListener);
 
         inspodateText.setOnClickListener(inspodateOnClickListener);
+
+        enddateText.setOnClickListener(inspodateOnClickListener);
 
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
 
@@ -199,8 +201,14 @@ public class Udinspo_Details_activity extends BaseActivity {
     private View.OnClickListener inspodateOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             sb = new StringBuffer();
             datePickerDialog.show();
+            if(view.getId()==R.id.udinspo_inspodate_text){
+                dateMark=1;
+            }else if(view.getId()==R.id.udinspo_enddate_text){
+                dateMark=2;
+            }
         }
     };
 
@@ -248,8 +256,11 @@ public class Udinspo_Details_activity extends BaseActivity {
             } else {
                 sb.append(i + ":" + i1 + ":00");
             }
-
-            inspodateText.setText(sb);
+            if(dateMark==1) {
+                inspodateText.setText(sb);
+            }else if(dateMark==2){
+                enddateText.setText(sb);
+            }
         }
     }
 
@@ -320,11 +331,12 @@ public class Udinspo_Details_activity extends BaseActivity {
      * 设置状态编辑*
      */
     private void statusEdit() {
-        descriptionText.setFocusable(true);
-        descriptionText.setFocusableInTouchMode(true);
-        inspotypeText.setEnabled(true);
+//        descriptionText.setFocusable(true);
+//        descriptionText.setFocusableInTouchMode(true);
+//        inspotypeText.setEnabled(true);
         inspobyText.setEnabled(true);
         inspodateText.setEnabled(true);
+        enddateText.setEnabled(true);
     }
 
 
@@ -487,6 +499,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         String createdate = createdateText.getText().toString();
         String inspoby = inspobyText.getText().toString();
         String inspodate = inspodateText.getText().toString();
+        String enddate = enddateText.getText().toString();
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -511,6 +524,9 @@ public class Udinspo_Details_activity extends BaseActivity {
             }
             if (!inspodate.equals(udinspo.inspodate)) {
                 jsonObject.put("INSPODATE", inspodate);
+            }
+            if (!inspodate.equals(udinspo.enddate)) {
+                jsonObject.put("ENDDATE", enddate);
             }
 
 

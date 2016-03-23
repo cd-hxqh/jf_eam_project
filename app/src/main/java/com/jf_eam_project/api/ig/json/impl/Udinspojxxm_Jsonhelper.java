@@ -97,8 +97,26 @@ public final class Udinspojxxm_Jsonhelper
         }else if ("CHECKBY".equals(fieldName)) {
             instance.checkby = jp.getValueAsString();
             return true;
+        }else if ("WRITEMETHOD".equals(fieldName)) {
+            instance.writemethod = jp.getValueAsString();
+            return true;
         }
-
+        else if ("UDINSPOJXXM1".equals(fieldName)) {
+            instance.udinspojxxm1 = jp.getValueAsString();
+            return true;
+        }
+        else if ("UDINSPOJXXM7".equals(fieldName)) {
+            instance.udinspojxxm7 = jp.getValueAsString();
+            return true;
+        }
+        else if ("UDINSPOJXXM9".equals(fieldName)) {
+            instance.udinspojxxm9 = jp.getValueAsString();
+            return true;
+        }
+        else if ("UDINSPOJXXM8".equals(fieldName)) {
+            instance.udinspojxxm8 = jp.getValueAsString();
+            return true;
+        }
         return false;
     }
 

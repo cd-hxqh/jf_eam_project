@@ -69,6 +69,9 @@ public class Udinspo extends Entity {
     @JsonField(fieldName = "udinspplan.description")
     public String udinspplandescription;//计划编号描述
 
+    @DatabaseField(columnName = "enddate")
+    @JsonField(fieldName = "enddate")
+    public String enddate;//完成时间
 
     public int getId() {
         return id;
@@ -172,5 +175,13 @@ public class Udinspo extends Entity {
 
     public void setUdinspplandescription(String udinspplandescription) {
         this.udinspplandescription = udinspplandescription;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 }
