@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation" >
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string-array name="drawer_tab_titles">
         <item>流程审批</item>
         <item>工单管理</item>
@@ -33,6 +32,19 @@
     <string-array name="lctype_tab_titles">
         <item>风机</item>
         <item>电气</item>
+    </string-array>
+
+
+    <string-array name="reporttype_tab_titles">
+        <item>故障提报单</item>
+        <item>缺陷提报单</item>
+    </string-array>
+
+    <string-array name="culevel_tab_titles">
+        <item>一级</item>
+        <item>二级</item>
+        <item>三级</item>
+        <item>四级</item>
     </string-array>
 
 

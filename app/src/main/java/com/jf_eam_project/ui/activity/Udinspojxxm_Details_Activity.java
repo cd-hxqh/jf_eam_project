@@ -3,23 +3,38 @@ package com.jf_eam_project.ui.activity;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
@@ -27,12 +42,17 @@ import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.ui.adapter.GridAdapter;
+import com.jf_eam_project.utils.Bimp;
+import com.jf_eam_project.utils.DataUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 /**
  * 检修项目标准
@@ -82,7 +102,11 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      */
     private View udinspojxxm1View;
     private LinearLayout udinspojxxm1LinearLayout;
-    private TextView udinspojxxm1Text;
+    private RadioGroup mRadioGroup1;
+    private RadioButton normalRadioButton; //正常
+    private RadioButton abnormalRadioButton; //异常常
+
+//    private TextView udinspojxxm1Text;
 
 
     /**
@@ -107,6 +131,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private TextView udinspojxxm4Text; //数值C
 
 
+    private GridView noScrollgridview;
+    private GridAdapter adapter; //相片选择
+
+
     private Udinspojxxm udinspojxxm; //设备备件
 
 
@@ -126,6 +154,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 填写方式*
      */
     private String writemethod;
+
+    private String udinspojxxmvalue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +193,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         udinspojxxm1View = (View) findViewById(R.id.udinspojxxm1_view);
         udinspojxxm1LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm1_linearlayout);
-        udinspojxxm1Text = (EditText) findViewById(R.id.udinspojxxm_udinspojxxm1_text);
+        mRadioGroup1 = (RadioGroup) findViewById(R.id.gendergroup);
+        normalRadioButton = (RadioButton) findViewById(R.id.udinspojxxm_normal_text);
+        abnormalRadioButton = (RadioButton) findViewById(R.id.udinspojxxm_abnormal_text);
 
 
         udinspojxxm2View = (View) findViewById(R.id.udinspojxxm2_view);
@@ -178,6 +210,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udinspojxxm4LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm4_linearlayout);
         udinspojxxm4Text = (EditText) findViewById(R.id.udinspojxxm4_text);
 
+        noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
+
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
 //        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
 
@@ -188,8 +222,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-//        editImageView.setVisibility(View.VISIBLE);
-        editImageView.setImageResource(R.drawable.edit_query);
+        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setImageResource(R.drawable.ic_report);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
 
@@ -244,18 +278,50 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 //        udinspojxxm3Text.setFocusableInTouchMode(false);
 //        udinspojxxm4Text.setFocusable(false);
 //        udinspojxxm4Text.setFocusableInTouchMode(false);
-
+        normalRadioButton.setChecked(true);
+        mRadioGroup1.setOnCheckedChangeListener(radiogpchange);
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
+
+        noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+        adapter = new GridAdapter(this);
+        adapter.update();
+        noScrollgridview.setAdapter(adapter);
+        noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                if (arg2 == Bimp.bmp.size()) {
+                    ActionSheetDialog();
+                } else {
+                }
+            }
+        });
     }
+
+
+    private RadioGroup.OnCheckedChangeListener radiogpchange = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+            if (checkedId == normalRadioButton.getId()) {
+                udinspojxxmvalue = "正常";
+
+            } else if (checkedId == abnormalRadioButton.getId()) {
+                udinspojxxmvalue = "异常";
+            }
+        }
+    };
 
 
     private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            submitBtn.setVisibility(View.VISIBLE);
-            //设置编辑状态
-            statusEdit();
+//            submitBtn.setVisibility(View.VISIBLE);
+//            //设置编辑状态
+//            statusEdit();
+
+            Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+            startActivityForResult(intent, 0);
         }
     };
 
@@ -263,8 +329,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         executionText.setFocusable(true);
         executionText.setFocusableInTouchMode(true);
-        udinspojxxm1Text.setFocusable(true);
-        udinspojxxm1Text.setFocusableInTouchMode(true);
+        normalRadioButton.setFocusable(true);
+        abnormalRadioButton.setFocusableInTouchMode(true);
         udinspojxxm2Text.setFocusable(true);
         udinspojxxm2Text.setFocusableInTouchMode(true);
         udinspojxxm3Text.setFocusable(true);
@@ -343,7 +409,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                         @Override
                         protected void onPostExecute(String s) {
 
-                            Log.i(TAG,"s="+s);
                             super.onPostExecute(s);
                             mProgressDialog.dismiss();
                             try {
@@ -391,55 +456,52 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udinspojxxm1.setType(Constants.UPDATE);
         json.put("TYPE", Constants.UPDATE);
 
-
         if (writemethod.equals("01")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
                 json.put("UDINSPOJXXM2", udinspojxxm2);
             }
 
-        }else if (writemethod.equals("02")) {
+        } else if (writemethod.equals("02")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
                 json.put("UDINSPOJXXM2", udinspojxxm2);
             }
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
                 udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
                 json.put("UDINSPOJXXM3", udinspojxxm3);
             }
-        }
-        else if (writemethod.equals("03")) {
+        } else if (writemethod.equals("03")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
                 json.put("UDINSPOJXXM2", udinspojxxm2);
             }
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
                 udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
                 json.put("UDINSPOJXXM3", udinspojxxm3);
             }
             String udinspojxxm4 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && TextUtils.isEmpty(udinspojxxm4)) {
+            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && !TextUtils.isEmpty(udinspojxxm4)) {
                 udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
                 json.put("UDINSPOJXXM4", udinspojxxm4);
             }
-        }
+        } else if (writemethod.equals("04")) {
 
-        else if (writemethod.equals("04")) {
-            String udinspojxxm = udinspojxxm1Text.getText().toString();
-            if (!udinspojxxm.equals(udinspojxxm1.udinspojxxm1) && TextUtils.isEmpty(udinspojxxm)) {
-                udinspojxxm1.setUdinspojxxm1(udinspojxxm);
+
+            if (!udinspojxxmvalue.equals(udinspojxxm1.udinspojxxm1) && !TextUtils.isEmpty(udinspojxxmvalue)) {
+                udinspojxxm1.setUdinspojxxm1(udinspojxxmvalue);
                 json.put("UDINSPOJXXM1", udinspojxxm);
             }
 
-        }
-        else if (writemethod.equals("05")) {
+        } else if (writemethod.equals("05")) {
+
             String execution = executionText.getText().toString();
-            if (!execution.equals(udinspojxxm1.execution) && TextUtils.isEmpty(execution)) {
+            if (!execution.equals(udinspojxxm1.execution) && !TextUtils.isEmpty(execution)) {
                 udinspojxxm1.setExecution(execution);
                 json.put("EXECUTION", execution);
             }
@@ -481,45 +543,41 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         Udinspojxxm udinspojxxm1 = new Udinspojxxm();
         if (writemethod.equals("01")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
             }
 
-        }else if (writemethod.equals("02")) {
+        } else if (writemethod.equals("02")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
             }
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
                 udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
             }
-        }
-        else if (writemethod.equals("03")) {
+        } else if (writemethod.equals("03")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && TextUtils.isEmpty(udinspojxxm2)) {
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
                 udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
             }
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && TextUtils.isEmpty(udinspojxxm3)) {
+            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
                 udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
             }
             String udinspojxxm4 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && TextUtils.isEmpty(udinspojxxm4)) {
+            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && !TextUtils.isEmpty(udinspojxxm4)) {
                 udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
             }
-        }
+        } else if (writemethod.equals("04")) {
 
-        else if (writemethod.equals("04")) {
-            String udinspojxxm = udinspojxxm1Text.getText().toString();
-            if (!udinspojxxm.equals(udinspojxxm1.udinspojxxm1) && TextUtils.isEmpty(udinspojxxm)) {
-                udinspojxxm1.setUdinspojxxm1(udinspojxxm);
+            if (!udinspojxxmvalue.equals(udinspojxxm1.udinspojxxm1) && !TextUtils.isEmpty(udinspojxxmvalue)) {
+                udinspojxxm1.setUdinspojxxm1(udinspojxxmvalue);
             }
 
-        }
-        else if (writemethod.equals("05")) {
+        } else if (writemethod.equals("05")) {
             String execution = executionText.getText().toString();
-            if (!execution.equals(udinspojxxm1.execution) && TextUtils.isEmpty(execution)) {
+            if (!execution.equals(udinspojxxm1.execution) && !TextUtils.isEmpty(execution)) {
                 udinspojxxm1.setExecution(execution);
             }
 
@@ -532,4 +590,51 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).insert(udinspojxxm1);
     }
 
+
+    private void ActionSheetDialog() {
+        final String[] stringItems = {"拍照", "相册"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(Udinspojxxm_Details_Activity.this, stringItems, null);
+
+        dialog.titleTextColor(getResources().getColor(R.color.light_blue_color_1));
+        dialog.show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { //拍照
+                    photo();
+                } else if (position == 2) { //相册
+
+                }
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private static final int TAKE_PICTURE = 0x000000;
+
+    private String path = "";
+
+    public void photo() {
+        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this), String.valueOf(System.currentTimeMillis())
+                + ".jpg");
+        Log.i(TAG, "file=" + DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this));
+        path = file.getPath();
+        Uri imageUri = Uri.fromFile(file);
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case TAKE_PICTURE:
+                if (Bimp.drr.size() < 9 && resultCode == -1) {
+                    Bimp.drr.add(path);
+                }
+                adapter.update();
+                break;
+        }
+    }
 }

@@ -583,5 +583,17 @@
     <string name="login_successful_text">离线登录成功</string>
 
 
+    <!--缺陷或故障提报单-->
+    <string name="reporttype_text">提报单类别:</string>
+    <string name="culevel_text">缺陷或故障等级:</string>
+    <string name="assettype_text">设备类别:</string>
+    <string name="assetnum_text">设备:</string>
+    <string name="description_text1">描述:</string>
+    <string name="descriptionxx_text">详细描述:</string>
+    <string name="reportby_text">提报人:</string>
+    <string name="reporttime_text">提报日期:</string>
+    <string name="createreport_text">提报单</string>
+    <string name="locaton_text">位置:</string>
+
 
 </resources>

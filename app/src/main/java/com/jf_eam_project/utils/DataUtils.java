@@ -40,6 +40,25 @@ public class DataUtils {
         return DB_NAME;
     }
 
+    public static String getFileImagePath(Context context) {
+        boolean isSdCard = isSdCard();
+        String path = null;
+        if (isSdCard) {
+            path = Constants.PATH_DB + context.getPackageName() + File.separator;
+        } else {
+            path = Constants.NOT_SDCARD_PATH_DB + context.getPackageName() + File.separator;
+        }
+
+        path=path+"Images/";
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+
+        return path;
+    }
+
 
     public static double getDirSize(File file) {
 

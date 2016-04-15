@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.List;
  * 巡检项目标准
  */
 public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmListAdapter.ViewHolder> {
+    private static final String TAG="UdinspojxxmListAdapter";
     Context mContext;
     List<Udinspojxxm> udinspojxxmList = new ArrayList<>();
 
@@ -71,6 +73,8 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
         final Udinspojxxm udinspojxxm = udinspojxxmList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.ud_description_title));
+
+        Log.i(TAG,"udinspojxxmid="+udinspojxxm.udinspojxxmid);
         holder.itemNum.setText(udinspojxxm.udinspojxxmlinenum);
         holder.itemDesc.setText(udinspojxxm.description);
         holder.cardView.setOnClickListener(new View.OnClickListener() {

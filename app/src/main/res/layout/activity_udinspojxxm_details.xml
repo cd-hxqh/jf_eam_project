@@ -224,18 +224,36 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/udinspojxxm1_text"
+                    android:text="是否正常:"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <EditText
-                    android:id="@+id/udinspojxxm_udinspojxxm1_text"
+                <RadioGroup
+                    android:id="@+id/gendergroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:hint="@string/have_not_data"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/udinspojxxm_normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:hint="@string/have_not_data"
+                        android:text="正常"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/dimens_16dp" />
+
+                    <RadioButton
+                        android:id="@+id/udinspojxxm_abnormal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:hint="@string/have_not_data"
+                        android:text="异常"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/dimens_16dp" />
+                </RadioGroup>
             </LinearLayout>
 
             <View
@@ -267,6 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -300,6 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -333,6 +353,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -344,25 +365,16 @@
                 android:background="@drawable/line"
                 android:visibility="gone"></View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/submit_btn_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_selector"
-                    android:gravity="center"
-                    android:text="@string/confirm_btn"
-                    android:textColor="@color/white"
-                    android:visibility="gone" />
-            </LinearLayout>
-
+            <GridView
+                android:id="@+id/noScrollgridview"
+                android:layout_width="290dp"
+                android:layout_height="350dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="@dimen/dimens_10"
+                android:horizontalSpacing="3dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -386,4 +398,22 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/submit_btn_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/button_selector2"
+            android:text="@string/confirm_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </RelativeLayout>

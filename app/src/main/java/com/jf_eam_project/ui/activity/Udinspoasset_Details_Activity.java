@@ -3,6 +3,8 @@ package com.jf_eam_project.ui.activity;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.utils.MessageUtils;
 
 import org.json.JSONArray;
@@ -65,6 +69,8 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
     private TextView assetnumText; //设备
     private TextView assetnumDescText; //设备描述
     private TextView childassetnumText; //设备部件
+
+
 
 
     private Udinspoasset udinspoasset; //设备备件
@@ -130,6 +136,8 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
         deleteBtn = (Button) findViewById(R.id.delete_btn_id);
 
+
+
     }
 
 
@@ -169,6 +177,9 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+
+
+
     }
 
 
@@ -450,7 +461,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
             Intent intent = getIntent();
             intent.setClass(Udinspoasset_Details_Activity.this, Udinspojxxm_Activity.class);
             intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
-            startActivityForResult(intent,0);
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
         }
     };

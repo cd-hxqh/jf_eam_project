@@ -14,7 +14,7 @@ public class Constants {
     /**旧**/
     public static final String HTTP_API_URL = "http://1.202.243.112:7001/maximo/mobile/";
     /**新**/
-//    public static final String HTTP_API_URL = "http://10.1.29.155:7001/maximo/mobile/";
+//    public static final String HTTP_API_URL = "http://10.1.3.45:7003/maximo/mobile/";
 
     /**
      * 登陆URL*
@@ -28,17 +28,17 @@ public class Constants {
     /**旧**/
     public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**新**/
-//    public static String webserviceURL = "http://10.1.29.155:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
+//    public static String webserviceURL = "http://10.1.3.45:7003/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**巡检Url**/
     /**旧**/
     public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
     /**新**/
-//    public static String webserviceUdinsPoURL = "http://10.1.29.155:7001/meaweb/services/COSERVICE";//巡检单接口地址
+//    public static String webserviceUdinsPoURL = "http://10.1.3.45:7003/meaweb/services/COSERVICE";//巡检单接口地址
     /**工作流审批地址**/
     /**旧**/
     public static String webserviceWfserviceURL = "http://1.202.243.112:7001/meaweb/services/WFSERVICE";//审批工作流地址
     /**新**/
-//    public static String webserviceWfserviceURL = "http://10.1.29.155:7001/meaweb/services/WFSERVICE";//审批工作流地址
+//    public static String webserviceWfserviceURL = "http://10.1.3.45:7003/meaweb/services/WFSERVICE";//审批工作流地址
 
 
     /**
