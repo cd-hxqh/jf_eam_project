@@ -373,7 +373,7 @@ public class AddUdinspoActivity extends BaseActivity {
                         protected String doInBackground(String... strings) {
                             String data = submitData();
 
-                            result = getBaseApplication().getWsService().InsertPO(data);
+                            result = getBaseApplication().getWsService().InsertPO(AddUdinspoActivity.this,data);
 
                             return result;
                         }

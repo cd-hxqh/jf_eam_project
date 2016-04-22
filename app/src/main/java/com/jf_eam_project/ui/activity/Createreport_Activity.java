@@ -1,6 +1,12 @@
 package com.jf_eam_project.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -18,15 +26,28 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Createreport;
+import com.jf_eam_project.model.Option;
+import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.model.Wplabor;
+import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.GetNowTime;
+import com.jf_eam_project.utils.JsonUtils;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * 缺陷与故障提报单
@@ -59,6 +80,10 @@ public class Createreport_Activity extends BaseActivity {
     private TextView reporttimeText; //提报日期
 
     /**
+     * 巡检项目标准id*
+     */
+    private String udinspojxxmid;
+    /**
      * 新增*
      */
     private Button addButton;
@@ -66,14 +91,31 @@ public class Createreport_Activity extends BaseActivity {
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
+    /**
+     * 位置*
+     */
+    private String location;
 
-    /**设备类型**/
+    /**
+     * 设备类型*
+     */
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-    /**提报单类别**/
+    /**
+     * 提报单类别*
+     */
     private ArrayList<DialogMenuItem> cMenuItems = new ArrayList<>();
-    /**故障等级**/
+    /**
+     * 故障等级*
+     */
     private ArrayList<DialogMenuItem> tMenuItems = new ArrayList<>();
 
+
+    private DatePickerDialog datePickerDialog;
+    private CumTimePickerDialog timePickerDialog;
+    StringBuffer sb;
+
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +135,8 @@ public class Createreport_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-
+        udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
+        Log.i(TAG, "udinspojxxmid=" + udinspojxxmid);
     }
 
     @Override
@@ -124,10 +167,15 @@ public class Createreport_Activity extends BaseActivity {
         culevelText.setOnClickListener(culevelTextOnClickListener);
 
         assettypeText.setOnClickListener(assettypeTextOnClickListener);
+        assetnumText.setOnClickListener(asstnumTextOnClickListener);
+        locationText.setOnClickListener(locationTextOnClickListener);
+
 
         reportbyText.setText(AccountUtils.getUserName(Createreport_Activity.this));
         reporttimeText.setText(GetNowTime.getTime());
+        setDataListener();
 
+        reporttimeText.setOnClickListener(new MydateListener());
         addButton.setOnClickListener(addButtonOnClickListener);
     }
 
@@ -141,14 +189,18 @@ public class Createreport_Activity extends BaseActivity {
         }
     };
 
-    /**提报单类别**/
+    /**
+     * 提报单类别*
+     */
     private View.OnClickListener reporttypeTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             NormalListDialog1();
         }
     };
-    /**故障等级**/
+    /**
+     * 故障等级*
+     */
     private View.OnClickListener culevelTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -157,7 +209,9 @@ public class Createreport_Activity extends BaseActivity {
     };
 
 
-    /**设备类别**/
+    /**
+     * 设备类别*
+     */
     private View.OnClickListener assettypeTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -165,12 +219,36 @@ public class Createreport_Activity extends BaseActivity {
         }
     };
 
+    /**
+     * 设备*
+     */
+
+    private View.OnClickListener asstnumTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Createreport_Activity.this, OptionActivity.class);
+            intent.putExtra("requestCode", Constants.ASSETCODE);
+            startActivityForResult(intent, Constants.ASSETCODE);
+        }
+    };
+
+    /**
+     * 位置*
+     */
+
+    private View.OnClickListener locationTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Createreport_Activity.this, OptionActivity.class);
+            intent.putExtra("requestCode", Constants.LOCATIONCODE);
+            startActivityForResult(intent, Constants.LOCATIONCODE);
+        }
+    };
 
 
-
-
-
-    /**设备类别**/
+    /**
+     * 设备类别*
+     */
     private void NormalListDialog() {
         final NormalListDialog dialog = new NormalListDialog(Createreport_Activity.this, mMenuItems);
         dialog.title("请选择")//
@@ -188,7 +266,9 @@ public class Createreport_Activity extends BaseActivity {
         });
     }
 
-    /**提报单类别**/
+    /**
+     * 提报单类别*
+     */
     private void NormalListDialog1() {
         final NormalListDialog dialog = new NormalListDialog(Createreport_Activity.this, cMenuItems);
         dialog.title("请选择")//
@@ -206,7 +286,9 @@ public class Createreport_Activity extends BaseActivity {
         });
     }
 
-    /**故障等级**/
+    /**
+     * 故障等级*
+     */
     private void NormalListDialog2() {
         final NormalListDialog dialog = new NormalListDialog(Createreport_Activity.this, tMenuItems);
         dialog.title("请选择")//
@@ -236,6 +318,7 @@ public class Createreport_Activity extends BaseActivity {
 
 
     }
+
     /**
      * 添加数据*
      */
@@ -247,6 +330,7 @@ public class Createreport_Activity extends BaseActivity {
 
 
     }
+
     /**
      * 添加数据*
      */
@@ -260,47 +344,233 @@ public class Createreport_Activity extends BaseActivity {
     }
 
 
-    /**保存提报单信息**/
-    private View.OnClickListener addButtonOnClickListener=new View.OnClickListener() {
+    /**
+     * 保存提报单信息*
+     */
+    private View.OnClickListener addButtonOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            saveReport();
+            if (judge()) {
+
+                encapsulationData();
+            }
         }
     };
 
 
-
-    private String saveReport(){
-        String reporttype=reporttypeText.getText().toString(); //提报单类别
-        String culevel=culevelText.getText().toString(); //缺陷或故障等级
-        String assettype=assettypeText.getText().toString(); //设备类别
-        String assetnum=assetnumText.getText().toString(); //设备
-        String location=locationText.getText().toString(); //位置
-        String description=descriptionText.getText().toString(); //描述
-        String descriptionxx=descriptionxxText.getText().toString(); //详细描述
-        String reportby=reportbyText.getText().toString(); //提报人
-        String reporttime=reporttimeText.getText().toString(); //提报时间
-
-        JSONObject jsonObject=new JSONObject();
-
-        try {
-            jsonObject.put("reporttype",reporttype);
-            jsonObject.put("culevel",culevel);
-            jsonObject.put("assettype",assettype);
-            jsonObject.put("assetnum",assetnum);
-            jsonObject.put("location",location);
-            jsonObject.put("description",description);
-            jsonObject.put("descriptionxx",descriptionxx);
-            jsonObject.put("reportby",reportby);
-            jsonObject.put("reporttime",reporttime);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    /**
+     * 判断提交的信息*
+     */
+    private boolean judge() {
+        if (reporttypeText.getText().toString().equals("")) {
+            MessageUtils.showErrorMessage(Createreport_Activity.this, "提报单类别必填");
+            return false;
         }
-        Log.i(TAG,"jsonObject="+jsonObject.toString());
-
-        return jsonObject.toString();
+        if (culevelText.getText().toString().equals("")) {
+            MessageUtils.showErrorMessage(Createreport_Activity.this, "等级必填");
+            return false;
+        }
+        if (location.equals("")) {
+            MessageUtils.showErrorMessage(Createreport_Activity.this, "位置必填");
+            return false;
+        }
+        if (descriptionText.getText().toString().equals("")) {
+            MessageUtils.showErrorMessage(Createreport_Activity.this, "描述必填");
+            return false;
+        }
+        return true;
     }
 
+
+    private Createreport saveReport() {
+        String reporttype = reporttypeText.getText().toString(); //提报单类别
+        String culevel = culevelText.getText().toString(); //缺陷或故障等级
+        String assettype = assettypeText.getText().toString(); //设备类别
+        String assetnum = assetnumText.getText().toString(); //设备
+//        String location = locationText.getText().toString(); //位置
+        String description = descriptionText.getText().toString(); //描述
+        String descriptionxx = descriptionxxText.getText().toString(); //详细描述
+        String reportby = reportbyText.getText().toString(); //提报人
+        String reporttime = reporttimeText.getText().toString(); //提报时间
+        Createreport createreport = new Createreport();
+        if (reporttype.equals("故障提报单")) {
+            createreport.setReporttype("FAULT");
+        } else {
+            createreport.setReporttype("HIDDEN");
+        }
+        createreport.setUdinspojxxmid(udinspojxxmid);
+        createreport.setCulevel(culevel);
+        createreport.setAssettype(assettype);
+        createreport.setAssetnum(assetnum);
+        createreport.setLocation(location);
+        createreport.setDescription(description);
+        createreport.setDescriptionxx(descriptionxx);
+        createreport.setReportby(reportby);
+        createreport.setReporttime(reporttime);
+        return createreport;
+    }
+
+
+    /**
+     * 设置时间选择器*
+     */
+    private void setDataListener() {
+
+        final Calendar objTime = Calendar.getInstance();
+        int iYear = objTime.get(Calendar.YEAR);
+        int iMonth = objTime.get(Calendar.MONTH);
+        int iDay = objTime.get(Calendar.DAY_OF_MONTH);
+        int hour = objTime.get(Calendar.HOUR_OF_DAY);
+
+        int minute = objTime.get(Calendar.MINUTE);
+
+
+        datePickerDialog = new DatePickerDialog(this, new datelistener(), iYear, iMonth, iDay);
+        timePickerDialog = new CumTimePickerDialog(this, new timelistener(), hour, minute, true);
+    }
+
+    private class MydateListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            sb = new StringBuffer();
+            datePickerDialog.show();
+        }
+    }
+
+    private class datelistener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            sb = new StringBuffer();
+            monthOfYear = monthOfYear + 1;
+            if (dayOfMonth < 10) {
+                sb.append(year + "-" + monthOfYear + "-" + "0" + dayOfMonth);
+            } else {
+                sb.append(year + "-" + monthOfYear + "-" + dayOfMonth);
+            }
+            timePickerDialog.show();
+        }
+    }
+
+    private class timelistener implements TimePickerDialog.OnTimeSetListener {
+        @Override
+        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+            sb.append(" ");
+            if (i1 < 10) {
+                sb.append(i + ":" + "0" + i1 + ":00");
+            } else {
+                sb.append(i + ":" + i1 + ":00");
+            }
+            reporttimeText.setText(sb);
+        }
+    }
+
+
+    /**
+     * 数据封装*
+     */
+    private void encapsulationData() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Createreport_Activity.this);
+        builder.setMessage("确定新增提报单吗？").setTitle("提示")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                mProgressDialog = ProgressDialog.show(Createreport_Activity.this, null,
+                        getString(R.string.inputing), true, true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.setCancelable(false);
+
+                if (NetWorkHelper.isNetwork(Createreport_Activity.this)) {
+                    MessageUtils.showMiddleToast(Createreport_Activity.this, "暂无网络,现离线保存数据!");
+                    mProgressDialog.dismiss();
+                    setResult(Constants.REFRESH);
+                    finish();
+                } else {
+
+
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            String data = null;
+                            Createreport createreport = saveReport();
+                            data = JsonUtils.saveReport(createreport);
+                            Log.i(TAG, "data=" + data);
+                            String result = getBaseApplication().getWsService().addReport(Createreport_Activity.this,data, "");
+                            Log.i(TAG, "result=" + result);
+                            return result;
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+
+                            super.onPostExecute(s);
+                            mProgressDialog.dismiss();
+                            try {
+                                if (s != null) {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String Msg = jsonObject.getString("Msg");
+                                    String errorNo = jsonObject.getString("errorNo");
+                                    if (errorNo.equals("0")) {
+                                        MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增成功");
+
+                                    } else {
+                                        MessageUtils.showMiddleToast(Createreport_Activity.this, Msg);
+                                    }
+                                    setResult(Constants.REFRESH);
+                                    finish();
+                                } else {
+                                    MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增失败");
+                                    setResult(Constants.REFRESH);
+                                    finish();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增失败");
+                                setResult(Constants.REFRESH);
+                                finish();
+                            }
+
+
+                        }
+                    }.execute();
+                }
+            }
+        }).create().show();
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        switch (resultCode) {
+            case Constants.ASSETCODE:
+                option = (Option) data.getSerializableExtra("option");
+                assetnumText.setText(option.getName());
+                location = option.getValue();
+                locationText.setText(option.getValue());
+                if (new LocationDao(Createreport_Activity.this).queryLocation(option.getValue()) != null) {
+                    locationText.setText(new LocationDao(Createreport_Activity.this).queryLocation(option.getValue()).description);
+                }
+                break;
+            case Constants.LOCATIONCODE:
+                option = (Option) data.getSerializableExtra("option");
+                locationText.setText(option.getName());
+                break;
+
+            default:
+                break;
+        }
+    }
 
 
 }

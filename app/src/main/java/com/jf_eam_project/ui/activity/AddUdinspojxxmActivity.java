@@ -206,7 +206,7 @@ public class AddUdinspojxxmActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                String result = getBaseApplication().getWsService().UpdatePO(data, udinspoassetnum);
+                String result = getBaseApplication().getWsService().UpdatePO(AddUdinspojxxmActivity.this,data, udinspoassetnum);
 
                 return result;
             }

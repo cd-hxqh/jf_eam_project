@@ -2,24 +2,36 @@ package com.jf_eam_project.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 import com.umeng.update.UmengUpdateAgent;
+
+import java.util.ArrayList;
 
 
 /**
@@ -38,6 +50,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private boolean isRemember; //记住密码
 
+    private TextView setIpTextView; //设置服务器地址
+
 
     String userName; //用户名
 
@@ -45,10 +59,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     String imei; //imei
 
+    /**
+     * 服务器地址
+     */
+    private ArrayList<DialogMenuItem> cMenuItems = new ArrayList<>();
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
         setUmeng();
 
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
@@ -56,6 +78,45 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         findViewById();
         initView();
+        addAddressData();
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addAddressData() {
+        String[] lctypes = getResources().getStringArray(R.array.address_text);
+
+        for (int i = 0; i < lctypes.length; i++)
+            cMenuItems.add(new DialogMenuItem(lctypes[i], 0));
+
+
+    }
+
+    /**
+     * 设置服务器地址
+     */
+    private void NormalListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(LoginActivity.this, cMenuItems);
+        dialog.title("请选择服务器地址")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                AccountUtils.setIpAddress(LoginActivity.this, cMenuItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 设置服务器地址*
+     */
+    private void setIpAddress() {
+
     }
 
     private void setUmeng() {
@@ -70,6 +131,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mPassword = (EditText) findViewById(R.id.user_login_password);
         checkBox = (CheckBox) findViewById(R.id.isremenber_password);
         mLogin = (Button) findViewById(R.id.user_login);
+
+        setIpTextView = (TextView) findViewById(R.id.ip_address_text);
     }
 
     @Override
@@ -77,12 +140,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
 //        if (isChecked) {
-            mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
-            mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
+        mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
+        mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
 //        }
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
+
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
+        setIpTextView.setOnClickListener(setIpTextViewOnClickListener);
     }
+
+    private View.OnClickListener setIpTextViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NormalListDialog();
+        }
+    };
+
 
     private CompoundButton.OnCheckedChangeListener cheBoxOnCheckedChangListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -110,7 +187,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         login();
                     }
-
                 }
                 break;
 
@@ -158,8 +234,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         MessageUtils.showMiddleToast(LoginActivity.this, data);
                         mProgressDialog.dismiss();
 //                        if (isRemember) {
-                            AccountUtils.setChecked(LoginActivity.this, isRemember);
-                            AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
+                        AccountUtils.setChecked(LoginActivity.this, isRemember);
+                        AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
 //                        }
                         getBaseApplication().setUsername(mUsername.getText().toString());
                         startIntent();

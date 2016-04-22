@@ -2,17 +2,26 @@ package com.jf_eam_project.config;
 
 import android.content.Context;
 
+import com.jf_eam_project.utils.AccountUtils;
+
 /**
  * Created by think on 2015/10/19.
  */
 public class Constants {
 
+
+    public static final String HTTP_API_IP= "http://1.202.243.112:7001/";
+
     /**
      * 基础接口*
      */
 //    public static final String HTTP_API_URL = "http://1.202.243.112/maximo/mobile/";
-    /**旧**/
+
+    /**
+     * 旧*
+     */
     public static final String HTTP_API_URL = "http://1.202.243.112:7001/maximo/mobile/";
+
     /**新**/
 //    public static final String HTTP_API_URL = "http://10.1.3.45:7003/maximo/mobile/";
 
@@ -22,24 +31,35 @@ public class Constants {
 
     public static final String SIGN_IN_URL = HTTP_API_URL + "system/login";
 
+
     /**
      *工单URL*
      */
-    /**旧**/
+    /**
+     * 旧*
+     */
     public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**新**/
 //    public static String webserviceURL = "http://10.1.3.45:7003/meaweb/services/MOBILESERVICE";//webservice接口地址
     /**巡检Url**/
-    /**旧**/
+    /**
+     * 旧*
+     */
     public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
     /**新**/
 //    public static String webserviceUdinsPoURL = "http://10.1.3.45:7003/meaweb/services/COSERVICE";//巡检单接口地址
     /**工作流审批地址**/
-    /**旧**/
+    /**
+     * 旧*
+     */
     public static String webserviceWfserviceURL = "http://1.202.243.112:7001/meaweb/services/WFSERVICE";//审批工作流地址
     /**新**/
 //    public static String webserviceWfserviceURL = "http://10.1.3.45:7003/meaweb/services/WFSERVICE";//审批工作流地址
 
+    /**
+     * 故障权限提报单*
+     */
+    public static String webserviceCreatereportURL = "http://1.202.243.112:7001/meaweb/services/UDRPSERVICE";//故障缺陷提报单
 
     /**
      * 通用接口查询*
@@ -86,7 +106,9 @@ public class Constants {
     //工作流状态
     public static final String WFINSTANCE_NAME = "WFINSTANCE";
 
-    /**巡检管理**/
+    /**
+     * 巡检管理*
+     */
     //巡检单的appid
     public static final String UDINSPO_APPID = "UDINSPOA";
     //巡检单的表名
@@ -168,7 +190,9 @@ public class Constants {
     //库存查询的表名
     public static final String INVENTORY_NAME = "INVENTORY";
 
-    /**物资编码申请**/
+    /**
+     * 物资编码申请*
+     */
     //物资编码申请appid
     public static final String UDITEMREQ_APPID = "UDITEM";
     //物资编码申请主表
@@ -176,7 +200,9 @@ public class Constants {
     //物资编码申请主表
     public static final String UDITEMREQLINE_NAME = "UDITEMREQLINE";
 
-    /**物资借用归还主表**/
+    /**
+     * 物资借用归还主表*
+     */
     //物资借用归还主表appid
     public static final String UDITEM_APPID = "UDITEM";
     //物资借用归还主表
@@ -211,7 +237,7 @@ public class Constants {
      * 工单跳转类型标识
      */
     public static final String PLAN = "PLAN";//计划工单
-//    public static final String PROJECT = "PROJECT";//项目工单
+    //    public static final String PROJECT = "PROJECT";//项目工单
     public static final String UNPLAN = "UNPLAN";//非计划工单
 
     /**
@@ -226,7 +252,7 @@ public class Constants {
     public static final int CRAFTRATE = 170;
     public static final int ITEM = 180;
     public static final int LABORCRAFTRATE = 190;
-    public static final int PERSON=160;
+    public static final int PERSON = 160;
 
 
     public static final String WAIT_APPROVAL = "等待核准";
@@ -244,7 +270,9 @@ public class Constants {
      * 无SD卡的数据库路径
      */
     public static final String NOT_SDCARD_PATH_DB = "/data/data/";
-    /** 数据库名称 **/
+    /**
+     * 数据库名称 *
+     */
     public static final String TB_NAME = "sqlite-jf.db";
 
     public static String getWsUrl(Context context) {
@@ -256,21 +284,31 @@ public class Constants {
     }
 
 
-    /**交互类型**/
+    /**
+     * 交互类型*
+     */
     public static final String ADD = "add"; //新增
     public static final String UPDATE = "update"; //更新
     public static final String DELETE = "delete"; //删除
 
 
-    /**刷新标识**/
-    public static final int REFRESH=10000;
+    /**
+     * 刷新标识*
+     */
+    public static final int REFRESH = 10000;
 
-    /**巡检单入口**/
-    public static final int ENTRANCE_1=1000;
-    public static final int ENTRANCE_2=1001;
+    /**
+     * 巡检单入口*
+     */
+    public static final int ENTRANCE_1 = 1000;
+    public static final int ENTRANCE_2 = 1001;
 
-    /**修改**/
-    public static final int MODIFICATION_MARK=10001;
-    /**删除**/
-    public static final int DELETE_MARK=10002;
+    /**
+     * 修改*
+     */
+    public static final int MODIFICATION_MARK = 10001;
+    /**
+     * 删除*
+     */
+    public static final int DELETE_MARK = 10002;
 }

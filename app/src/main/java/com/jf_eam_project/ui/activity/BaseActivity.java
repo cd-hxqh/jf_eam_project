@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.utils.AccountUtils;
 
 
 public abstract class BaseActivity extends ActionBarActivity {
@@ -34,17 +35,19 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     private ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppManager.getInstance().addActivity(this);
-
+        AccountUtils.setIpAddress(BaseActivity.this, Constants.HTTP_API_IP);
         tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         myshared = this.getSharedPreferences(Constants.USER_INFO, Context.MODE_PRIVATE);
         baseApplication = (BaseApplication) getApplication();
     }
+
 
     /**
      * 绑定控件id
@@ -59,7 +62,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     /**
      *
      */
-    protected BaseApplication getBaseApplication(){
+    protected BaseApplication getBaseApplication() {
         return baseApplication;
     }
 
@@ -116,7 +119,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     public void showProgressDialog(String message) {
 
 
-
         if (progressDialog != null) {
             progressDialog.cancel();
         }
@@ -128,8 +130,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
 
-    /**关闭进度条**/
-    public void closeProgressDialog(){
+    /**
+     * 关闭进度条*
+     */
+    public void closeProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }

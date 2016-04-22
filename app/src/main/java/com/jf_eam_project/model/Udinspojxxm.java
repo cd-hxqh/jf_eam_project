@@ -10,7 +10,6 @@ import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * 设备及部件
- *
  */
 @JsonType
 @DatabaseTable(tableName = "Udinspojxxm")
@@ -88,6 +87,10 @@ public class Udinspojxxm extends Entity {
     @DatabaseField(columnName = "udinspojxxm9")
     @JsonField(fieldName = "udinspojxxm9")
     public String udinspojxxm9;//检查标准
+
+    @DatabaseField(columnName = "reportnum")
+    @JsonField(fieldName = "reportnum")
+    public String reportnum;//
 
     public String type; //操作类型
 
@@ -227,5 +230,14 @@ public class Udinspojxxm extends Entity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public String getReportnum() {
+        return reportnum;
+    }
+
+    public void setReportnum(String reportnum) {
+        this.reportnum = reportnum;
     }
 }

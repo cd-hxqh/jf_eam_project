@@ -10,7 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 
 public class FileUtils {
-	
+	private static final String TAG="FileUtils";
 	public static String SDPATH = Environment.getExternalStorageDirectory()
 			+ "/formats/";
 
@@ -52,17 +52,21 @@ public class FileUtils {
 		file.isFile();
 		return file.exists();
 	}
-	
+
+	/**删除文件**/
 	public static void delFile(String fileName){
-		File file = new File(SDPATH + fileName);
+
+		Log.i(TAG,"fileName="+fileName);
+		File file = new File(fileName);
 		if(file.isFile()){
 			file.delete();
         }
 		file.exists();
 	}
 
-	public static void deleteDir() {
-		File dir = new File(SDPATH);
+	/**删除文件目录**/
+	public static void deleteDir(String filePath) {
+		File dir = new File(filePath);
 		if (dir == null || !dir.exists() || !dir.isDirectory())
 			return;
 		
@@ -70,7 +74,7 @@ public class FileUtils {
 			if (file.isFile())
 				file.delete(); // 删除所有文件
 			else if (file.isDirectory())
-				deleteDir(); // 递规的方式删除文件夹
+				deleteDir(filePath); // 递规的方式删除文件夹
 		}
 		dir.delete();// 删除目录本身
 	}

@@ -363,7 +363,7 @@ public class Udinspojxxm_History_Activity extends BaseActivity implements SwipeR
                                         e.printStackTrace();
                                     }
 
-                                    result = getBaseApplication().getWsService().UpdatePO(data, "");
+                                    result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_History_Activity.this,data, "");
                                 }
                             }
                             return result;

@@ -215,7 +215,7 @@ public class Wfm_Details_Activity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String result = getBaseApplication().getWfService().wfGoOn(wfm.getProcessname(), wfm.getOwnertable(), id, wfm.getOwnertable() + "ID", zx, desc);
+                String result = getBaseApplication().getWfService().wfGoOn(Wfm_Details_Activity.this,wfm.getProcessname(), wfm.getOwnertable(), id, wfm.getOwnertable() + "ID", zx, desc);
                 return result;
             }
 

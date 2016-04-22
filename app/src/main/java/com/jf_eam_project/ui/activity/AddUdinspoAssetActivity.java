@@ -361,7 +361,7 @@ public class AddUdinspoAssetActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                String result = getBaseApplication().getWsService().UpdatePO(data, insponum);
+                String result = getBaseApplication().getWsService().UpdatePO(AddUdinspoAssetActivity.this,data, insponum);
 
                 return result;
             }

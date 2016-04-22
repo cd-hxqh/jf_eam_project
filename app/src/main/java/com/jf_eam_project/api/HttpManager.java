@@ -8,6 +8,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.utils.AccountUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -38,14 +39,14 @@ public class HttpManager {
      */
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
-
-
+        String loginIp= AccountUtils.getIpAddress(cxt)+"maximo/mobile/system/login";
+        Log.i(TAG,"loginIp="+loginIp);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("loginid", username);
         params.put("password", password);
         params.put("imei", imei);
-        client.post(Constants.SIGN_IN_URL, params, new TextHttpResponseHandler() {
+        client.post(loginIp, params, new TextHttpResponseHandler() {
 
 
             @Override
@@ -470,11 +471,13 @@ public class HttpManager {
      * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
+
+        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
         client.setTimeout(600000);
-        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
+        client.get(base_url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 SafeHandler.onFailure(handler, "查询失败");
@@ -495,11 +498,12 @@ public class HttpManager {
      * 不分页获取信息方法*
      */
     public static void getData1(final Context cxt, String data, final HttpRequestHandler<String> handler) {
+        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
         client.setTimeout(600000);
-        client.get(Constants.BASE_URL, params, new AsyncHttpResponseHandler() {
+        client.get(base_url, params, new AsyncHttpResponseHandler() {
 
 
             @Override
@@ -556,10 +560,11 @@ public class HttpManager {
      */
     public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
         Log.i(TAG, "data=" + data);
+        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
-        client.get(Constants.BASE_URL, params, new TextHttpResponseHandler() {
+        client.get(base_url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));

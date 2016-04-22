@@ -117,6 +117,10 @@ public final class Udinspojxxm_Jsonhelper
             instance.udinspojxxm8 = jp.getValueAsString();
             return true;
         }
+        else if ("REPORTNUM".equals(fieldName)) {
+            instance.reportnum = jp.getValueAsString();
+            return true;
+        }
         return false;
     }
 

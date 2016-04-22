@@ -17,12 +17,17 @@ import com.jf_eam_project.utils.Bimp;
 import com.jf_eam_project.utils.FileUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GridAdapter extends BaseAdapter {
+    private static final String TAG = "GridAdapter";
     private LayoutInflater inflater; // 视图容器
     private int selectedPosition = -1;// 选中的位置
     private boolean shape;
     private Context context;
+
 
     public boolean isShape() {
         return shape;
@@ -114,6 +119,7 @@ public class GridAdapter extends BaseAdapter {
             public void run() {
                 while (true) {
                     if (Bimp.max == Bimp.drr.size()) {
+
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
@@ -121,7 +127,7 @@ public class GridAdapter extends BaseAdapter {
                     } else {
                         try {
                             String path = Bimp.drr.get(Bimp.max);
-                            System.out.println(path);
+                            Log.i(TAG, "path=" + path);
                             Bitmap bm = Bimp.revitionImageSize(path);
                             Bimp.bmp.add(bm);
                             String newStr = path.substring(

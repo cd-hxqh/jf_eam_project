@@ -275,7 +275,7 @@ public class Udinspoasset_Details_Activity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                String result = getBaseApplication().getWsService().UpdatePO(data, udinspoasset.udinspoassetnum);
+                String result = getBaseApplication().getWsService().UpdatePO(Udinspoasset_Details_Activity.this,data, udinspoasset.udinspoassetnum);
 
                 return result;
             }

@@ -164,7 +164,7 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this,1);
+        workListAdapter = new WorkListAdapter(this, 1);
         recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -185,14 +185,14 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
     }
 
     private void getData(String search) {
-        if(search.equals("")){
+        if (search.equals("")) {
             list = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
-        }else {
+        } else {
             list = (ArrayList<WorkOrder>) workOrderDao.queryByWonum(search);
         }
-        if(list != null&&list.size()!=0) {
+        if (list != null && list.size() != 0) {
             workListAdapter.adddate(list);
-        }else {
+        } else {
             nodatalayout.setVisibility(View.VISIBLE);
         }
         workListAdapter.setOnLongClickListener(new WorkListAdapter.OnLongClickListener() {
@@ -231,7 +231,7 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    workListAdapter = new WorkListAdapter(Work_History_ListActivity.this,1);
+                    workListAdapter = new WorkListAdapter(Work_History_ListActivity.this, 1);
                     recyclerView.setAdapter(workListAdapter);
                     getData(searchText);
                     return true;
@@ -344,7 +344,7 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                                             final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), getWoactivityList(chooseList.get(i).id),
                                                     getWplaborList(chooseList.get(i).id), getWpmaterialList(chooseList.get(i).id),
                                                     getAssignmentList(chooseList.get(i).id), getLabtransList(chooseList.get(i).id));
-                                            result = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                                            result = getBaseApplication().getWsService().InsertWO(Work_History_ListActivity.this, updataInfo, getBaseApplication().getUsername());
                                         }
                                     }
                                     return result;
@@ -376,7 +376,7 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                 });
     }
 
-    private void deleteList(ArrayList<WorkOrder> list){
+    private void deleteList(ArrayList<WorkOrder> list) {
         for (int i = 0; i < list.size(); i++) {
             new WoactivityDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
             new WplaborDao(Work_History_ListActivity.this).deleteByWonum(list.get(i).id);
@@ -387,23 +387,23 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         new WorkOrderDao(Work_History_ListActivity.this).deleteList(list);
     }
 
-    private ArrayList<Woactivity> getWoactivityList(int workorderid){
+    private ArrayList<Woactivity> getWoactivityList(int workorderid) {
         return (ArrayList<Woactivity>) new WoactivityDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
-    private ArrayList<Wplabor> getWplaborList(int workorderid){
+    private ArrayList<Wplabor> getWplaborList(int workorderid) {
         return (ArrayList<Wplabor>) new WplaborDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
-    private ArrayList<Wpmaterial> getWpmaterialList(int workorderid){
+    private ArrayList<Wpmaterial> getWpmaterialList(int workorderid) {
         return (ArrayList<Wpmaterial>) new WpmeterialDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
-    private ArrayList<Assignment> getAssignmentList(int workorderid){
+    private ArrayList<Assignment> getAssignmentList(int workorderid) {
         return (ArrayList<Assignment>) new AssignmentDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 
-    private ArrayList<Labtrans> getLabtransList(int workorderid){
+    private ArrayList<Labtrans> getLabtransList(int workorderid) {
         return (ArrayList<Labtrans>) new LabtransDao(Work_History_ListActivity.this).queryByWonum(workorderid);
     }
 

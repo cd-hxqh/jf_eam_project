@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -53,6 +54,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 检修项目标准
@@ -156,6 +160,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private String writemethod;
 
     private String udinspojxxmvalue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,6 +299,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                 if (arg2 == Bimp.bmp.size()) {
                     ActionSheetDialog();
                 } else {
+                    Intent intent = new Intent(Udinspojxxm_Details_Activity.this,
+                            PhotoActivity.class);
+                    intent.putExtra("ID", arg2);
+                    startActivity(intent);
                 }
             }
         });
@@ -319,9 +328,14 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 //            submitBtn.setVisibility(View.VISIBLE);
 //            //设置编辑状态
 //            statusEdit();
+            if (udinspojxxm.reportnum.equals("")) {
 
-            Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
-            startActivityForResult(intent, 0);
+                Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+                intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
+                startActivityForResult(intent, 0);
+            } else {
+                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "已生成缺陷或故障提报单！");
+            }
         }
     };
 
@@ -401,7 +415,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                                 e.printStackTrace();
                             }
 
-                            String result = getBaseApplication().getWsService().UpdatePO(data, "");
+                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this,data, "");
 
                             return result;
                         }
@@ -592,7 +606,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
     private void ActionSheetDialog() {
-        final String[] stringItems = {"拍照", "相册"};
+        final String[] stringItems = {"拍照"};
         final ActionSheetDialog dialog = new ActionSheetDialog(Udinspojxxm_Details_Activity.this, stringItems, null);
 
         dialog.titleTextColor(getResources().getColor(R.color.light_blue_color_1));
@@ -602,9 +616,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) { //拍照
                     photo();
-                } else if (position == 2) { //相册
-
                 }
+//                else if (position == 1) { //相册
+//                    PhotoAlbum();
+//                }
                 dialog.dismiss();
             }
         });
@@ -616,25 +631,41 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private String path = "";
 
     public void photo() {
+        String fileName = DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this, udinspojxxm.udinspojxxmid + "");
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this), String.valueOf(System.currentTimeMillis())
-                + ".jpg");
-        Log.i(TAG, "file=" + DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this));
+        File file = new File(fileName, String.valueOf(System.currentTimeMillis())
+                + ".JPEG");
         path = file.getPath();
         Uri imageUri = Uri.fromFile(file);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
+    /**
+     * 相册选择*
+     */
+    private void PhotoAlbum() {
+        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, ShowImageActivity.class);
+        startActivityForResult(intent, 0);
+    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (Bimp.drr.size() < 9 && resultCode == -1) {
                     Bimp.drr.add(path);
                 }
-                adapter.update();
+//                adapter.update();
                 break;
         }
+    }
+
+
+    @Override
+    protected void onRestart() {
+
+        adapter.update();
+        super.onRestart();
     }
 }

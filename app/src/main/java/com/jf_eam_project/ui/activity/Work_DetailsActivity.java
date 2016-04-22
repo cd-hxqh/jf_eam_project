@@ -461,7 +461,7 @@ public class Work_DetailsActivity extends BaseActivity {
             new AsyncTask<String, String, String>() {
                 @Override
                 protected String doInBackground(String... strings) {
-                    reviseresult = getBaseApplication().getWsService().UpdataWO(finalUpdataInfo, wonum.getText().toString());
+                    reviseresult = getBaseApplication().getWsService().UpdataWO(Work_DetailsActivity.this,finalUpdataInfo, wonum.getText().toString());
                     return reviseresult;
                 }
 
@@ -670,7 +670,7 @@ public class Work_DetailsActivity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", wonum, "WONUM");
+                String result = getBaseApplication().getWfService().startwf(Work_DetailsActivity.this,"UDFJHWO", "WORKORDER", wonum, "WONUM");
                 return result;
             }
 
@@ -701,7 +701,7 @@ public class Work_DetailsActivity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String result = getBaseApplication().getWfService().wfGoOn("UDFJHWO", "WORKORDER", wonum, "WONUM", zx, desc);
+                String result = getBaseApplication().getWfService().wfGoOn(Work_DetailsActivity.this,"UDFJHWO", "WORKORDER", wonum, "WONUM", zx, desc);
                 return result;
             }
 

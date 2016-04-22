@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ import java.util.List;
  */
 public class Work_AddNewActivity extends BaseActivity {
 
+    private static final String TAG="Work_AddNewActivity";
     private WorkOrder workOrder = new WorkOrder();
     private TextView titlename;
     private ImageView menuImageView;
@@ -243,7 +245,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (wonumlayout.getVisibility()==View.GONE) {
+            if (wonumlayout.getVisibility() == View.GONE) {
                 final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
                 dialog.content("确定放弃新增吗?")//
                         .showAnim(mBasIn)//
@@ -264,7 +266,7 @@ public class Work_AddNewActivity extends BaseActivity {
                                 Work_AddNewActivity.this.finish();
                             }
                         });
-            }else {
+            } else {
                 Work_AddNewActivity.this.finish();
             }
         }
@@ -353,7 +355,8 @@ public class Work_AddNewActivity extends BaseActivity {
                     new AsyncTask<String, String, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
-                            addresult = getBaseApplication().getWsService().InsertWO(updataInfo, getBaseApplication().getUsername());
+                            addresult = getBaseApplication().getWsService().InsertWO(Work_AddNewActivity.this, updataInfo, getBaseApplication().getUsername());
+                            Log.i(TAG, "addresult=" + addresult);
                             return addresult;
                         }
 
@@ -361,9 +364,9 @@ public class Work_AddNewActivity extends BaseActivity {
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
                             if (s == null || s.equals("")) {
-                                Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                                MessageUtils.showMiddleToast(Work_AddNewActivity.this, "新增工单是败");
                             } else if (!NumberUtils.isDigits(s)) {
-                                Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
+                                MessageUtils.showMiddleToast(Work_AddNewActivity.this, s);
                             } else {
                                 Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
                                 wonumlayout.setVisibility(View.VISIBLE);
@@ -406,7 +409,7 @@ public class Work_AddNewActivity extends BaseActivity {
                                 new AsyncTask<String, String, String>() {
                                     @Override
                                     protected String doInBackground(String... strings) {
-                                        result = getBaseApplication().getWfService().startwf("UDFJHWO", "WORKORDER", addresult, "WONUM");
+                                        result = getBaseApplication().getWfService().startwf(Work_AddNewActivity.this, "UDFJHWO", "WORKORDER", addresult, "WONUM");
                                         return result;
                                     }
 
@@ -415,10 +418,10 @@ public class Work_AddNewActivity extends BaseActivity {
                                         super.onPostExecute(s);
                                         if (s == null || s.equals("")) {
                                             Toast.makeText(Work_AddNewActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                                        } else if (s.equals("工作流启动成功")){
+                                        } else if (s.equals("工作流启动成功")) {
                                             Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
                                             Work_AddNewActivity.this.finish();
-                                        }else {
+                                        } else {
                                             Toast.makeText(Work_AddNewActivity.this, s, Toast.LENGTH_SHORT).show();
                                         }
                                         mProgressDialog.dismiss();

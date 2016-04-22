@@ -41,7 +41,7 @@ public class DataUtils {
         return DB_NAME;
     }
 
-    public static String getFileImagePath(Context context) {
+    public static String getFileImagePath(Context context,String udinspojxxmid) {
         boolean isSdCard = isSdCard();
         String path = null;
         if (isSdCard) {
@@ -50,7 +50,7 @@ public class DataUtils {
             path = Constants.NOT_SDCARD_PATH_DB + context.getPackageName() + File.separator;
         }
 
-        path=path+"Images/";
+        path=path+"Images/"+udinspojxxmid;
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();

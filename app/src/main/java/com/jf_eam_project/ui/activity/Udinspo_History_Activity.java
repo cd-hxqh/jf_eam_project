@@ -355,7 +355,7 @@ public class Udinspo_History_Activity extends BaseActivity implements SwipeRefre
                                 for (int i = 0; i < chooseList.size(); i++) {
                                     String data = submitData(chooseList.get(i));
 
-                                    result = getBaseApplication().getWsService().InsertPO(data);
+                                    result = getBaseApplication().getWsService().InsertPO(Udinspo_History_Activity.this,data);
                                 }
                             }
                             return result;

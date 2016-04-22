@@ -1,11 +1,13 @@
 package com.jf_eam_project.webserviceclient;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Webservice_result;
+import com.jf_eam_project.utils.AccountUtils;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -55,7 +57,8 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String InsertWO(String string, String personId) {
+    public String InsertWO(Context context,String string, String personId) {
+        String url=AccountUtils.getIpAddress(context)+"meaweb/services/MOBILESERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -88,7 +91,8 @@ public class AndroidClientService {
     /**
      * 更新工单
      */
-    public String UpdataWO(String string, String wonum) {
+    public String UpdataWO(Context context,String string, String wonum) {
+        String url=AccountUtils.getIpAddress(context)+"meaweb/services/MOBILESERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -122,9 +126,8 @@ public class AndroidClientService {
      *
      * @return
      */
-    public String startwf(String processname, String mbo, String keyValue, String key) {
-
-        Log.i(TAG, "processname=" + processname + ",mbo=" + mbo + ",keyValue=" + keyValue + ",key=" + key);
+    public String startwf(Context context,String processname, String mbo, String keyValue, String key) {
+        String url=AccountUtils.getIpAddress(context)+"meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -158,9 +161,9 @@ public class AndroidClientService {
      *
      * @return
      */
-    public String wfGoOn(String processname, String mbo, String keyValue, String key, String zx, String desc) {
+    public String wfGoOn(Context context,String processname, String mbo, String keyValue, String key, String zx, String desc) {
 
-        Log.i(TAG, "processname=" + processname + ",mbo=" + mbo + ",keyValue=" + keyValue + ",key=" + key + ",zx=" + zx + ",desc=" + desc);
+        String url= AccountUtils.getIpAddress(context)+"meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -178,7 +181,6 @@ public class AndroidClientService {
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
-            Log.i(TAG, "232123212");
             return null;
         } catch (XmlPullParserException e) {
             return null;
@@ -201,8 +203,8 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String InsertPO(String string) {
-
+    public String InsertPO(Context context,String string) {
+        String url= AccountUtils.getIpAddress(context)+"meaweb/services/COSERVICE";
         Log.i(TAG, "string=" + string);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -210,7 +212,7 @@ public class AndroidClientService {
         SoapObject soapReq = new SoapObject(NAMESPACE, "coserviceinsertCheckOrder");
         soapReq.addProperty("json", string);
         soapEnvelope.setOutputSoapObject(soapReq);
-        HttpTransportSE httpTransport = new HttpTransportSE(Constants.webserviceUdinsPoURL, timeOut);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
@@ -235,12 +237,10 @@ public class AndroidClientService {
     /**
      * 更新巡检
      *
-     * @param string
      * @return
      */
-    public String UpdatePO(String string, String key) {
-
-        Log.i(TAG, "string=" + string + ",key=" + key);
+    public String UpdatePO(Context context,String string, String key) {
+        String url= AccountUtils.getIpAddress(context)+"meaweb/services/COSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -250,7 +250,45 @@ public class AndroidClientService {
             soapReq.addProperty("key", key);
         }
         soapEnvelope.setOutputSoapObject(soapReq);
-        HttpTransportSE httpTransport = new HttpTransportSE(Constants.webserviceUdinsPoURL, timeOut);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+            return null;
+        }
+        String obj = null;
+        String result = null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            result = obj;
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 新增提报单
+     *
+     * @param string
+     * @return
+     */
+    public String addReport(Context context,String string, String key) {
+        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "udrpserviceinsertReport");
+        soapReq.addProperty("json", string);
+        if (!key.equals("")) {
+            soapReq.addProperty("key", key);
+        }
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException e) {
