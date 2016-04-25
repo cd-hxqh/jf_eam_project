@@ -251,6 +251,66 @@
                 android:layout_width="100dp"
                 android:layout_height="@dimen/dimen_40dp"
                 android:gravity="center_vertical"
+                android:text="@string/work_isxq"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <CheckBox
+                android:id="@+id/work_isxq"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:button="@drawable/umeng_update_button_check_selector"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_isyhpc"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <CheckBox
+                android:id="@+id/work_isyhpc"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:button="@drawable/umeng_update_button_check_selector"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
                 android:text="@string/work_status"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
@@ -272,37 +332,37 @@
             android:layout_height="1dp"
             android:background="@drawable/line" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="@dimen/dimen_40dp"
-                android:gravity="center_vertical"
-                android:text="@string/work_statusdate"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="@dimen/dimen_40dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="@string/work_statusdate"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
-            <TextView
-                android:id="@+id/work_statusdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:drawableRight="@drawable/item_more"
-                android:gravity="center_vertical"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/work_statusdate"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:drawableRight="@drawable/item_more"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="@string/have_not_data"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
+        <!--</LinearLayout>-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/line" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@drawable/line" />-->
 
         <LinearLayout
             android:id="@+id/work_lctype_layout"
@@ -336,6 +396,69 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_powerloss"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <EditText
+                android:id="@+id/work_powerloss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp"
+                android:inputType="numberDecimal"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_speed"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <EditText
+                android:id="@+id/work_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp"
+                android:inputType="numberDecimal"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
         <LinearLayout
             android:id="@+id/work_failurecode_layout"
             android:layout_width="match_parent"
@@ -520,6 +643,99 @@
                 android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:id="@+id/work_largepart_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_largepart"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <TextView
+                android:id="@+id/work_largepart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@drawable/item_more"
+                android:gravity="center_vertical"
+                android:hint="@string/have_not_data"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_issuematerial"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <CheckBox
+                android:id="@+id/work_issuematerial"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:button="@drawable/umeng_update_button_check_selector"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:text="@string/work_shutdown"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/dimens_16dp" />
+
+            <CheckBox
+                android:id="@+id/work_shutdown"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:button="@drawable/umeng_update_button_check_selector"
+                android:gravity="center_vertical" />
         </LinearLayout>
 
         <View

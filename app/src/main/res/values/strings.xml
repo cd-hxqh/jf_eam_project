@@ -122,12 +122,20 @@
     <string name="work_description_hint">请输入相关描述</string>
     <string name="work_udwotype">工单类型</string>
     <string name="work_udwotypedesc">工单类型描述</string>
-    <string name="work_assetnum">资产</string>
-    <string name="work_assetdesc">资产描述</string>
-    <string name="work_location">位置</string>
+    <string name="work_assetnum">设备编号</string>
+    <string name="work_assetdesc">设备描述</string>
+    <string name="work_location">位置编码</string>
     <string name="work_locationdesc">位置描述</string>
     <string name="work_status">状态</string>
     <string name="work_statusdesc">状态描述</string>
+    <string name="work_longdescription">详细描述</string>
+    <string name="work_isxq">消缺</string>
+    <string name="work_isyhpc">排查隐患</string>
+    <string name="work_powerloss">损失电量</string>
+    <string name="work_speed">平均风速</string>
+    <string name="work_largepart">大部件发放</string>
+    <string name="work_issuematerial">物料发放</string>
+    <string name="work_shutdown">停机</string>
 
     <string name="work_jpdetails">作业详情信息</string>
     <string name="work_jpnum">作业计划</string>
@@ -148,7 +156,7 @@
     <string name="work_udprojectnum">项目编号</string>
     <string name="work_uudprojectnumdesc">项目编号描述</string>
     <string name="work_statusdate">状态日期</string>
-    <string name="work_lctype">风机/电气</string>
+    <string name="work_lctype">设备专业</string>
     <string name="work_woclass">类</string>
     <string name="work_failurecode">故障类</string>
     <string name="work_problemcode">问题代码</string>

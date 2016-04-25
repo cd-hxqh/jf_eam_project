@@ -127,9 +127,30 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "udbelong")
     @DatabaseField(columnName = "udbelong")
     public String udbelong;//风电场
-
-
-
+    @JsonField(fieldName = "description_longdescription")
+    @DatabaseField(columnName = "description_longdescription")
+    public String description_longdescription;//详细描述
+    @JsonField(fieldName = "isxq")
+    @DatabaseField(columnName = "isxq")
+    public String isxq;//消缺
+    @JsonField(fieldName = "isyhpc")
+    @DatabaseField(columnName = "isyhpc")
+    public String isyhpc;//排查隐患
+    @JsonField(fieldName = "powerloss")
+    @DatabaseField(columnName = "powerloss")
+    public String powerloss;//损失电量
+    @JsonField(fieldName = "speed")
+    @DatabaseField(columnName = "speed")
+    public String speed;//平均风速
+    @JsonField(fieldName = "largepart")
+    @DatabaseField(columnName = "largepart")
+    public String largepart;//大部件发放
+    @JsonField(fieldName = "issuematerial")
+    @DatabaseField(columnName = "issuematerial")
+    public String issuematerial;//物料发放
+    @JsonField(fieldName = "shutdown")
+    @DatabaseField(columnName = "shutdown")
+    public String shutdown;//停机
 
     public String getWonum() {
         return wonum;
@@ -322,4 +343,6 @@ public class WorkOrder extends Entity {
     public void setReportedby(String reportedby) {
         this.reportedby = reportedby;
     }
+
+
 }

@@ -124,6 +124,7 @@ public abstract class BaseAlertEditDialog<T extends BaseAlertEditDialog<T>> exte
         mTvContent.setTextColor(mContentTextColor);
         mTvContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, mContentTextSize);
         mTvContent.setLineSpacing(0, 1.3f);
+        mTvContent.setSelection(mContent.length());
 
         /**btns*/
         mTvBtnLeft.setText(mBtnLeftText);

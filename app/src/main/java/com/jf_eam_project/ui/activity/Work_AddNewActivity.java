@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,8 +90,10 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView assetdesc;//资产描述
     private TextView location; //位置
     private TextView locationdesc;//位置描述
+    private CheckBox isxq;//消缺
+    private CheckBox isyhpc;//排查隐患
     private TextView status; //状态
-    private TextView statusdate; //状态日期
+//    private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
     //    private TextView woclass; //类
     private TextView failurecode; //故障类
@@ -180,7 +183,7 @@ public class Work_AddNewActivity extends BaseActivity {
         location = (TextView) findViewById(R.id.work_location);
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
         status = (TextView) findViewById(R.id.work_status);
-        statusdate = (TextView) findViewById(R.id.work_statusdate);
+//        statusdate = (TextView) findViewById(R.id.work_statusdate);
         lctype = (TextView) findViewById(R.id.work_lctype);
 //        woclass = (TextView) findViewById(R.id.work_woclass);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
@@ -210,7 +213,7 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.isnew = true;
         udwotype.setText(workOrder.udwotype);
         status.setText("等待核准");
-        statusdate.setText(GetNowTime.getTime());
+//        statusdate.setText(GetNowTime.getTime());
         displayname.setText(getBaseApplication().getUsername());
         createdate.setText(GetNowTime.getTime());
         reportedby.setText(getBaseApplication().getUsername());
@@ -443,7 +446,7 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.location = location.getText().toString();
         workOrder.locationdesc = locationdesc.getText().toString();
         workOrder.status = status.getText().toString();
-        workOrder.statusdate = statusdate.getText().toString();
+//        workOrder.statusdate = statusdate.getText().toString();
         workOrder.lctype = lctype.getText().toString();
         workOrder.failurecode = failurecode.getText().toString();
         workOrder.problemcode = problemcode.getText().toString();
