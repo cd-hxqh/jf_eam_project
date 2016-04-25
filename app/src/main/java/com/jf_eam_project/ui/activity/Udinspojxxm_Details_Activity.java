@@ -34,8 +34,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
@@ -66,6 +71,8 @@ import java.util.List;
 public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private static final String TAG = "Udinspojxxm_Details_Activity";
+    private static final int ADD_REPORT=1; //提报单新增
+    private static final int DETAILS_REPORT=2; //提报单详情
 
     /**
      * 标题*
@@ -143,7 +150,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private Udinspojxxm udinspojxxm; //设备备件
 
-
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
     /**
      * 保存按钮*
      */
@@ -308,6 +316,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                 }
             }
         });
+
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
     }
 
 
@@ -331,20 +343,53 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 //            //设置编辑状态
 //            statusEdit();
             if (udinspojxxm.reportnum.equals("")) {
-                    if(!isData()) {
-                        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
-                        intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
-                        startActivityForResult(intent, 0);
-                    }else{
-                        MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "本地有提报单尚未提报");
-                    }
-            }  else {
+                Createreport createreport = isData();
+                if (null == createreport) {
+                    Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+                    intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
+                    intent.putExtra("mark", ADD_REPORT);
+                    startActivityForResult(intent, 0);
+                } else {
+                    NormalDialogStyleTwo(createreport);
+                }
+            } else {
                 MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "已生成缺陷或故障提报单！");
             }
 
 
         }
     };
+
+
+    private void NormalDialogStyleTwo(final Createreport createreport) {
+        final NormalDialog dialog = new NormalDialog(Udinspojxxm_Details_Activity.this);
+        dialog.content("有尚未提交的提报单信息,是否查看")//
+                .style(NormalDialog.STYLE_TWO)//
+                .titleTextSize(23)//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+                        intent.putExtra("createreport", createreport);
+                        intent.putExtra("mark", DETAILS_REPORT);
+                        startActivityForResult(intent, 0);
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
 
     private void statusEdit() {
 
@@ -679,9 +724,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     /**
      * 判断该项目巡检是否存在故障或缺陷提报单*
      */
-    private boolean isData() {
+    private Createreport isData() {
         Createreport createreport = new CreatereportDao(Udinspojxxm_Details_Activity.this).findByUdinspojxxmid(udinspojxxm.udinspojxxmid + "");
 
-        return null == createreport ? false : true;
+        return createreport;
     }
 }

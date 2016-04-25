@@ -59,13 +59,22 @@ public class CreatereportDao {
      */
     public void create(Createreport createreport) {
         try {
-            createreportDaoOpe.create(createreport);
-            Log.i(TAG, "11111");
+            createreportDaoOpe.createOrUpdate(createreport);
         } catch (SQLException e) {
-            Log.i(TAG,"sssssssssssssss");
             e.printStackTrace();
         }
     }
+
+    /**更新提报单**/
+    public void update(Createreport createreport) {
+        try {
+            createreportDaoOpe.update(createreport);
+        } catch (SQLException e) {
+            Log.i(TAG,"this is SQLException");
+            e.printStackTrace();
+        }
+    }
+
 
     public List<Createreport> queryForAll() {
         try {

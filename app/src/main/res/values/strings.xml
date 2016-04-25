@@ -598,6 +598,7 @@
     <string name="locaton_text">位置:</string>
     <string name="photo_detail">照片详情</string>
     <string name="title_activity_show_image">ShowImageActivity</string>
+    <string name="report_details_text">提报单详情</string>
 
 
 </resources>

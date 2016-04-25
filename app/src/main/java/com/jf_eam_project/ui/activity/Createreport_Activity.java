@@ -95,7 +95,7 @@ public class Createreport_Activity extends BaseActivity {
     /**
      * 位置*
      */
-    private String location;
+    private String location = "";
 
     /**
      * 设备类型*
@@ -118,6 +118,12 @@ public class Createreport_Activity extends BaseActivity {
 
     private ProgressDialog mProgressDialog;
 
+    /**
+     * 详情与新增标识*
+     */
+    private int mark;
+    private Createreport report;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,8 +142,15 @@ public class Createreport_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
-        Log.i(TAG, "udinspojxxmid=" + udinspojxxmid);
+        mark = getIntent().getExtras().getInt("mark");
+        Log.i(TAG, "mark=" + mark);
+        if (mark == 1) { //新增
+            udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
+        } else { //详情
+            report = (Createreport) getIntent().getSerializableExtra("createreport");
+        }
+
+
     }
 
     @Override
@@ -161,7 +174,22 @@ public class Createreport_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.createreport_text));
+        if (mark == 1) {
+            titleView.setText(getString(R.string.createreport_text));
+        } else {
+            titleView.setText(getString(R.string.report_details_text));
+            reporttypeText.setText(report.getReporttype());
+            culevelText.setText(report.getCulevel());
+            assettypeText.setText(report.getAssettype());
+            assetnumText.setText(report.getAssetnum());
+            locationText.setText(report.getLocation());
+            descriptionText.setText(report.getDescription());
+            descriptionxxText.setText(report.getDescriptionxx());
+            reportbyText.setText(report.getReportby());
+            reporttimeText.setText(report.getReporttime());
+        }
+
+
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         reporttypeText.setOnClickListener(reporttypeTextOnClickListener);
@@ -363,23 +391,27 @@ public class Createreport_Activity extends BaseActivity {
      * 判断提交的信息*
      */
     private boolean judge() {
-        if (reporttypeText.getText().toString().equals("")) {
-            MessageUtils.showErrorMessage(Createreport_Activity.this, "提报单类别必填");
-            return false;
+        if (mark == 1) {
+            if (reporttypeText.getText().toString().equals("")) {
+                MessageUtils.showErrorMessage(Createreport_Activity.this, "提报单类别必填");
+                return false;
+            }
+            if (culevelText.getText().toString().equals("")) {
+                MessageUtils.showErrorMessage(Createreport_Activity.this, "等级必填");
+                return false;
+            }
+            if (location.equals("")) {
+                MessageUtils.showErrorMessage(Createreport_Activity.this, "位置必填");
+                return false;
+            }
+            if (descriptionText.getText().toString().equals("")) {
+                MessageUtils.showErrorMessage(Createreport_Activity.this, "描述必填");
+                return false;
+            }
+            return true;
+        } else {
+            return true;
         }
-        if (culevelText.getText().toString().equals("")) {
-            MessageUtils.showErrorMessage(Createreport_Activity.this, "等级必填");
-            return false;
-        }
-        if (location.equals("")) {
-            MessageUtils.showErrorMessage(Createreport_Activity.this, "位置必填");
-            return false;
-        }
-        if (descriptionText.getText().toString().equals("")) {
-            MessageUtils.showErrorMessage(Createreport_Activity.this, "描述必填");
-            return false;
-        }
-        return true;
     }
 
 
@@ -388,27 +420,57 @@ public class Createreport_Activity extends BaseActivity {
         String culevel = culevelText.getText().toString(); //缺陷或故障等级
         String assettype = assettypeText.getText().toString(); //设备类别
         String assetnum = assetnumText.getText().toString(); //设备
-//        String location = locationText.getText().toString(); //位置
+//        String location1 = locationText.getText().toString(); //位置
         String description = descriptionText.getText().toString(); //描述
         String descriptionxx = descriptionxxText.getText().toString(); //详细描述
         String reportby = reportbyText.getText().toString(); //提报人
         String reporttime = reporttimeText.getText().toString(); //提报时间
-        Createreport createreport = new Createreport();
-        if (reporttype.equals("故障提报单")) {
-            createreport.setReporttype("FAULT");
-        } else {
-            createreport.setReporttype("HIDDEN");
+        Createreport createreport = null;
+        if (mark == 1) { //新增
+            createreport = new Createreport();
+            if (reporttype.equals("故障提报单")) {
+                createreport.setReporttype("FAULT");
+            } else {
+                createreport.setReporttype("HIDDEN");
+            }
+            createreport.setUdinspojxxmid(udinspojxxmid);
+            createreport.setLocation(location);
+
+
+            createreport.setCulevel(culevel);
+            createreport.setAssettype(assettype);
+            createreport.setAssetnum(assetnum);
+
+
+            createreport.setDescription(description);
+            createreport.setDescriptionxx(descriptionxx);
+            createreport.setReportby(reportby);
+            createreport.setReporttime(reporttime);
+            return createreport;
+
+        } else if (mark == 2) { //更新
+            if (reporttype.equals("故障提报单")) {
+                report.setReporttype("FAULT");
+            } else {
+                report.setReporttype("HIDDEN");
+            }
+            if (!location.equals("")) {
+                report.setLocation(location);
+
+            }
+            report.setCulevel(culevel);
+            report.setAssettype(assettype);
+            report.setAssetnum(assetnum);
+
+
+            report.setDescription(description);
+            report.setDescriptionxx(descriptionxx);
+            report.setReportby(reportby);
+            report.setReporttime(reporttime);
+            return report;
         }
-        createreport.setUdinspojxxmid(udinspojxxmid);
-        createreport.setCulevel(culevel);
-        createreport.setAssettype(assettype);
-        createreport.setAssetnum(assetnum);
-        createreport.setLocation(location);
-        createreport.setDescription(description);
-        createreport.setDescriptionxx(descriptionxx);
-        createreport.setReportby(reportby);
-        createreport.setReporttime(reporttime);
-        return createreport;
+        return null;
+
     }
 
 
@@ -492,7 +554,17 @@ public class Createreport_Activity extends BaseActivity {
                 if (NetWorkHelper.isNetwork(Createreport_Activity.this)) {
                     MessageUtils.showMiddleToast(Createreport_Activity.this, "暂无网络,现离线保存数据!");
                     Createreport createreport = saveReport();
-                    new CreatereportDao(Createreport_Activity.this).create(createreport);
+                    Log.i(TAG, "createreport dd=" + createreport.getDescriptionxx());
+                    Log.i(TAG, "createreport id=" + createreport.getId());
+
+                    if (mark == 1) { //创建
+                        Log.i(TAG, "111111");
+                        new CreatereportDao(Createreport_Activity.this).create(createreport);
+                    } else if (mark == 2) { //更新
+                        new CreatereportDao(Createreport_Activity.this).update(createreport);
+                        Log.i(TAG, "22222");
+
+                    }
                     mProgressDialog.dismiss();
                     setResult(Constants.REFRESH);
                     finish();
