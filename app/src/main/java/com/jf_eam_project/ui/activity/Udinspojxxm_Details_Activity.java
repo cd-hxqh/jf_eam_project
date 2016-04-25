@@ -682,7 +682,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private boolean isData() {
         Createreport createreport = new CreatereportDao(Udinspojxxm_Details_Activity.this).findByUdinspojxxmid(udinspojxxm.udinspojxxmid + "");
 
-        Log.i(TAG, "createreport=" + createreport.getAssetnum());
         return null == createreport ? false : true;
     }
 }
