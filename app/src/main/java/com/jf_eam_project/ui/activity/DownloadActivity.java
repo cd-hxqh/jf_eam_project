@@ -78,11 +78,11 @@ public class DownloadActivity extends BaseActivity {
                 case START:
                     if (count < 10) {
                         mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
-                                getString(R.string.downloading1)+childArray.get(0).get(count), true, true);
+                                getString(R.string.downloading1) + childArray.get(0).get(count), true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
                         if (count == 0) {//位置
-                            downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME),childArray.get(0).get(count));
+                            downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), childArray.get(0).get(count));
                         } else if (count == 1) {//资产
                             downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), childArray.get(0).get(count));
                         } else if (count == 2) {//故障类
@@ -225,7 +225,7 @@ public class DownloadActivity extends BaseActivity {
                 groupHolder = (GroupHolder) convertView.getTag();
             }
             groupHolder.groupText.setText(groupArray.get(groupPosition));
-            groupHolder.downAll.setOnClickListener(new downloadAll(groupPosition,groupHolder.downAll));
+            groupHolder.downAll.setOnClickListener(new downloadAll(groupPosition, groupHolder.downAll));
             return convertView;
         }
 
@@ -279,6 +279,14 @@ public class DownloadActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
+
+
+            mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
+                    getString(R.string.downloading), true, true);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.setCancelable(false);
+
+
             String buttonText = childArray.get(group).get(child);
             if (buttonText.equals(childArray.get(0).get(0))) {//位置
                 downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
@@ -300,11 +308,11 @@ public class DownloadActivity extends BaseActivity {
                 downloaddata(HttpManager.getUrl(Constants.ITEM_APPID, Constants.ITEM_NAME), buttonText, button);
             } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
                 downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), buttonText, button);
+            } else {
+                mProgressDialog.dismiss();
+                button.setText(getResources().getString(R.string.downloaded));
             }
-            mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
-                    getString(R.string.downloading), true, true);
-            mProgressDialog.setCanceledOnTouchOutside(false);
-            mProgressDialog.setCancelable(false);
+
         }
     }
 
@@ -433,7 +441,8 @@ public class DownloadActivity extends BaseActivity {
     private class downloadAll implements View.OnClickListener {
         int group;
         Button button;
-        private downloadAll(int group,Button button) {
+
+        private downloadAll(int group, Button button) {
             this.group = group;
             this.button = button;
         }

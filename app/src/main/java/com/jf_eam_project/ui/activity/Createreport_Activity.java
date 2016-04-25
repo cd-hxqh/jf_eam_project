@@ -26,6 +26,7 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
@@ -490,6 +491,8 @@ public class Createreport_Activity extends BaseActivity {
 
                 if (NetWorkHelper.isNetwork(Createreport_Activity.this)) {
                     MessageUtils.showMiddleToast(Createreport_Activity.this, "暂无网络,现离线保存数据!");
+                    Createreport createreport = saveReport();
+                    new CreatereportDao(Createreport_Activity.this).create(createreport);
                     mProgressDialog.dismiss();
                     setResult(Constants.REFRESH);
                     finish();
@@ -502,9 +505,7 @@ public class Createreport_Activity extends BaseActivity {
                             String data = null;
                             Createreport createreport = saveReport();
                             data = JsonUtils.saveReport(createreport);
-                            Log.i(TAG, "data=" + data);
-                            String result = getBaseApplication().getWsService().addReport(Createreport_Activity.this,data, "");
-                            Log.i(TAG, "result=" + result);
+                            String result = getBaseApplication().getWsService().addReport(Createreport_Activity.this, data, "");
                             return result;
                         }
 

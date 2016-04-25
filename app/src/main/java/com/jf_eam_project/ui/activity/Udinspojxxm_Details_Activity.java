@@ -36,10 +36,12 @@ import android.widget.TextView;
 
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
@@ -329,13 +331,18 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 //            //设置编辑状态
 //            statusEdit();
             if (udinspojxxm.reportnum.equals("")) {
-
-                Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
-                intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
-                startActivityForResult(intent, 0);
-            } else {
+                    if(!isData()) {
+                        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+                        intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
+                        startActivityForResult(intent, 0);
+                    }else{
+                        MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "本地有提报单尚未提报");
+                    }
+            }  else {
                 MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "已生成缺陷或故障提报单！");
             }
+
+
         }
     };
 
@@ -415,7 +422,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                                 e.printStackTrace();
                             }
 
-                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this,data, "");
+                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this, data, "");
 
                             return result;
                         }
@@ -667,5 +674,15 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         adapter.update();
         super.onRestart();
+    }
+
+    /**
+     * 判断该项目巡检是否存在故障或缺陷提报单*
+     */
+    private boolean isData() {
+        Createreport createreport = new CreatereportDao(Udinspojxxm_Details_Activity.this).findByUdinspojxxmid(udinspojxxm.udinspojxxmid + "");
+
+        Log.i(TAG, "createreport=" + createreport.getAssetnum());
+        return null == createreport ? false : true;
     }
 }
