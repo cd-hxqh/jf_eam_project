@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -126,13 +128,19 @@ public class Work_DetailsActivity extends BaseActivity {
     private CheckBox isyhpc;//排查隐患
     private TextView status; //状态
 //    private TextView statusdate; //状态日期
-    private TextView lctype; //风机/电气
+    private TextView lctype; //设备专业
+    private EditText powerloss;//损失电量
+    private EditText speed;//平均风速
     private TextView failurecode; //故障类
     private TextView problemcode; //问题代码
     private TextView displayname; //创建人
     private TextView createdate; //创建时间
     private TextView uddescription; //分公司
     private TextView udbelong; //风电场
+    private TextView largepart;//大部件发放
+    private CheckBox issuematerial;//物料发放
+    private CheckBox shutdown;//停机
+    private EditText longdescription;//详细信息
 
     private TextView jpnum; //作业计划
     private TextView targstartdate;//计划开始时间
@@ -148,6 +156,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private String reviseresult;
 
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private ArrayList<DialogMenuItem> largepartItems = new ArrayList<>();
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
 
@@ -185,7 +194,11 @@ public class Work_DetailsActivity extends BaseActivity {
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
         status = (TextView) findViewById(R.id.work_status);
 //        statusdate = (TextView) findViewById(R.id.work_statusdate);
+        isxq = (CheckBox) findViewById(R.id.work_isxq);
+        isyhpc = (CheckBox) findViewById(R.id.work_isyhpc);
         lctype = (TextView) findViewById(R.id.work_lctype);
+        powerloss = (EditText) findViewById(R.id.work_powerloss);
+        speed = (EditText) findViewById(R.id.work_speed);
 //        woclass = (TextView) findViewById(R.id.work_woclass);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
@@ -193,7 +206,10 @@ public class Work_DetailsActivity extends BaseActivity {
         createdate = (TextView) findViewById(R.id.work_createdate);
         uddescription=(TextView)findViewById(R.id.uddeptdescription_id);
         udbelong=(TextView)findViewById(R.id.work_udbelong_id);
-
+        largepart = (TextView) findViewById(R.id.work_largepart);
+        issuematerial = (CheckBox) findViewById(R.id.work_issuematerial);
+        shutdown = (CheckBox) findViewById(R.id.work_shutdown);
+        longdescription = (EditText) findViewById(R.id.work_longdescription);
 
         jpnum = (TextView) findViewById(R.id.work_jpnum);
         targstartdate = (TextView) findViewById(R.id.work_targstartdate);
@@ -234,7 +250,11 @@ public class Work_DetailsActivity extends BaseActivity {
         locationdesc.setText(workOrder.locationdesc);
         status.setText(workOrder.status);
 //        statusdate.setText(workOrder.statusdate);
+        isxq.setChecked(workOrder.isxq!=null&&workOrder.isxq.equals("Y"));
+        isyhpc.setChecked(workOrder.isyhpc != null && workOrder.isyhpc.equals("Y"));
         lctype.setText(workOrder.lctype);
+        powerloss.setText(workOrder.powerloss);
+        speed.setText(workOrder.speed);
 //        woclass.setText(workOrder.woclass);
         failurecode.setText(workOrder.failurecode);
         problemcode.setText(workOrder.problemcode);
@@ -242,7 +262,10 @@ public class Work_DetailsActivity extends BaseActivity {
         createdate.setText(workOrder.createdate);
         uddescription.setText(workOrder.uddeptdescription);
         udbelong.setText(workOrder.udbelong);
-
+        largepart.setText(workOrder.largepart);
+        issuematerial.setChecked(workOrder.issuematerial != null && workOrder.issuematerial.equals("Y"));
+        shutdown.setChecked(workOrder.shutdown != null && workOrder.shutdown.equals("Y"));
+        longdescription.setText(workOrder.description_longdescription);
 
         jpnum.setText(workOrder.jpnum);
         targstartdate.setText(workOrder.targstartdate);
@@ -258,6 +281,15 @@ public class Work_DetailsActivity extends BaseActivity {
         assetnum.setEnabled(false);
         location.setEnabled(false);
         lctype.setEnabled(false);
+        isxq.setClickable(false);
+        isyhpc.setClickable(false);
+        powerloss.setEnabled(false);
+        speed.setEnabled(false);
+        largepart.setEnabled(false);
+        issuematerial.setClickable(false);
+        shutdown.setClickable(false);
+        longdescription.setFocusable(false);
+        longdescription.setFocusableInTouchMode(false);
         failurecode.setEnabled(false);
         problemcode.setEnabled(false);
         jpnum.setEnabled(false);
@@ -270,8 +302,10 @@ public class Work_DetailsActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addTaskData();
+        addlargepartData();
         setDataListener();
         lctype.setOnClickListener(lctypeOnClickListener);
+        largepart.setOnClickListener(largepartOnClickListener);
         targstartdate.setOnClickListener(new MydateListener());
         targcompdate.setOnClickListener(new MydateListener());
         actstart.setOnClickListener(new MydateListener());
@@ -282,6 +316,22 @@ public class Work_DetailsActivity extends BaseActivity {
         failurecode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
         jpnum.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
+        isxq.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isyhpc.setChecked(!b);
+                }
+            }
+        });
+        isyhpc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isxq.setChecked(!b);
+                }
+            }
+        });
 
         revise.setOnClickListener(reviseOnClickListener);
         wfservice.setOnClickListener(wfserviceOnClickListener);
@@ -346,6 +396,13 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     };
 
+    private View.OnClickListener largepartOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            largepartListDialog();
+        }
+    };
+
     private void NormalListDialog() {
         final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems);
         dialog.title("请选择")//
@@ -361,6 +418,21 @@ public class Work_DetailsActivity extends BaseActivity {
         });
     }
 
+    private void largepartListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, largepartItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                largepart.setText(largepartItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
     /**
      * 添加任务数据*
      */
@@ -370,6 +442,18 @@ public class Work_DetailsActivity extends BaseActivity {
         list.add("电气");
         for (int i = 0; i < list.size(); i++) {
             mMenuItems.add(new DialogMenuItem(list.get(i), 0));
+        }
+    }
+
+    /**
+     * 添加任务数据*
+     */
+    private void addlargepartData() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("是");
+        list.add("否");
+        for (int i = 0; i < list.size(); i++) {
+            largepartItems.add(new DialogMenuItem(list.get(i), 0));
         }
     }
 
@@ -391,6 +475,15 @@ public class Work_DetailsActivity extends BaseActivity {
         assetnum.setEnabled(true);
         location.setEnabled(true);
         lctype.setEnabled(true);
+        isxq.setClickable(true);
+        isyhpc.setClickable(true);
+        powerloss.setEnabled(true);
+        speed.setEnabled(true);
+        largepart.setEnabled(true);
+        issuematerial.setEnabled(true);
+        shutdown.setEnabled(true);
+        longdescription.setFocusable(true);
+        longdescription.setFocusableInTouchMode(true);
         failurecode.setEnabled(true);
         problemcode.setEnabled(true);
         jpnum.setEnabled(true);
@@ -730,8 +823,15 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.assetnum = assetnum.getText().toString();
         workOrder.location = location.getText().toString();
         workOrder.status = status.getText().toString();
+        workOrder.isxq = isxq.isChecked()?"Y":"N";
+        workOrder.isyhpc = isyhpc.isChecked()?"Y":"N";
+        workOrder.issuematerial = issuematerial.isChecked()?"Y":"N";
+        workOrder.shutdown = shutdown.isChecked()?"Y":"N";
+        workOrder.description_longdescription = longdescription.getText().toString().trim();
 //        workOrder.statusdate = statusdate.getText().toString();
         workOrder.lctype = lctype.getText().toString();
+        workOrder.powerloss = powerloss.getText().toString().trim();
+        workOrder.speed = speed.getText().toString().trim();
         workOrder.failurecode = failurecode.getText().toString();
         workOrder.problemcode = problemcode.getText().toString();
         workOrder.createdate = createdate.getText().toString();

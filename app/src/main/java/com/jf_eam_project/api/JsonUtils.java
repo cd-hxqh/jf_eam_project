@@ -236,6 +236,14 @@ public class JsonUtils {
             jsonObject.put("ACTSTART", workOrder.actstart);
             jsonObject.put("ACTFINISH", workOrder.actfinish);
             jsonObject.put("REPORTEDBY", workOrder.reportedby);
+            jsonObject.put("DESCRIPTION_LONGDESCRIPTION", workOrder.description_longdescription);
+            jsonObject.put("ISXQ", workOrder.isxq);
+            jsonObject.put("ISYHPC", workOrder.isyhpc);
+            jsonObject.put("POWERLOSS", workOrder.powerloss);
+            jsonObject.put("SPEED", workOrder.speed);
+            jsonObject.put("LARGEPART", workOrder.largepart);
+            jsonObject.put("ISSUEMATERIAL", workOrder.issuematerial);
+            jsonObject.put("SHUTDOWN", workOrder.shutdown);
             jsonObject.put("REPORTDATE", workOrder.reportdate);
 
             JSONObject object = new JSONObject();

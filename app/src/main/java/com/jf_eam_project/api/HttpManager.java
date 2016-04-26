@@ -576,7 +576,6 @@ public class HttpManager {
                 if (result.getResultlist() == null) {
                     SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
                 } else {
-
                     SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
                 }
 

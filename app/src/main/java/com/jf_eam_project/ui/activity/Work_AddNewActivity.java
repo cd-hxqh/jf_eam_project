@@ -19,7 +19,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -74,7 +76,7 @@ import java.util.List;
  */
 public class Work_AddNewActivity extends BaseActivity {
 
-    private static final String TAG="Work_AddNewActivity";
+    private static final String TAG = "Work_AddNewActivity";
     private WorkOrder workOrder = new WorkOrder();
     private TextView titlename;
     private ImageView menuImageView;
@@ -83,7 +85,7 @@ public class Work_AddNewActivity extends BaseActivity {
 
     private TextView wonum;//工单号
     private LinearLayout wonumlayout;
-    private TextView description;//描述
+    private EditText description;//描述
     //    private TextView parent;//父工单
     private TextView udwotype; //工单类型
     private TextView assetnum;//资产编号
@@ -93,13 +95,19 @@ public class Work_AddNewActivity extends BaseActivity {
     private CheckBox isxq;//消缺
     private CheckBox isyhpc;//排查隐患
     private TextView status; //状态
-//    private TextView statusdate; //状态日期
+    //    private TextView statusdate; //状态日期
     private TextView lctype; //风机/电气
+    private EditText powerloss;//损失电量
+    private EditText speed;//平均风速
     //    private TextView woclass; //类
     private TextView failurecode; //故障类
     private TextView problemcode; //问题代码
     private TextView displayname; //创建人
     private TextView createdate; //创建时间
+    private TextView largepart;//大部件发放
+    private CheckBox issuematerial;//物料发放
+    private CheckBox shutdown;//停机
+    private EditText longdescription;//详细信息
 
     private TextView jpnum; //作业计划
     private TextView targstartdate;//计划开始时间
@@ -146,7 +154,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-
+    private ArrayList<DialogMenuItem> largepartItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +167,7 @@ public class Work_AddNewActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addLctypeData();
+        addlargepartData();
     }
 
     /**
@@ -175,7 +184,7 @@ public class Work_AddNewActivity extends BaseActivity {
         backlayout = (ImageView) findViewById(R.id.title_back_id);
         wonum = (TextView) findViewById(R.id.work_wonum);
         wonumlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
-        description = (TextView) findViewById(R.id.work_desc);
+        description = (EditText) findViewById(R.id.work_desc);
 //        parent = (TextView) findViewById(R.id.work_parent);
         udwotype = (TextView) findViewById(R.id.work_udwotype);
         assetnum = (TextView) findViewById(R.id.work_assetnum);
@@ -184,7 +193,11 @@ public class Work_AddNewActivity extends BaseActivity {
         locationdesc = (TextView) findViewById(R.id.work_locationdesc);
         status = (TextView) findViewById(R.id.work_status);
 //        statusdate = (TextView) findViewById(R.id.work_statusdate);
+        isxq = (CheckBox) findViewById(R.id.work_isxq);
+        isyhpc = (CheckBox) findViewById(R.id.work_isyhpc);
         lctype = (TextView) findViewById(R.id.work_lctype);
+        powerloss = (EditText) findViewById(R.id.work_powerloss);
+        speed = (EditText) findViewById(R.id.work_speed);
 //        woclass = (TextView) findViewById(R.id.work_woclass);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
@@ -197,6 +210,10 @@ public class Work_AddNewActivity extends BaseActivity {
         actfinish = (TextView) findViewById(R.id.work_actfinish);
         reportedby = (TextView) findViewById(R.id.work_reportedby);
         reportdate = (TextView) findViewById(R.id.work_reportdate);
+        largepart = (TextView) findViewById(R.id.work_largepart);
+        issuematerial = (CheckBox) findViewById(R.id.work_issuematerial);
+        shutdown = (CheckBox) findViewById(R.id.work_shutdown);
+        longdescription = (EditText) findViewById(R.id.work_longdescription);
 
         addnew = (Button) findViewById(R.id.work_add);
         wfservice = (Button) findViewById(R.id.wfservice);
@@ -220,6 +237,7 @@ public class Work_AddNewActivity extends BaseActivity {
         reportdate.setText(GetNowTime.getTime());
 
         lctype.setOnClickListener(lctypeOnClickListener);
+        largepart.setOnClickListener(largepartOnClickListener);
 
         addnew.setOnClickListener(addnewlistener);
         wfservice.setOnClickListener(wfserviceOnClickListener);
@@ -237,6 +255,22 @@ public class Work_AddNewActivity extends BaseActivity {
         failurecode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(Constants.FAILURELIST));
         jpnum.setOnClickListener(new LayoutOnClickListener(Constants.JOBPLAN));
+        isxq.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isyhpc.setChecked(!b);
+                }
+            }
+        });
+        isyhpc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    isxq.setChecked(!b);
+                }
+            }
+        });
 
         if (workOrder.udwotype.equals(Constants.UNPLAN)) {
             wfservice.setVisibility(View.VISIBLE);
@@ -282,6 +316,13 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     };
 
+    private View.OnClickListener largepartOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            largepartListDialog();
+        }
+    };
+
     private void NormalListDialog() {
         final NormalListDialog dialog = new NormalListDialog(Work_AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
@@ -299,6 +340,21 @@ public class Work_AddNewActivity extends BaseActivity {
         });
     }
 
+    private void largepartListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(Work_AddNewActivity.this, largepartItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                largepart.setText(largepartItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
     /**
      * 添加数据*
      */
@@ -307,8 +363,18 @@ public class Work_AddNewActivity extends BaseActivity {
 
         for (int i = 0; i < lctypes.length; i++)
             mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
+    }
 
-
+    /**
+     * 添加任务数据*
+     */
+    private void addlargepartData() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("是");
+        list.add("否");
+        for (int i = 0; i < list.size(); i++) {
+            largepartItems.add(new DialogMenuItem(list.get(i), 0));
+        }
     }
 
 
@@ -447,7 +513,14 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.locationdesc = locationdesc.getText().toString();
         workOrder.status = status.getText().toString();
 //        workOrder.statusdate = statusdate.getText().toString();
+        workOrder.isxq = isxq.isChecked() ? "Y" : "N";
+        workOrder.isyhpc = isyhpc.isChecked() ? "Y" : "N";
+        workOrder.issuematerial = issuematerial.isChecked()?"Y":"N";
+        workOrder.shutdown = shutdown.isChecked()?"Y":"N";
+        workOrder.description_longdescription = longdescription.getText().toString().trim();
         workOrder.lctype = lctype.getText().toString();
+        workOrder.powerloss = powerloss.getText().toString().trim();
+        workOrder.speed = speed.getText().toString().trim();
         workOrder.failurecode = failurecode.getText().toString();
         workOrder.problemcode = problemcode.getText().toString();
         workOrder.displayname = displayname.getText().toString();

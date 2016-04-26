@@ -167,13 +167,35 @@ public final class WorkOrder_JsonHelper
         } else if ("REPORTEDBY".equals(fieldName)) {
             instance.reportedby = jp.getValueAsString();
             return true;
-        }
-        else if ("UDDEPTDESCRIPTION".equals(fieldName)) {
+        } else if ("UDDEPTDESCRIPTION".equals(fieldName)) {
             instance.uddeptdescription = jp.getValueAsString();
             return true;
-        }
-        else if ("UDBELONG".equals(fieldName)) {
+        } else if ("UDBELONG".equals(fieldName)) {
             instance.udbelong = jp.getValueAsString();
+            return true;
+        } else if ("DESCRIPTION_LONGDESCRIPTION".equals(fieldName)) {
+            instance.description_longdescription = jp.getValueAsString();
+            return true;
+        } else if ("ISXQ".equals(fieldName)) {
+            instance.isxq = jp.getValueAsString();
+            return true;
+        } else if ("ISYHPC".equals(fieldName)) {
+            instance.isyhpc = jp.getValueAsString();
+            return true;
+        } else if ("POWERLOSS".equals(fieldName)) {
+            instance.powerloss = jp.getValueAsString();
+            return true;
+        } else if ("SPEED".equals(fieldName)) {
+            instance.speed = jp.getValueAsString();
+            return true;
+        } else if ("LARGEPART".equals(fieldName)) {
+            instance.largepart = jp.getValueAsString();
+            return true;
+        } else if ("ISSUEMATERIAL".equals(fieldName)) {
+            instance.issuematerial = jp.getValueAsString();
+            return true;
+        } else if ("SHUTDOWN".equals(fieldName)) {
+            instance.shutdown = jp.getValueAsString();
             return true;
         }
 

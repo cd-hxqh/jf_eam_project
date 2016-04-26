@@ -128,7 +128,7 @@
     <string name="work_locationdesc">位置描述</string>
     <string name="work_status">状态</string>
     <string name="work_statusdesc">状态描述</string>
-    <string name="work_longdescription">详细描述</string>
+    <string name="work_longdescription">详细信息</string>
     <string name="work_isxq">消缺</string>
     <string name="work_isyhpc">排查隐患</string>
     <string name="work_powerloss">损失电量</string>
