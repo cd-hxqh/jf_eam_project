@@ -103,6 +103,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private TextView udinspojxxm8Text; //检查方法
 
 
+
     /**
      * 描述*
      */
