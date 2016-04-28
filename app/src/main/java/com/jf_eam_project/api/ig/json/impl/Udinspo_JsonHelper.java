@@ -104,8 +104,47 @@ public final class Udinspo_JsonHelper
         } else if ("UDINSPPLAN.DESCRIPTION".equals(fieldName)) {
             instance.udinspplandescription = jp.getValueAsString();
             return true;
-        } else if ("ENDDATE".equals(fieldName)) {
+        }
+        else if ("ENDDATE".equals(fieldName)) {
             instance.enddate = jp.getValueAsString();
+            return true;
+        }
+
+        else if ("ASSETTYPE".equals(fieldName)) {
+            instance.assettype = jp.getValueAsString();
+            return true;
+        }
+        else if ("CHECKTYPE".equals(fieldName)) {
+            instance.checktype = jp.getValueAsString();
+            return true;
+        }
+        else if ("INSPMAINPLANNUM".equals(fieldName)) {
+            instance.inspmainplannum = jp.getValueAsString();
+            return true;
+        }
+        else if ("INSPSCHEMENUM".equals(fieldName)) {
+            instance.inspschemenum = jp.getValueAsString();
+            return true;
+        }
+        else if ("STARTDATE".equals(fieldName)) {
+            instance.startdate = jp.getValueAsString();
+            return true;
+        }
+        else if ("STATUS".equals(fieldName)) {
+            instance.status = jp.getValueAsString();
+            return true;
+        }
+        else if ("TEMPERATURE".equals(fieldName)) {
+            instance.temperature = jp.getValueAsString();
+            return true;
+        }
+
+        else if ("UDBELONG".equals(fieldName)) {
+            instance.udbelong = jp.getValueAsString();
+            return true;
+        }
+        else if ("WEATHER".equals(fieldName)) {
+            instance.weather = jp.getValueAsString();
             return true;
         }
 

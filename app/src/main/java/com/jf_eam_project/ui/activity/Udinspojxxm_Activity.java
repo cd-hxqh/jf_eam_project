@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.UdinspoAssetDao;
+import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -31,6 +33,8 @@ import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,12 +133,35 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        getData(searchText);
+        if (NetWorkHelper.isNetwork(Udinspojxxm_Activity.this)) {//没网
+            MessageUtils.showMiddleToast(Udinspojxxm_Activity.this, "世界上最遥远的距离就是没网。检查设置");
+            getLocalData();
+        } else {
+            getData(searchText);
+        }
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
     }
+
+    /**
+     * 获取本地数据*
+     */
+    private void getLocalData() {
+
+        ArrayList<Udinspojxxm> list = (ArrayList<Udinspojxxm>) new UdinspojxxmDao(Udinspojxxm_Activity.this).queryByUdinspoassetnum(udinspoassetnum);
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+        if (list == null || list.isEmpty()) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        } else {
+
+            udinspojxxmListAdapter.adddate(list);
+        }
+
+    }
+
 
 
     private void getData(String search) {
@@ -159,6 +186,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
                             recyclerView.setAdapter(udinspojxxmListAdapter);
                         }
                         if (totalPages == page) {
+                            new UdinspojxxmDao(Udinspojxxm_Activity.this).create(items);
                             udinspojxxmListAdapter.adddate(items);
                         }
                     }
@@ -222,13 +250,23 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
     public void onLoad() {
         page = 1;
 
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspojxxm_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspojxxm_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
 

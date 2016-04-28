@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
  */
 public class UdinspoDao {
 
-    private static final String TAG="UdinspoDao";
+    private static final String TAG = "UdinspoDao";
     private Context context;
     private Dao<Udinspo, Integer> udinspoDaoOpe;
     private DatabaseHelper helper;
@@ -49,11 +49,13 @@ public class UdinspoDao {
      */
     public void create(final List<Udinspo> list) {
         try {
-            deleteall();
+            deleteList(list);
             udinspoDaoOpe.callBatchTasks(new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
                     for (Udinspo udinspo : list) {
+                        Log.i(TAG,"insponum="+udinspo.insponum);
+                        deleteInsponum(udinspo.insponum);
                         udinspoDaoOpe.createOrUpdate(udinspo);
                     }
                     return null;
@@ -97,7 +99,7 @@ public class UdinspoDao {
     }
 
     /**
-     *
+     * 删除所有的数据
      */
     public void deleteall() {
         try {
@@ -106,6 +108,22 @@ public class UdinspoDao {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * 根据编号删除信息*
+     */
+    public void deleteInsponum(String insponum) {
+        try {
+
+            List<Udinspo> list = udinspoDaoOpe.queryBuilder().where().eq("insponum", insponum).query();
+
+            udinspoDaoOpe.delete(list);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 根据巡检编号查询Udinspo信息
@@ -129,8 +147,8 @@ public class UdinspoDao {
     public List<Udinspo> queryByDesc(String desc) {
         List<Udinspo> list = null;
         try {
-            list = udinspoDaoOpe.queryBuilder().where().like("description", "%" +desc+"%").query();
-            Log.i(TAG,"list size="+list.size());
+            list = udinspoDaoOpe.queryBuilder().where().like("description", "%" + desc + "%").query();
+            Log.i(TAG, "list size=" + list.size());
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,5 +173,21 @@ public class UdinspoDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    /**
+     * 根据类型assettype与checktype查询Udinspo信息*
+     */
+    public List<Udinspo> findByType(String assettype, String checktype) {
+        List<Udinspo> list = null;
+        try {
+            list = udinspoDaoOpe.queryBuilder().where().eq("assettype", assettype).and().eq("checktype", checktype).query();
+            Log.i(TAG, "list size=" + list.size());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

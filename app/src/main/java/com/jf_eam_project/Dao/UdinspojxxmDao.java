@@ -52,11 +52,11 @@ public class UdinspojxxmDao {
      */
     public void create(final List<Udinspojxxm> list) {
             try {
-                deleteall();
                 udinspojxxmDaoOpe.callBatchTasks(new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
                         for (Udinspojxxm udinspojxxm : list) {
+                            deleteudUdinspojxxmid(udinspojxxm.udinspojxxmid);
                             udinspojxxmDaoOpe.createOrUpdate(udinspojxxm);
                         }
                         return null;
@@ -92,6 +92,20 @@ public class UdinspojxxmDao {
         }
     }
 
+    /**根据巡检备件编号删除信息**/
+    public void deleteudUdinspojxxmid(int udinspojxxmid) {
+        try {
+
+            List<Udinspojxxm> list = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspojxxmid", udinspojxxmid).query();
+
+            udinspojxxmDaoOpe.delete(list);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     /**
      *
      * @param insponum
@@ -105,6 +119,22 @@ public class UdinspojxxmDao {
         }
         return null;
     }
+
+
+
+
+    /**根据设备编号查询信息**/
+
+    public List<Udinspojxxm> queryByUdinspoassetnum(String udinspoassetnum){
+        try {
+            return udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum", udinspoassetnum).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     /**
      *

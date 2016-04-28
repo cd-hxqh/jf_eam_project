@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.UdinspoAssetDao;
+import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -27,10 +29,13 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.PRLine;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.ui.adapter.PrLineListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -125,12 +130,35 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        getData(searchText);
+        if (NetWorkHelper.isNetwork(Udinspoasset_Activity.this)) {//没网
+            MessageUtils.showMiddleToast(Udinspoasset_Activity.this, "世界上最遥远的距离就是没网。检查设置");
+            getLocalData();
+        } else {
+            getData(searchText);
+        }
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
     }
+
+    /**
+     * 获取本地数据*
+     */
+    private void getLocalData() {
+
+        ArrayList<Udinspoasset> list = (ArrayList<Udinspoasset>) new UdinspoAssetDao(Udinspoasset_Activity.this).queryByInsponum(insponum);
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+        if (list == null || list.isEmpty()) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        } else {
+
+            udinspoassetListAdapter.adddate(list);
+        }
+
+    }
+
 
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -167,6 +195,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
                             recyclerView.setAdapter(udinspoassetListAdapter);
                         }
                         if (totalPages == page) {
+                            new UdinspoAssetDao(Udinspoasset_Activity.this).create(items);
                             udinspoassetListAdapter.adddate(items);
                         }
                     }
@@ -230,19 +259,29 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     public void onLoad() {
         page = 1;
 
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspoasset_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspoasset_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (resultCode) {
             case Constants.REFRESH:
                 getData(searchText);
                 break;

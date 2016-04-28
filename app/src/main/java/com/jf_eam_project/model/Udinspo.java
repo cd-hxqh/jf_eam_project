@@ -71,7 +71,120 @@ public class Udinspo extends Entity {
 
     @DatabaseField(columnName = "enddate")
     @JsonField(fieldName = "enddate")
-    public String enddate;//完成时间
+    public String enddate;//计划结束时间
+
+
+    @DatabaseField(columnName = "assettype")
+    @JsonField(fieldName = "assettype")
+    public String assettype;//类型
+
+    @DatabaseField(columnName = "checktype")
+    @JsonField(fieldName = "checktype")
+    public String checktype;//类型
+
+    @DatabaseField(columnName = "inspmainplannum")
+    @JsonField(fieldName = "inspmainplannum")
+    public String inspmainplannum;//计划编号
+
+
+    @DatabaseField(columnName = "inspschemenum")
+    @JsonField(fieldName = "inspschemenum")
+    public String inspschemenum;//检修方案编号
+
+
+    @DatabaseField(columnName = "startdate")
+    @JsonField(fieldName = "startdate")
+    public String startdate;//开始时间
+
+
+    @DatabaseField(columnName = "status")
+    @JsonField(fieldName = "status")
+    public String status;//状态
+
+    @DatabaseField(columnName = "temperature")
+    @JsonField(fieldName = "temperature")
+    public String temperature;//温度
+
+    @DatabaseField(columnName = "udbelong")
+    @JsonField(fieldName = "udbelong")
+    public String udbelong;//风电场
+
+    @DatabaseField(columnName = "weather")
+    @JsonField(fieldName = "weather")
+    public String weather;//湿度
+
+
+    public String getAssettype() {
+        return assettype;
+    }
+
+    public void setAssettype(String assettype) {
+        this.assettype = assettype;
+    }
+
+    public String getChecktype() {
+        return checktype;
+    }
+
+    public void setChecktype(String checktype) {
+        this.checktype = checktype;
+    }
+
+    public String getInspmainplannum() {
+        return inspmainplannum;
+    }
+
+    public void setInspmainplannum(String inspmainplannum) {
+        this.inspmainplannum = inspmainplannum;
+    }
+
+    public String getInspschemenum() {
+        return inspschemenum;
+    }
+
+    public void setInspschemenum(String inspschemenum) {
+        this.inspschemenum = inspschemenum;
+    }
+
+    public String getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getUdbelong() {
+        return udbelong;
+    }
+
+    public void setUdbelong(String udbelong) {
+        this.udbelong = udbelong;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
 
     public int getId() {
         return id;

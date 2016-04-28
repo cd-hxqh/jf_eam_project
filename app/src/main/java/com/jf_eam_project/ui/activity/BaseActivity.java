@@ -170,6 +170,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
 
+
     /**
      * 退出登陆*
      */

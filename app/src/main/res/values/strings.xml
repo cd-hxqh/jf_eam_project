@@ -376,15 +376,19 @@
     <string name="udinspo_inspotype_title">巡检单类型:</string>
     <string name="udinspo_createby_title">创建人:</string>
     <string name="udinspo_createdate_title">创建时间:</string>
-    <string name="udinspo_inspoby_title">巡检人:</string>
-    <string name="udinspo_inspodate_title">巡检日期:</string>
-    <string name="enddate_text">完成时间:</string>
+    <string name="udinspo_inspoby_title">检修人:</string>
+    <string name="udinspo_inspodate_title">检修日期:</string>
+    <string name="startdate_text">开始时间:</string>
+    <string name="enddate_text">结束时间:</string>
     <string name="udinspo_lastrundate_title">本次生成日期:</string>
     <string name="udinspo_nextrundate_title">下次运行时间:</string>
     <string name="udinspo_detail_title">巡检单详情</string>
     <string name="udinspoasset_title">设备及检修项目</string>
     <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
+
+    <string name="inspschemenum_text">方案编号:</string>
+    <string name="statu_text">状态:</string>
 
 
 
@@ -607,6 +611,8 @@
     <string name="photo_detail">照片详情</string>
     <string name="title_activity_show_image">ShowImageActivity</string>
     <string name="report_details_text">提报单详情</string>
+    <string name="weather_text">天气:</string>
+    <string name="temperature_text">温度:</string>
 
 
 </resources>

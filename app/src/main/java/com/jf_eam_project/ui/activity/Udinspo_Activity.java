@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -29,9 +30,12 @@ import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspoListadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 巡检单列表
@@ -85,13 +89,21 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
     private String searchText = "";
     private int page = 1;
 
-    /**获取巡检单标题**/
+    /**
+     * 获取巡检单标题*
+     */
     private String title;
-    /**巡检单类型**/
+    /**
+     * 巡检单类型*
+     */
     private String inspotype;
-    /**assettype**/
+    /**
+     * assettype*
+     */
     private String assettype;
-    /**checktype**/
+    /**
+     * checktype*
+     */
     private String checktype;
 
     @Override
@@ -103,13 +115,15 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
         initView();
     }
 
-    /**获取巡检单**/
+    /**
+     * 获取巡检单*
+     */
     private void initData() {
-        title=getIntent().getStringExtra("title");
-        inspotype=getIntent().getStringExtra("inspotype");
-        if(inspotype.equals("05")){
-            assettype=getIntent().getStringExtra("assettype");
-            checktype=getIntent().getStringExtra("checktype");
+        title = getIntent().getStringExtra("title");
+        inspotype = getIntent().getStringExtra("inspotype");
+        if (inspotype.equals("05")) {
+            assettype = getIntent().getStringExtra("assettype");
+            checktype = getIntent().getStringExtra("checktype");
         }
     }
 
@@ -141,17 +155,39 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspoListadapter = new UdinspoListadapter(this,0);
+        udinspoListadapter = new UdinspoListadapter(this, 0);
         recyclerView.setAdapter(udinspoListadapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        getData(searchText);
+        if (NetWorkHelper.isNetwork(Udinspo_Activity.this)) { //没有网络
+            MessageUtils.showMiddleToast(Udinspo_Activity.this, "世界上最遥远的距离就是没网。检查设置");
+            getLocalData();
+        } else {
+            getData(searchText);
+        }
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
+    }
+
+    /**
+     * 获取本地数据*
+     */
+    private void getLocalData() {
+
+        ArrayList<Udinspo> list = (ArrayList<Udinspo>) new UdinspoDao(Udinspo_Activity.this).findByType(assettype, checktype);
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+        if (list == null || list.isEmpty()) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        } else {
+
+            udinspoListadapter.adddate(list);
+        }
+
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -166,13 +202,23 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
     public void onLoad() {
         page = 1;
 
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspo_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-        getData(searchText);
+        if (!NetWorkHelper.isNetwork(Udinspo_Activity.this)) { //没有网络
+            getData(searchText);
+        } else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+        }
     }
 
 
@@ -210,7 +256,7 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype,assettype,checktype,search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -230,10 +276,11 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspoListadapter = new UdinspoListadapter(Udinspo_Activity.this,0);
+                            udinspoListadapter = new UdinspoListadapter(Udinspo_Activity.this, 0);
                             recyclerView.setAdapter(udinspoListadapter);
                         }
                         if (totalPages == page) {
+                            new UdinspoDao(Udinspo_Activity.this).create(items);
                             udinspoListadapter.adddate(items);
                         }
                     }

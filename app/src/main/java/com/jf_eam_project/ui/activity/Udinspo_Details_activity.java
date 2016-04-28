@@ -78,17 +78,19 @@ public class Udinspo_Details_activity extends BaseActivity {
     private TextView insponumText; //巡检单
     private TextView descriptionText; //描述
     private TextView inspplannumText; //计划编号
-    private TextView inspotypeText; //巡检单类型
-    private TextView createbyText; //创建人
-    private TextView createdateText; //创建时间
-    private TextView inspobyText; //巡检人
-    private TextView inspodateText; //巡检日期
-    private TextView enddateText; //完成时间
-
+    private TextView inspschemenumText; //检修方案编号
+    private TextView inspobyText; //检修人
+    private TextView inspodateText; //检修日期
+    private TextView startdateText; //开始时间
+    private TextView enddateText; //结束时间
+    private TextView statusText; //状态
+    private TextView branchText; //分公司
+    private TextView farmText; //风电场
+    private TextView weatherText; //天气
+    private TextView temperatureText; //温度
 
 
     private Button confirmBtn; //确认
-
 
 
     private Udinspo udinspo;
@@ -114,8 +116,10 @@ public class Udinspo_Details_activity extends BaseActivity {
     private DatePickerDialog datePickerDialog;
     private CumTimePickerDialog timePickerDialog;
 
-    /**日期选择标识**/
-    private int dateMark=0;
+    /**
+     * 日期选择标识*
+     */
+    private int dateMark = 0;
 
 
     @Override
@@ -149,12 +153,16 @@ public class Udinspo_Details_activity extends BaseActivity {
         insponumText = (TextView) findViewById(R.id.udinspo_insponum_text);
         descriptionText = (TextView) findViewById(R.id.udinspo_description_text);
         inspplannumText = (TextView) findViewById(R.id.udinspo_inspplannum_text);
-        inspotypeText = (TextView) findViewById(R.id.udinspo_inspotype_text);
-        createbyText = (TextView) findViewById(R.id.udinspo_createby_text);
-        createdateText = (TextView) findViewById(R.id.udinspo_createdate_text);
+        inspschemenumText = (TextView) findViewById(R.id.inspschemenum_text_id);
         inspobyText = (TextView) findViewById(R.id.udinspo_inspoby_text);
         inspodateText = (TextView) findViewById(R.id.udinspo_inspodate_text);
-        enddateText = (TextView) findViewById(R.id.udinspo_enddate_text);
+        startdateText = (TextView) findViewById(R.id.startdate_text_id);
+        enddateText = (TextView) findViewById(R.id.enddate_text_id);
+        statusText = (TextView) findViewById(R.id.statu_text_id);
+        branchText = (TextView) findViewById(R.id.description_text_id);
+        farmText = (TextView) findViewById(R.id.uddept_description_text_id);
+        weatherText = (TextView) findViewById(R.id.weather_text_id);
+        temperatureText = (TextView) findViewById(R.id.temperature_text_id);
 
 
         confirmBtn = (Button) findViewById(R.id.submit_btn_id);
@@ -169,20 +177,35 @@ public class Udinspo_Details_activity extends BaseActivity {
         menuImageView.setImageResource(R.drawable.ic_drawer);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
         descriptionText.setFocusable(false);
         descriptionText.setFocusableInTouchMode(false);
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
             descriptionText.setText(udinspo.getDescription() == null ? "" : udinspo.getDescription());
-            inspplannumText.setText(udinspo.getInspplannum() == null ? "" : udinspo.getInspplannum());
-            inspotypeText.setText(udinspo.getInspotype() == null ? "" : udinspo.getInspotype());
-            createbyText.setText(udinspo.getCreateby() == null ? "" : udinspo.getCreateby());
-            createdateText.setText(udinspo.getCreatedate() == null ? "" : udinspo.getCreatedate());
+            inspplannumText.setText(udinspo.getInspmainplannum() == null ? "" : udinspo.getInspmainplannum());
+            inspschemenumText.setText(udinspo.getInspschemenum() == null ? "" : udinspo.getInspschemenum());
             inspobyText.setText(udinspo.getInspoby() == null ? "" : udinspo.getInspoby());
             inspodateText.setText(udinspo.getInspodate() == null ? "" : udinspo.getInspodate());
+            startdateText.setText(udinspo.getStartdate() == null ? "" : udinspo.getStartdate());
             enddateText.setText(udinspo.getEnddate() == null ? "" : udinspo.getEnddate());
+            statusText.setText(udinspo.getStatus() == null ? "" : udinspo.getStatus());
+            String branch=udinspo.getBranch();
+            if(branch.equals("01001")){
+                branchText.setText("华北分公司");
+            }
+            else{
+                branchText.setText(udinspo.getBranch() == null ? "" : udinspo.getBranch());
+            }
+            String farm=udinspo.getUdbelong();
+            if(farm.equals("01001001")){
+                farmText.setText("平鲁大山台风电场");
+            }else {
+                farmText.setText(udinspo.getUdbelong() == null ? "" : udinspo.getUdbelong());
+            }
+            weatherText.setText(udinspo.getWeather() == null ? "" : udinspo.getWeather());
+            temperatureText.setText(udinspo.getTemperature() == null ? "" : udinspo.getTemperature());
         }
 
 //        inspotypeText.setOnClickListener(inspotypeOnClickListener);
@@ -204,10 +227,10 @@ public class Udinspo_Details_activity extends BaseActivity {
 
             sb = new StringBuffer();
             datePickerDialog.show();
-            if(view.getId()==R.id.udinspo_inspodate_text){
-                dateMark=1;
-            }else if(view.getId()==R.id.udinspo_enddate_text){
-                dateMark=2;
+            if (view.getId() == R.id.udinspo_inspodate_text) {
+                dateMark = 1;
+            } else if (view.getId() == R.id.enddate_text_id) {
+                dateMark = 2;
             }
         }
     };
@@ -256,9 +279,9 @@ public class Udinspo_Details_activity extends BaseActivity {
             } else {
                 sb.append(i + ":" + i1 + ":00");
             }
-            if(dateMark==1) {
+            if (dateMark == 1) {
                 inspodateText.setText(sb);
-            }else if(dateMark==2){
+            } else if (dateMark == 2) {
                 enddateText.setText(sb);
             }
         }
@@ -288,23 +311,23 @@ public class Udinspo_Details_activity extends BaseActivity {
 
     }
 
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(Udinspo_Details_activity.this, mMenuItems);
-        dialog.title("请选择")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                inspotype = inspotypeTexts[position];
-                inspotypeText.setText(inspotype);
-
-
-                dialog.dismiss();
-            }
-        });
-    }
+//    private void NormalListDialog() {
+//        final NormalListDialog dialog = new NormalListDialog(Udinspo_Details_activity.this, mMenuItems);
+//        dialog.title("请选择")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)//
+//                .show();
+//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+//            @Override
+//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                inspotype = inspotypeTexts[position];
+//                inspotypeText.setText(inspotype);
+//
+//
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
 
     /**
@@ -313,7 +336,7 @@ public class Udinspo_Details_activity extends BaseActivity {
     private View.OnClickListener inspotypeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            NormalListDialog();
+//            NormalListDialog();
         }
     };
 
@@ -360,8 +383,10 @@ public class Udinspo_Details_activity extends BaseActivity {
         }
     };
 
-    /**删除操作**/
-    private View.OnClickListener deleteBtnOnClickListener=new View.OnClickListener() {
+    /**
+     * 删除操作*
+     */
+    private View.OnClickListener deleteBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
@@ -449,7 +474,7 @@ public class Udinspo_Details_activity extends BaseActivity {
             protected String doInBackground(String... strings) {
                 String data = submitData();
 
-                String result = getBaseApplication().getWsService().UpdatePO(Udinspo_Details_activity.this,data, udinspo.insponum);
+                String result = getBaseApplication().getWsService().UpdatePO(Udinspo_Details_activity.this, data, udinspo.insponum);
 
                 return result;
             }
@@ -458,7 +483,7 @@ public class Udinspo_Details_activity extends BaseActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 closeProgressDialog();
-                Log.i(TAG,"s="+s);
+                Log.i(TAG, "s=" + s);
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -494,9 +519,9 @@ public class Udinspo_Details_activity extends BaseActivity {
         String insponum = udinspo.insponum;
         String description = descriptionText.getText().toString();
         String inspplannum = inspplannumText.getText().toString();
-        String inspotype = inspotypeText.getText().toString();
-        String createby = createbyText.getText().toString();
-        String createdate = createdateText.getText().toString();
+//        String inspotype = inspotypeText.getText().toString();
+//        String createby = createbyText.getText().toString();
+//        String createdate = createdateText.getText().toString();
         String inspoby = inspobyText.getText().toString();
         String inspodate = inspodateText.getText().toString();
         String enddate = enddateText.getText().toString();
@@ -513,12 +538,12 @@ public class Udinspo_Details_activity extends BaseActivity {
             if (!inspotype.equals(udinspo.inspotype)) {
                 jsonObject.put("INSPOTYPE", inspotype);
             }
-            if (!createby.equals(udinspo.createby)) {
-                jsonObject.put("CREATEBY", createby);
-            }
-            if (!createdate.equals(udinspo.createdate)) {
-                jsonObject.put("CREATEDATE", createdate);
-            }
+//            if (!createby.equals(udinspo.createby)) {
+//                jsonObject.put("CREATEBY", createby);
+//            }
+//            if (!createdate.equals(udinspo.createdate)) {
+//                jsonObject.put("CREATEDATE", createdate);
+//            }
             if (!inspoby.equals(udinspo.inspoby)) {
                 jsonObject.put("INSPOBY", inspoby);
             }
