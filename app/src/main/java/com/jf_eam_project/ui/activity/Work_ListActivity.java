@@ -31,9 +31,11 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by think on 2015/11/20.
@@ -67,6 +69,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     /**资产编号**/
     private String assetsNum;
+
+    WorkOrderDao dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +121,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                 finish();
             }
         });
+        dao = new WorkOrderDao(Work_ListActivity.this);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -136,46 +141,58 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search,assetsNum, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
+        if (NetWorkHelper.isNetwork(Work_ListActivity.this)){
+            List<WorkOrder> list = dao.queryByType(worktype);
+            if (list.size()==0){
+                nodatalayout.setVisibility(View.VISIBLE);
+            }else {
+                workListAdapter.adddate(list);
+                nodatalayout.setVisibility(View.GONE);
             }
+            refresh_layout.setRefreshing(false);
+        }else {
+            HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, assetsNum, page, 20), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                }
 
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<WorkOrder> items = null;
-                if (totalPages != 0 && currentPage != 0) {
-                    try {
-                        items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
-                        refresh_layout.setRefreshing(false);
-                        refresh_layout.setLoading(false);
-                        if (items == null || items.isEmpty()) {
-                            nodatalayout.setVisibility(View.VISIBLE);
-                        } else {
-                            if (page == 1) {
-                                workListAdapter = new WorkListAdapter(Work_ListActivity.this,0);
-                                recyclerView.setAdapter(workListAdapter);
-                                nodatalayout.setVisibility(View.GONE);
+                @Override
+                public void onSuccess(Results results, int totalPages, int currentPage) {
+                    ArrayList<WorkOrder> items = null;
+                    if (totalPages != 0 && currentPage != 0) {
+                        try {
+                            items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
+                            refresh_layout.setRefreshing(false);
+                            refresh_layout.setLoading(false);
+                            if (items == null || items.isEmpty()) {
+                                nodatalayout.setVisibility(View.VISIBLE);
+                            } else {
+                                if (page == 1) {
+                                    workListAdapter = new WorkListAdapter(Work_ListActivity.this, 0);
+                                    recyclerView.setAdapter(workListAdapter);
+                                    nodatalayout.setVisibility(View.GONE);
+                                }
+                                if (totalPages == page) {
+                                    workListAdapter.adddate(items);
+                                }
+                                dao.Update(items);
                             }
-                            if (totalPages == page) {
-                                workListAdapter.adddate(items);
-                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } else {
+                        refresh_layout.setRefreshing(false);
+                        nodatalayout.setVisibility(View.VISIBLE);
                     }
-                } else {
+                }
+
+                @Override
+                public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
-            }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
+            });
+        }
     }
 
     private void setSearchEdit() {

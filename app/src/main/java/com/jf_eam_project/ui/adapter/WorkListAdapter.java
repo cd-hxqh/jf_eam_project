@@ -223,6 +223,17 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void adddate(List<WorkOrder> data) {
+        if (data.size() > 0) {
+            for (int i = 0; i < data.size(); i++) {
+                if (!workOrderList.contains(data.get(i))) {
+                    workOrderList.add(data.get(i));
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public void removeAllData() {
         if (workOrderList.size() > 0) {
             workOrderList.removeAll(workOrderList);

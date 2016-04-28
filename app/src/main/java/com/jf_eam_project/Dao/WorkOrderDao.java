@@ -49,6 +49,31 @@ public class WorkOrderDao {
         }
     }
 
+    /**
+     * 批量更新
+     * @param list
+     */
+    public void Update(final List<WorkOrder> list) {
+        try {
+            WorkOrderDaoOpe.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (WorkOrder workOrder : list) {
+                        if (!isexitByNum(workOrder.wonum)) {
+                            WorkOrderDaoOpe.createOrUpdate(workOrder);
+                        }else {
+                            deleteByWonum(workOrder.wonum);
+                            WorkOrderDaoOpe.createOrUpdate(workOrder);
+                        }
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void create(WorkOrder workOrder) {
         try {
             if (!isexitByNum(workOrder.wonum)) {
@@ -96,6 +121,19 @@ public class WorkOrderDao {
     }
 
     /**
+     * @param type
+     */
+    public List<WorkOrder> queryByType(String type) {
+        try {
+            return WorkOrderDaoOpe.queryBuilder().where().eq("udwotype",type ).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      *
      */
     public void deleteall() {
@@ -128,7 +166,7 @@ public class WorkOrderDao {
     /**
      *
      */
-    public void deleteByWonum(int wonum) {
+    public void deleteByWonum(String  wonum) {
         try {
             WorkOrderDaoOpe.delete(WorkOrderDaoOpe.queryBuilder().where().eq("wonum", wonum).query());
         } catch (SQLException e) {
