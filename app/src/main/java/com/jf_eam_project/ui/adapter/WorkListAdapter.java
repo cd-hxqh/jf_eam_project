@@ -18,6 +18,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.activity.Material_Details_Activity;
 import com.jf_eam_project.ui.activity.Material_Up_Details_Activity;
+import com.jf_eam_project.ui.activity.Work_AddNewActivity;
 import com.jf_eam_project.ui.activity.Work_DetailsActivity;
 
 import java.util.ArrayList;
@@ -98,11 +99,19 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }else {
-                    Intent intent = new Intent(mContext, Work_DetailsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("workOrder", workOrder);
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
+                    if (workOrder.isnew) {
+                        Intent intent = new Intent(mContext, Work_AddNewActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("workOrder", workOrder);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(mContext, Work_DetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("workOrder", workOrder);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }
                 }
             }
         });

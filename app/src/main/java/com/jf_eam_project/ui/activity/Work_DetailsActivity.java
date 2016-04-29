@@ -567,6 +567,9 @@ public class Work_DetailsActivity extends BaseActivity {
                     super.onPostExecute(s);
                     if (s.equals("成功")) {
                         Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                        if (workOrder.ishistory){
+                            new WorkOrderDao(Work_DetailsActivity.this).deleteById(workOrder.id);
+                        }
                     } else if (s.equals("")) {
                         Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
                     } else {

@@ -174,7 +174,11 @@ public class Work_AddNewActivity extends BaseActivity {
      * 获取数据*
      */
     private void geiIntentData() {
-        workOrder.setUdwotype(getIntent().getStringExtra("worktype"));
+        if (getIntent().hasExtra("worktype")) {
+            workOrder.setUdwotype(getIntent().getStringExtra("worktype"));
+        }else {
+            workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        }
     }
 
     @Override
@@ -227,14 +231,60 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
         wonumlayout.setVisibility(View.GONE);
-        workOrder.isnew = true;
-        udwotype.setText(workOrder.udwotype);
-        status.setText("等待核准");
+        if (workOrder.ishistory){
+            description.setText(workOrder.description);
+//        parent.setText(workOrder.parent);
+            if(workOrder.udwotype.equals("PLAN")){
+                udwotype.setText(getString(R.string.work_plan_type));
+            }else if(workOrder.udwotype.equals("UNPLAN")){
+                udwotype.setText(getString(R.string.work_unplan_type));
+            }
+
+            assetnum.setText(workOrder.assetnum);
+            assetdesc.setText(workOrder.assetdesc);
+            location.setText(workOrder.location);
+            locationdesc.setText(workOrder.locationdesc);
+            status.setText(workOrder.status);
+//        statusdate.setText(workOrder.statusdate);
+            isxq.setChecked(workOrder.isxq!=null&&workOrder.isxq.equals("Y"));
+            isyhpc.setChecked(workOrder.isyhpc != null && workOrder.isyhpc.equals("Y"));
+            lctype.setText(workOrder.lctype);
+            powerloss.setText(workOrder.powerloss);
+            speed.setText(workOrder.speed);
+//        woclass.setText(workOrder.woclass);
+            failurecode.setText(workOrder.failurecode);
+            problemcode.setText(workOrder.problemcode);
+            displayname.setText(workOrder.displayname);
+            createdate.setText(workOrder.createdate);
+//            uddescription.setText(workOrder.uddeptdescription);
+//            udbelong.setText(workOrder.udbelong);
+            largepart.setText(workOrder.largepart);
+            issuematerial.setChecked(workOrder.issuematerial != null && workOrder.issuematerial.equals("Y"));
+            shutdown.setChecked(workOrder.shutdown != null && workOrder.shutdown.equals("Y"));
+            longdescription.setText(workOrder.description_longdescription);
+
+            jpnum.setText(workOrder.jpnum);
+            targstartdate.setText(workOrder.targstartdate);
+            targcompdate.setText(workOrder.targcompdate);
+            actstart.setText(workOrder.actstart);
+            actfinish.setText(workOrder.actfinish);
+            reportedby.setText(workOrder.reportedby);
+            reportdate.setText(workOrder.reportdate);
+        }else {
+            workOrder.isnew = true;
+            if(workOrder.udwotype.equals("PLAN")){
+                udwotype.setText(getString(R.string.work_plan_type));
+            }else if(workOrder.udwotype.equals("UNPLAN")){
+                udwotype.setText(getString(R.string.work_unplan_type));
+            }
+//            udwotype.setText(workOrder.udwotype);
+            status.setText("等待核准");
 //        statusdate.setText(GetNowTime.getTime());
-        displayname.setText(getBaseApplication().getUsername());
-        createdate.setText(GetNowTime.getTime());
-        reportedby.setText(getBaseApplication().getUsername());
-        reportdate.setText(GetNowTime.getTime());
+            displayname.setText(getBaseApplication().getUsername());
+            createdate.setText(GetNowTime.getTime());
+            reportedby.setText(getBaseApplication().getUsername());
+            reportdate.setText(GetNowTime.getTime());
+        }
 
         lctype.setOnClickListener(lctypeOnClickListener);
         largepart.setOnClickListener(largepartOnClickListener);
@@ -433,13 +483,16 @@ public class Work_AddNewActivity extends BaseActivity {
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
                             if (s == null || s.equals("")) {
-                                MessageUtils.showMiddleToast(Work_AddNewActivity.this, "新增工单是败");
+                                MessageUtils.showMiddleToast(Work_AddNewActivity.this, "新增工单失败");
                             } else if (!NumberUtils.isDigits(s)) {
                                 MessageUtils.showMiddleToast(Work_AddNewActivity.this, s);
                             } else {
                                 Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
                                 wonumlayout.setVisibility(View.VISIBLE);
                                 wonum.setText(s);
+                                if (workOrder.ishistory){
+                                    new WorkOrderDao(Work_AddNewActivity.this).deleteById(workOrder.id);
+                                }
                             }
                             closeProgressDialog();
                         }

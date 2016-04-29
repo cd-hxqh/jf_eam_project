@@ -89,7 +89,7 @@ public class WorkOrderDao {
      */
     public void Update(WorkOrder workOrder) {
         try {
-            WorkOrderDaoOpe.create(workOrder);
+            WorkOrderDaoOpe.createOrUpdate(workOrder);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -152,7 +152,7 @@ public class WorkOrderDao {
      */
     public List<WorkOrder> queryByType(String type) {
         try {
-            return WorkOrderDaoOpe.queryBuilder().where().eq("udwotype",type ).query();
+            return WorkOrderDaoOpe.queryBuilder().where().eq("udwotype", type).query();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -186,6 +186,17 @@ public class WorkOrderDao {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    public void deleteById(int id) {
+        try {
+            WorkOrderDaoOpe.delete(WorkOrderDaoOpe.queryBuilder().where().eq("id", id).query());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

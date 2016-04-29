@@ -125,6 +125,14 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         initView();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        workListAdapter = new WorkListAdapter(Work_History_ListActivity.this, 1);
+        recyclerView.setAdapter(workListAdapter);
+        getData(searchText);
+    }
+
     /**
      * 初始化DAO*
      */
@@ -344,7 +352,11 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                                             final String updataInfo = JsonUtils.WorkToJson(chooseList.get(i), getWoactivityList(chooseList.get(i).id),
                                                     getWplaborList(chooseList.get(i).id), getWpmaterialList(chooseList.get(i).id),
                                                     getAssignmentList(chooseList.get(i).id), getLabtransList(chooseList.get(i).id));
-                                            result = getBaseApplication().getWsService().InsertWO(Work_History_ListActivity.this, updataInfo, getBaseApplication().getUsername());
+                                            if (chooseList.get(i).isnew) {
+                                                result = getBaseApplication().getWsService().InsertWO(Work_History_ListActivity.this, updataInfo, getBaseApplication().getUsername());
+                                            }else {
+                                                result = getBaseApplication().getWsService().UpdataWO(Work_History_ListActivity.this,updataInfo, chooseList.get(i).wonum);
+                                            }
                                         }
                                     }
                                     return result;
@@ -359,8 +371,8 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                                         MessageUtils.showMiddleToast(Work_History_ListActivity.this, "工单" + s + "提交成功");
                                         deleteList(chooseList);
                                         workListAdapter.removeAllData();
-                                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
-                                        if (list1 == null && list1.size() == 0) {
+                                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForLoc();
+                                        if (list1 == null || list1.size() == 0) {
                                             nodatalayout.setVisibility(View.VISIBLE);
                                         }
                                         workListAdapter.adddate(list1);
@@ -431,10 +443,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
                         mProgressDialog = ProgressDialog.show(Work_History_ListActivity.this, null, "删除中...", true, true);
                         mProgressDialog.setCanceledOnTouchOutside(false);
                         mProgressDialog.setCancelable(false);
-                        Log.i(TAG, "chooseList size=" + chooseList.size());
                         deleteList(chooseList);
                         workListAdapter.removeAllData();
-                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
+                        ArrayList<WorkOrder> list1 = (ArrayList<WorkOrder>) workOrderDao.queryForLoc();
                         if (list1 == null && list1.size() == 0) {
                             nodatalayout.setVisibility(View.VISIBLE);
                         }
@@ -454,7 +465,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
 
     @Override
     public void onRefresh() {
-
+        workListAdapter = new WorkListAdapter(Work_History_ListActivity.this, 1);
+        recyclerView.setAdapter(workListAdapter);
+        getData(searchText);
         refresh_layout.setRefreshing(false);
     }
 }
