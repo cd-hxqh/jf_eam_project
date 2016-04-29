@@ -56,7 +56,7 @@ public class UdinspojxxmDao {
                     @Override
                     public Void call() throws Exception {
                         for (Udinspojxxm udinspojxxm : list) {
-                            deleteudUdinspojxxmid(udinspojxxm.udinspojxxmid);
+                            deleteudUdinspojxxmid(udinspojxxm.udinspojxxmid, 0);
                             udinspojxxmDaoOpe.createOrUpdate(udinspojxxm);
                         }
                         return null;
@@ -93,10 +93,10 @@ public class UdinspojxxmDao {
     }
 
     /**根据巡检备件编号删除信息**/
-    public void deleteudUdinspojxxmid(int udinspojxxmid) {
+    public void deleteudUdinspojxxmid(int udinspojxxmid,int local) {
         try {
 
-            List<Udinspojxxm> list = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspojxxmid", udinspojxxmid).query();
+            List<Udinspojxxm> list = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspojxxmid", udinspojxxmid).and().eq("local",local).query();
 
             udinspojxxmDaoOpe.delete(list);
         } catch (SQLException e) {
@@ -114,6 +114,19 @@ public class UdinspojxxmDao {
     public List<Udinspojxxm> queryByNum(String insponum){
         try {
             return udinspojxxmDaoOpe.queryBuilder().where().like("udinspoassetnum", insponum).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     *
+     * @param insponum
+     * @return
+     */
+    public List<Udinspojxxm> queryByNumAndLocal(String insponum){
+        try {
+            return udinspojxxmDaoOpe.queryBuilder().where().like("udinspoassetnum", insponum).and().eq("local", "1").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -175,7 +188,7 @@ public class UdinspojxxmDao {
     public List<Udinspojxxm> queryByDesc(String desc) {
         List<Udinspojxxm> list = null;
         try {
-            list = udinspojxxmDaoOpe.queryBuilder().where().like("description", "%" + desc + "%").and().like("udinspoassetnum","%" + desc + "%").query();
+            list = udinspojxxmDaoOpe.queryBuilder().where().like("description", "%" + desc + "%").and().like("udinspoassetnum","%" + desc + "%").and().eq("local",1).query();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();

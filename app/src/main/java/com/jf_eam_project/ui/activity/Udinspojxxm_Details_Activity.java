@@ -1,35 +1,23 @@
 package com.jf_eam_project.ui.activity;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,13 +30,10 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.CreatereportDao;
-import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Createreport;
-import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.utils.Bimp;
@@ -61,9 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 检修项目标准
@@ -71,8 +53,8 @@ import java.util.List;
 public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private static final String TAG = "Udinspojxxm_Details_Activity";
-    private static final int ADD_REPORT=1; //提报单新增
-    private static final int DETAILS_REPORT=2; //提报单详情
+    private static final int ADD_REPORT = 1; //提报单新增
+    private static final int DETAILS_REPORT = 2; //提报单详情
 
     /**
      * 标题*
@@ -101,7 +83,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private TextView udinspojxxm9Text; //检查标准
 
     private TextView udinspojxxm8Text; //检查方法
-
 
 
     /**
@@ -168,9 +149,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     /**
      * 填写方式*
      */
-    private String writemethod;
+    private String writemethod = "";
 
-    private String udinspojxxmvalue;
+    private String udinspojxxmvalue = "";
 
 
     @Override
@@ -653,7 +634,12 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
         udinspojxxm1.setUdinspojxxmlinenum(udinspojxxm.udinspojxxmlinenum);
         udinspojxxm1.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
+        udinspojxxm1.setDescription(udinspojxxm.description);
         udinspojxxm1.setType(Constants.UPDATE);
+        udinspojxxm1.setWritemethod(writemethod);
+        udinspojxxm1.setReportnum(udinspojxxm.reportnum);
+        udinspojxxm1.setUdinspojxxm7(udinspojxxm.udinspojxxm7);
+        udinspojxxm1.setLocal(1);
         new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).insert(udinspojxxm1);
     }
 

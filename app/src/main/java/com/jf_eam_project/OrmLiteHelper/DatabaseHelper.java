@@ -65,7 +65,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Craftrate.class);
             TableUtils.createTable(connectionSource, Item.class);
             TableUtils.createTable(connectionSource, Laborcraftrate.class);
-
             TableUtils.createTable(connectionSource, Udinspo.class);
             TableUtils.createTable(connectionSource, Udinspoasset.class);
             TableUtils.createTable(connectionSource, Udinspojxxm.class);

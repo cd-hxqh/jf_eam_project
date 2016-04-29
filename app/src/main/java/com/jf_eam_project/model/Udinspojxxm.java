@@ -94,6 +94,18 @@ public class Udinspojxxm extends Entity {
 
     public String type; //操作类型
 
+    @DatabaseField(columnName = "local")
+    @JsonField(fieldName = "local")
+    public int local;//本地操作
+
+
+    public int getLocal() {
+        return local;
+    }
+
+    public void setLocal(int local) {
+        this.local = local;
+    }
 
     public int getId() {
         return id;

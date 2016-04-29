@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -24,16 +23,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.ui.adapter.UdinspoListadapter;
 import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
@@ -232,7 +226,7 @@ public class Udinspojxxm_History_Activity extends BaseActivity implements SwipeR
 
     private void getData(String search) {
         if (search.equals("")) {
-            list = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNum(udinspoassetnum);
+            list = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNumAndLocal(udinspoassetnum);
         } else {
             list = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByDesc(search);
         }
@@ -384,7 +378,7 @@ public class Udinspojxxm_History_Activity extends BaseActivity implements SwipeR
 
                                     udinspojxxmListAdapter.removeAllData();
 
-                                    ArrayList<Udinspojxxm> list1 = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNum(udinspoassetnum);
+                                    ArrayList<Udinspojxxm> list1 = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNumAndLocal(udinspoassetnum);
                                     if (list1 == null || list1.size() == 0) {
                                         nodatalayout.setVisibility(View.VISIBLE);
                                     }
@@ -470,7 +464,7 @@ public class Udinspojxxm_History_Activity extends BaseActivity implements SwipeR
 
                 udinspojxxmListAdapter.removeAllData();
 
-                ArrayList<Udinspojxxm> list1 = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNum(udinspoassetnum);
+                ArrayList<Udinspojxxm> list1 = (ArrayList<Udinspojxxm>) udinspojxxmDao.queryByNumAndLocal(udinspoassetnum);
                 if (list1 == null || list1.size() == 0) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
