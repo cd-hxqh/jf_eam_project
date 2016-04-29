@@ -96,7 +96,7 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 android.R.color.holo_red_light);
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
-        if (!workOrder.isnew && (wplabors == null || wplabors.size() == 0)) {
+        if (!workOrder.isnew && (wplabors == null || wplabors.size() == 0) && !workOrder.ishistory) {
             refresh_layout.setRefreshing(true);
             getdata();
         } else {
@@ -158,17 +158,17 @@ public class WplaborFragment extends Fragment implements SwipeRefreshLayout.OnRe
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew&& (wplabors == null || wplabors.size() == 0)) {
+        if (!workOrder.isnew && (wplabors == null || wplabors.size() == 0) && !workOrder.ishistory) {
             page = 1;
             getdata();
-        }else {
+        } else {
             refresh_layout.setRefreshing(false);
         }
     }
 
     @Override
     public void onLoad() {
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew && (wplabors == null || wplabors.size() == 0) && !workOrder.ishistory) {
             page++;
             getdata();
         }

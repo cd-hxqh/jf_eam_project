@@ -97,7 +97,7 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        if (!workOrder.isnew && (woactivities == null || woactivities.size() == 0)) {
+        if (!workOrder.isnew && (woactivities == null || woactivities.size() == 0) && !workOrder.ishistory) {
             refresh_layout.setRefreshing(true);
             getdata();
         } else {
@@ -159,17 +159,17 @@ public class WoactivityFragment extends Fragment implements SwipeRefreshLayout.O
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew&& (woactivities == null || woactivities.size() == 0)) {
+        if (!workOrder.isnew && (woactivities == null || woactivities.size() == 0) && !workOrder.ishistory) {
             page = 1;
             getdata();
-        }else {
+        } else {
             refresh_layout.setRefreshing(false);
         }
     }
 
     @Override
     public void onLoad() {
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew && (woactivities == null || woactivities.size() == 0) && !workOrder.ishistory) {
             page++;
             getdata();
         }

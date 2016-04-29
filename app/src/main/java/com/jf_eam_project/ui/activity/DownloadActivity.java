@@ -40,6 +40,7 @@ import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
+import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -279,40 +280,42 @@ public class DownloadActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
+            if (NetWorkHelper.isNetwork(DownloadActivity.this)){
+                Toast.makeText(DownloadActivity.this,"无可用网络",Toast.LENGTH_SHORT).show();
+            }else {
+
+                mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
+                        getString(R.string.downloading), true, true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.setCancelable(false);
 
 
-            mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
-                    getString(R.string.downloading), true, true);
-            mProgressDialog.setCanceledOnTouchOutside(false);
-            mProgressDialog.setCancelable(false);
-
-
-            String buttonText = childArray.get(group).get(child);
-            if (buttonText.equals(childArray.get(0).get(0))) {//位置
-                downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
-                downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURECODE_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURELIST_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
-                downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.JOBPLAN_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
-                downloaddata(HttpManager.getUrl(Constants.PERSON_APPID, Constants.PERSON_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
-                downloaddata(HttpManager.getUrl(Constants.LABOR_APPID, Constants.LABOR_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
-                downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID, Constants.CRAFTRATE_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
-                downloaddata(HttpManager.getUrl(Constants.ITEM_APPID, Constants.ITEM_NAME), buttonText, button);
-            } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
-                downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), buttonText, button);
-            } else {
-                mProgressDialog.dismiss();
-                button.setText(getResources().getString(R.string.downloaded));
+                String buttonText = childArray.get(group).get(child);
+                if (buttonText.equals(childArray.get(0).get(0))) {//位置
+                    downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
+                    downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
+                    downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURECODE_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
+                    downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURELIST_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(4))) {//作业计划
+                    downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.JOBPLAN_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(5))) {//人员
+                    downloaddata(HttpManager.getUrl(Constants.PERSON_APPID, Constants.PERSON_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(6))) {//员工
+                    downloaddata(HttpManager.getUrl(Constants.LABOR_APPID, Constants.LABOR_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(7))) {//工种
+                    downloaddata(HttpManager.getUrl(Constants.CRAFTRATE_APPID, Constants.CRAFTRATE_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(8))) {//项目
+                    downloaddata(HttpManager.getUrl(Constants.ITEM_APPID, Constants.ITEM_NAME), buttonText, button);
+                } else if (buttonText.equals(childArray.get(0).get(9))) {//员工工种
+                    downloaddata(HttpManager.getUrl(Constants.LABORCRAFTRATE_APPID, Constants.LABORCRAFTRATE_NAME), buttonText, button);
+                } else {
+                    mProgressDialog.dismiss();
+                    button.setText(getResources().getString(R.string.downloaded));
+                }
             }
-
         }
     }
 

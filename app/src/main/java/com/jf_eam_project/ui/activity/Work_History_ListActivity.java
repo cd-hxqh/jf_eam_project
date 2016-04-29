@@ -186,9 +186,9 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
 
     private void getData(String search) {
         if (search.equals("")) {
-            list = (ArrayList<WorkOrder>) workOrderDao.queryForAll();
+            list = (ArrayList<WorkOrder>) workOrderDao.queryForLoc();
         } else {
-            list = (ArrayList<WorkOrder>) workOrderDao.queryByWonum(search);
+            list = (ArrayList<WorkOrder>) workOrderDao.queryByWonumForLoc(search);
         }
         if (list != null && list.size() != 0) {
             workListAdapter.adddate(list);

@@ -96,7 +96,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        if (!workOrder.isnew && (wpmaterials==null||wpmaterials.size() == 0)) {
+        if (!workOrder.isnew && (wpmaterials == null || wpmaterials.size() == 0) && !workOrder.ishistory) {
             refresh_layout.setRefreshing(true);
             getdata();
         } else {
@@ -107,7 +107,7 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     private void getdata() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl("",page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWpmaterialUrl("", page, 20, workOrder.wonum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -158,17 +158,17 @@ public class WpmaterialFragment extends Fragment implements SwipeRefreshLayout.O
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew&& (wpmaterials==null||wpmaterials.size() == 0)) {
+        if (!workOrder.isnew && (wpmaterials == null || wpmaterials.size() == 0) && !workOrder.ishistory) {
             page = 1;
             getdata();
-        }else {
+        } else {
             refresh_layout.setRefreshing(false);
         }
     }
 
     @Override
     public void onLoad() {
-        if (!workOrder.isnew) {
+        if (!workOrder.isnew && (wpmaterials == null || wpmaterials.size() == 0) && !workOrder.ishistory) {
             page++;
             getdata();
         }

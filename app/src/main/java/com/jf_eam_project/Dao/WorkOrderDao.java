@@ -108,6 +108,33 @@ public class WorkOrderDao {
     }
 
     /**
+     * 搜索本地历史数据
+     */
+    public List<WorkOrder> queryForLoc() {
+        try {
+            return WorkOrderDaoOpe.queryBuilder().where().eq("ishistory", true).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 按照wonum搜索本地数据
+     * @param wonum
+     */
+    public List<WorkOrder> queryByWonumForLoc(String wonum) {
+        try {
+            return WorkOrderDaoOpe.queryBuilder().where().like("wonum", "%" + wonum + "%").or().like("description", "%" + wonum + "%").and().eq("ishistory",true).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * @param wonum
      */
     public List<WorkOrder> queryByWonum(String wonum) {
@@ -193,7 +220,7 @@ public class WorkOrderDao {
      */
     public boolean isexitByNum(String wonum) {
         try {
-            List<WorkOrder> workOrderList = WorkOrderDaoOpe.queryBuilder().where().eq("wonum", wonum).query();
+            List<WorkOrder> workOrderList = WorkOrderDaoOpe.queryBuilder().where().eq("wonum", wonum).and().eq("ishistory",false).query();
             if (workOrderList.size() > 0) {
                 return true;
             } else {
