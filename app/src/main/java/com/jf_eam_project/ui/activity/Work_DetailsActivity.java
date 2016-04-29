@@ -480,8 +480,8 @@ public class Work_DetailsActivity extends BaseActivity {
         powerloss.setEnabled(true);
         speed.setEnabled(true);
         largepart.setEnabled(true);
-        issuematerial.setEnabled(true);
-        shutdown.setEnabled(true);
+        issuematerial.setClickable(true);
+        shutdown.setClickable(true);
         longdescription.setFocusable(true);
         longdescription.setFocusableInTouchMode(true);
         failurecode.setEnabled(true);
@@ -546,6 +546,7 @@ public class Work_DetailsActivity extends BaseActivity {
         if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
             MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
             saveWorkOrder();
+            closeProgressDialog();
         } else {
             String updataInfo = null;
             if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
