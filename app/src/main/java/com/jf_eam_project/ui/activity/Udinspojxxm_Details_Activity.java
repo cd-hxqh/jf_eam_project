@@ -144,6 +144,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private Button deleteBtn;
 
 
+    /**提报单**/
+    private Button reportBtn;
+
+
     private ProgressDialog mProgressDialog;
 
     /**
@@ -210,6 +214,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
 
         submitBtn = (Button) findViewById(R.id.submit_btn_id);
+        reportBtn = (Button) findViewById(R.id.report_btn);
 //        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
 
     }
@@ -219,7 +224,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setImageResource(R.drawable.ic_report);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
@@ -302,6 +307,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+
+        reportBtn.setOnClickListener(editImageViewOnClickListener);
+
     }
 
 

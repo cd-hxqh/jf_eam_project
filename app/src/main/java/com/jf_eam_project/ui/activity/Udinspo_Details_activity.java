@@ -71,6 +71,9 @@ public class Udinspo_Details_activity extends BaseActivity {
      */
     private ImageView menuImageView;
 
+    /**巡检备件_btn**/
+    private Button udinspoassetBtn;
+
 
     /**
      * 界面信息显示*
@@ -166,6 +169,7 @@ public class Udinspo_Details_activity extends BaseActivity {
 
 
         confirmBtn = (Button) findViewById(R.id.submit_btn_id);
+        udinspoassetBtn = (Button) findViewById(R.id.udinspoasset_btn_id);
 
     }
 
@@ -175,7 +179,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
-        menuImageView.setVisibility(View.VISIBLE);
+//        menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 //        editImageView.setVisibility(View.VISIBLE);
         editImageView.setOnClickListener(editImageViewOnClickListener);
@@ -217,6 +221,7 @@ public class Udinspo_Details_activity extends BaseActivity {
         enddateText.setOnClickListener(inspodateOnClickListener);
 
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
+        udinspoassetBtn.setOnClickListener(udinspoassetBtnOnClickListener);
 
     }
 
@@ -438,6 +443,16 @@ public class Udinspo_Details_activity extends BaseActivity {
     };
 
 
+    private View.OnClickListener udinspoassetBtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udinspo_Details_activity.this, Udinspoasset_Activity.class);
+            intent.putExtra("insponum", udinspo.insponum);
+            startActivityForResult(intent, 0);
+        }
+    };
+
+
     /**
      * 数据封装*
      */
@@ -483,7 +498,6 @@ public class Udinspo_Details_activity extends BaseActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 closeProgressDialog();
-                Log.i(TAG, "s=" + s);
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
