@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -46,6 +47,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 检修项目标准
@@ -157,6 +161,13 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private String udinspojxxmvalue = "";
 
+    public static int max = 0;
+    public static List<Bitmap> bmp = new ArrayList<Bitmap>();
+    public static HashMap<String, Boolean> mHashMap = new HashMap<String, Boolean>();
+    //
+    //图片sd地址  上传服务器时把图片调用下面方法压缩后 保存到临时文件夹 图片压缩后小于100KB，失真度不明显
+    public static List<String> drr = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +235,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-//        editImageView.setVisibility(View.VISIBLE);
+        editImageView.setVisibility(View.VISIBLE);
         editImageView.setImageResource(R.drawable.ic_report);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
@@ -293,7 +304,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
-                if (arg2 == Bimp.bmp.size()) {
+                if (arg2 == Udinspojxxm_Details_Activity.bmp.size()) {
                     ActionSheetDialog();
                 } else {
                     Intent intent = new Intent(Udinspojxxm_Details_Activity.this,
@@ -700,8 +711,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
         switch (requestCode) {
             case TAKE_PICTURE:
-                if (Bimp.drr.size() < 9 && resultCode == -1) {
-                    Bimp.drr.add(path);
+                if (Udinspojxxm_Details_Activity.drr.size() < 9 && resultCode == -1) {
+                    Udinspojxxm_Details_Activity.drr.add(path);
                 }
 //                adapter.update();
                 break;

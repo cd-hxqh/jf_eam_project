@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.ui.activity.Udinspojxxm_Details_Activity;
 import com.jf_eam_project.utils.Bimp;
 import com.jf_eam_project.utils.FileUtils;
 
@@ -47,7 +48,7 @@ public class GridAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return (Bimp.bmp.size() + 1);
+        return (Udinspojxxm_Details_Activity.bmp.size() + 1);
     }
 
     public Object getItem(int arg0) {
@@ -85,15 +86,15 @@ public class GridAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        if (position == Bimp.bmp.size()) {
+        Log.i(TAG,"position="+position+",size="+Udinspojxxm_Details_Activity.bmp.size());
+        if (position == Udinspojxxm_Details_Activity.bmp.size()) {
             holder.image.setImageBitmap(BitmapFactory.decodeResource(
                     context.getResources(), R.drawable.icon_addpic_unfocused));
             if (position == 9) {
                 holder.image.setVisibility(View.GONE);
             }
         } else {
-            holder.image.setImageBitmap(Bimp.bmp.get(position));
+            holder.image.setImageBitmap(Udinspojxxm_Details_Activity.bmp.get(position));
         }
 
         return convertView;
@@ -118,23 +119,23 @@ public class GridAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
-                    if (Bimp.max == Bimp.drr.size()) {
-
+                    if (Udinspojxxm_Details_Activity.max == Udinspojxxm_Details_Activity.drr.size()) {
+                        Log.i(TAG,"2222222");
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
                         break;
                     } else {
                         try {
-                            String path = Bimp.drr.get(Bimp.max);
+                            String path = Udinspojxxm_Details_Activity.drr.get(Udinspojxxm_Details_Activity.max);
                             Log.i(TAG, "path=" + path);
                             Bitmap bm = Bimp.revitionImageSize(path);
-                            Bimp.bmp.add(bm);
+                            Udinspojxxm_Details_Activity.bmp.add(bm);
                             String newStr = path.substring(
                                     path.lastIndexOf("/") + 1,
                                     path.lastIndexOf("."));
                             FileUtils.saveBitmap(bm, "" + newStr);
-                            Bimp.max += 1;
+                            Udinspojxxm_Details_Activity.max += 1;
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
@@ -147,4 +148,8 @@ public class GridAdapter extends BaseAdapter {
             }
         }).start();
     }
+
+
+
+
 }
