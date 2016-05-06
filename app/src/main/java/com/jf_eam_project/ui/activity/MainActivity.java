@@ -259,8 +259,8 @@ public class MainActivity extends BaseActivity
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        AppManager.AppExit(MainActivity.this);
                         dialog.dismiss();
+                        AppManager.AppExit(MainActivity.this);
                     }
                 });
 

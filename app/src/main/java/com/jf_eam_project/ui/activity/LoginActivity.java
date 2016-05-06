@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -139,10 +140,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initView() {
 
         boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
-//        if (isChecked) {
+        Log.i(TAG, "isChecked=" + isChecked);
         mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
-        mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
-//        }
+        if (isChecked) {
+
+            mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
+            checkBox.setChecked(isChecked);
+        }
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
 

@@ -183,4 +183,13 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
+    }
 }
