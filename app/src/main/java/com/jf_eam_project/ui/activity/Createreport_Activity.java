@@ -6,8 +6,13 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -25,6 +31,7 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.LocationDao;
@@ -37,8 +44,10 @@ import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
+import com.jf_eam_project.utils.DataUtils;
 import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.JsonUtils;
 import com.jf_eam_project.utils.MessageUtils;
@@ -47,8 +56,11 @@ import com.jf_eam_project.utils.NetWorkHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 缺陷与故障提报单
@@ -124,6 +136,19 @@ public class Createreport_Activity extends BaseActivity {
     private int mark;
     private Createreport report;
 
+    private GridView noScrollgridview;
+    private GridAdapter adapter; //相片选择
+
+    /**
+     * 照片*
+     */
+    public static int max = 0;
+    public static List<Bitmap> bmp = new ArrayList<Bitmap>();
+    public static HashMap<String, Boolean> mHashMap = new HashMap<String, Boolean>();
+
+    //图片sd地址  上传服务器时把图片调用下面方法压缩后 保存到临时文件夹 图片压缩后小于100KB，失真度不明显
+    private List<String> drr = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +173,7 @@ public class Createreport_Activity extends BaseActivity {
             udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
+            udinspojxxmid=report.udinspojxxmid;
         }
 
 
@@ -167,6 +193,10 @@ public class Createreport_Activity extends BaseActivity {
         descriptionxxText = (TextView) findViewById(R.id.descriptionxx_text_id);
         reportbyText = (TextView) findViewById(R.id.reportby_text_id);
         reporttimeText = (TextView) findViewById(R.id.reporttime_text_id);
+
+
+        noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
+
 
         addButton = (Button) findViewById(R.id.createreport_add_button);
 
@@ -206,6 +236,29 @@ public class Createreport_Activity extends BaseActivity {
 
         reporttimeText.setOnClickListener(new MydateListener());
         addButton.setOnClickListener(addButtonOnClickListener);
+
+
+
+        noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+
+        adapter = new GridAdapter(this, readFile());
+//        adapter.update();
+        noScrollgridview.setAdapter(adapter);
+        noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                if (arg2 == drr.size()) {
+                    ActionSheetDialog();
+                } else {
+                    Intent intent = new Intent(Createreport_Activity.this,
+                            PhotoActivity.class);
+                    intent.putExtra("ID", arg2);
+                    intent.putStringArrayListExtra("drr", (ArrayList<String>) drr);
+                    startActivityForResult(intent, 1000);
+                }
+            }
+        });
     }
 
     /**
@@ -637,13 +690,117 @@ public class Createreport_Activity extends BaseActivity {
                 break;
             case Constants.LOCATIONCODE:
                 option = (Option) data.getSerializableExtra("option");
+                location = option.getName();
                 locationText.setText(option.getName());
                 break;
 
             default:
                 break;
         }
+
+
+        switch (requestCode) {
+            case TAKE_PICTURE:
+                if (drr.size() < 9 && resultCode == -1) {
+                    drr.add(path);
+                }
+            case 1000:
+                adapter = new GridAdapter(this, readFile());
+                noScrollgridview.setAdapter(adapter);
+//                adapter.update();
+                break;
+        }
+
+
+    }
+
+    /**拍照弹出框**/
+    private void ActionSheetDialog() {
+        final String[] stringItems = {"拍照"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(Createreport_Activity.this, stringItems, null);
+
+        dialog.titleTextColor(getResources().getColor(R.color.light_blue_color_1));
+        dialog.show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { //拍照
+                    photo();
+                }
+//                else if (position == 1) { //相册
+//                    PhotoAlbum();
+//                }
+                dialog.dismiss();
+            }
+        });
+
     }
 
 
+    private static final int TAKE_PICTURE = 0x000000;
+
+    private String path = "";
+
+
+    /**
+     * 拍照*
+     */
+    public void photo() {
+        String fileName = DataUtils.getFileImagePath(Createreport_Activity.this, udinspojxxmid + "report");
+        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(fileName, String.valueOf(System.currentTimeMillis())
+                + ".JPEG");
+        path = file.getPath();
+
+        Uri imageUri = Uri.fromFile(file);
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+    }
+
+    /**
+     * 相册选择*
+     */
+    private void PhotoAlbum() {
+        Intent intent = new Intent(Createreport_Activity.this, ShowImageActivity.class);
+        startActivityForResult(intent, 0);
+    }
+
+
+
+
+
+
+    @Override
+    protected void onRestart() {
+
+//        adapter.update();
+        adapter = new GridAdapter(this, readFile());
+        noScrollgridview.setAdapter(adapter);
+        super.onRestart();
+    }
+
+    /**
+     * 读取文件*
+     */
+    private List<String> readFile() {
+        String fileName = DataUtils.getFileImagePath(Createreport_Activity.this, udinspojxxmid + "report");
+        File file = new File(fileName);
+        drr = new ArrayList<String>();
+        if (file.exists()) {
+
+            if (file.isDirectory()) {
+                for (String name : file.list()) {
+
+                    File file1 = new File(fileName, name);
+                    if (file1.exists()) {
+                        drr.add(file1.getPath());
+                    }
+
+                }
+            }
+
+
+        }
+        return drr;
+    }
 }

@@ -28,6 +28,10 @@ public class GridAdapter extends BaseAdapter {
     private int selectedPosition = -1;// 选中的位置
     private boolean shape;
     private Context context;
+    /**
+     * 文件存放的路径*
+     */
+    private List<String> drr = new ArrayList<String>();
 
 
     public boolean isShape() {
@@ -38,8 +42,9 @@ public class GridAdapter extends BaseAdapter {
         this.shape = shape;
     }
 
-    public GridAdapter(Context context) {
+    public GridAdapter(Context context, List<String> drr) {
         this.context = context;
+        this.drr = drr;
         inflater = LayoutInflater.from(context);
     }
 
@@ -48,7 +53,7 @@ public class GridAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return (Udinspojxxm_Details_Activity.bmp.size() + 1);
+        return (drr.size() + 1);
     }
 
     public Object getItem(int arg0) {
@@ -73,7 +78,6 @@ public class GridAdapter extends BaseAdapter {
      * ListView Item设置
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int coord = position;
         ViewHolder holder = null;
         if (convertView == null) {
 
@@ -86,15 +90,17 @@ public class GridAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Log.i(TAG,"position="+position+",size="+Udinspojxxm_Details_Activity.bmp.size());
-        if (position == Udinspojxxm_Details_Activity.bmp.size()) {
+
+
+        if (position == drr.size()) {
             holder.image.setImageBitmap(BitmapFactory.decodeResource(
                     context.getResources(), R.drawable.icon_addpic_unfocused));
             if (position == 9) {
                 holder.image.setVisibility(View.GONE);
             }
         } else {
-            holder.image.setImageBitmap(Udinspojxxm_Details_Activity.bmp.get(position));
+//            holder.image.setImageBitmap(Udinspojxxm_Details_Activity.bmp.get(position));
+            holder.image.setImageBitmap(getBimap(drr.get(position)));
         }
 
         return convertView;
@@ -119,16 +125,14 @@ public class GridAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
-                    if (Udinspojxxm_Details_Activity.max == Udinspojxxm_Details_Activity.drr.size()) {
-                        Log.i(TAG,"2222222");
+                    if (Udinspojxxm_Details_Activity.max == drr.size()) {
                         Message message = new Message();
                         message.what = 1;
                         handler.sendMessage(message);
                         break;
                     } else {
                         try {
-                            String path = Udinspojxxm_Details_Activity.drr.get(Udinspojxxm_Details_Activity.max);
-                            Log.i(TAG, "path=" + path);
+                            String path = drr.get(Udinspojxxm_Details_Activity.max);
                             Bitmap bm = Bimp.revitionImageSize(path);
                             Udinspojxxm_Details_Activity.bmp.add(bm);
                             String newStr = path.substring(
@@ -150,6 +154,18 @@ public class GridAdapter extends BaseAdapter {
     }
 
 
+    /**
+     * 根据路径获取bmp对象*
+     */
+    private Bitmap getBimap(String path) {
+        Bitmap bm = null;
+        try {
+            bm = Bimp.revitionImageSize(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bm;
 
+    }
 
 }

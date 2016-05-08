@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -148,7 +149,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private Button deleteBtn;
 
 
-    /**提报单**/
+    /**
+     * 提报单*
+     */
     private Button reportBtn;
 
 
@@ -161,12 +164,16 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private String udinspojxxmvalue = "";
 
+
+    /**
+     * 照片*
+     */
     public static int max = 0;
     public static List<Bitmap> bmp = new ArrayList<Bitmap>();
     public static HashMap<String, Boolean> mHashMap = new HashMap<String, Boolean>();
-    //
+
     //图片sd地址  上传服务器时把图片调用下面方法压缩后 保存到临时文件夹 图片压缩后小于100KB，失真度不明显
-    public static List<String> drr = new ArrayList<String>();
+    private List<String> drr = new ArrayList<String>();
 
 
     @Override
@@ -235,7 +242,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        editImageView.setVisibility(View.VISIBLE);
+//        editImageView.setVisibility(View.VISIBLE);
         editImageView.setImageResource(R.drawable.ic_report);
         editImageView.setOnClickListener(editImageViewOnClickListener);
 
@@ -297,20 +304,22 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter = new GridAdapter(this);
-        adapter.update();
+
+        adapter = new GridAdapter(this, readFile());
+//        adapter.update();
         noScrollgridview.setAdapter(adapter);
         noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
-                if (arg2 == Udinspojxxm_Details_Activity.bmp.size()) {
+                if (arg2 == drr.size()) {
                     ActionSheetDialog();
                 } else {
                     Intent intent = new Intent(Udinspojxxm_Details_Activity.this,
                             PhotoActivity.class);
                     intent.putExtra("ID", arg2);
-                    startActivity(intent);
+                    intent.putStringArrayListExtra("drr", (ArrayList<String>) drr);
+                    startActivityForResult(intent, 1000);
                 }
             }
         });
@@ -688,12 +697,17 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
     private String path = "";
 
+
+    /**
+     * 拍照*
+     */
     public void photo() {
         String fileName = DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this, udinspojxxm.udinspojxxmid + "");
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = new File(fileName, String.valueOf(System.currentTimeMillis())
                 + ".JPEG");
         path = file.getPath();
+
         Uri imageUri = Uri.fromFile(file);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
@@ -708,12 +722,15 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        Log.i(TAG, "requestCode=" + requestCode + ",resultCode=" + resultCode);
         switch (requestCode) {
             case TAKE_PICTURE:
-                if (Udinspojxxm_Details_Activity.drr.size() < 9 && resultCode == -1) {
-                    Udinspojxxm_Details_Activity.drr.add(path);
+                if (drr.size() < 9 && resultCode == -1) {
+                    drr.add(path);
                 }
+            case 1000:
+                adapter = new GridAdapter(this, readFile());
+                noScrollgridview.setAdapter(adapter);
 //                adapter.update();
                 break;
         }
@@ -723,7 +740,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     @Override
     protected void onRestart() {
 
-        adapter.update();
+//        adapter.update();
+        adapter = new GridAdapter(this, readFile());
+        noScrollgridview.setAdapter(adapter);
         super.onRestart();
     }
 
@@ -734,5 +753,30 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         Createreport createreport = new CreatereportDao(Udinspojxxm_Details_Activity.this).findByUdinspojxxmid(udinspojxxm.udinspojxxmid + "");
 
         return createreport;
+    }
+
+    /**
+     * 读取文件*
+     */
+    private List<String> readFile() {
+        String fileName = DataUtils.getFileImagePath(Udinspojxxm_Details_Activity.this, udinspojxxm.udinspojxxmid + "");
+        File file = new File(fileName);
+        drr = new ArrayList<String>();
+        if (file.exists()) {
+
+            if (file.isDirectory()) {
+                for (String name : file.list()) {
+
+                    File file1 = new File(fileName, name);
+                    if (file1.exists()) {
+                        drr.add(file1.getPath());
+                    }
+
+                }
+            }
+
+
+        }
+        return drr;
     }
 }

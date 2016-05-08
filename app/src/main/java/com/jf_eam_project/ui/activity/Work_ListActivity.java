@@ -239,4 +239,5 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         page++;
         getData(searchText);
     }
+
 }
