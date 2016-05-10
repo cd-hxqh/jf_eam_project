@@ -130,6 +130,27 @@ public class HttpManager {
     }
 
 
+
+
+    /**
+     * 设置故障，巡检提报单
+     */
+    public static String getUdreport(String apptype,String vlaue, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+
+                return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "'}}";
+
+        } else {
+
+                return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "','REPORTNUM':'" + vlaue + "'}}";
+        }
+    }
+
+
+
+
+
+
     /**
      * 设置工单接口*
      */

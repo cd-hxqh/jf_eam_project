@@ -71,7 +71,9 @@ public class Udinspo_Details_activity extends BaseActivity {
      */
     private ImageView menuImageView;
 
-    /**巡检备件_btn**/
+    /**
+     * 巡检备件_btn*
+     */
     private Button udinspoassetBtn;
 
 
@@ -188,26 +190,25 @@ public class Udinspo_Details_activity extends BaseActivity {
         if (udinspo != null) {
             insponumText.setText(udinspo.getInsponum() == null ? "" : udinspo.getInsponum());
             descriptionText.setText(udinspo.getDescription() == null ? "" : udinspo.getDescription());
-            inspplannumText.setText(udinspo.getInspmainplannum() == null ? "" : udinspo.getInspmainplannum());
-            inspschemenumText.setText(udinspo.getInspschemenum() == null ? "" : udinspo.getInspschemenum());
-            inspobyText.setText(udinspo.getInspoby() == null ? "" : udinspo.getInspoby());
+            inspplannumText.setText(udinspo.udinspmainplandesc == null ? "" : udinspo.udinspmainplandesc);
+            inspschemenumText.setText(udinspo.inspschemenumdesc == null ? "" : udinspo.inspschemenumdesc);
+            inspobyText.setText(udinspo.inspobydisplayname == null ? "" : udinspo.inspobydisplayname);
             inspodateText.setText(udinspo.getInspodate() == null ? "" : udinspo.getInspodate());
             startdateText.setText(udinspo.getStartdate() == null ? "" : udinspo.getStartdate());
             enddateText.setText(udinspo.getEnddate() == null ? "" : udinspo.getEnddate());
-            statusText.setText(udinspo.getStatus() == null ? "" : udinspo.getStatus());
-            String branch=udinspo.getBranch();
-            if(branch.equals("01001")){
+
+
+            statusText.setText(udinspo.statusdesc == null ? "" : udinspo.statusdesc);
+//            setStatus();
+
+
+            String branch = udinspo.getBranch();
+            if (branch.equals("01001")) {
                 branchText.setText("华北分公司");
-            }
-            else{
+            } else {
                 branchText.setText(udinspo.getBranch() == null ? "" : udinspo.getBranch());
             }
-            String farm=udinspo.getUdbelong();
-            if(farm.equals("01001001")){
-                farmText.setText("平鲁大山台风电场");
-            }else {
-                farmText.setText(udinspo.getUdbelong() == null ? "" : udinspo.getUdbelong());
-            }
+            farmText.setText(udinspo.getUdbelongdesc() == null ? "" : udinspo.getUdbelongdesc());
             weatherText.setText(udinspo.getWeather() == null ? "" : udinspo.getWeather());
             temperatureText.setText(udinspo.getTemperature() == null ? "" : udinspo.getTemperature());
         }
@@ -224,6 +225,24 @@ public class Udinspo_Details_activity extends BaseActivity {
         udinspoassetBtn.setOnClickListener(udinspoassetBtnOnClickListener);
 
     }
+
+//    /**
+//     * 设置状态*
+//     */
+//    private void setStatus(String status) {
+//        String statusText = null;
+//        if (status.equals("APPR")) { //已批准
+//            statusText = "已批准";
+//        }else if(status.equals("CAN")){ //	取消
+//            statusText = "取消";
+//        }else if(status.equals("CLOSE")){ //关闭
+//            statusText = "关闭";
+//        }else if(status.equals("CLOSE")){ //关闭
+//            statusText = "关闭";
+//        }
+//
+//
+//    }
 
 
     private View.OnClickListener inspodateOnClickListener = new View.OnClickListener() {

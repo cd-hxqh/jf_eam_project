@@ -41,6 +41,10 @@ public class Udinspo extends Entity {
     @DatabaseField(columnName = "inspoby")
     public String inspoby;//巡检人
 
+    @JsonField(fieldName = "inspobydisplayname")
+    @DatabaseField(columnName = "inspobydisplayname")
+    public String inspobydisplayname;//巡检人名称
+
     @JsonField(fieldName = "inspodate")
     @DatabaseField(columnName = "inspodate")
     public String inspodate;//巡检日期
@@ -55,7 +59,9 @@ public class Udinspo extends Entity {
 
     @DatabaseField(columnName = "inspplannum")
     @JsonField(fieldName = "inspplannum")
-    public String inspplannum;//计划编号
+    public String inspplannum;//检修计划单号
+
+
 
     @DatabaseField(columnName = "lastrundate")
     @JsonField(fieldName = "lastrundate")
@@ -65,9 +71,7 @@ public class Udinspo extends Entity {
     @JsonField(fieldName = "nextrundate")
     public String nextrundate;//下次运行时间
 
-    @DatabaseField(columnName = "udinspplandescription")
-    @JsonField(fieldName = "udinspplan.description")
-    public String udinspplandescription;//计划编号描述
+
 
     @DatabaseField(columnName = "enddate")
     @JsonField(fieldName = "enddate")
@@ -86,10 +90,18 @@ public class Udinspo extends Entity {
     @JsonField(fieldName = "inspmainplannum")
     public String inspmainplannum;//计划编号
 
+    @DatabaseField(columnName = "udinspmainplandesc")
+    @JsonField(fieldName = "udinspmainplandesc")
+    public String udinspmainplandesc;//计划编号描述
+
 
     @DatabaseField(columnName = "inspschemenum")
     @JsonField(fieldName = "inspschemenum")
     public String inspschemenum;//检修方案编号
+
+    @DatabaseField(columnName = "inspschemenumdesc")
+    @JsonField(fieldName = "inspschemenumdesc")
+    public String inspschemenumdesc;//检修方案描述
 
 
     @DatabaseField(columnName = "startdate")
@@ -101,17 +113,25 @@ public class Udinspo extends Entity {
     @JsonField(fieldName = "status")
     public String status;//状态
 
+    @DatabaseField(columnName = "statusdesc")
+    @JsonField(fieldName = "statusdesc")
+    public String statusdesc;//状态描述
+
     @DatabaseField(columnName = "temperature")
     @JsonField(fieldName = "temperature")
     public String temperature;//温度
 
     @DatabaseField(columnName = "udbelong")
     @JsonField(fieldName = "udbelong")
-    public String udbelong;//风电场
+    public String udbelong;//运行单位
+
+    @DatabaseField(columnName = "udbelongdesc")
+    @JsonField(fieldName = "udbelongdesc")
+    public String udbelongdesc;//运行单位描述
 
     @DatabaseField(columnName = "weather")
     @JsonField(fieldName = "weather")
-    public String weather;//湿度
+    public String weather;//天气
 
 
     public String getAssettype() {
@@ -282,12 +302,12 @@ public class Udinspo extends Entity {
         this.nextrundate = nextrundate;
     }
 
-    public String getUdinspplandescription() {
-        return udinspplandescription;
+    public String getUdinspmainplandesc() {
+        return udinspmainplandesc;
     }
 
-    public void setUdinspplandescription(String udinspplandescription) {
-        this.udinspplandescription = udinspplandescription;
+    public void setUdinspmainplandesc(String udinspmainplandesc) {
+        this.udinspmainplandesc = udinspmainplandesc;
     }
 
     public String getEnddate() {
@@ -296,5 +316,38 @@ public class Udinspo extends Entity {
 
     public void setEnddate(String enddate) {
         this.enddate = enddate;
+    }
+
+
+    public String getInspobydisplayname() {
+        return inspobydisplayname;
+    }
+
+    public void setInspobydisplayname(String inspobydisplayname) {
+        this.inspobydisplayname = inspobydisplayname;
+    }
+
+    public String getInspschemenumdesc() {
+        return inspschemenumdesc;
+    }
+
+    public void setInspschemenumdesc(String inspschemenumdesc) {
+        this.inspschemenumdesc = inspschemenumdesc;
+    }
+
+    public String getStatusdesc() {
+        return statusdesc;
+    }
+
+    public void setStatusdesc(String statusdesc) {
+        this.statusdesc = statusdesc;
+    }
+
+    public String getUdbelongdesc() {
+        return udbelongdesc;
+    }
+
+    public void setUdbelongdesc(String udbelongdesc) {
+        this.udbelongdesc = udbelongdesc;
     }
 }

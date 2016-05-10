@@ -31,6 +31,7 @@ import com.jf_eam_project.api.ig.json.impl.Udinspoasset_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Udinspojxxm_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Uditemreq_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Uditemreqline_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Udreport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wfm_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Woactivity_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.WorkOrder_JsonHelper;
@@ -65,6 +66,7 @@ import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Uditemreq;
 import com.jf_eam_project.model.Uditemreqline;
+import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.model.Wfassignment;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -298,5 +300,11 @@ public class Ig_Json_Model {
     /**解析物资借用归还行表**/
     public static ArrayList<Udbrline> parsingUdbrline(String input) throws IOException {
         return UdbrLine_JsonHelper.parseFromJsonList(input);
+    }
+
+
+    /**解析故障，缺陷**/
+    public static ArrayList<Udreport> parsingUdreport(String input) throws IOException {
+        return Udreport_JsonHelper.parseFromJsonList(input);
     }
 }

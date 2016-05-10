@@ -370,7 +370,7 @@
 
     <!--巡检管理-->
     <string name="udinspo_insponum_title">巡检单:</string>
-    <string name="udinspo_inspplannum_title">计划编号:</string>
+    <string name="udinspo_inspplannum_title">计划描述:</string>
     <string name="udinspo_inspotype_title">巡检单类型:</string>
     <string name="udinspo_createby_title">创建人:</string>
     <string name="udinspo_createdate_title">创建时间:</string>

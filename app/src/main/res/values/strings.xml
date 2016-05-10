@@ -374,7 +374,7 @@
 
     <!--巡检管理-->
     <string name="udinspo_insponum_title">巡检单:</string>
-    <string name="udinspo_inspplannum_title">计划编号:</string>
+    <string name="udinspo_inspplannum_title">计划描述:</string>
     <string name="udinspo_inspotype_title">巡检单类型:</string>
     <string name="udinspo_createby_title">创建人:</string>
     <string name="udinspo_createdate_title">创建时间:</string>
@@ -389,7 +389,7 @@
     <string name="udinspoasset_udinspoassetlinenum_title">序号:</string>
     <string name="udinspoasset_location_title">位置:</string>
 
-    <string name="inspschemenum_text">方案编号:</string>
+    <string name="inspschemenum_text">方案描述:</string>
     <string name="statu_text">状态:</string>
 
 
@@ -499,6 +499,7 @@
     <string name="createdate_text">创建时间:</string>
     <string name="description_text">分公司:</string>
     <string name="uddept_description_text">风电场:</string>
+    <string name="uddeptdes_text">运行单位:</string>
     <string name="state_text">状态:</string>
     <string name="material_detail_text">领料单详情</string>
 
@@ -615,6 +616,9 @@
     <string name="report_details_text">提报单详情</string>
     <string name="weather_text">天气:</string>
     <string name="temperature_text">温度:</string>
+    <string name="udreport_title">提报单</string>
+    <string name="gztbd_text">故障提报单</string>
+    <string name="qxtbd_text">缺陷提报单</string>
 
 
 </resources>

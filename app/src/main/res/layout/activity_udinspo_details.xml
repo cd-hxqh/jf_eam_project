@@ -26,6 +26,7 @@
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -302,14 +303,16 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:background="@drawable/line" />
+                android:background="@drawable/line"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="100dp"
@@ -344,7 +347,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/uddept_description_text"
+                    android:text="@string/uddeptdes_text"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
@@ -438,15 +441,15 @@
         android:layout_alignParentBottom="true">
 
         <Button
-        android:id="@+id/submit_btn_id"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.0"
-        android:background="@drawable/button_selector2"
-        android:text="@string/confirm_btn"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone" />
+            android:id="@+id/submit_btn_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/button_selector2"
+            android:text="@string/confirm_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/udinspoasset_btn_id"
@@ -456,7 +459,6 @@
             android:background="@drawable/button_selector2"
             android:text="执行"
             android:textColor="@color/white"
-            android:textSize="16sp"
-           />
+            android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

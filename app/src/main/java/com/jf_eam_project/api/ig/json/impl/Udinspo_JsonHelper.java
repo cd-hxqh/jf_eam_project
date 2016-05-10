@@ -12,7 +12,7 @@ import com.jf_eam_project.model.Udinspo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**巡检单**/
 public final class Udinspo_JsonHelper
         implements JsonHelper<Udinspo> {
     private static final String TAG = "Udinspo_JsonHelper";
@@ -83,7 +83,13 @@ public final class Udinspo_JsonHelper
         } else if ("INSPOBY".equals(fieldName)) {
             instance.inspoby = jp.getValueAsString();
             return true;
-        } else if ("INSPODATE".equals(fieldName)) {
+        }else if ("INSPOBYDISPLAYNAME".equals(fieldName)) {
+            instance.inspobydisplayname = jp.getValueAsString();
+            return true;
+        }
+
+
+        else if ("INSPODATE".equals(fieldName)) {
             instance.inspodate = jp.getValueAsString();
             return true;
         } else if ("INSPONUM".equals(fieldName)) {
@@ -101,8 +107,8 @@ public final class Udinspo_JsonHelper
         } else if ("NEXTRUNDATE".equals(fieldName)) {
             instance.nextrundate = jp.getValueAsString();
             return true;
-        } else if ("UDINSPPLAN.DESCRIPTION".equals(fieldName)) {
-            instance.udinspplandescription = jp.getValueAsString();
+        } else if ("UDINSPMAINPLANDESC".equals(fieldName)) {
+            instance.udinspmainplandesc = jp.getValueAsString();
             return true;
         }
         else if ("ENDDATE".equals(fieldName)) {
@@ -126,12 +132,20 @@ public final class Udinspo_JsonHelper
             instance.inspschemenum = jp.getValueAsString();
             return true;
         }
+        else if ("INSPSCHEMENUMDESC".equals(fieldName)) {
+            instance.inspschemenumdesc = jp.getValueAsString();
+            return true;
+        }
         else if ("STARTDATE".equals(fieldName)) {
             instance.startdate = jp.getValueAsString();
             return true;
         }
         else if ("STATUS".equals(fieldName)) {
             instance.status = jp.getValueAsString();
+            return true;
+        }
+        else if ("STATUSDESC".equals(fieldName)) {
+            instance.statusdesc = jp.getValueAsString();
             return true;
         }
         else if ("TEMPERATURE".equals(fieldName)) {
@@ -141,6 +155,10 @@ public final class Udinspo_JsonHelper
 
         else if ("UDBELONG".equals(fieldName)) {
             instance.udbelong = jp.getValueAsString();
+            return true;
+        }
+        else if ("UDBELONGDESC".equals(fieldName)) {
+            instance.udbelongdesc = jp.getValueAsString();
             return true;
         }
         else if ("WEATHER".equals(fieldName)) {

@@ -36,6 +36,7 @@ import com.jf_eam_project.ui.fragment.Polling_Fragment;
 import com.jf_eam_project.ui.fragment.QrCode_Fragment;
 import com.jf_eam_project.ui.fragment.Setting_Fragment;
 import com.jf_eam_project.ui.fragment.Udinspo_fragment;
+import com.jf_eam_project.ui.fragment.Udreport_Fragment;
 import com.jf_eam_project.ui.fragment.Wfment_fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
 import com.jf_eam_project.ui.widget.CustomDialog;
@@ -87,6 +88,8 @@ public class MainActivity extends BaseActivity
      * 采购管理*
      */
     private Po_Fragment po_fragment;
+    /**故障缺陷**/
+    private Udreport_Fragment udreport_fragment;
     /**
      * 本地历史*
      */
@@ -183,7 +186,7 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, polling_fragment).commit();
 
                 break;
-            case 3:
+            case 3: //库存管理
                 if (newInventory_fragment == null) {
                     newInventory_fragment = new Inventory_fragment();
                     Bundle bundle = new Bundle();
@@ -192,7 +195,7 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, newInventory_fragment).commit();
 
                 break;
-            case 4:
+            case 4: //采购管理
                 if (po_fragment == null) {
                     po_fragment = new Po_Fragment();
                     Bundle bundle = new Bundle();
@@ -200,7 +203,15 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, po_fragment).commit();
                 break;
-            case 5:
+            case 5: //故障/缺陷
+                if (udreport_fragment == null) {
+                    udreport_fragment = new Udreport_Fragment();
+                    Bundle bundle = new Bundle();
+                    udreport_fragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, udreport_fragment).commit();
+                break;
+            case 6: //本地历史
                 if (historyFragment == null) {
                     historyFragment = new HistoryFragment();
                     Bundle bundle = new Bundle();
@@ -208,7 +219,7 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, historyFragment).commit();
                 break;
-            case 6:
+            case 7: //二维码扫描
 //                if (qrCodeFragment == null) {
 //                    qrCodeFragment = new QrCode_Fragment();
 //                    Bundle bundle = new Bundle();
@@ -220,7 +231,7 @@ public class MainActivity extends BaseActivity
                 intent.setClass(MainActivity.this, MipcaActivityCapture.class);
                 startActivityForResult(intent, 0);
                 break;
-            case 7:
+            case 8: //设置
                 if (settingFragment == null) {
                     settingFragment = new Setting_Fragment();
                     Bundle bundle = new Bundle();
@@ -228,7 +239,7 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, settingFragment).commit();
                 break;
-            case 8:
+            case 9:  //退出
                 mNavigationDrawerFragment.closeDrawer();
                 showAlertDialog();
                 break;
@@ -280,7 +291,7 @@ public class MainActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             if (mSelectPos == 6) {
-            }else {
+            } else {
                 restoreActionBar();
             }
             return true;

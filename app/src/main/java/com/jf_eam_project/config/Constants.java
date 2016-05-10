@@ -117,6 +117,14 @@ public class Constants {
     public static final String UDINSPOASSET_NAME = "UDINSPOASSET";
     //检修项目标准
     public static final String UDINSPOJXXM_NAME = "UDINSPOJXXM";
+
+    /**故障,缺陷**/
+    //故障缺陷的appid
+    public static final String UDREPORT_APPID = "UDUPRAPP";
+
+    //故障缺陷的表名
+    public static final String UDREPORT_NAME = "UDREPORT";
+
     /**
      * 基本信息配置
      */

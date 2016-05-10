@@ -57,8 +57,8 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String InsertWO(Context context,String string, String personId) {
-        String url=AccountUtils.getIpAddress(context)+"meaweb/services/MOBILESERVICE";
+    public String InsertWO(Context context, String string, String personId) {
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -91,8 +91,8 @@ public class AndroidClientService {
     /**
      * 更新工单
      */
-    public String UpdataWO(Context context,String string, String wonum) {
-        String url=AccountUtils.getIpAddress(context)+"meaweb/services/MOBILESERVICE";
+    public String UpdataWO(Context context, String string, String wonum) {
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -126,8 +126,8 @@ public class AndroidClientService {
      *
      * @return
      */
-    public String startwf(Context context,String processname, String mbo, String keyValue, String key) {
-        String url=AccountUtils.getIpAddress(context)+"meaweb/services/WFSERVICE";
+    public String startwf(Context context, String processname, String mbo, String keyValue, String key) {
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -161,9 +161,9 @@ public class AndroidClientService {
      *
      * @return
      */
-    public String wfGoOn(Context context,String processname, String mbo, String keyValue, String key, String zx, String desc) {
+    public String wfGoOn(Context context, String processname, String mbo, String keyValue, String key, String zx, String desc) {
 
-        String url= AccountUtils.getIpAddress(context)+"meaweb/services/WFSERVICE";
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -203,8 +203,8 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String InsertPO(Context context,String string) {
-        String url= AccountUtils.getIpAddress(context)+"meaweb/services/COSERVICE";
+    public String InsertPO(Context context, String string) {
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/COSERVICE";
         Log.i(TAG, "string=" + string);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -239,8 +239,8 @@ public class AndroidClientService {
      *
      * @return
      */
-    public String UpdatePO(Context context,String string, String key) {
-        String url= AccountUtils.getIpAddress(context)+"meaweb/services/COSERVICE";
+    public String UpdatePO(Context context, String string, String key) {
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/COSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -277,8 +277,11 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String addReport(Context context,String string, String key) {
-        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
+    public String addReport(Context context, String string, String key) {
+//        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
+        String url = AccountUtils.getIpAddress(context) + "meaweb/wsdl/UDRPSERVICE";
+
+        Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;

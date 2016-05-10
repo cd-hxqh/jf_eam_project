@@ -17,6 +17,7 @@ import com.jf_eam_project.ui.activity.Materials_up_ListActivity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
 import com.jf_eam_project.ui.activity.Udbr_ListActivity;
+import com.jf_eam_project.ui.activity.UdinspoNew_Activity;
 import com.jf_eam_project.ui.activity.Udinspo_Activity;
 import com.jf_eam_project.ui.activity.Uditemreq_listactivity;
 
@@ -113,7 +114,7 @@ public class Polling_Fragment extends BaseFragment {
             switch (v.getId()) {
                 case R.id.udinspo_dqdjd_id: //电气定检单
 
-                    Intent intent = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent.putExtra("title", getActivity().getString(R.string.dqdjd_text));
                     intent.putExtra("assettype", "电气");
                     intent.putExtra("checktype", "定检");
@@ -123,7 +124,7 @@ public class Polling_Fragment extends BaseFragment {
                     break;
                 case R.id.udinspo_fjdjd_id: //风机定检单
 
-                    Intent intent1 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent1 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent1.putExtra("title", getActivity().getString(R.string.fjdjd_text));
                     intent1.putExtra("assettype", "风机");
                     intent1.putExtra("checktype", "定检");
@@ -133,7 +134,7 @@ public class Polling_Fragment extends BaseFragment {
                     break;
 
                 case R.id.udinspo_fjxjd_id: //风机巡检单
-                    Intent intent2 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent2 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent2.putExtra("inspotype", "05");
                     intent2.putExtra("assettype", "风机");
                     intent2.putExtra("checktype", "巡检");
@@ -141,25 +142,25 @@ public class Polling_Fragment extends BaseFragment {
                     startActivityForResult(intent2, 0);
                     break;
                 case R.id.udinspo_jdxl_id: //集电线路
-                    Intent intent3 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent3 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent3.putExtra("title", getActivity().getString(R.string.jdxl_text));
                     intent3.putExtra("inspotype", "02");
                     startActivityForResult(intent3, 0);
                     break;
                 case R.id.udinspo_xtb_id: //箱台变
-                    Intent intent4 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent4 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent4.putExtra("title", getActivity().getString(R.string.jdxl_text));
                     intent4.putExtra("inspotype", "01");
                     startActivityForResult(intent4, 0);
                     break;
                 case R.id.udinspo_qtsb_id: //其他设备
-                    Intent intent5 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent5 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent5.putExtra("title", getActivity().getString(R.string.qtsb_text));
                     intent5.putExtra("inspotype", "03");
                     startActivityForResult(intent5, 0);
                     break;
                 case R.id.udinspo_rcxj_id: //日常巡检
-                    Intent intent6 = new Intent(getActivity(), Udinspo_Activity.class);
+                    Intent intent6 = new Intent(getActivity(), UdinspoNew_Activity.class);
                     intent6.putExtra("title", getActivity().getString(R.string.rcxj_text));
                     intent6.putExtra("inspotype", "04");
                     startActivityForResult(intent6, 0);

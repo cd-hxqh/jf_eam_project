@@ -229,6 +229,14 @@
         <activity
             android:name=".ui.activity.Udinspoasset_Activity"
             android:label="@string/udinspoasset_title" />
+
+        <!--故障提报单-->
+        <activity
+            android:name=".ui.activity.Udreport_Activity"
+            android:label="@string/udreport_title" />
+
+
+
         <!-- 通用选项页面 -->
         <activity
             android:name=".ui.activity.OptionActivity"
@@ -238,6 +246,9 @@
             android:label="@string/udinspoasset_detail_title" />
         <activity
             android:name=".ui.activity.Udinspo_Activity"
+            android:label="@string/udinspo_title" />
+        <activity
+            android:name=".ui.activity.UdinspoNew_Activity"
             android:label="@string/udinspo_title" />
         <activity
             android:name=".ui.activity.AddUdinspoActivity"

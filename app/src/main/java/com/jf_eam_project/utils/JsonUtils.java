@@ -12,10 +12,11 @@ import org.json.JSONObject;
  * json工具解析类
  */
 public class JsonUtils {
-    private final static  String TAG="JsonUtils";
+    private final static String TAG = "JsonUtils";
+
     public static String saveReport(Createreport createreport) {
         JSONObject jsonObject = new JSONObject();
-        JSONArray array=new JSONArray();
+        JSONArray array = new JSONArray();
         try {
             jsonObject.put("udinspojxxmid", createreport.getUdinspojxxmid());
             jsonObject.put("apptype", createreport.getReporttype());
@@ -27,15 +28,17 @@ public class JsonUtils {
             jsonObject.put("descriptionxx", createreport.getDescriptionxx());
             jsonObject.put("CREATEBY", createreport.getReportby());
             jsonObject.put("createdate", createreport.getReporttime());
+            jsonObject.put("branck", "01001");
+            jsonObject.put("cubelong", "01001001");
 
-            JSONObject json=new JSONObject();
-            json.put("","");
+            JSONObject json = new JSONObject();
+            json.put("", "");
             array.put(json);
             jsonObject.put("relationShip", array);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i(TAG,jsonObject.toString());
+        Log.i(TAG, jsonObject.toString());
         return jsonObject.toString();
     }
 }

@@ -173,7 +173,7 @@ public class Createreport_Activity extends BaseActivity {
             udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
-            udinspojxxmid=report.udinspojxxmid;
+            udinspojxxmid = report.udinspojxxmid;
         }
 
 
@@ -236,7 +236,6 @@ public class Createreport_Activity extends BaseActivity {
 
         reporttimeText.setOnClickListener(new MydateListener());
         addButton.setOnClickListener(addButtonOnClickListener);
-
 
 
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -607,15 +606,11 @@ public class Createreport_Activity extends BaseActivity {
                 if (NetWorkHelper.isNetwork(Createreport_Activity.this)) {
                     MessageUtils.showMiddleToast(Createreport_Activity.this, "暂无网络,现离线保存数据!");
                     Createreport createreport = saveReport();
-                    Log.i(TAG, "createreport dd=" + createreport.getDescriptionxx());
-                    Log.i(TAG, "createreport id=" + createreport.getId());
 
                     if (mark == 1) { //创建
-                        Log.i(TAG, "111111");
                         new CreatereportDao(Createreport_Activity.this).create(createreport);
                     } else if (mark == 2) { //更新
                         new CreatereportDao(Createreport_Activity.this).update(createreport);
-                        Log.i(TAG, "22222");
 
                     }
                     mProgressDialog.dismiss();
@@ -639,6 +634,7 @@ public class Createreport_Activity extends BaseActivity {
 
                             super.onPostExecute(s);
                             mProgressDialog.dismiss();
+                            Log.i(TAG, "s=" + s);
                             try {
                                 if (s != null) {
                                     JSONObject jsonObject = new JSONObject(s);
@@ -714,7 +710,9 @@ public class Createreport_Activity extends BaseActivity {
 
     }
 
-    /**拍照弹出框**/
+    /**
+     * 拍照弹出框*
+     */
     private void ActionSheetDialog() {
         final String[] stringItems = {"拍照"};
         final ActionSheetDialog dialog = new ActionSheetDialog(Createreport_Activity.this, stringItems, null);
@@ -764,10 +762,6 @@ public class Createreport_Activity extends BaseActivity {
         Intent intent = new Intent(Createreport_Activity.this, ShowImageActivity.class);
         startActivityForResult(intent, 0);
     }
-
-
-
-
 
 
     @Override
