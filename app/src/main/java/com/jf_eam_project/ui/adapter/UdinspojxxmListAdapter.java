@@ -29,7 +29,7 @@ import java.util.List;
  * 巡检项目标准
  */
 public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmListAdapter.ViewHolder> {
-    private static final String TAG="UdinspojxxmListAdapter";
+    private static final String TAG = "UdinspojxxmListAdapter";
     Context mContext;
     List<Udinspojxxm> udinspojxxmList = new ArrayList<>();
 
@@ -47,11 +47,27 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
      */
     private int cMark;
 
+    /**
+     * 分公司*
+     */
+    private String branch;
+    /**
+     * 运行单位*
+     */
+    private String udbelong;
 
-    public UdinspojxxmListAdapter(Context context,int cMark) {
+
+    public UdinspojxxmListAdapter(Context context, int cMark) {
         this.mContext = context;
         this.cMark = cMark;
     }
+
+
+    public void setData(String branch, String udbelong) {
+        this.branch = branch;
+        this.udbelong = udbelong;
+    }
+
 
     /**
      * 长按事件*
@@ -62,6 +78,7 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
      * 选中事件*
      */
     public OnCheckedChangeListener onCheckedChangeListener;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -82,6 +99,8 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
                 Intent intent = new Intent(mContext, Udinspojxxm_Details_Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Udinspojxxm", udinspojxxm);
+                bundle.putSerializable("branch", branch);
+                bundle.putSerializable("udbelong", udbelong);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -175,8 +194,6 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
     }
 
 
-
-
     public void update(ArrayList<Udinspojxxm> data, boolean merge) {
         if (merge && udinspojxxmList.size() > 0) {
             for (int i = 0; i < udinspojxxmList.size(); i++) {
@@ -211,7 +228,7 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
 
     public void removeAllData() {
         if (udinspojxxmList.size() > 0) {
-            udinspojxxmList.removeAll(udinspojxxmList);  
+            udinspojxxmList.removeAll(udinspojxxmList);
         }
     }
 
@@ -256,8 +273,6 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
     public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
         this.onCheckedChangeListener = onCheckedChangeListener;
     }
-
-
 
 
 }

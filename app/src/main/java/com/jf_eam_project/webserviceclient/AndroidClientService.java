@@ -278,8 +278,8 @@ public class AndroidClientService {
      * @return
      */
     public String addReport(Context context, String string, String key) {
-//        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
-        String url = AccountUtils.getIpAddress(context) + "meaweb/wsdl/UDRPSERVICE";
+        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
+//        String url = AccountUtils.getIpAddress(context) + "meaweb/wsdl/UDRPSERVICE";
 
         Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

@@ -23,7 +23,7 @@ public class Udinspo extends Entity {
 
     @JsonField(fieldName = "branch")
     @DatabaseField(columnName = "branch")
-    public String branch;//
+    public String branch;//分公司
 
     @JsonField(fieldName = "createby")
     @DatabaseField(columnName = "createby")

@@ -28,8 +28,8 @@ public class JsonUtils {
             jsonObject.put("descriptionxx", createreport.getDescriptionxx());
             jsonObject.put("CREATEBY", createreport.getReportby());
             jsonObject.put("createdate", createreport.getReporttime());
-            jsonObject.put("branck", "01001");
-            jsonObject.put("cubelong", "01001001");
+            jsonObject.put("branck", createreport.getBranck());
+            jsonObject.put("cubelong", createreport.getCubelong());
 
             JSONObject json = new JSONObject();
             json.put("", "");

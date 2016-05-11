@@ -49,6 +49,15 @@ public class Createreport extends Entity {
     @JsonField(fieldName = "reporttime")
     @DatabaseField(columnName = "reporttime")
     public String reporttime;//提报时间
+
+    @JsonField(fieldName = "branck")
+    @DatabaseField(columnName = "branck")
+    public String branck;//分公司
+
+    @JsonField(fieldName = "cubelong")
+    @DatabaseField(columnName = "cubelong")
+    public String cubelong;//运行单位
+
     @JsonField(fieldName = "udinspojxxmid")
     @DatabaseField(columnName = "udinspojxxmid")
     public String udinspojxxmid;//巡检项目标准Id
@@ -156,5 +165,21 @@ public class Createreport extends Entity {
 
     public void setUdinspojxxmid(String udinspojxxmid) {
         this.udinspojxxmid = udinspojxxmid;
+    }
+
+    public String getBranck() {
+        return branck;
+    }
+
+    public void setBranck(String branck) {
+        this.branck = branck;
+    }
+
+    public String getCubelong() {
+        return cubelong;
+    }
+
+    public void setCubelong(String cubelong) {
+        this.cubelong = cubelong;
     }
 }

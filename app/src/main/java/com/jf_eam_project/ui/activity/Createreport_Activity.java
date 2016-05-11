@@ -149,6 +149,16 @@ public class Createreport_Activity extends BaseActivity {
     //图片sd地址  上传服务器时把图片调用下面方法压缩后 保存到临时文件夹 图片压缩后小于100KB，失真度不明显
     private List<String> drr = new ArrayList<String>();
 
+
+    /**
+     * 分公司*
+     */
+    private String branch;
+    /**
+     * 运行单位*
+     */
+    private String udbelong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,9 +178,10 @@ public class Createreport_Activity extends BaseActivity {
      */
     private void initData() {
         mark = getIntent().getExtras().getInt("mark");
-        Log.i(TAG, "mark=" + mark);
         if (mark == 1) { //新增
             udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
+            branch = getIntent().getExtras().getString("branch");
+            udbelong = getIntent().getExtras().getString("udbelong");
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
             udinspojxxmid = report.udinspojxxmid;
@@ -498,6 +509,8 @@ public class Createreport_Activity extends BaseActivity {
             createreport.setDescriptionxx(descriptionxx);
             createreport.setReportby(reportby);
             createreport.setReporttime(reporttime);
+            createreport.setBranck(branch);
+            createreport.setCubelong(udbelong);
             return createreport;
 
         } else if (mark == 2) { //更新

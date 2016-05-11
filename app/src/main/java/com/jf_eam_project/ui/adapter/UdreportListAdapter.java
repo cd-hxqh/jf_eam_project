@@ -54,13 +54,7 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, Udreport_Details_Activity.class);
                 Bundle bundle = new Bundle();
-                if (udreport.apptype.equals("FAULT")) {
-                    bundle.putInt("mark", 0);
-                } else {
-                    bundle.putInt("mark", 1);
-                }
-
-
+                bundle.putInt("mark", 0);
                 bundle.putSerializable("udreport", udreport);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);

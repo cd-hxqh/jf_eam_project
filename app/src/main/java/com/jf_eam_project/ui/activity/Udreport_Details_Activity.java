@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +12,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.model.WorkOrder;
+import com.jf_eam_project.ui.adapter.UdreportListAdapter;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * 提报单详情
@@ -64,15 +73,25 @@ public class Udreport_Details_Activity extends BaseActivity {
 
     private int mark; //标识
 
+    /**
+     * 提报单编号*
+     */
+    private String reportnum;
+
+    private ProgressDialog mProgressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initData();
-        if (mark == 0) {
+        if (udreport.apptype.equals("FAULT")) {
             setContentView(R.layout.activity_gztbd_details);
-        } else {
+        } else if (udreport.apptype.equals("HIDDEN")) {
             setContentView(R.layout.activity_qxtbd_details);
+        } else {
+            setContentView(R.layout.activity_gztbd_details);
         }
 
         findViewById();
@@ -83,15 +102,18 @@ public class Udreport_Details_Activity extends BaseActivity {
      * 获取初始话数据*
      */
     private void initData() {
-        udreport = (Udreport) getIntent().getSerializableExtra("udreport");
+
         mark = getIntent().getIntExtra("mark", 0);
+
+
+        udreport = (Udreport) getIntent().getSerializableExtra("udreport");
     }
 
     @Override
     protected void findViewById() {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-        if (mark == 0) {
+        if (mark==1||udreport.apptype.equals("FAULT")) {
             reportnumText = (TextView) findViewById(R.id.reportnum_text_id);
             descriptionText = (TextView) findViewById(R.id.description_text_id);
             udworktypeText = (TextView) findViewById(R.id.udworktype_text_id);
@@ -131,10 +153,12 @@ public class Udreport_Details_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if (mark == 0) {
+        if (udreport.apptype.equals("FAULT")) {
             titleView.setText(getString(R.string.gztbd_title));
-        } else {
+        } else if( udreport.apptype.equals("HIDDEN")){
             titleView.setText(getString(R.string.qxtbd_title));
+        }else{
+            titleView.setText("提报单详情");
         }
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
@@ -142,7 +166,7 @@ public class Udreport_Details_Activity extends BaseActivity {
         if (udreport != null) {
             reportnumText.setText(udreport.reportnum == null ? "" : udreport.reportnum);
             descriptionText.setText(udreport.description == null ? "" : udreport.description);
-            if (mark == 1) {
+            if (udreport.apptype.equals("HIDDEN")) {
                 qxtypeText.setText(udreport.qxtype == null ? "" : udreport.qxtype);
                 qxsjlyText.setText(udreport.qxsjly == null ? "" : udreport.qxsjly);
             }
@@ -173,6 +197,9 @@ public class Udreport_Details_Activity extends BaseActivity {
             finish();
         }
     };
+
+
+
 
 
 }

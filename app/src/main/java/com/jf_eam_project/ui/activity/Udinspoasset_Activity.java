@@ -80,6 +80,11 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
     private int page = 1;
 
 
+    /**分公司**/
+    private String branch;
+    /**运行单位**/
+    private String udbelong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,8 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
      */
     private void initData() {
         insponum = getIntent().getExtras().getString("insponum");
+        branch = getIntent().getExtras().getString("branch");
+        udbelong = getIntent().getExtras().getString("udbelong");
     }
 
     @Override
@@ -125,6 +132,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         udinspoassetListAdapter = new UdinspoassetListAdapter(this);
         recyclerView.setAdapter(udinspoassetListAdapter);
+        udinspoassetListAdapter.setData(branch,udbelong);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -153,7 +161,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
         if (list == null || list.isEmpty()) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
-
+            udinspoassetListAdapter.setData(branch,udbelong);
             udinspoassetListAdapter.adddate(list);
         }
 
@@ -192,6 +200,7 @@ public class Udinspoasset_Activity extends BaseActivity implements SwipeRefreshL
                     } else {
                         if (page == 1) {
                             udinspoassetListAdapter = new UdinspoassetListAdapter(Udinspoasset_Activity.this);
+                            udinspoassetListAdapter.setData(branch,udbelong);
                             recyclerView.setAdapter(udinspoassetListAdapter);
                         }
                         if (totalPages == page) {

@@ -34,9 +34,14 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
+import com.jf_eam_project.api.HttpManager;
+import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.utils.Bimp;
 import com.jf_eam_project.utils.DataUtils;
@@ -48,6 +53,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -176,6 +182,16 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private List<String> drr = new ArrayList<String>();
 
 
+    /**
+     * 分公司*
+     */
+    private String branch;
+    /**
+     * 运行单位*
+     */
+    private String udbelong;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +207,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private void initData() {
         udinspojxxm = (Udinspojxxm) getIntent().getSerializableExtra("Udinspojxxm");
         writemethod = udinspojxxm.writemethod;
+        branch = getIntent().getExtras().getString("branch");
+        udbelong = getIntent().getExtras().getString("udbelong");
+        Log.i(TAG, "branch=" + branch + ",udbelong=" + udbelong);
     }
 
     @Override
@@ -358,17 +377,91 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                     Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
                     intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
                     intent.putExtra("mark", ADD_REPORT);
+                    intent.putExtra("branch", branch);
+                    intent.putExtra("udbelong", udbelong);
                     startActivityForResult(intent, 0);
                 } else {
                     NormalDialogStyleTwo(createreport);
                 }
             } else {
-                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "已生成缺陷或故障提报单！");
+                NormalDialogReport(udinspojxxm.reportnum);
             }
 
 
         }
     };
+
+
+    private void NormalDialogReport(final String reportnum) {
+        final NormalDialog dialog = new NormalDialog(Udinspojxxm_Details_Activity.this);
+        dialog.content("已生成故障或缺陷提报单,是否查看!")//
+                .style(NormalDialog.STYLE_TWO)//
+                .titleTextSize(23)//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+
+                        getUdreport(reportnum, dialog);
+
+
+                    }
+                });
+
+    }
+
+
+    /**
+     * 根据编号获取提报单信息*
+     */
+    private void getUdreport(String reportnum, final NormalDialog dialog) {
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(reportnum), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                Log.i(TAG, "results=" + results.getResultlist());
+                dialog.dismiss();
+                ArrayList<Udreport> items = null;
+                try {
+                    items = Ig_Json_Model.parsingUdreport(results.getResultlist());
+                    if (items == null || items.isEmpty()) {
+                    } else {
+
+                        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Udreport_Details_Activity.class);
+                        intent.putExtra("udreport", items.get(0));
+                        intent.putExtra("mark", 1);
+                        startActivityForResult(intent, 0);
+
+
+                    }
+
+                } catch (IOException e) {
+                    dialog.dismiss();
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                dialog.dismiss();
+            }
+        });
+    }
 
 
     private void NormalDialogStyleTwo(final Createreport createreport) {

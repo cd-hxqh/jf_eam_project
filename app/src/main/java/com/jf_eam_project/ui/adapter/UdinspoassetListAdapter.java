@@ -28,11 +28,24 @@ import java.util.List;
 public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetListAdapter.ViewHolder> {
     Context mContext;
     List<Udinspoasset> udinspoassetList = new ArrayList<>();
+    /**
+     * 分公司*
+     */
+    private String branch;
+    /**
+     * 运行单位*
+     */
+    private String udbelong;
 
     public UdinspoassetListAdapter(Context context) {
         this.mContext = context;
     }
 
+
+    public void setData(String branch, String udbelong) {
+        this.branch = branch;
+        this.udbelong = udbelong;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,6 +66,8 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
                 Intent intent = new Intent();
                 intent.setClass(mContext, Udinspojxxm_Activity.class);
                 intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
+                intent.putExtra("branch", branch);
+                intent.putExtra("udbelong", udbelong);
                 mContext.startActivity(intent);
             }
         });

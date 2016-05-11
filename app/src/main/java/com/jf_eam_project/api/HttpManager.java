@@ -39,8 +39,8 @@ public class HttpManager {
      */
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
-        String loginIp= AccountUtils.getIpAddress(cxt)+"maximo/mobile/system/login";
-        Log.i(TAG,"loginIp="+loginIp);
+        String loginIp = AccountUtils.getIpAddress(cxt) + "maximo/mobile/system/login";
+        Log.i(TAG, "loginIp=" + loginIp);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("loginid", username);
@@ -130,25 +130,29 @@ public class HttpManager {
     }
 
 
-
-
     /**
      * 设置故障，巡检提报单
      */
-    public static String getUdreport(String apptype,String vlaue, int curpage, int showcount) {
+    public static String getUdreport(String apptype, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
 
-                return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "'}}";
 
         } else {
 
-                return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "','REPORTNUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "','REPORTNUM':'" + vlaue + "'}}";
         }
     }
 
+    /**
+     * 根据编号获取提报单信息
+     */
+    public static String getUdreport(String reportnum) {
+
+        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + 1 + ",'showcount':" + 10 + ",'option':'read','condition':{'REPORTNUM':'=" + reportnum + "'}}";
 
 
-
+    }
 
 
     /**
@@ -493,7 +497,7 @@ public class HttpManager {
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
 
-        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
+        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -519,7 +523,7 @@ public class HttpManager {
      * 不分页获取信息方法*
      */
     public static void getData1(final Context cxt, String data, final HttpRequestHandler<String> handler) {
-        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
+        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -581,7 +585,7 @@ public class HttpManager {
      */
     public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
         Log.i(TAG, "data=" + data);
-        String base_url=AccountUtils.getIpAddress(cxt)+"maximo/mobile/"+"common/api";
+        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);

@@ -462,11 +462,14 @@ public class Udinspo_Details_activity extends BaseActivity {
     };
 
 
+    /**执行**/
     private View.OnClickListener udinspoassetBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Udinspo_Details_activity.this, Udinspoasset_Activity.class);
             intent.putExtra("insponum", udinspo.insponum);
+            intent.putExtra("branch", udinspo.branch);
+            intent.putExtra("udbelong", udinspo.udbelong);
             startActivityForResult(intent, 0);
         }
     };

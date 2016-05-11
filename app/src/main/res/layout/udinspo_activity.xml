@@ -11,6 +11,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/ab_solid_example"
+        android:visibility="gone"
         android:gravity="center_vertical"
         >
 
