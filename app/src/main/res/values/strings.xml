@@ -616,9 +616,29 @@
     <string name="report_details_text">提报单详情</string>
     <string name="weather_text">天气:</string>
     <string name="temperature_text">温度:</string>
+
+
     <string name="udreport_title">提报单</string>
     <string name="gztbd_text">故障提报单</string>
     <string name="qxtbd_text">缺陷提报单</string>
+    <string name="reportnum_text">编号:</string>
+    <string name="udworktype_text">工单类型:</string>
+    <string name="assettype_1_text">设备专业:</string>
+    <string name="culevel_1_text">故障等级:</string>
+    <string name="branch_description_text">分公司:</string>
+    <string name="statustype_text">故障状态:</string>
+    <string name="createby_displayname_text">提报人:</string>
+    <string name="createdate_1_text">提报日期:</string>
+    <string name="xcdate_text">消除时间:</string>
+    <string name="assetnum_description_text">设备:</string>
+    <string name="location_description_text">位置:</string>
+    <string name="cudescribe_text">故障,隐患描述:</string>
+    <string name="gztbd_title">故障提报单</string>
+    <string name="assettype_2_text">设备专业:</string>
+    <string name="qxtype_text">缺陷类型:</string>
+    <string name="qxsjly_text">数据来源:</string>
+    <string name="culevel_2_text">缺陷等级:</string>
+    <string name="qxtbd_title">缺陷提报单</string>
 
 
 </resources>
