@@ -98,7 +98,6 @@ public class Udreport extends Entity {
 //    @DatabaseField(columnName = "location_description")
     @JsonField(fieldName = "location_description")
     public String location_description;//位置名称
-
 //    @DatabaseField(columnName = "failurecode")
     @JsonField(fieldName = "failurecode")
     public String failurecode;//故障类
