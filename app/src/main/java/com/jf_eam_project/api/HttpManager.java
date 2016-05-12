@@ -93,16 +93,30 @@ public class HttpManager {
     public static String getUdinspourl1(String inspotype, String assettype, String checktype, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPOTYPE':'" + inspotype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPOTYPE':'" + inspotype + "'}}";
             }
         } else {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "'}}";
             }
+        }
+    }
+
+
+    /**
+     * 根据巡检单编号下载数据*
+     */
+
+    public static String getUdinspo(String inspotype, String assettype, String checktype, String vlaue, int curpage, int showcount) {
+
+        if (inspotype.equals("05")) {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'="  + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'=" + vlaue + "','INSPOTYPE':'" + inspotype + "'}}";
         }
     }
 

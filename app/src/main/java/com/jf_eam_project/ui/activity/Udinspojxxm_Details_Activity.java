@@ -209,7 +209,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         writemethod = udinspojxxm.writemethod;
         branch = getIntent().getExtras().getString("branch");
         udbelong = getIntent().getExtras().getString("udbelong");
-        Log.i(TAG, "branch=" + branch + ",udbelong=" + udbelong);
     }
 
     @Override

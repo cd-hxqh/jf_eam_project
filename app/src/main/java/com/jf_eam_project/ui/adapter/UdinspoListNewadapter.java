@@ -2,6 +2,7 @@ package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -36,17 +37,13 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
      */
     private boolean allChoose;
 
-
+    private int postion=-1;
 
     public UdinspoListNewadapter(Context context) {
 
         this.mContext = context;
     }
 
-    /**
-     * 长按事件*
-     */
-    public OnLongClickListener onLongClickListener;
 
     /**
      * 选中事件*
@@ -56,7 +53,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.udinspo_list_item, parent, false);
         return new ViewHolder(v);
     }
 
@@ -70,41 +67,33 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udinspo_Details_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("udinspo", udinspo);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, Udinspo_Details_activity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("udinspo", udinspo);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
             }
         });
 
-//        if (cMark == 1) { //历史记录
-//            holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    onLongClickListener.cOnLongClickListener();
-//
-//                    return true;
-//                }
-//            });
-//
-//
-//            holder.checkBox.setVisibility(View.VISIBLE);
-//            holder.item_more.setVisibility(View.GONE);
-//
-//            holder.checkBox.setChecked(allChoose);
-//
-//
-//            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                    if (b) {
-//                        onCheckedChangeListener.cOnCheckedChangeListener(position);
-//                    }
-//                }
-//            });
-//
-//        }
+
+        holder.checkBox.setVisibility(View.VISIBLE);
+        holder.item_more.setVisibility(View.GONE);
+
+        holder.checkBox.setChecked(allChoose);
+
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    onCheckedChangeListener.cOnCheckedChangeListener(position);
+                }
+            }
+        });
+        if (postion == position) {
+            holder.downloadText.setText("已下载");
+            holder.downloadText.setTextColor(Color.parseColor("#0b61aa"));
+        }
     }
 
     @Override
@@ -143,6 +132,10 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
          * 更多*
          */
         private ImageView item_more;
+        /**
+         * 下载标识*
+         */
+        private TextView downloadText;
 
         public ViewHolder(View view) {
             super(view);
@@ -156,6 +149,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
             checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
             item_more = (ImageView) view.findViewById(R.id.avatar);
+            downloadText = (TextView) view.findViewById(R.id.is_download);
         }
     }
 
@@ -212,21 +206,8 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
     }
 
 
-    public interface OnLongClickListener {
-        public void cOnLongClickListener();
-    }
-
     public interface OnCheckedChangeListener {
         public void cOnCheckedChangeListener(int postion);
-    }
-
-
-    public OnLongClickListener getOnLongClickListener() {
-        return onLongClickListener;
-    }
-
-    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
-        this.onLongClickListener = onLongClickListener;
     }
 
 
@@ -236,5 +217,12 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
 
     public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
         this.onCheckedChangeListener = onCheckedChangeListener;
+    }
+
+
+    public void setPostions(int pos) {
+        this.postion = pos;
+
+        notifyDataSetChanged();
     }
 }
