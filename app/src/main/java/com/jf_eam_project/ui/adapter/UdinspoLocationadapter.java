@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.ui.activity.Udinspo_Details_activity;
@@ -29,34 +27,20 @@ import java.util.List;
  * Created by think on 2015/11/26.
  * 巡检单
  */
-public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewadapter.ViewHolder> {
-    private static final String TAG = "UdinspoListNewadapter";
+public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocationadapter.ViewHolder> {
     Context mContext;
     List<Udinspo> udinspoList = new ArrayList<>();
 
 
-    /**
-     * 全选*
-     */
-    private boolean allChoose;
-
-    private int postion = -1;
-
-    public UdinspoListNewadapter(Context context) {
+    public UdinspoLocationadapter(Context context) {
 
         this.mContext = context;
     }
 
 
-    /**
-     * 选中事件*
-     */
-    public OnCheckedChangeListener onCheckedChangeListener;
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.udinspo_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.udinspolocation_list_item, parent, false);
         return new ViewHolder(v);
     }
 
@@ -69,23 +53,25 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         holder.itemDesc.setText(udinspo.description);
 
 
-        holder.checkBox.setVisibility(View.VISIBLE);
-        holder.item_more.setVisibility(View.GONE);
+        holder.operationText.setText(null == udinspo.getOperation() ? "待执行" : udinspo.getOperation());
 
-        holder.checkBox.setChecked(allChoose);
-
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if(null!=udinspo.getOperation()&&udinspo.getOperation().equals("执行中")){
+            holder.operationText.setTextColor(Color.parseColor("#ff29549f"));
+        }else if(null!=udinspo.getOperation()&&udinspo.getOperation().equals("已完成")){
+            holder.operationText.setTextColor(Color.parseColor("#ffff4444"));
+        }
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    onCheckedChangeListener.cOnCheckedChangeListener(position);
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, Udinspo_Details_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udinspo", udinspo);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
-        if (isExists(udinspo.insponum, udinspo.inspotype)) {
-            holder.downloadText.setText("已下载");
-            holder.downloadText.setTextColor(Color.parseColor("#0b61aa"));
-        }
+
+
     }
 
     @Override
@@ -117,21 +103,13 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
          */
         public TextView itemDesc;
         /**
-         * 选择*
-         */
-        private CheckBox checkBox;
-        /**
          * 更多*
          */
         private ImageView item_more;
         /**
-         * 下载标识*
+         * 操作状态*
          */
-        private TextView downloadText;
-        /**
-         * 类型*
-         */
-        private String inspotype;
+        private TextView operationText;
 
         public ViewHolder(View view) {
             super(view);
@@ -143,9 +121,8 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
-            checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
             item_more = (ImageView) view.findViewById(R.id.avatar);
-            downloadText = (TextView) view.findViewById(R.id.is_download);
+            operationText = (TextView) view.findViewById(R.id.is_operation);
         }
     }
 
@@ -185,58 +162,6 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         if (udinspoList.size() > 0) {
             udinspoList.removeAll(udinspoList);
         }
-    }
-
-//    /**
-//     * 传递值*
-//     */
-//    public void setMark(int mark) {
-//        this.mark = mark;
-//    }
-
-    /**
-     * 设置全选*
-     */
-    public void setAllChoose(boolean allChoose) {
-        this.allChoose = allChoose;
-    }
-
-
-    public interface OnCheckedChangeListener {
-        public void cOnCheckedChangeListener(int postion);
-    }
-
-
-    public OnCheckedChangeListener getOnCheckedChangeListener() {
-        return onCheckedChangeListener;
-    }
-
-    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
-        this.onCheckedChangeListener = onCheckedChangeListener;
-    }
-
-
-    public void setPostions(int pos) {
-        this.postion = pos;
-
-        notifyDataSetChanged();
-    }
-
-
-    /**
-     * 判断数据是否下载*
-     */
-    private boolean isExists(String insponum, String inspotype) {
-        Log.i(TAG, "inspotype=" + inspotype);
-        List<Udinspo> list = new UdinspoDao(mContext).findByInspotype(inspotype);
-        if (list != null && list.size() != 0) {
-            for (Udinspo udinspo : list) {
-                if (udinspo.getInsponum().equals(insponum))
-                    return true;
-            }
-        }
-
-        return false;
     }
 
 

@@ -639,7 +639,7 @@
     <string name="qxsjly_text">数据来源:</string>
     <string name="culevel_2_text">缺陷等级:</string>
     <string name="qxtbd_title">缺陷提报单</string>
-    <string name="online_text">巡检任务在线领取</string>
+    <string name="online_text">任务在线领取</string>
     <string name="failurecode_text">故障类:</string>
     <string name="djdh_text">定检单号:</string>
     <string name="details_text">详细信息</string>

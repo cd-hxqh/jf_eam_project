@@ -99,6 +99,13 @@ public class Udinspojxxm extends Entity {
     public int local;//本地操作
 
 
+    @DatabaseField(columnName = "completion")
+    @JsonField(fieldName = "completion")
+    public int completion;//完成状态
+
+
+
+
     public int getLocal() {
         return local;
     }
@@ -251,5 +258,14 @@ public class Udinspojxxm extends Entity {
 
     public void setReportnum(String reportnum) {
         this.reportnum = reportnum;
+    }
+
+
+    public int getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(int completion) {
+        this.completion = completion;
     }
 }

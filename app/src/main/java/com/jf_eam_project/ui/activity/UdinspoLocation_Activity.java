@@ -27,6 +27,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.ui.adapter.UdinspoListadapter;
+import com.jf_eam_project.ui.adapter.UdinspoLocationadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
@@ -75,7 +76,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     /**
      * 适配器*
      */
-    private UdinspoListadapter udinspoListadapter;
+    private UdinspoLocationadapter udinspoLocationadapter;
     /**
      * 编辑框*
      */
@@ -97,11 +98,11 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     /**
      * assettype*
      */
-    private String assettype;
+    private String assettype = "";
     /**
      * checktype*
      */
-    private String checktype;
+    private String checktype = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     private void initData() {
         title = getIntent().getStringExtra("title");
         inspotype = getIntent().getStringExtra("inspotype");
+        Log.i(TAG, "inspotype=" + inspotype);
         if (inspotype.equals("05")) {
             assettype = getIntent().getStringExtra("assettype");
             checktype = getIntent().getStringExtra("checktype");
@@ -145,15 +147,14 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         menuImageView.setImageResource(R.drawable.ic_drawer);
 //        menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
-
-
+        search.setVisibility(View.GONE);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspoListadapter = new UdinspoListadapter(this, 0);
-        recyclerView.setAdapter(udinspoListadapter);
+        udinspoLocationadapter = new UdinspoLocationadapter(this);
+        recyclerView.setAdapter(udinspoLocationadapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -169,15 +170,20 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
      * 获取本地数据*
      */
     private void getLocalData() {
+        ArrayList<Udinspo> list = null;
+        if (assettype.equals("") && checktype.equals("")) {
+            list = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
 
-        ArrayList<Udinspo> list = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
+        } else {
+            list = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
+        }
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
         if (list == null || list.isEmpty()) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
 
-            udinspoListadapter.adddate(list);
+            udinspoLocationadapter.adddate(list);
         }
 
     }
@@ -208,8 +214,8 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 //        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
 //            getData(searchText);
 //        } else {
-            refresh_layout.setRefreshing(false);
-            refresh_layout.setLoading(false);
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
 //        }
     }
 
@@ -232,7 +238,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    udinspoListadapter.removeAllData();
+                    udinspoLocationadapter.removeAllData();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -268,12 +274,12 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspoListadapter = new UdinspoListadapter(UdinspoLocation_Activity.this, 0);
-                            recyclerView.setAdapter(udinspoListadapter);
+                            udinspoLocationadapter = new UdinspoLocationadapter(UdinspoLocation_Activity.this);
+                            recyclerView.setAdapter(udinspoLocationadapter);
                         }
                         if (totalPages == page) {
                             new UdinspoDao(UdinspoLocation_Activity.this).create(items);
-                            udinspoListadapter.adddate(items);
+                            udinspoLocationadapter.adddate(items);
                         }
                     }
 

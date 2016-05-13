@@ -217,4 +217,21 @@ public class UdinspojxxmDao {
         }
     }
 
+
+    /**计算已完成的任务
+     * 0表示未完成
+     * 1表示已完成
+     *
+     * **/
+    public List<Udinspojxxm> findBycompletion(String udinspoassetnum,int completion){
+        List<Udinspojxxm> udinspojxxms=null;
+        try {
+            udinspojxxms = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum",udinspoassetnum).and().eq("completion",completion).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return udinspojxxms;
+    }
+
 }

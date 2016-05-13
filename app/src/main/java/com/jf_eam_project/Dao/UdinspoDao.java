@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
+import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 
@@ -54,7 +55,7 @@ public class UdinspoDao {
                 @Override
                 public Void call() throws Exception {
                     for (Udinspo udinspo : list) {
-                        Log.i(TAG,"insponum="+udinspo.insponum);
+                        Log.i(TAG, "insponum=" + udinspo.insponum);
                         deleteInsponum(udinspo.insponum);
                         udinspoDaoOpe.createOrUpdate(udinspo);
                     }
@@ -65,6 +66,18 @@ public class UdinspoDao {
             e.printStackTrace();
         }
     }
+
+    /**更新提报单**/
+    public void update(Udinspo udinspo) {
+        try {
+            udinspoDaoOpe.update(udinspo);
+        } catch (SQLException e) {
+            Log.i(TAG,"this is SQLException");
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * @param list
@@ -183,7 +196,21 @@ public class UdinspoDao {
         List<Udinspo> list = null;
         try {
             list = udinspoDaoOpe.queryBuilder().where().eq("assettype", assettype).and().eq("checktype", checktype).query();
-            Log.i(TAG, "list size=" + list.size());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 根据类型inspotype查询Udinspo信息*
+     */
+    public List<Udinspo> findByInspotype(String inspotype) {
+        List<Udinspo> list = null;
+        try {
+            list = udinspoDaoOpe.queryBuilder().where().eq("inspotype", inspotype).query();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();

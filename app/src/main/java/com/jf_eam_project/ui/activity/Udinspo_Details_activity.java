@@ -30,6 +30,7 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
@@ -37,6 +38,7 @@ import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
+import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
 
 import org.json.JSONException;
@@ -468,15 +470,34 @@ public class Udinspo_Details_activity extends BaseActivity {
     private View.OnClickListener udinspoassetBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Udinspo_Details_activity.this, Udinspoasset_Activity.class);
+            //更新状态
+            updateUdinspo();
+
+            Intent intent = new Intent(Udinspo_Details_activity.this, Udinspoassetnew_Activity.class);
             intent.putExtra("insponum", udinspo.insponum);
             intent.putExtra("branch", udinspo.branch);
             intent.putExtra("udbelong", udinspo.udbelong);
             intent.putExtra("assettype", udinspo.assettype);
-            Log.i(TAG,"assettype="+udinspo.assettype);
             startActivityForResult(intent, 0);
         }
     };
+
+
+    /**
+     * 更新操作状态*
+     */
+    private void updateUdinspo() {
+
+        Log.i(TAG,"udinspo.getStartdate()="+udinspo.getStartdate());
+        if (udinspo.getStartdate() == null||udinspo.getStartdate().equals("")) {
+            Log.i(TAG,"time="+GetNowTime.getTime());
+            udinspo.setStartdate(GetNowTime.getTime());
+        }
+        if (udinspo.getOperation() == null) {
+            udinspo.setOperation("执行中");
+        }
+        new UdinspoDao(Udinspo_Details_activity.this).update(udinspo);
+    }
 
 
     /**

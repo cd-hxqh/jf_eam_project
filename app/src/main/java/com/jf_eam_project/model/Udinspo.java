@@ -133,6 +133,11 @@ public class Udinspo extends Entity {
     @JsonField(fieldName = "weather")
     public String weather;//天气
 
+    @DatabaseField(columnName = "operation")
+    @JsonField(fieldName = "operation")
+    public String operation;//执行状态
+
+
 
     public String getAssettype() {
         return assettype;
@@ -349,5 +354,13 @@ public class Udinspo extends Entity {
 
     public void setUdbelongdesc(String udbelongdesc) {
         this.udbelongdesc = udbelongdesc;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 }
