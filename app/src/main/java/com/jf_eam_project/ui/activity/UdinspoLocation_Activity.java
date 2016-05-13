@@ -159,12 +159,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        if (NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
-            MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "世界上最遥远的距离就是没网。检查设置");
-            getLocalData();
-        } else {
-            getData(searchText);
-        }
+        getLocalData();
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
@@ -210,12 +205,12 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     @Override
     public void onRefresh() {
         page++;
-        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
-            getData(searchText);
-        } else {
+//        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
+//            getData(searchText);
+//        } else {
             refresh_layout.setRefreshing(false);
             refresh_layout.setLoading(false);
-        }
+//        }
     }
 
 

@@ -139,13 +139,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void initView() {
 
-        boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
-        Log.i(TAG, "isChecked=" + isChecked);
+        isRemember = AccountUtils.getIsChecked(LoginActivity.this);
         mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
-        if (isChecked) {
+        if (isRemember) {
 
             mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
-            checkBox.setChecked(isChecked);
+            checkBox.setChecked(isRemember);
         }
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
@@ -238,6 +237,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         MessageUtils.showMiddleToast(LoginActivity.this, data);
                         mProgressDialog.dismiss();
 //                        if (isRemember) {
+                        Log.i(TAG,"isRemember111"+isRemember);
                         AccountUtils.setChecked(LoginActivity.this, isRemember);
                         AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
 //                        }
