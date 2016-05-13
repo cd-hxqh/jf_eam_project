@@ -87,6 +87,8 @@ public class Createreport_Activity extends BaseActivity {
     private TextView assettypeText; //设备类别
     private TextView assetnumText; //设备
     private TextView locationText; //位置
+    private TextView failurecodeText; //故障类
+
     private TextView descriptionText; //描述
     private TextView descriptionxxText; //详细描述
     private TextView reportbyText; //提报人
@@ -158,6 +160,10 @@ public class Createreport_Activity extends BaseActivity {
      * 运行单位*
      */
     private String udbelong;
+    /**
+     * 类型*
+     */
+    private String assettype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +188,7 @@ public class Createreport_Activity extends BaseActivity {
             udinspojxxmid = getIntent().getExtras().getString("udinspojxxmid");
             branch = getIntent().getExtras().getString("branch");
             udbelong = getIntent().getExtras().getString("udbelong");
+            assettype = getIntent().getExtras().getString("assettype");
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
             udinspojxxmid = report.udinspojxxmid;
@@ -200,6 +207,7 @@ public class Createreport_Activity extends BaseActivity {
         assettypeText = (TextView) findViewById(R.id.assettype_text_id);
         assetnumText = (TextView) findViewById(R.id.assetnum_text_id);
         locationText = (TextView) findViewById(R.id.locaton_text_id);
+        failurecodeText = (TextView) findViewById(R.id.failurecode_text_id);
         descriptionText = (TextView) findViewById(R.id.description_text_id);
         descriptionxxText = (TextView) findViewById(R.id.descriptionxx_text_id);
         reportbyText = (TextView) findViewById(R.id.reportby_text_id);
@@ -217,6 +225,8 @@ public class Createreport_Activity extends BaseActivity {
     protected void initView() {
         if (mark == 1) {
             titleView.setText(getString(R.string.createreport_text));
+            assettypeText.setText(assettype);
+
         } else {
             titleView.setText(getString(R.string.report_details_text));
             reporttypeText.setText(report.getReporttype());
@@ -239,6 +249,7 @@ public class Createreport_Activity extends BaseActivity {
         assettypeText.setOnClickListener(assettypeTextOnClickListener);
         assetnumText.setOnClickListener(asstnumTextOnClickListener);
         locationText.setOnClickListener(locationTextOnClickListener);
+        failurecodeText.setOnClickListener(failurecodeTextOnClickListener);
 
 
         reportbyText.setText(AccountUtils.getUserName(Createreport_Activity.this));
@@ -326,6 +337,19 @@ public class Createreport_Activity extends BaseActivity {
 
     /**
      * 位置*
+     */
+
+    private View.OnClickListener failurecodeTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Createreport_Activity.this, OptionActivity.class);
+            intent.putExtra("requestCode", Constants.FAILURECODE);
+            startActivityForResult(intent, Constants.FAILURECODE);
+        }
+    };
+
+    /**
+     * 故障类
      */
 
     private View.OnClickListener locationTextOnClickListener = new View.OnClickListener() {
@@ -483,7 +507,7 @@ public class Createreport_Activity extends BaseActivity {
         String culevel = culevelText.getText().toString(); //缺陷或故障等级
         String assettype = assettypeText.getText().toString(); //设备类别
         String assetnum = assetnumText.getText().toString(); //设备
-//        String location1 = locationText.getText().toString(); //位置
+        String failurecode = failurecodeText.getText().toString(); //故障类
         String description = descriptionText.getText().toString(); //描述
         String descriptionxx = descriptionxxText.getText().toString(); //详细描述
         String reportby = reportbyText.getText().toString(); //提报人
@@ -498,6 +522,7 @@ public class Createreport_Activity extends BaseActivity {
             }
             createreport.setUdinspojxxmid(udinspojxxmid);
             createreport.setLocation(location);
+            createreport.setFailurecode(failurecode);
 
 
             createreport.setCulevel(culevel);
@@ -702,7 +727,10 @@ public class Createreport_Activity extends BaseActivity {
                 location = option.getName();
                 locationText.setText(option.getName());
                 break;
-
+            case Constants.FAILURECODE:
+                option = (Option) data.getSerializableExtra("option");
+                failurecodeText.setText(option.getName());
+                break;
             default:
                 break;
         }

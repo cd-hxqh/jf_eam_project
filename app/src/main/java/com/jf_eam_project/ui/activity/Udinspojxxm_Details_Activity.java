@@ -190,6 +190,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 运行单位*
      */
     private String udbelong;
+    /**类型**/
+    private String assettype;
 
 
     @Override
@@ -209,6 +211,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         writemethod = udinspojxxm.writemethod;
         branch = getIntent().getExtras().getString("branch");
         udbelong = getIntent().getExtras().getString("udbelong");
+        assettype = getIntent().getExtras().getString("assettype");
     }
 
     @Override
@@ -378,6 +381,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                     intent.putExtra("mark", ADD_REPORT);
                     intent.putExtra("branch", branch);
                     intent.putExtra("udbelong", udbelong);
+                    intent.putExtra("assettype", assettype);
                     startActivityForResult(intent, 0);
                 } else {
                     NormalDialogStyleTwo(createreport);

@@ -177,7 +177,7 @@ public class Udinspo_Details_activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleView.setText(getString(R.string.udinspo_detail_title));
+        titleView.setText(getString(R.string.details_text));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         menuImageView.setImageResource(R.drawable.ic_drawer);
@@ -462,7 +462,9 @@ public class Udinspo_Details_activity extends BaseActivity {
     };
 
 
-    /**执行**/
+    /**
+     * 执行*
+     */
     private View.OnClickListener udinspoassetBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -470,6 +472,8 @@ public class Udinspo_Details_activity extends BaseActivity {
             intent.putExtra("insponum", udinspo.insponum);
             intent.putExtra("branch", udinspo.branch);
             intent.putExtra("udbelong", udinspo.udbelong);
+            intent.putExtra("assettype", udinspo.assettype);
+            Log.i(TAG,"assettype="+udinspo.assettype);
             startActivityForResult(intent, 0);
         }
     };

@@ -225,6 +225,10 @@
         <activity
             android:name=".ui.activity.Udinspo_Details_activity"
             android:label="@string/udinspo_detail_title" />
+        <!-- 巡检管理 -->
+        <activity
+            android:name=".ui.activity.UdinspoLocation_Activity"
+            android:label="@string/udinspo_title" />
         <!-- 设备备件 -->
         <activity
             android:name=".ui.activity.Udinspoasset_Activity"

@@ -60,7 +60,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Udinspo udinspo = udinspoList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.udinspo_insponum_title));
+        holder.itemNumTitle.setText(mContext.getString(R.string.djdh_text));
         holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
         holder.itemNum.setText(udinspo.insponum);
         holder.itemDesc.setText(udinspo.description);

@@ -55,6 +55,8 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
      * 运行单位*
      */
     private String udbelong;
+    /**类型**/
+    private String assettype;
 
 
     public UdinspojxxmListAdapter(Context context, int cMark) {
@@ -63,9 +65,10 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
     }
 
 
-    public void setData(String branch, String udbelong) {
+    public void setData(String branch, String udbelong,String assettype) {
         this.branch = branch;
         this.udbelong = udbelong;
+        this.assettype = assettype;
     }
 
 
@@ -101,6 +104,7 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
                 bundle.putSerializable("Udinspojxxm", udinspojxxm);
                 bundle.putSerializable("branch", branch);
                 bundle.putSerializable("udbelong", udbelong);
+                bundle.putSerializable("assettype", assettype);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }

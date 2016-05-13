@@ -60,6 +60,7 @@ public class Udreport_Details_Activity extends BaseActivity {
     private TextView xcdateText; //消除时间
     private TextView assetnum_descriptionText; //设备
     private TextView location_descriptionText; //位置
+    private TextView failurecodeText; //故障类
     private TextView cudescribeText; //故障、隐患描述
 
 
@@ -127,6 +128,7 @@ public class Udreport_Details_Activity extends BaseActivity {
             xcdateText = (TextView) findViewById(R.id.xcdate_text_id);
             assetnum_descriptionText = (TextView) findViewById(R.id.assetnum_description_text_id);
             location_descriptionText = (TextView) findViewById(R.id.location_description_text_id);
+            failurecodeText = (TextView) findViewById(R.id.failurecode_text_id);
             cudescribeText = (TextView) findViewById(R.id.cudescribe_text_id);
         } else {
             reportnumText = (TextView) findViewById(R.id.reportnum_text_id);
@@ -182,6 +184,7 @@ public class Udreport_Details_Activity extends BaseActivity {
             xcdateText.setText(udreport.xcdate == null ? "" : udreport.xcdate);
             assetnum_descriptionText.setText(udreport.assetnum_description == null ? "" : udreport.assetnum_description);
             location_descriptionText.setText(udreport.location_description == null ? "" : udreport.location_description);
+            failurecodeText.setText(udreport.failurecode == null ? "" : udreport.failurecode);
             cudescribeText.setText(udreport.cudescribe == null ? "" : udreport.cudescribe);
         }
 

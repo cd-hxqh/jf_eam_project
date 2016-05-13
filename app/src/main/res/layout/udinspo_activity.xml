@@ -11,8 +11,8 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/ab_solid_example"
-        android:gravity="center_vertical"
-        >
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
 
         <TextView
@@ -22,6 +22,15 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="下载任务"
+            android:textColor="@drawable/text_selector" />
+
+        <TextView
+            android:id="@+id/wait_operating_task_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待执行任务"
             android:textColor="@drawable/text_selector" />
 
 

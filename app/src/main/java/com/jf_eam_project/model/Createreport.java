@@ -62,6 +62,10 @@ public class Createreport extends Entity {
     @DatabaseField(columnName = "udinspojxxmid")
     public String udinspojxxmid;//巡检项目标准Id
 
+    @JsonField(fieldName = "failurecode")
+    @DatabaseField(columnName = "failurecode")
+    public String failurecode;//故障类
+
 
     public int getId() {
         return id;
@@ -181,5 +185,13 @@ public class Createreport extends Entity {
 
     public void setCubelong(String cubelong) {
         this.cubelong = cubelong;
+    }
+
+    public String getFailurecode() {
+        return failurecode;
+    }
+
+    public void setFailurecode(String failurecode) {
+        this.failurecode = failurecode;
     }
 }

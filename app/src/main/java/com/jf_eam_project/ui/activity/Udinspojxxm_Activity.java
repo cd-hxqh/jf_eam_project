@@ -87,7 +87,8 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
      * 运行单位*
      */
     private String udbelong;
-
+    /**巡检类型**/
+    private String assettype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,8 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
         udinspoassetnum = getIntent().getExtras().getString("udinspoassetnum");
         branch = getIntent().getExtras().getString("branch");
         udbelong = getIntent().getExtras().getString("udbelong");
-        Log.i(TAG,"branch="+branch+",udbelong="+udbelong);
+        assettype = getIntent().getExtras().getString("assettype");
+        Log.i(TAG,"assettype="+assettype);
     }
 
     @Override
@@ -140,7 +142,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         udinspojxxmListAdapter = new UdinspojxxmListAdapter(this, 0);
         recyclerView.setAdapter(udinspojxxmListAdapter);
-        udinspojxxmListAdapter.setData(branch,udbelong);
+        udinspojxxmListAdapter.setData(branch,udbelong,assettype);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -196,7 +198,7 @@ public class Udinspojxxm_Activity extends BaseActivity implements SwipeRefreshLa
                     } else {
                         if (page == 1) {
                             udinspojxxmListAdapter = new UdinspojxxmListAdapter(Udinspojxxm_Activity.this, 0);
-                            udinspojxxmListAdapter.setData(branch,udbelong);
+                            udinspojxxmListAdapter.setData(branch,udbelong,assettype);
                             recyclerView.setAdapter(udinspojxxmListAdapter);
                         }
                         if (totalPages == page) {

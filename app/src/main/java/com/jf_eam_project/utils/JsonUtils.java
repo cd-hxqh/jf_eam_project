@@ -30,6 +30,7 @@ public class JsonUtils {
             jsonObject.put("createdate", createreport.getReporttime());
             jsonObject.put("branck", createreport.getBranck());
             jsonObject.put("cubelong", createreport.getCubelong());
+            jsonObject.put("failurecode", createreport.getFailurecode());
 
             JSONObject json = new JSONObject();
             json.put("", "");

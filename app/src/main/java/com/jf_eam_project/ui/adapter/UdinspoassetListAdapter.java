@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +37,18 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
      * 运行单位*
      */
     private String udbelong;
+    /**类型**/
+    private String assettype;
 
     public UdinspoassetListAdapter(Context context) {
         this.mContext = context;
     }
 
 
-    public void setData(String branch, String udbelong) {
+    public void setData(String branch, String udbelong,String assettype) {
         this.branch = branch;
         this.udbelong = udbelong;
+        this.assettype = assettype;
     }
 
     @Override
@@ -68,6 +72,8 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
                 intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
                 intent.putExtra("branch", branch);
                 intent.putExtra("udbelong", udbelong);
+                intent.putExtra("assettype", assettype);
+                Log.i("UdinspoassetListAdapter","assettype="+assettype);
                 mContext.startActivity(intent);
             }
         });

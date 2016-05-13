@@ -123,6 +123,10 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
      * 下载任务*
      */
     private TextView downBtn;
+    /**
+     * 等待操作*
+     */
+    private TextView waitTask;
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -160,6 +164,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
         downBtn = (TextView) findViewById(R.id.upload_choose_id);
+        waitTask = (TextView) findViewById(R.id.wait_operating_task_id);
     }
 
     @Override
@@ -168,7 +173,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         allCheckBox.setVisibility(View.VISIBLE);
-        titlename.setText(title);
+        titlename.setText(getString(R.string.online_text));
         backImageView.setOnClickListener(backImageViewOnClickListener);
         allCheckBox.setOnCheckedChangeListener(allCheckBoxOmCheckedChangeListener);
 
@@ -191,6 +196,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
         refresh_layout.setOnLoadListener(this);
 
         downBtn.setOnClickListener(downBtnOnClickListener);
+        waitTask.setOnClickListener(waitTaskOnClickListener);
     }
 
     /**
@@ -226,6 +232,19 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             } else {
                 MessageUtils.showMiddleToast(UdinspoNew_Activity.this, "请选择需要下载的任务");
             }
+        }
+    };
+
+
+    private View.OnClickListener waitTaskOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            intent.setClass(UdinspoNew_Activity.this, UdinspoLocation_Activity.class);
+            intent.putExtra("assettype", "电气");
+            intent.putExtra("checktype", "定检");
+            intent.putExtra("inspotype", "05");
+            startActivityForResult(intent, 0);
         }
     };
 
@@ -277,7 +296,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if (b) {
-                Log.i(TAG,"list size="+list.size());
+                Log.i(TAG, "list size=" + list.size());
                 allCheckBox.setText("取消");
                 addListData();
             } else {
