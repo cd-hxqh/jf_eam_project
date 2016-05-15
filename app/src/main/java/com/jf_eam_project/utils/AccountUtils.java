@@ -43,6 +43,31 @@ public class AccountUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
         return sharedPreferences.getBoolean(cxt.getString(R.string.logined_member_ischeck), false);
     }
+    /**
+     * 记录登录人名称
+     *
+     * @param cxt
+     * @param displayName *
+     */
+
+    public static void setDisplayName(Context cxt, String displayName) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putString(cxt.getString(R.string.logined_member_displayName), displayName).commit();
+
+    }
+
+    ;
+
+
+    /**
+     *  获取登录人名称
+     */
+    public static String getDisplayName(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getString(cxt.getString(R.string.logined_member_displayName),"");
+    }
 
 
     /**

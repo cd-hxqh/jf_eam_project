@@ -57,6 +57,7 @@ public class HttpManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 if (statusCode == 200) {
+                    Log.i(TAG,"responseString="+responseString);
                     String errmsg = JsonUtils.parsingAuthStr(cxt, responseString);
                     SafeHandler.onSuccess(handler, errmsg);
                 }

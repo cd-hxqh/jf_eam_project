@@ -123,7 +123,7 @@ public class NavigationDrawerFragment extends BaseFragment {
         });
         mDrawerListView.setAdapter(new DrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        mUserTextView.setText(AccountUtils.getUserName(getActivity()));
+        mUserTextView.setText(AccountUtils.getDisplayName(getActivity()));
         return rootView;
     }
 

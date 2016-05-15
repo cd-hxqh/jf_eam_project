@@ -12,6 +12,7 @@ import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
 import com.jf_eam_project.model.Wpmaterial;
+import com.jf_eam_project.utils.AccountUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +39,12 @@ public class JsonUtils {
         try {
             JSONObject json = new JSONObject(data);
             String jsonString = json.getString("errcode");
+            String result = json.getString("result");
+            JSONObject jsonObject=new JSONObject((result));
+
+            String displayName=jsonObject.getString("displayName");
+            AccountUtils.setDisplayName(cxt,displayName);
+
             if (jsonString.equals(Constants.LOGINSUCCESS) || jsonString.equals(Constants.CHANGEIMEI)) {
                 errmsg = json.getString("errmsg");
             }
@@ -57,7 +64,6 @@ public class JsonUtils {
      * @return
      */
     public static String parsingInsertWO(String data) {
-        Log.i(TAG, "data=" + data);
         String woNum = null;
         try {
             JSONObject object = new JSONObject(data);
@@ -102,7 +108,6 @@ public class JsonUtils {
     }
 
     public static String parsingwfserviceResult(String data) {
-        Log.i(TAG, "data=" + data);
         String result = null;
         try {
             JSONObject object = new JSONObject(data);
@@ -118,7 +123,6 @@ public class JsonUtils {
     }
 
     public static String parsingwfserviceGoOnResult(String data) {
-        Log.i(TAG, "data=" + data);
         String result = null;
         try {
             JSONObject object = new JSONObject(data);
@@ -151,7 +155,6 @@ public class JsonUtils {
      * 分页解析返回的结果*
      */
     public static Results parsingResults(Context ctx, String data) {
-        Log.i(TAG, "data=" + data);
         String result = null;
         Results results = null;
         try {

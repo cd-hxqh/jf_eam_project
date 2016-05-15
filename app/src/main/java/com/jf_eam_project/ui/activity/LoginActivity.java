@@ -20,7 +20,11 @@ import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
@@ -113,6 +117,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
     }
 
+
+    /**
+     * 设置服务器地址
+     */
+    private void NormalEditTextDialog() {
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(LoginActivity.this);
+        dialog.title("设置服务器地址");
+        String ip=AccountUtils.getIpAddress(LoginActivity.this);
+
+        dialog.content(ip)
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(new OnBtnEditClickL() {
+
+                                  @Override
+                                  public void onBtnClick(String text) {
+                                      dialog.dismiss();
+                                  }
+                              },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+
+                        AccountUtils.setIpAddress(LoginActivity.this, text);
+                        dialog.dismiss();
+                    }
+                }
+
+
+        );
+
+    }
+
+
     /**
      * 设置服务器地址*
      */
@@ -159,7 +199,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private View.OnClickListener setIpTextViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NormalListDialog();
+//            NormalListDialog();
+            NormalEditTextDialog();
         }
     };
 
@@ -237,7 +278,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         MessageUtils.showMiddleToast(LoginActivity.this, data);
                         mProgressDialog.dismiss();
 //                        if (isRemember) {
-                        Log.i(TAG,"isRemember111"+isRemember);
                         AccountUtils.setChecked(LoginActivity.this, isRemember);
                         AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
 //                        }

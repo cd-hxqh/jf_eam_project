@@ -93,7 +93,7 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
         final Udinspojxxm udinspojxxm = udinspojxxmList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.ud_description_title));
-
+        Log.i(TAG,"udinspojxxm="+udinspojxxm.writemethod);
         holder.itemNum.setText(udinspojxxm.udinspojxxmlinenum);
         holder.itemDesc.setText(udinspojxxm.description);
         holder.cardView.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,8 @@ import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.ui.activity.Udinspoassetnew_Activity;
+import com.jf_eam_project.ui.activity.UdinspojxxmNew_Activity;
 import com.jf_eam_project.ui.activity.Udinspojxxm_Activity;
 
 import java.util.ArrayList;
@@ -69,7 +71,7 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, Udinspojxxm_Activity.class);
+                intent.setClass(mContext, UdinspojxxmNew_Activity.class);
                 intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
                 intent.putExtra("branch", branch);
                 intent.putExtra("udbelong", udbelong);

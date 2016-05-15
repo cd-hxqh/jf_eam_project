@@ -252,7 +252,7 @@ public class Createreport_Activity extends BaseActivity {
         failurecodeText.setOnClickListener(failurecodeTextOnClickListener);
 
 
-        reportbyText.setText(AccountUtils.getUserName(Createreport_Activity.this));
+        reportbyText.setText(AccountUtils.getDisplayName(Createreport_Activity.this));
         reporttimeText.setText(GetNowTime.getTime());
         setDataListener();
 

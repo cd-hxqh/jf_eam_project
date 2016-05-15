@@ -236,6 +236,9 @@
         <activity
             android:name=".ui.activity.Udinspoassetnew_Activity"
             android:label="@string/udinspoasset_title" />
+        <activity
+            android:name=".ui.activity.UdinspojxxmNew_Activity"
+            android:label="@string/udinspojxxm_title" />
 
         <!--故障提报单-->
         <activity
