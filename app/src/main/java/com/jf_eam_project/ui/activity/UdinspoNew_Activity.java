@@ -15,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,31 +30,30 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
+import com.jf_eam_project.Dao.UdreportDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Udreport;
-import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.UdinspoListNewadapter;
-import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 巡检单列表
  */
 public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Udinspo_Activity";
+    private static final String TAG = "UdinspoNew_Activity";
 
 
     /**
@@ -121,6 +119,10 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
 
 
     ArrayList<Udinspo> list = new ArrayList<>();
+    /**
+     * 未下载的巡检单子*
+     */
+    ArrayList<Udinspo> notDownlist = new ArrayList<>();
 
     ArrayList<Udinspo> chooseList = new ArrayList<Udinspo>();
 
@@ -337,6 +339,8 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
     @Override
     public void onRefresh() {
         page = 1;
+        allCheckBox.setChecked(false);
+        notDownlist = new ArrayList<Udinspo>();
         getData(searchText);
     }
 
@@ -391,12 +395,23 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                     if (list == null || list.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
+                        nodatalayout.setVisibility(View.GONE);
                         if (page == 1) {
                             udinspoListNewadapter = new UdinspoListNewadapter(UdinspoNew_Activity.this);
                             recyclerView.setAdapter(udinspoListNewadapter);
                         }
                         if (totalPages == page) {
-                            udinspoListNewadapter.adddate(list);
+                            for (Udinspo udinspo : list) {
+                                if (!isExists(udinspo.insponum, udinspo.inspotype))
+                                    notDownlist.add(udinspo);
+                            }
+
+                            if (notDownlist == null || notDownlist.isEmpty()) {
+                                nodatalayout.setVisibility(View.VISIBLE);
+                            } else {
+
+                                udinspoListNewadapter.adddate(notDownlist);
+                            }
                         }
 
                         udinspoListNewadapter.setOnCheckedChangeListener(new UdinspoListNewadapter.OnCheckedChangeListener() {
@@ -409,6 +424,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    nodatalayout.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -419,6 +435,22 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+
+    /**
+     * 判断数据是否下载*
+     */
+    private boolean isExists(String insponum, String inspotype) {
+        List<Udinspo> list = new UdinspoDao(UdinspoNew_Activity.this).findByInspotype(inspotype);
+        if (list != null && list.size() != 0) {
+            for (Udinspo udinspo : list) {
+                if (udinspo.getInsponum().equals(insponum))
+                    return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -441,7 +473,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                     if (list1 == null || list1.isEmpty()) {
                     } else {
                         new UdinspoDao(UdinspoNew_Activity.this).create(list1);
-                        for(Udinspo udinspo:list1){
+                        for (Udinspo udinspo : list1) {
                             getUdinspoassetData(udinspo.insponum);
                         }
                         udinspoListNewadapter.notifyDataSetChanged();
@@ -467,7 +499,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
      * 孙表
      */
     private void getUdinspoassetData(final String insponum) {
-        Log.i(TAG,"insponum="+insponum);
         HttpManager.getDataPagingInfo(this, HttpManager.getUdinspoasseturl(insponum, "", page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
@@ -478,15 +509,15 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspoasset> items = null;
 
-                Log.i(TAG,"Udinspoasset="+results.getResultlist());
                 try {
                     items = Ig_Json_Model.parseUdinspoassetString(results.getResultlist());
                     if (items == null || items.isEmpty()) {
 
                     } else {
                         new UdinspoAssetDao(UdinspoNew_Activity.this).create(items);
-                        for(Udinspoasset udinspoasset:items){
+                        for (Udinspoasset udinspoasset : items) {
                             getUdinspojxxmData(udinspoasset.udinspoassetnum);
+
                         }
                     }
                 } catch (IOException e) {
@@ -504,21 +535,11 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
     }
 
 
-
-
-
-
-
-
-
-
-
     /**
      * 根据 Udinspoasset udinspoassetnum获取Udinspojxxm的信息
      * 孙表
      */
     private void getUdinspojxxmData(final String udinspoassetnum) {
-        Log.i(TAG,"udinspoassetnum="+udinspoassetnum);
         HttpManager.getDataPagingInfo(this, HttpManager.getUdinspojxxmUrl(udinspoassetnum, "", page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
@@ -528,13 +549,58 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspojxxm> items = null;
-                Log.i(TAG,"Udinspojxxm ="+results.getResultlist());
 
                 try {
                     items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
                     if (items == null || items.isEmpty()) {
                     } else {
                         new UdinspojxxmDao(UdinspoNew_Activity.this).create(items);
+                        for (Udinspojxxm udinspojxxm : items) {
+                            if (!udinspojxxm.reportnum.equals("")) {
+                                getUdreportData(udinspojxxm.reportnum);
+                            }
+                        }
+                    }
+                    MessageUtils.showMiddleToast(UdinspoNew_Activity.this, "数据下载成功");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+    /**
+     * 根据 Udinspoasset udinspoassetnum获取Udreport的信息
+     * 孙表
+     */
+    private void getUdreportData(final String reportnum) {
+        Log.i(TAG, "reportnum=" + reportnum);
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(reportnum), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                ArrayList<Udreport> items = null;
+                Log.i(TAG, "Udreport =" + results.getResultlist());
+
+                try {
+                    items = Ig_Json_Model.parsingUdreport(results.getResultlist());
+                    if (items == null || items.isEmpty()) {
+                    } else {
+                        new UdreportDao(UdinspoNew_Activity.this).create(items);
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -549,7 +615,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             }
         });
     }
-
 
 
 }

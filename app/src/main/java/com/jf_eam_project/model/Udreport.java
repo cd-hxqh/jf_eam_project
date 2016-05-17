@@ -14,133 +14,133 @@ import com.j256.ormlite.table.DatabaseTable;
  *
  */
 @JsonType
-//@DatabaseTable(tableName = "Udreport")
+@DatabaseTable(tableName = "Udreport")
 public class Udreport extends Entity {
 
-//    @DatabaseField(generatedId = true)
+    @DatabaseField(generatedId = true)
     @JsonIgnore
     public int id;
 
     @JsonField(fieldName = "reportnum")
-//    @DatabaseField(columnName = "reportnum")
+    @DatabaseField(columnName = "reportnum")
     public String reportnum;// 编号
 
     @JsonField(fieldName = "description")
-//    @DatabaseField(columnName = "description")
+    @DatabaseField(columnName = "description")
     public String description;//描述
 
     @JsonField(fieldName = "assettype")
-//    @DatabaseField(columnName = "assettype")
+    @DatabaseField(columnName = "assettype")
     public String assettype;//设备专业
 
     @JsonField(fieldName = "qxtype")
-//    @DatabaseField(columnName = "qxtype")
+    @DatabaseField(columnName = "qxtype")
     public String qxtype;//缺陷类型
 
     @JsonField(fieldName = "qxsjly")
-//    @DatabaseField(columnName = "qxsjly")
+    @DatabaseField(columnName = "qxsjly")
     public String qxsjly;//缺陷数据来源
 
     @JsonField(fieldName = "culevel")
-//    @DatabaseField(columnName = "culevel")
+    @DatabaseField(columnName = "culevel")
     public String culevel;//缺陷等级
 
     @JsonField(fieldName = "udworktype")
-//    @DatabaseField(columnName = "udworktype")
+    @DatabaseField(columnName = "udworktype")
     public String udworktype;//工单类型
 
     @JsonField(fieldName = "branch_description")
-//    @DatabaseField(columnName = "branch_description")
+    @DatabaseField(columnName = "branch_description")
     public String branch_description;//分公司
 
     @JsonField(fieldName = "udbelong")
-//    @DatabaseField(columnName = "udbelong")
+    @DatabaseField(columnName = "udbelong")
     public String udbelong;//运行单位
 
-//    @DatabaseField(columnName = "udbelong_description")
+    @DatabaseField(columnName = "udbelong_description")
     @JsonField(fieldName = "udbelong_description")
     public String udbelong_description;//运行单位中文名称
 
 
 
-//    @DatabaseField(columnName = "statustype")
+    @DatabaseField(columnName = "statustype")
     @JsonField(fieldName = "statustype")
     public String statustype;//状态
 
-//    @DatabaseField(columnName = "createby_displayname")
+    @DatabaseField(columnName = "createby_displayname")
     @JsonField(fieldName = "createby_displayname")
     public String createby_displayname;//提报人
 
 
 
-//    @DatabaseField(columnName = "createdate")
+    @DatabaseField(columnName = "createdate")
     @JsonField(fieldName = "createdate")
     public String createdate;//提报时间
 
 
-//    @DatabaseField(columnName = "xcdate")
+    @DatabaseField(columnName = "xcdate")
     @JsonField(fieldName = "xcdate")
     public String xcdate;//消除时间
 
-//    @DatabaseField(columnName = "assetnum")
+    @DatabaseField(columnName = "assetnum")
     @JsonField(fieldName = "assetnum")
     public String assetnum;//设备
 
-//    @DatabaseField(columnName = "assetnum_description")
+    @DatabaseField(columnName = "assetnum_description")
     @JsonField(fieldName = "assetnum_description")
     public String assetnum_description;//设备名称
 
-//    @DatabaseField(columnName = "location")
+    @DatabaseField(columnName = "location")
     @JsonField(fieldName = "location")
     public String location;//位置
 
 
-//    @DatabaseField(columnName = "location_description")
+    @DatabaseField(columnName = "location_description")
     @JsonField(fieldName = "location_description")
     public String location_description;//位置名称
-//    @DatabaseField(columnName = "failurecode")
+    @DatabaseField(columnName = "failurecode")
     @JsonField(fieldName = "failurecode")
     public String failurecode;//故障类
 
 
-//    @DatabaseField(columnName = "problemcode")
+    @DatabaseField(columnName = "problemcode")
     @JsonField(fieldName = "problemcode")
     public String problemcode;//问题代码
 
 
-//    @DatabaseField(columnName = "stoptime")
+    @DatabaseField(columnName = "stoptime")
     @JsonField(fieldName = "stoptime")
     public String stoptime;//设备停机时间
 
-//    @DatabaseField(columnName = "starttime")
+    @DatabaseField(columnName = "starttime")
     @JsonField(fieldName = "starttime")
     public String starttime;//设备恢复时间
 
-//    @DatabaseField(columnName = "bugtime")
+    @DatabaseField(columnName = "bugtime")
     @JsonField(fieldName = "bugtime")
     public String bugtime;//故障耗时(小时)
 
-//    @DatabaseField(columnName = "sbpjnum")
+    @DatabaseField(columnName = "sbpjnum")
     @JsonField(fieldName = "sbpjnum")
     public String sbpjnum;//设备评级编号
 
-//    @DatabaseField(columnName = "sbpjnum_description")
+    @DatabaseField(columnName = "sbpjnum_description")
     @JsonField(fieldName = "sbpjnum_description")
     public String sbpjnum_description;//设备评级编号
 
-//    @DatabaseField(columnName = "wonum")
+    @DatabaseField(columnName = "wonum")
     @JsonField(fieldName = "wonum")
     public String wonum;//关联工单号
 
-//    @DatabaseField(columnName = "cudescribe")
+    @DatabaseField(columnName = "cudescribe")
     @JsonField(fieldName = "cudescribe")
     public String cudescribe;//关联工单号
 
-//    @DatabaseField(columnName = "remark")
+    @DatabaseField(columnName = "remark")
     @JsonField(fieldName = "remark")
     public String remark;//备注
 
-//    @DatabaseField(columnName = "apptype")
+    @DatabaseField(columnName = "apptype")
     @JsonField(fieldName = "apptype")
     public String apptype;//类型
 

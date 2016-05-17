@@ -202,11 +202,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/udinspo_jkzx_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:visibility="invisible"
                 android:orientation="vertical">
 
                 <ImageView
@@ -221,7 +221,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dimens_10_dp"
-                    android:text="日常巡检"
+                    android:text="集控中心"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_18_sp" />
 

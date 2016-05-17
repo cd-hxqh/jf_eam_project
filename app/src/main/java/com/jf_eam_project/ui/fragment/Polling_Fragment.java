@@ -33,7 +33,6 @@ public class Polling_Fragment extends BaseFragment {
     private LinearLayout dqdjd_layout;
 
 
-
     /**
      * 风机定检单
      */
@@ -61,7 +60,10 @@ public class Polling_Fragment extends BaseFragment {
      * 日常巡检
      */
     private LinearLayout rcxj_layout;
-
+    /**
+     * 集控中心*
+     */
+    private LinearLayout jkzx_layout;
 
 
     @Override
@@ -91,6 +93,7 @@ public class Polling_Fragment extends BaseFragment {
         xtb_layout = (LinearLayout) view.findViewById(R.id.udinspo_xtb_id);
         qtsb_layout = (LinearLayout) view.findViewById(R.id.udinspo_qtsb_id);
         rcxj_layout = (LinearLayout) view.findViewById(R.id.udinspo_rcxj_id);
+        jkzx_layout = (LinearLayout) view.findViewById(R.id.udinspo_jkzx_id);
     }
 
     /**
@@ -104,6 +107,7 @@ public class Polling_Fragment extends BaseFragment {
         xtb_layout.setOnClickListener(onClickListener);
         qtsb_layout.setOnClickListener(onClickListener);
         rcxj_layout.setOnClickListener(onClickListener);
+        jkzx_layout.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -164,6 +168,12 @@ public class Polling_Fragment extends BaseFragment {
                     intent6.putExtra("title", getActivity().getString(R.string.rcxj_text));
                     intent6.putExtra("inspotype", "04");
                     startActivityForResult(intent6, 0);
+                    break;
+                case R.id.udinspo_jkzx_id: //集控中心
+                    Intent intent7 = new Intent(getActivity(), UdinspoNew_Activity.class);
+                    intent7.putExtra("title", getActivity().getString(R.string.jkzx_text));
+                    intent7.putExtra("inspotype", "06");
+                    startActivityForResult(intent7, 0);
                     break;
 
             }

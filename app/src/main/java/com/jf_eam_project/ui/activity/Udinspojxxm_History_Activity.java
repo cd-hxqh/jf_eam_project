@@ -143,6 +143,7 @@ public class Udinspojxxm_History_Activity extends BaseActivity implements SwipeR
         search = (EditText) findViewById(R.id.search_edit);
 
         chooseLinearLayout = (LinearLayout) findViewById(R.id.choose_linearlayout_id);
+
         allTextView = (TextView) findViewById(R.id.all_choose_id);
         uploadTextView = (TextView) findViewById(R.id.upload_choose_id);
         deleteTextView = (TextView) findViewById(R.id.delete_choose_id);

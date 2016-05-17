@@ -6,7 +6,6 @@
     android:layout_marginBottom="2dp"
     android:layout_marginTop="2dp"
     android:background="#fff"
-
     android:foreground="?android:selectableItemBackground"
     android:orientation="horizontal"
     card_view:cardCornerRadius="2dp">
@@ -29,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_num_title"
-                android:textColor="#de000000"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
@@ -39,7 +38,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/item_num_title"
                 android:hint="@string/hint_item_num_title"
-                android:textColor="#de000000"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
@@ -50,7 +49,7 @@
                 android:layout_below="@+id/item_num_title"
                 android:layout_marginTop="5dp"
                 android:text="@string/item_desc_title"
-                android:textColor="#de000000"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
@@ -65,7 +64,7 @@
                 android:ems="14"
                 android:hint="@string/hint_item_desc_title"
                 android:singleLine="true"
-                android:textColor="#de000000"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
@@ -92,7 +91,6 @@
             android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
             android:button="@drawable/checkbox"
-            android:src="@drawable/item_more"
             android:visibility="gone"/>
     </RelativeLayout>
 

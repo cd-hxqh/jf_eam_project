@@ -96,7 +96,7 @@ public class Udinspojxxm extends Entity {
 
     @DatabaseField(columnName = "local")
     @JsonField(fieldName = "local")
-    public int local;//本地操作
+    public int local;//本地操作(0:未操作，1:已操作)
 
 
     @DatabaseField(columnName = "completion")

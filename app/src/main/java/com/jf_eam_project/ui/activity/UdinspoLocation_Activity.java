@@ -1,7 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,21 +23,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.Dao.UdinspoDao;
+import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
+import com.jf_eam_project.model.Udinspoasset;
+import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspoListadapter;
 import com.jf_eam_project.ui.adapter.UdinspoLocationadapter;
+import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 巡检单列表
@@ -77,10 +91,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
      * 适配器*
      */
     private UdinspoLocationadapter udinspoLocationadapter;
-    /**
-     * 编辑框*
-     */
-    private EditText search;
+
     /**
      * 查询条件*
      */
@@ -104,13 +115,56 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
      */
     private String checktype = "";
 
+
+    /**
+     * 全选*
+     */
+    private TextView allTextView;
+    /**
+     * 上传*
+     */
+    private TextView uploadTextView;
+    /**
+     * 删除*
+     */
+    private TextView deleteTextView;
+
+    /**
+     * 判断是否全选*
+     */
+    private boolean aBoolean;
+
+
+    ArrayList<Udinspo> list = new ArrayList<Udinspo>();
+    ArrayList<Udinspo> chooseList = new ArrayList<Udinspo>();
+
+    private ProgressDialog mProgressDialog;
+
+    private UdinspoDao udinspoDao;
+
+
+    /**
+     * 被选中的Udinspojxxm数据*
+     */
+    private List<Udinspojxxm> chooseUdinspojxxmList = new ArrayList<Udinspojxxm>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work);
+        setContentView(R.layout.activity_location);
+        initDao();
         initData();
         findViewById();
         initView();
+    }
+
+    /**
+     * 初始化DAO*
+     */
+    private void initDao() {
+        udinspoDao = new UdinspoDao(UdinspoLocation_Activity.this);
+
     }
 
     /**
@@ -123,6 +177,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         if (inspotype.equals("05")) {
             assettype = getIntent().getStringExtra("assettype");
             checktype = getIntent().getStringExtra("checktype");
+            Log.i(TAG, "assettype=" + assettype + ",checktype=" + checktype);
         }
     }
 
@@ -135,19 +190,20 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
+
+        allTextView = (TextView) findViewById(R.id.all_choose_id);
+        uploadTextView = (TextView) findViewById(R.id.upload_choose_id);
+        deleteTextView = (TextView) findViewById(R.id.delete_choose_id);
     }
 
     @Override
     protected void initView() {
-        setSearchEdit();
 
 
         titlename.setText(title);
         menuImageView.setImageResource(R.drawable.ic_drawer);
 //        menuImageView.setVisibility(View.VISIBLE);
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        search.setVisibility(View.GONE);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -164,13 +220,17 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
+
+
+        allTextView.setOnClickListener(allOnClickListener);
+        uploadTextView.setOnClickListener(uploadOnClickListener);
+        deleteTextView.setOnClickListener(deleteOnClickListener);
     }
 
     /**
      * 获取本地数据*
      */
     private void getLocalData() {
-        ArrayList<Udinspo> list = null;
         if (assettype.equals("") && checktype.equals("")) {
             list = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
 
@@ -186,6 +246,13 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
             udinspoLocationadapter.adddate(list);
         }
 
+        udinspoLocationadapter.setOnCheckedChangeListener(new UdinspoLocationadapter.OnCheckedChangeListener() {
+            @Override
+            public void cOnCheckedChangeListener(int postion) {
+                chooseList.add(list.get(postion));
+            }
+        });
+
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -196,16 +263,70 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     };
 
 
+    /**
+     * 全选*
+     */
+    private View.OnClickListener allOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (aBoolean) {
+                aBoolean = false;
+                allTextView.setText("全选");
+                chooseList = new ArrayList<Udinspo>();
+//                addListData();
+            } else {
+                allTextView.setText("全不选");
+                aBoolean = true;
+
+            }
+            udinspoLocationadapter.setAllChoose(aBoolean);
+            udinspoLocationadapter.notifyDataSetChanged();
+
+        }
+    };
+
+    /**
+     * 上传*
+     */
+    private View.OnClickListener uploadOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (chooseList.size() == 0) {
+                MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择上传数据...");
+            } else {
+
+
+                encapsulationData(chooseList);
+
+                alerDialog(chooseList.size());
+            }
+        }
+    };
+    /**
+     * 删除*
+     */
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (chooseList != null && chooseList.size() != 0) {
+                deleteData(chooseList);
+            } else {
+                MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择需要删除的任务");
+            }
+        }
+    };
+
+
     @Override
     public void onLoad() {
         page = 1;
 
-        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
-            getData(searchText);
-        } else {
-            refresh_layout.setRefreshing(false);
-            refresh_layout.setLoading(false);
-        }
+//        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
+//            getData(searchText);
+//        } else {
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+//        }
     }
 
     @Override
@@ -219,36 +340,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 //        }
     }
 
-
-    private void setSearchEdit() {
-        SpannableString msp = new SpannableString("XX搜索");
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
-        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        search.setHint(msp);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    // 先隐藏键盘
-                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(
-                                    UdinspoLocation_Activity.this.getCurrentFocus()
-                                            .getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
-                    searchText = search.getText().toString();
-                    udinspoLocationadapter.removeAllData();
-                    nodatalayout.setVisibility(View.GONE);
-                    refresh_layout.setRefreshing(true);
-                    page = 1;
-                    getData(searchText);
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 
     /**
      * 获取数据*
@@ -296,4 +387,240 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
             }
         });
     }
+
+
+    /**
+     * 全选*
+     */
+    private void addListData() {
+        if (list != null && list.size() == 0) {
+            for (int i = 0; i < list.size(); i++) {
+                chooseList.add(list.get(i));
+            }
+        }
+    }
+
+
+    /**
+     * 数据删除
+     */
+    private void deleteData(final ArrayList<Udinspo> chooseList) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(UdinspoLocation_Activity.this);
+        builder.setMessage("已选择" + chooseList.size() + "条记录，确定删除吗？").setTitle("提示")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                mProgressDialog = ProgressDialog.show(UdinspoLocation_Activity.this, null, "删除中...", true, true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.setCancelable(false);
+
+
+                //根据insponum删除Udinspoasset信息
+                deleteListUdinspoasset(chooseList);
+
+
+                udinspoLocationadapter.removeAllData();
+
+                ArrayList<Udinspo> list1 = null;
+
+                if (assettype.equals("") && checktype.equals("")) {
+                    list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
+
+                } else {
+                    list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
+                }
+
+                if (list1 == null || list1.size() == 0) {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+                udinspoLocationadapter.adddate(list1);
+                udinspoLocationadapter.notifyDataSetChanged();
+                mProgressDialog.dismiss();
+            }
+        }).create().show();
+
+
+    }
+
+
+    /**
+     * 根据insponum删除Udinspoasset的信息*
+     */
+    private void deleteListUdinspoasset(List<Udinspo> list) {
+        //删除Udinspo数据
+        udinspoDao.deleteList(list);
+        if (null != list && list.size() != 0) {
+            for (Udinspo udinspo : list) {
+                String insponum = udinspo.insponum;
+                //根据insponum删除Udinspoasset
+                delUdinspoasset(insponum);
+            }
+        }
+    }
+
+
+    /**
+     * 删除Udinspoasset*
+     */
+    private void delUdinspoasset(String insponum) {
+
+        List<Udinspoasset> list = new UdinspoAssetDao(UdinspoLocation_Activity.this).queryByInsponum(insponum);
+        new UdinspoAssetDao(UdinspoLocation_Activity.this).deleteInsponum(insponum);
+        if (null != list && list.size() != 0) {
+            for (Udinspoasset udinspoasset : list) {
+                String udinspoassetnum = udinspoasset.udinspoassetnum;
+                //根据udinspoassetnum查询Udinspojxxm
+                delUdinspojxxm(udinspoassetnum);
+
+            }
+        }
+
+
+    }
+
+    /**根据udinspoassetnum编号删除Udinspojxxm信息**/
+    private void delUdinspojxxm(String udinspoassetnum) {
+        Log.i(TAG,"删除——————udinspoassetnum="+udinspoassetnum);
+        List<Udinspojxxm> list=new UdinspojxxmDao(this).queryByUdinspoassetnum(udinspoassetnum);
+        new UdinspojxxmDao(this).deleteList(list);
+    }
+
+
+    /**
+     * 上传选中的数据*
+     */
+    private void encapsulationData(List<Udinspo> list) {
+
+
+        if (null != list && list.size() != 0) {
+            for (Udinspo udinspo : list) {
+                Log.i(TAG, "insponum=" + udinspo.getInsponum());
+                findByUdinspoasset(udinspo.getInsponum());
+            }
+
+        }
+
+    }
+
+
+    /**
+     * 根据巡检编号查询备件信息*
+     */
+    private void findByUdinspoasset(String insponum) {
+        List<Udinspoasset> list = new UdinspoAssetDao(UdinspoLocation_Activity.this).queryByInsponum(insponum);
+        if (null != list && list.size() != 0) {
+            for (Udinspoasset udinspoasset : list) {
+                Log.i(TAG, "udinspoassetnum=" + udinspoasset.getUdinspoassetnum());
+                findByUdinspojxxm(udinspoasset.getUdinspoassetnum());
+            }
+        }
+
+    }
+
+
+    /**
+     * 根据备件编号查询检修项目详情*
+     */
+    private void findByUdinspojxxm(String udinspoassetnum) {
+        List<Udinspojxxm> list = new UdinspojxxmDao(UdinspoLocation_Activity.this).findByLocation(udinspoassetnum, 1);
+        if (null != list && list.size() != 0) {
+            for (Udinspojxxm udinspojxxm : list) {
+                Log.i(TAG, "getUdinspojxxmlinenum" + udinspojxxm.getUdinspojxxmlinenum());
+                chooseUdinspojxxmList.add(udinspojxxm);
+            }
+        }
+
+    }
+
+    ;
+
+
+    /**
+     * 上传弹出框*
+     */
+    private void alerDialog(int size) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UdinspoLocation_Activity.this);
+        builder.setMessage("已选择" + size + "条记录，确定上传吗？").setTitle("提示")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                mProgressDialog = ProgressDialog.show(UdinspoLocation_Activity.this, null,
+                        getString(R.string.inputing), true, true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.setCancelable(false);
+
+                if (NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) {
+                    MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "暂无网络,上传失败");
+                } else {
+
+
+                    new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            String result = null;
+                            if (chooseUdinspojxxmList != null && chooseUdinspojxxmList.size() != 0) {
+                                for (int i = 0; i < chooseUdinspojxxmList.size(); i++) {
+                                    String data = JsonUtils.udinspojxxmJson(chooseUdinspojxxmList.get(i));
+
+                                    Log.i(TAG, "choose data=" + data);
+                                    if (data != null || !data.isEmpty()) {
+                                        result = getBaseApplication().getWsService().UpdatePO(UdinspoLocation_Activity.this, data, "");
+
+                                    }
+                                }
+                            }
+                            return result;
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+
+
+                            mProgressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                String success = jsonObject.getString("status");
+                                String errorNo = jsonObject.getString("errorNo");
+
+                                if (success.equals("数据更新成功") && errorNo.equals("0")) {
+                                    MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "上传成功");
+                                    deleteListUdinspoasset(chooseList);
+
+                                    udinspoLocationadapter.removeAllData();
+
+                                    ArrayList<Udinspo> list1 = (ArrayList<Udinspo>) udinspoDao.queryForAll();
+                                    if (list1 == null || list1.size() == 0) {
+                                        nodatalayout.setVisibility(View.VISIBLE);
+                                    }
+                                    udinspoLocationadapter.adddate(list1);
+                                    udinspoLocationadapter.notifyDataSetChanged();
+                                } else {
+                                    MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "上传失败");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }.execute();
+                }
+            }
+        }).create().show();
+    }
+
 }

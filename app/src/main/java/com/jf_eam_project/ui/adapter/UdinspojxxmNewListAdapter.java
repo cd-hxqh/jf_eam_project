@@ -17,9 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.ui.activity.Udinspoasset_Details_Activity;
 import com.jf_eam_project.ui.activity.Udinspojxxm_Details_Activity;
 
 import java.util.ArrayList;
@@ -29,24 +27,15 @@ import java.util.List;
 /**
  * 巡检项目标准
  */
-public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmListAdapter.ViewHolder> {
-    private static final String TAG = "UdinspojxxmListAdapter";
+public class UdinspojxxmNewListAdapter extends RecyclerView.Adapter<UdinspojxxmNewListAdapter.ViewHolder> {
+    private static final String TAG = "UdinspojxxmNewListAdapter";
     Context mContext;
     List<Udinspojxxm> udinspojxxmList = new ArrayList<>();
 
     /**
-     * checkbox
-     * 隐藏/显示
+     * 点击事件*
      */
-    private int mark = 0;
-    /**
-     * 全选*
-     */
-    private boolean allChoose;
-    /**
-     * 入口*
-     */
-    private int cMark;
+    public OnClickListener onClickListener;
 
     /**
      * 分公司*
@@ -62,9 +51,8 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
     private String assettype;
 
 
-    public UdinspojxxmListAdapter(Context context, int cMark) {
+    public UdinspojxxmNewListAdapter(Context context) {
         this.mContext = context;
-        this.cMark = cMark;
     }
 
 
@@ -75,19 +63,9 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
     }
 
 
-    /**
-     * 长按事件*
-     */
-    public OnLongClickListener onLongClickListener;
-
-    /**
-     * 选中事件*
-     */
-    public OnCheckedChangeListener onCheckedChangeListener;
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.udinspolocation_list_item, parent, false);
         return new ViewHolder(v);
     }
 
@@ -96,77 +74,48 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
         final Udinspojxxm udinspojxxm = udinspojxxmList.get(position);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.ud_description_title));
+        holder.checkBox.setVisibility(View.GONE);
 
         holder.itemNum.setText(udinspojxxm.udinspojxxmlinenum);
         holder.itemDesc.setText(udinspojxxm.description);
-        Log.i(TAG, "udinspojxxm=" + udinspojxxm.udinspojxxm1);
-        if(isAbnormal(udinspojxxm.udinspojxxm1)){
-            Log.i(TAG,"正常");
-            holder.itemNumTitle.setTextColor(R.color.black);
-            holder.itemDescTitle.setTextColor(R.color.black);
-            holder.itemNum.setTextColor(R.color.black);
-            holder.itemDesc.setTextColor(R.color.black);
-        }else{
-            Log.i(TAG,"异常");
+        String udinspojxxm1 = udinspojxxm.udinspojxxm1;
+
+        if (udinspojxxm1.equals("")) {
+            holder.udinspojxxm1.setVisibility(View.GONE);
+        } else {
+            holder.udinspojxxm1.setVisibility(View.VISIBLE);
+            holder.udinspojxxm1.setText(udinspojxxm1);
+        }
+
+
+        if (isAbnormal(udinspojxxm1)) {
+            holder.itemNumTitle.setTextColor(Color.parseColor("#000000"));
+            holder.itemDescTitle.setTextColor(Color.parseColor("#000000"));
+            holder.itemNum.setTextColor(Color.parseColor("#000000"));
+            holder.itemDesc.setTextColor(Color.parseColor("#000000"));
+            holder.udinspojxxm1.setTextColor(Color.parseColor("#ff29549f"));
+        } else {
 
 
             holder.itemNumTitle.setTextColor(Color.parseColor("#ffff4444"));
             holder.itemDescTitle.setTextColor(Color.parseColor("#ffff4444"));
             holder.itemNum.setTextColor(Color.parseColor("#ffff4444"));
             holder.itemDesc.setTextColor(Color.parseColor("#ffff4444"));
+            holder.udinspojxxm1.setTextColor(Color.parseColor("#ffff4444"));
         }
-
-
-
-
-
-
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udinspojxxm_Details_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Udinspojxxm", udinspojxxm);
-                bundle.putSerializable("branch", branch);
-                bundle.putSerializable("udbelong", udbelong);
-                bundle.putSerializable("assettype", assettype);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+
+
+                onClickListener.cOnClickListener(udinspojxxm);
+
             }
         });
 
-        if (cMark == 1) { //历史记录
-            holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    onLongClickListener.cOnLongClickListener();
 
-                    return true;
-                }
-            });
-
-            if (mark == 0) {
-                holder.checkBox.setVisibility(View.GONE);
-                holder.item_more.setVisibility(View.VISIBLE);
-            } else {
-                holder.checkBox.setVisibility(View.VISIBLE);
-                holder.item_more.setVisibility(View.GONE);
-            }
-
-            holder.checkBox.setChecked(allChoose);
-
-
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b) {
-                        onCheckedChangeListener.cOnCheckedChangeListener(position);
-                    }
-                }
-            });
-        }
     }
 
     @Override
@@ -209,6 +158,11 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
          */
         public ImageView item_more;
 
+        /**
+         * 状态*
+         */
+        public TextView udinspojxxm1;
+
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
@@ -221,6 +175,7 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
             checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
             item_more = (ImageView) view.findViewById(R.id.avatar);
+            udinspojxxm1 = (TextView) view.findViewById(R.id.is_operation);
         }
     }
 
@@ -265,58 +220,25 @@ public class UdinspojxxmListAdapter extends RecyclerView.Adapter<UdinspojxxmList
 
 
     /**
-     * 传递值*
-     */
-    public void setMark(int mark) {
-        this.mark = mark;
-    }
-
-    /**
-     * 设置全选*
-     */
-    public void setAllChoose(boolean allChoose) {
-        this.allChoose = allChoose;
-    }
-
-
-    public interface OnLongClickListener {
-        public void cOnLongClickListener();
-    }
-
-    public interface OnCheckedChangeListener {
-        public void cOnCheckedChangeListener(int postion);
-    }
-
-
-    public OnLongClickListener getOnLongClickListener() {
-        return onLongClickListener;
-    }
-
-    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
-        this.onLongClickListener = onLongClickListener;
-    }
-
-
-    public OnCheckedChangeListener getOnCheckedChangeListener() {
-        return onCheckedChangeListener;
-    }
-
-    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
-        this.onCheckedChangeListener = onCheckedChangeListener;
-    }
-
-
-    /**
      * 判断巡检项目表是否正常异常*
      */
     private boolean isAbnormal(String udinspojxxm1) {
-        Log.i(TAG,"udinspojxxm1="+udinspojxxm1);
-        if (udinspojxxm1.isEmpty()||udinspojxxm1.equals("") || udinspojxxm1.equals("正常")) {
+        if (udinspojxxm1.isEmpty() || udinspojxxm1.equals("") || udinspojxxm1.equals("正常")) {
             return true;
         } else {
             return false;
         }
     }
 
+    public interface OnClickListener {
+        public void cOnClickListener(Udinspojxxm udinspojxxm);
+    }
 
+    public OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 }

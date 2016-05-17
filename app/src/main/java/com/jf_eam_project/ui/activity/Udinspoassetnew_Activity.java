@@ -167,6 +167,19 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
             udinspoassetNewListAdapter.adddate(list);
         }
 
+
+        udinspoassetNewListAdapter.setOnClickListener(new UdinspoassetNewListAdapter.OnClickListener() {
+            @Override
+            public void cOnClickListener(Udinspoasset udinspoasset) {
+                Intent intent = new Intent();
+                intent.setClass(Udinspoassetnew_Activity.this, UdinspojxxmNew_Activity.class);
+                intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
+                intent.putExtra("branch", branch);
+                intent.putExtra("udbelong", udbelong);
+                intent.putExtra("assettype", assettype);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 
 
@@ -212,6 +225,9 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case Constants.REFRESH:
+                udinspoassetNewListAdapter.removeAllData();
+                getLocalData();
+                udinspoassetNewListAdapter.notifyDataSetChanged();
                 break;
         }
 

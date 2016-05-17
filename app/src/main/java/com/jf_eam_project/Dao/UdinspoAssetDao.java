@@ -77,6 +77,20 @@ public class UdinspoAssetDao {
         }
     }
 
+    /**
+     * 根据insponum编号删除信息*
+     */
+    public void deleteInsponum(String insponum) {
+        try {
+
+            List<Udinspoasset> list = udinspoassetDaoOpe.queryBuilder().where().eq("insponum", insponum).query();
+
+            udinspoassetDaoOpe.delete(list);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * @return

@@ -1,12 +1,14 @@
 package com.jf_eam_project.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -40,10 +42,10 @@ public class JsonUtils {
             JSONObject json = new JSONObject(data);
             String jsonString = json.getString("errcode");
             String result = json.getString("result");
-            JSONObject jsonObject=new JSONObject((result));
+            JSONObject jsonObject = new JSONObject((result));
 
-            String displayName=jsonObject.getString("displayName");
-            AccountUtils.setDisplayName(cxt,displayName);
+            String displayName = jsonObject.getString("displayName");
+            AccountUtils.setDisplayName(cxt, displayName);
 
             if (jsonString.equals(Constants.LOGINSUCCESS) || jsonString.equals(Constants.CHANGEIMEI)) {
                 errmsg = json.getString("errmsg");
@@ -60,6 +62,7 @@ public class JsonUtils {
 
     /**
      * 解析新增工单返回信息
+     *
      * @param data
      * @return
      */
@@ -67,15 +70,15 @@ public class JsonUtils {
         String woNum = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.has("success")&&object.getString("success").equals("成功")){
+            if (object.has("success") && object.getString("success").equals("成功")) {
                 if (object.has("wonum")) {
                     woNum = object.getString("wonum");
-                }else if(object.has("WONUM")){
+                } else if (object.has("WONUM")) {
                     woNum = object.getString("WONUM");
                 }
-            }else if(object.has("errorMsg")){
+            } else if (object.has("errorMsg")) {
                 woNum = object.getString("errorMsg");
-            }else {
+            } else {
                 woNum = "";
             }
         } catch (JSONException e) {
@@ -86,6 +89,7 @@ public class JsonUtils {
 
     /**
      * 解析修改工单返回信息
+     *
      * @param data
      * @return
      */
@@ -94,11 +98,11 @@ public class JsonUtils {
         String success = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.has("success")&&object.getString("success").equals("成功")){
+            if (object.has("success") && object.getString("success").equals("成功")) {
                 success = object.getString("success");
-            }else if (object.has("errorMsg")){
+            } else if (object.has("errorMsg")) {
                 success = object.getString("errorMsg");
-            }else {
+            } else {
                 success = "";
             }
         } catch (JSONException e) {
@@ -111,9 +115,9 @@ public class JsonUtils {
         String result = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.has("errorMsg")){
+            if (object.has("errorMsg")) {
                 result = object.getString("errorMsg");
-            }else {
+            } else {
                 result = "";
             }
         } catch (JSONException e) {
@@ -126,9 +130,9 @@ public class JsonUtils {
         String result = null;
         try {
             JSONObject object = new JSONObject(data);
-            if(object.has("status")){
+            if (object.has("status")) {
                 result = object.getString("status");
-            }else {
+            } else {
                 result = "";
             }
         } catch (JSONException e) {
@@ -138,11 +142,11 @@ public class JsonUtils {
     }
 
     //解析查询工作流返回的数据
-    public static String parsingwfstatusResult(String data){
+    public static String parsingwfstatusResult(String data) {
         try {
             JSONArray jsonArray = new JSONArray(data);
             JSONObject jsonObject = jsonArray.getJSONObject(0);
-            if(jsonObject.has("ACTIVE")){
+            if (jsonObject.has("ACTIVE")) {
                 return jsonObject.getString("ACTIVE");
             }
         } catch (JSONException e) {
@@ -220,7 +224,7 @@ public class JsonUtils {
             jsonObject.put("DESCRIPTION", workOrder.description);
             jsonObject.put("UDWOTYPE", workOrder.udwotype);
             jsonObject.put("ASSETNUM", workOrder.assetnum);
-            if(workOrder.isnew){
+            if (workOrder.isnew) {
                 jsonObject.put("ASSETDESC", workOrder.assetdesc);
                 jsonObject.put("LOCATIONDESC", workOrder.locationdesc);
                 jsonObject.put("DISPLAYNAME", workOrder.displayname);
@@ -263,8 +267,8 @@ public class JsonUtils {
                     woactivityObj.put("ACTSTART", woactivities.get(i).actstart);
                     woactivityObj.put("ACTFINISH", woactivities.get(i).actfinish);
                     woactivityObj.put("ESTDUR", woactivities.get(i).estdur);
-                    if(!workOrder.isnew){
-                        woactivityObj.put("TYPE",woactivities.get(i).type);
+                    if (!workOrder.isnew) {
+                        woactivityObj.put("TYPE", woactivities.get(i).type);
                     }
                     woactivityArray.put(woactivityObj);
                 }
@@ -279,11 +283,11 @@ public class JsonUtils {
                     wplaborObj.put("CRAFT", wplabors.get(i).craft);
                     wplaborObj.put("QUANTITY", wplabors.get(i).quantity);
                     wplaborObj.put("LABORHRS", wplabors.get(i).laborhrs);
-                    if(!workOrder.isnew){
-                        wplaborObj.put("TYPE",wplabors.get(i).type);
+                    if (!workOrder.isnew) {
+                        wplaborObj.put("TYPE", wplabors.get(i).type);
                     }
-                    if(wplabors.get(i).wplaborid!=null&&!wplabors.get(i).wplaborid.equals("")){
-                        wplaborObj.put("WPLABORID",wplabors.get(i).wplaborid);
+                    if (wplabors.get(i).wplaborid != null && !wplabors.get(i).wplaborid.equals("")) {
+                        wplaborObj.put("WPLABORID", wplabors.get(i).wplaborid);
                     }
                     wplaborArray.put(wplaborObj);
                 }
@@ -293,68 +297,68 @@ public class JsonUtils {
                 object.put("WPMATERIAL", "");
                 JSONArray wpmaterialArray = new JSONArray();
                 JSONObject wpmaterialObj;
-                for(int i = 0;i < wpmaterials.size();i ++){
+                for (int i = 0; i < wpmaterials.size(); i++) {
                     wpmaterialObj = new JSONObject();
-                    wpmaterialObj.put("ITEMNUM",wpmaterials.get(i).itemnum);
-                    wpmaterialObj.put("ITEMQTY",wpmaterials.get(i).itemqty);
-                    wpmaterialObj.put("LOCATION",wpmaterials.get(i).location);
-                    wpmaterialObj.put("STORELOCSITE",wpmaterials.get(i).storelocsite);
-                    wpmaterialObj.put("REQUESTBY",wpmaterials.get(i).requestby);
-                    wpmaterialObj.put("REQUIREDATE",wpmaterials.get(i).requiredate);
-                    if(!workOrder.isnew){
-                        wpmaterialObj.put("TYPE",wpmaterials.get(i).type);
+                    wpmaterialObj.put("ITEMNUM", wpmaterials.get(i).itemnum);
+                    wpmaterialObj.put("ITEMQTY", wpmaterials.get(i).itemqty);
+                    wpmaterialObj.put("LOCATION", wpmaterials.get(i).location);
+                    wpmaterialObj.put("STORELOCSITE", wpmaterials.get(i).storelocsite);
+                    wpmaterialObj.put("REQUESTBY", wpmaterials.get(i).requestby);
+                    wpmaterialObj.put("REQUIREDATE", wpmaterials.get(i).requiredate);
+                    if (!workOrder.isnew) {
+                        wpmaterialObj.put("TYPE", wpmaterials.get(i).type);
                     }
-                    if(wpmaterials.get(i).wpitemid!=null&&!wpmaterials.get(i).wpitemid.equals("")){
-                        wpmaterialObj.put("WPITEMID",wpmaterials.get(i).wpitemid);
+                    if (wpmaterials.get(i).wpitemid != null && !wpmaterials.get(i).wpitemid.equals("")) {
+                        wpmaterialObj.put("WPITEMID", wpmaterials.get(i).wpitemid);
                     }
                     wpmaterialArray.put(wpmaterialObj);
                 }
-                jsonObject.put("WPMATERIAL",wpmaterialArray);
+                jsonObject.put("WPMATERIAL", wpmaterialArray);
             }
             if (assignments != null && assignments.size() != 0) {
                 object.put("ASSIGNMENT", "");
                 JSONArray assignmentArray = new JSONArray();
                 JSONObject assignmentObj;
-                for(int i = 0;i < assignments.size();i ++){
+                for (int i = 0; i < assignments.size(); i++) {
                     assignmentObj = new JSONObject();
-                    assignmentObj.put("LABORCODE",assignments.get(i).laborcode);
-                    assignmentObj.put("CRAFT",assignments.get(i).craft);
-                    assignmentObj.put("LABORHRS",assignments.get(i).laborhrs);
-                    if(!workOrder.isnew){
-                        assignmentObj.put("TYPE",assignments.get(i).type);
+                    assignmentObj.put("LABORCODE", assignments.get(i).laborcode);
+                    assignmentObj.put("CRAFT", assignments.get(i).craft);
+                    assignmentObj.put("LABORHRS", assignments.get(i).laborhrs);
+                    if (!workOrder.isnew) {
+                        assignmentObj.put("TYPE", assignments.get(i).type);
                     }
-                    if(assignments.get(i).assignmentid!=null&&!assignments.get(i).assignmentid.equals("")){
-                        assignmentObj.put("ASSIGNMENTID",assignments.get(i).assignmentid);
+                    if (assignments.get(i).assignmentid != null && !assignments.get(i).assignmentid.equals("")) {
+                        assignmentObj.put("ASSIGNMENTID", assignments.get(i).assignmentid);
                     }
                     assignmentArray.put(assignmentObj);
                 }
-                jsonObject.put("ASSIGNMENT",assignmentArray);
+                jsonObject.put("ASSIGNMENT", assignmentArray);
             }
             if (labtranses != null && labtranses.size() != 0) {
                 object.put("LABTRANS", "");
                 JSONArray labtransArray = new JSONArray();
                 JSONObject labtransObj;
-                for(int i = 0;i < labtranses.size();i ++){
+                for (int i = 0; i < labtranses.size(); i++) {
                     labtransObj = new JSONObject();
-                    labtransObj.put("LABORCODE",labtranses.get(i).laborcode);
-                    labtransObj.put("STARTDATE",labtranses.get(i).startdate);
-                    labtransObj.put("REGULARHRS",labtranses.get(i).regularhrs);
-                    labtransObj.put("CRAFT",labtranses.get(i).craft);
-                    labtransObj.put("PAYRATE","0");
-                    if(labtranses.get(i).labtransid!=null&&!labtranses.get(i).labtransid.equals("")){
-                        labtransObj.put("LABTRANSID",labtranses.get(i).labtransid);
+                    labtransObj.put("LABORCODE", labtranses.get(i).laborcode);
+                    labtransObj.put("STARTDATE", labtranses.get(i).startdate);
+                    labtransObj.put("REGULARHRS", labtranses.get(i).regularhrs);
+                    labtransObj.put("CRAFT", labtranses.get(i).craft);
+                    labtransObj.put("PAYRATE", "0");
+                    if (labtranses.get(i).labtransid != null && !labtranses.get(i).labtransid.equals("")) {
+                        labtransObj.put("LABTRANSID", labtranses.get(i).labtransid);
                     }
-                    if(labtranses.get(i).type!=null&&!labtranses.get(i).type.equals("")){
-                        labtransObj.put("TYPE",labtranses.get(i).type);
+                    if (labtranses.get(i).type != null && !labtranses.get(i).type.equals("")) {
+                        labtransObj.put("TYPE", labtranses.get(i).type);
                     }
                     labtransArray.put(labtransObj);
 
                 }
-                jsonObject.put("LABTRANS",labtransArray);
+                jsonObject.put("LABTRANS", labtransArray);
             }
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
-            jsonObject.put("relationShip",jsonArray);
+            jsonObject.put("relationShip", jsonArray);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -362,4 +366,55 @@ public class JsonUtils {
         return jsonObject.toString();
     }
 
+
+    /**
+     * 封装Udinspojxxm的json
+     */
+    public static String udinspojxxmJson(Udinspojxxm udinspojxxm) {
+
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
+
+            json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
+            json.put("TYPE", Constants.UPDATE);
+            json.put("UDINSPOJXXM1", udinspojxxm.udinspojxxm1);
+            json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
+            json.put("UDINSPOJXXM3", udinspojxxm.udinspojxxm3);
+
+
+            json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
+            json.put("UDINSPOJXXM4", udinspojxxm.udinspojxxm4);
+            json.put("EXECUTION", udinspojxxm.execution);
+
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("GRADESON", jsonUdinspojxxmInfo(json.toString()));
+            return jsonObject.toString();
+
+        } catch (JSONException e) {
+            return null;
+        }
+
+    }
+
+
+    /**
+     * 封装udinspojxxm信息*
+     */
+    private static JSONArray jsonUdinspojxxmInfo(String str) {
+        JSONArray jsonArray = null;
+
+        String json3 = "";
+        try {
+            json3 = "[" + str + "]";
+
+            jsonArray = new JSONArray(json3);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jsonArray;
+    }
 }

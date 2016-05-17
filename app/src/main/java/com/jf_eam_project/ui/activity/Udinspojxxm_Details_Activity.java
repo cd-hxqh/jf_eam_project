@@ -33,6 +33,7 @@ import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
+import com.jf_eam_project.Dao.UdreportDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -40,6 +41,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Createreport;
+import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.GridAdapter;
@@ -110,7 +112,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private LinearLayout udinspojxxm1LinearLayout;
     private RadioGroup mRadioGroup1;
     private RadioButton normalRadioButton; //正常
-    private RadioButton abnormalRadioButton; //异常常
+    private RadioButton abnormalRadioButton; //异常
 
 //    private TextView udinspojxxm1Text;
 
@@ -190,7 +192,9 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      * 运行单位*
      */
     private String udbelong;
-    /**类型**/
+    /**
+     * 类型*
+     */
     private String assettype;
 
 
@@ -301,11 +305,20 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
             udinspojxxm8Text.setText(udinspojxxm.getUdinspojxxm8() == null ? "" : udinspojxxm.getUdinspojxxm8());
             udinspojxxm9Text.setText(udinspojxxm.getUdinspojxxm9() == null ? "" : udinspojxxm.getUdinspojxxm9());
             executionText.setText(udinspojxxm.getExecution() == null ? "" : udinspojxxm.getExecution());
+            String udinspojxxm1 = udinspojxxm.getUdinspojxxm1();
+            if (udinspojxxm1.equals("") || udinspojxxm1.equals("正常")) {
+                normalRadioButton.setChecked(true);
+                abnormalRadioButton.setChecked(false);
+                executionText.setText("正常");
+            } else {
+                normalRadioButton.setChecked(false);
+                abnormalRadioButton.setChecked(true);
+                executionText.setText(udinspojxxm1);
+            }
 
-
-//            udinspojxxm2Text.setText(udinspojxxm.getUdinspojxxm2() == null ? "" : udinspojxxm.getUdinspojxxm2());
-//            udinspojxxm3Text.setText(udinspojxxm.getUdinspojxxm3() == null ? "" : udinspojxxm.getUdinspojxxm3());
-//            udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
+            udinspojxxm2Text.setText(udinspojxxm.getUdinspojxxm2() == null ? "" : udinspojxxm.getUdinspojxxm2());
+            udinspojxxm3Text.setText(udinspojxxm.getUdinspojxxm3() == null ? "" : udinspojxxm.getUdinspojxxm3());
+            udinspojxxm4Text.setText(udinspojxxm.getUdinspojxxm4() == null ? "" : udinspojxxm.getUdinspojxxm4());
         }
 
 
@@ -319,7 +332,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 //        udinspojxxm3Text.setFocusableInTouchMode(false);
 //        udinspojxxm4Text.setFocusable(false);
 //        udinspojxxm4Text.setFocusableInTouchMode(false);
-        normalRadioButton.setChecked(true);
         mRadioGroup1.setOnCheckedChangeListener(radiogpchange);
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
@@ -359,9 +371,11 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
             if (checkedId == normalRadioButton.getId()) {
                 udinspojxxmvalue = "正常";
+                executionText.setText(udinspojxxmvalue);
 
             } else if (checkedId == abnormalRadioButton.getId()) {
                 udinspojxxmvalue = "异常";
+                executionText.setText(udinspojxxmvalue);
             }
         }
     };
@@ -414,13 +428,24 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
+                        //根据reportnum查询Udreport
 
-                        getUdreport(reportnum, dialog);
-
+//                        getUdreport(reportnum, dialog);
+                        getUdreportList(reportnum);
+                        dialog.dismiss();
 
                     }
                 });
 
+    }
+
+
+    private void getUdreportList(String reportnum) {
+        List<Udreport> list = new UdreportDao(Udinspojxxm_Details_Activity.this).queryByNum(reportnum);
+        Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Udreport_Details_Activity.class);
+        intent.putExtra("udreport", list.get(0));
+        intent.putExtra("mark", 1);
+        startActivityForResult(intent, 0);
     }
 
 
@@ -436,7 +461,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG, "results=" + results.getResultlist());
                 dialog.dismiss();
                 ArrayList<Udreport> items = null;
                 try {
@@ -538,79 +562,111 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      */
     private void encapsulationData() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspojxxm_Details_Activity.this);
-        builder.setMessage("确定更新检修项目标准吗？").setTitle("提示")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                mProgressDialog = ProgressDialog.show(Udinspojxxm_Details_Activity.this, null,
-                        getString(R.string.inputing), true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspojxxm_Details_Activity.this);
+//        builder.setMessage("确定更新检修项目标准吗？").setTitle("提示")
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//
+//                saveUdinspo();
+//                setResult(Constants.REFRESH);
+//                finish();
+//            }
+//        }).create().show();
 
-                if (NetWorkHelper.isNetwork(Udinspojxxm_Details_Activity.this)) {
-                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "暂无网络,现离线保存数据!");
-                    mProgressDialog.dismiss();
-                    saveUdinspo();
-                    setResult(Constants.REFRESH);
-                    finish();
-                } else {
+        if (saveUdinspo()) {
+            setResult(Constants.REFRESH);
 
-
-                    new AsyncTask<String, String, String>() {
-                        @Override
-                        protected String doInBackground(String... strings) {
-                            String data = null;
-                            try {
-                                data = submitBtn();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this, data, "");
-
-                            return result;
-                        }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-
-                            super.onPostExecute(s);
-                            mProgressDialog.dismiss();
-                            try {
-                                JSONObject jsonObject = new JSONObject(s);
-                                String success = jsonObject.getString("status");
-                                String errorNo = jsonObject.getString("errorNo");
-                                if (success.equals("数据更新成功") && errorNo.equals("0")) {
-                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新成功");
-
-                                } else {
-                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
-                                }
-                                setResult(Constants.REFRESH);
-                                finish();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
-                                setResult(Constants.REFRESH);
-                                finish();
-                            }
-
-
-                        }
-                    }.execute();
-                }
-            }
-        }).create().show();
+            MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据保存成功");
+            finish();
+        }
 
 
     }
+//    /**
+//     * 数据封装*
+//     */
+//    private void encapsulationData() {
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspojxxm_Details_Activity.this);
+//        builder.setMessage("确定更新检修项目标准吗？").setTitle("提示")
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//                mProgressDialog = ProgressDialog.show(Udinspojxxm_Details_Activity.this, null,
+//                        getString(R.string.inputing), true, true);
+//                mProgressDialog.setCanceledOnTouchOutside(false);
+//                mProgressDialog.setCancelable(false);
+//
+//                if (NetWorkHelper.isNetwork(Udinspojxxm_Details_Activity.this)) {
+//                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "暂无网络,现离线保存数据!");
+//                    mProgressDialog.dismiss();
+//                    saveUdinspo();
+//                    setResult(Constants.REFRESH);
+//                    finish();
+//                } else {
+//
+//
+//                    new AsyncTask<String, String, String>() {
+//                        @Override
+//                        protected String doInBackground(String... strings) {
+//                            String data = null;
+//                            try {
+//                                data = submitBtn();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this, data, "");
+//
+//                            return result;
+//                        }
+//
+//                        @Override
+//                        protected void onPostExecute(String s) {
+//
+//                            super.onPostExecute(s);
+//                            mProgressDialog.dismiss();
+//                            try {
+//                                JSONObject jsonObject = new JSONObject(s);
+//                                String success = jsonObject.getString("status");
+//                                String errorNo = jsonObject.getString("errorNo");
+//                                if (success.equals("数据更新成功") && errorNo.equals("0")) {
+//                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新成功");
+//
+//                                } else {
+//                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
+//                                }
+//                                setResult(Constants.REFRESH);
+//                                finish();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
+//                                setResult(Constants.REFRESH);
+//                                finish();
+//                            }
+//
+//
+//                        }
+//                    }.execute();
+//                }
+//            }
+//        }).create().show();
+//
+//
+//    }
 
 
     /**
@@ -657,7 +713,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                 udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
                 json.put("UDINSPOJXXM3", udinspojxxm3);
             }
-            String udinspojxxm4 = udinspojxxm3Text.getText().toString();
+            String udinspojxxm4 = udinspojxxm4Text.getText().toString();
             if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && !TextUtils.isEmpty(udinspojxxm4)) {
                 udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
                 json.put("UDINSPOJXXM4", udinspojxxm4);
@@ -711,60 +767,92 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     /**
      * 将巡检信息保存至本地*
      */
-    private void saveUdinspo() {
-        Udinspojxxm udinspojxxm1 = new Udinspojxxm();
+    private boolean saveUdinspo() {
         if (writemethod.equals("01")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
-                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+            if (udinspojxxm2.length() == 0) {
+                udinspojxxm2Text.setError("数值A不能为空");
+                return false;
             }
+            udinspojxxm.setUdinspojxxm2(udinspojxxm2);
+
 
         } else if (writemethod.equals("02")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
-                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+
+            if (udinspojxxm2.length() == 0) {
+                udinspojxxm2Text.setError("数值A不能为空");
+                return false;
             }
+
+            udinspojxxm.setUdinspojxxm2(udinspojxxm2);
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
-                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
+
+            if (udinspojxxm3.length() == 0) {
+                udinspojxxm3Text.setError("数值B不能为空");
+                return false;
             }
+            udinspojxxm.setUdinspojxxm3(udinspojxxm3);
         } else if (writemethod.equals("03")) {
             String udinspojxxm2 = udinspojxxm2Text.getText().toString();
-            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !TextUtils.isEmpty(udinspojxxm2)) {
-                udinspojxxm1.setUdinspojxxm2(udinspojxxm2);
+            if (udinspojxxm2.length() == 0) {
+                udinspojxxm2Text.setError("数值A不能为空");
+                return false;
+            }
+
+            if (!udinspojxxm2.equals(udinspojxxm.udinspojxxm2) && !udinspojxxm2.isEmpty()) {
+                udinspojxxm.setUdinspojxxm2(udinspojxxm2);
             }
             String udinspojxxm3 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm3.equals(udinspojxxm.udinspojxxm3) && !TextUtils.isEmpty(udinspojxxm3)) {
-                udinspojxxm1.setUdinspojxxm3(udinspojxxm3);
-            }
-            String udinspojxxm4 = udinspojxxm3Text.getText().toString();
-            if (!udinspojxxm4.equals(udinspojxxm.udinspojxxm4) && !TextUtils.isEmpty(udinspojxxm4)) {
-                udinspojxxm1.setUdinspojxxm4(udinspojxxm4);
-            }
-        } else if (writemethod.equals("04")) {
-
-            if (!udinspojxxmvalue.equals(udinspojxxm1.udinspojxxm1) && !TextUtils.isEmpty(udinspojxxmvalue)) {
-                udinspojxxm1.setUdinspojxxm1(udinspojxxmvalue);
+            if (udinspojxxm3.length() == 0) {
+                udinspojxxm3Text.setError("数值B不能为空");
+                return false;
             }
 
-        } else if (writemethod.equals("05")) {
+            udinspojxxm.setUdinspojxxm3(udinspojxxm3);
+            String udinspojxxm4 = udinspojxxm4Text.getText().toString();
+            if (udinspojxxm4.length() == 0) {
+                udinspojxxm4Text.setError("数值C不能为空");
+                return false;
+            }
+
+
+            udinspojxxm.setUdinspojxxm4(udinspojxxm4);
+        }
+//        else if (writemethod.equals("04")) {
+
+//            if (!udinspojxxmvalue.equals(udinspojxxm1.udinspojxxm1) && !TextUtils.isEmpty(udinspojxxmvalue)) {
+//                udinspojxxm1.setUdinspojxxm1(udinspojxxmvalue);
+//            }
+
+//        }
+        else if (writemethod.equals("05")) {
             String execution = executionText.getText().toString();
-            if (!execution.equals(udinspojxxm1.execution) && !TextUtils.isEmpty(execution)) {
-                udinspojxxm1.setExecution(execution);
+            if (!execution.equals(udinspojxxm.execution) && !TextUtils.isEmpty(execution)) {
+                udinspojxxm.setExecution(execution);
             }
 
         }
+        udinspojxxm.setId(udinspojxxm.id);
+        udinspojxxm.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
+        udinspojxxm.setUdinspojxxmlinenum(udinspojxxm.udinspojxxmlinenum);
+        udinspojxxm.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
+        udinspojxxm.setDescription(udinspojxxm.description);
+        udinspojxxm.setType(Constants.UPDATE);
+        udinspojxxm.setWritemethod(writemethod);
+        udinspojxxm.setReportnum(udinspojxxm.reportnum);
+        udinspojxxm.setUdinspojxxm7(udinspojxxm.udinspojxxm7);
+        udinspojxxm.setLocal(1); //已操作
+        udinspojxxm.setCompletion(1);
+//        if (udinspojxxmvalue.equals("正常")) {
+//            udinspojxxm.setCompletion(1);
+//        } else if (udinspojxxmvalue.equals("异常")) {
+//            udinspojxxm.setCompletion(0);
+//        }
 
-        udinspojxxm1.setUdinspojxxmid(udinspojxxm.udinspojxxmid);
-        udinspojxxm1.setUdinspojxxmlinenum(udinspojxxm.udinspojxxmlinenum);
-        udinspojxxm1.setUdinspoassetnum(udinspojxxm.udinspoassetnum);
-        udinspojxxm1.setDescription(udinspojxxm.description);
-        udinspojxxm1.setType(Constants.UPDATE);
-        udinspojxxm1.setWritemethod(writemethod);
-        udinspojxxm1.setReportnum(udinspojxxm.reportnum);
-        udinspojxxm1.setUdinspojxxm7(udinspojxxm.udinspojxxm7);
-        udinspojxxm1.setLocal(1);
-        new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).insert(udinspojxxm1);
+        udinspojxxm.setUdinspojxxm1(udinspojxxmvalue.equals("") ? "正常" : udinspojxxmvalue);
+        new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).update(udinspojxxm);
+        return true;
     }
 
 

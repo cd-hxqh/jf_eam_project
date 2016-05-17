@@ -23,6 +23,7 @@ import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -69,6 +70,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Udinspoasset.class);
             TableUtils.createTable(connectionSource, Udinspojxxm.class);
             TableUtils.createTable(connectionSource, Createreport.class);
+            TableUtils.createTable(connectionSource, Udreport.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,6 +103,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Udinspoasset.class, true);
             TableUtils.dropTable(connectionSource, Udinspojxxm.class, true);
             TableUtils.dropTable(connectionSource, Createreport.class, true);
+            TableUtils.dropTable(connectionSource, Udreport.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

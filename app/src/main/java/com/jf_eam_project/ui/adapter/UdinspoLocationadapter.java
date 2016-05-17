@@ -31,6 +31,16 @@ public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocation
     Context mContext;
     List<Udinspo> udinspoList = new ArrayList<>();
 
+    /**
+     * 全选*
+     */
+    private boolean allChoose;
+
+    /**
+     * 选中事件*
+     */
+    public OnCheckedChangeListener onCheckedChangeListener;
+
 
     public UdinspoLocationadapter(Context context) {
 
@@ -71,6 +81,17 @@ public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocation
             }
         });
 
+        holder.checkBox.setChecked(allChoose);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    onCheckedChangeListener.cOnCheckedChangeListener(position);
+                }
+            }
+        });
+
 
     }
 
@@ -105,11 +126,13 @@ public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocation
         /**
          * 更多*
          */
-        private ImageView item_more;
+        public ImageView item_more;
         /**
          * 操作状态*
          */
-        private TextView operationText;
+        public TextView operationText;
+        /**checkBox复选框**/
+        public CheckBox checkBox;
 
         public ViewHolder(View view) {
             super(view);
@@ -123,6 +146,7 @@ public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocation
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
             item_more = (ImageView) view.findViewById(R.id.avatar);
             operationText = (TextView) view.findViewById(R.id.is_operation);
+            checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
         }
     }
 
@@ -165,4 +189,22 @@ public class UdinspoLocationadapter extends RecyclerView.Adapter<UdinspoLocation
     }
 
 
+    /**
+     * 设置全选*
+     */
+    public void setAllChoose(boolean allChoose) {
+        this.allChoose = allChoose;
+    }
+
+    public interface OnCheckedChangeListener {
+        public void cOnCheckedChangeListener(int postion);
+    }
+
+    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+        this.onCheckedChangeListener = onCheckedChangeListener;
+    }
+
+    public OnCheckedChangeListener getOnCheckedChangeListener() {
+        return onCheckedChangeListener;
+    }
 }

@@ -80,11 +80,11 @@ public class Udinspo extends Entity {
 
     @DatabaseField(columnName = "assettype")
     @JsonField(fieldName = "assettype")
-    public String assettype;//类型
+    public String assettype;//仪表类型
 
     @DatabaseField(columnName = "checktype")
     @JsonField(fieldName = "checktype")
-    public String checktype;//类型
+    public String checktype;//巡检类型
 
     @DatabaseField(columnName = "inspmainplannum")
     @JsonField(fieldName = "inspmainplannum")

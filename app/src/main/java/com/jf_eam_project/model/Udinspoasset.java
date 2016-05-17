@@ -27,7 +27,7 @@ public class Udinspoasset extends Entity {
 
     @DatabaseField(columnName = "assetnum")
     @JsonField(fieldName = "assetnum")
-    public String assetnum;//设备描述
+    public String assetnum;//设备编号
 
     @DatabaseField(columnName = "childassetnum")
     @JsonField(fieldName = "childassetnum")

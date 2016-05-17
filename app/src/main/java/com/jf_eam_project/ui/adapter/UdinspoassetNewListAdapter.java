@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import java.util.List;
  * 设备备件
  */
 public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<UdinspoassetNewListAdapter.ViewHolder> {
+    private static final String TAG = "UdinspoassetNewListAdapter";
     Context mContext;
     List<Udinspoasset> udinspoassetList = new ArrayList<>();
     /**
@@ -41,6 +43,12 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
      * 类型*
      */
     private String assettype;
+
+
+    /**
+     * 点击事件*
+     */
+    public OnClickListener onClickListener;
 
     public UdinspoassetNewListAdapter(Context context) {
         this.mContext = context;
@@ -62,22 +70,24 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Udinspoasset udinspoasset = udinspoassetList.get(position);
+
+        holder.checkBox.setVisibility(View.GONE);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.udinspojxxm_desciption_text));
         holder.itemNum.setText(udinspoasset.udinspoassetlinenum);
         holder.itemDesc.setText(udinspoasset.childassetnum);
-        holder.completionText.setText("完成率:"+getCom(udinspoasset.udinspoassetlinenum)+"%");
+        holder.completionText.setText("完成率:" + getCom(udinspoasset.udinspoassetnum) + "%");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, UdinspojxxmNew_Activity.class);
-                intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
-                intent.putExtra("branch", branch);
-                intent.putExtra("udbelong", udbelong);
-                intent.putExtra("assettype", assettype);
-                Log.i("UdinspoassetListAdapter", "assettype=" + assettype);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(mContext, UdinspojxxmNew_Activity.class);
+//                intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
+//                intent.putExtra("branch", branch);
+//                intent.putExtra("udbelong", udbelong);
+//                intent.putExtra("assettype", assettype);
+//                mContext.startActivity(intent);
+                onClickListener.cOnClickListener(udinspoasset);
             }
         });
     }
@@ -114,6 +124,10 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
          * 完成率*
          */
         public TextView completionText;
+        /**
+         * 选择框*
+         */
+        public CheckBox checkBox;
 
         public ViewHolder(View view) {
             super(view);
@@ -126,6 +140,7 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
             completionText = (TextView) view.findViewById(R.id.is_operation);
+            checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
         }
     }
 
@@ -135,7 +150,7 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
                 Udinspoasset udinspoasset = udinspoassetList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).udinspoassetlinenum == udinspoasset.udinspoassetlinenum) {
+                    if (data.get(j).udinspoassetnum == udinspoasset.getUdinspoassetnum()) {
                         exist = true;
                         break;
                     }
@@ -172,26 +187,44 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
      * 计算完成率*
      */
     private String getCom(String udinspoassetnum) {
+
         //计算总数
-        int sizeCount = -1;
+        double sizeCount = -1;
         //完成数
-        int endCount = 0;
+        double endCount = 0;
 
         //总数
-        List<Udinspojxxm> udinspojxxms = new UdinspojxxmDao(mContext).findByudinspoassetnum(udinspoassetnum);
+        List<Udinspojxxm> udinspojxxms = new UdinspojxxmDao(mContext).queryByUdinspoassetnum(udinspoassetnum);
         if (null != udinspojxxms && udinspojxxms.size() != 0) {
             sizeCount = udinspojxxms.size();
+            for (Udinspojxxm udinspojxxm : udinspojxxms) {
+            }
         }
 
         //完成数
         List<Udinspojxxm> endudinspojxxms = new UdinspojxxmDao(mContext).findBycompletion(udinspoassetnum, 1);
         if (null != endudinspojxxms && endudinspojxxms.size() != 0) {
-            endCount = udinspojxxms.size();
+            endCount = endudinspojxxms.size();
         }
 
-        String com = endCount / sizeCount + "";
+
+        String com = (endCount / sizeCount) * 100 + "";
+
 
         return com;
+    }
+
+
+    public interface OnClickListener {
+        public void cOnClickListener(Udinspoasset udinspoasset);
+    }
+
+    public OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
 

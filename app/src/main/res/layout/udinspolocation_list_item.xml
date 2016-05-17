@@ -16,7 +16,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
+
+        <CheckBox
+            android:id="@+id/checkbox_id"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
+            android:button="@drawable/checkbox"
+            android:src="@drawable/item_more"
+            />
+
         <RelativeLayout
+            android:layout_toRightOf="@+id/checkbox_id"
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.jf_eam_project.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,12 +32,14 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
+import com.jf_eam_project.ui.adapter.UdinspojxxmNewListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 检修项目标准
@@ -71,8 +76,8 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     private LinearLayout nodatalayout;
     private SwipeRefreshLayout refresh_layout = null;
 
-    private UdinspojxxmListAdapter udinspojxxmListAdapter;
-    private EditText search;
+    private UdinspojxxmNewListAdapter udinspojxxmNewListAdapter;
+    //    private EditText search;
     private String searchText = "";
     private int page = 1;
 
@@ -84,13 +89,20 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
      * 运行单位*
      */
     private String udbelong;
-    /**巡检类型**/
+    /**
+     * 巡检类型*
+     */
     private String assettype;
+
+    /**
+     * 确定按钮*
+     */
+    private Button submitbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work);
+        setContentView(R.layout.activity_udispoxxmnew);
 
         initData();
         findViewById();
@@ -105,7 +117,6 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
         branch = getIntent().getExtras().getString("branch");
         udbelong = getIntent().getExtras().getString("udbelong");
         assettype = getIntent().getExtras().getString("assettype");
-        Log.i(TAG,"assettype="+assettype);
     }
 
     @Override
@@ -117,7 +128,8 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
+        submitbtn = (Button) findViewById(R.id.submit_btn_id);
+//        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
@@ -126,10 +138,10 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         addImageView.setImageResource(R.drawable.ic_menu_recent_history);
-        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setVisibility(View.GONE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
 
-        setSearchEdit();
+//        setSearchEdit();
 
 
         layoutManager = new LinearLayoutManager(this);
@@ -137,9 +149,9 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspojxxmListAdapter = new UdinspojxxmListAdapter(this, 0);
-        recyclerView.setAdapter(udinspojxxmListAdapter);
-        udinspojxxmListAdapter.setData(branch,udbelong,assettype);
+        udinspojxxmNewListAdapter = new UdinspojxxmNewListAdapter(this);
+        recyclerView.setAdapter(udinspojxxmNewListAdapter);
+        udinspojxxmNewListAdapter.setData(branch, udbelong, assettype);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -150,6 +162,7 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
+        submitbtn.setOnClickListener(submitbtnOnClickListener);
 
     }
 
@@ -165,11 +178,24 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
 
-            udinspojxxmListAdapter.adddate(list);
+            udinspojxxmNewListAdapter.adddate(list);
         }
 
-    }
+        udinspojxxmNewListAdapter.setOnClickListener(new UdinspojxxmNewListAdapter.OnClickListener() {
+            @Override
+            public void cOnClickListener(Udinspojxxm udinspojxxm) {
+                Intent intent = new Intent(UdinspojxxmNew_Activity.this, Udinspojxxm_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Udinspojxxm", udinspojxxm);
+                bundle.putSerializable("branch", branch);
+                bundle.putSerializable("udbelong", udbelong);
+                bundle.putSerializable("assettype", assettype);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
 
+    }
 
 
     private void getData(String search) {
@@ -190,13 +216,13 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            udinspojxxmListAdapter = new UdinspojxxmListAdapter(UdinspojxxmNew_Activity.this, 0);
-                            udinspojxxmListAdapter.setData(branch,udbelong,assettype);
-                            recyclerView.setAdapter(udinspojxxmListAdapter);
+                            udinspojxxmNewListAdapter = new UdinspojxxmNewListAdapter(UdinspojxxmNew_Activity.this);
+                            udinspojxxmNewListAdapter.setData(branch, udbelong, assettype);
+                            recyclerView.setAdapter(udinspojxxmNewListAdapter);
                         }
                         if (totalPages == page) {
                             new UdinspojxxmDao(UdinspojxxmNew_Activity.this).create(items);
-                            udinspojxxmListAdapter.adddate(items);
+                            udinspojxxmNewListAdapter.adddate(items);
                         }
                     }
                 } catch (IOException e) {
@@ -214,36 +240,36 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     }
 
 
-    private void setSearchEdit() {
-
-        SpannableString msp = new SpannableString("XX搜索");
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
-        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        search.setHint(msp);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    // 隐藏软件盘
-                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(
-                                    UdinspojxxmNew_Activity.this.getCurrentFocus()
-                                            .getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
-                    searchText = search.getText().toString();
-                    udinspojxxmListAdapter.removeAllData();
-                    nodatalayout.setVisibility(View.GONE);
-                    refresh_layout.setRefreshing(true);
-                    page = 1;
-                    getData(searchText);
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+//    private void setSearchEdit() {
+//
+//        SpannableString msp = new SpannableString("XX搜索");
+//        Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
+//        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+//        search.setHint(msp);
+//        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    // 隐藏软件盘
+//                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+//                            .hideSoftInputFromWindow(
+//                                    UdinspojxxmNew_Activity.this.getCurrentFocus()
+//                                            .getWindowToken(),
+//                                    InputMethodManager.HIDE_NOT_ALWAYS);
+//                    searchText = search.getText().toString();
+//                    udinspojxxmNewListAdapter.removeAllData();
+//                    nodatalayout.setVisibility(View.GONE);
+//                    refresh_layout.setRefreshing(true);
+//                    page = 1;
+//                    getData(searchText);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
     /**
      * 返回点击
@@ -251,7 +277,7 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-           finish();
+            finish();
         }
     };
 
@@ -294,14 +320,69 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "requestCode=" + requestCode + "resultCode=" + resultCode);
         switch (resultCode) {
 
             case Constants.REFRESH:
-                udinspojxxmListAdapter.removeAllData();
-                getData(searchText);
+                udinspojxxmNewListAdapter.removeAllData();
+                getLocalData();
+                udinspojxxmNewListAdapter.notifyDataSetChanged();
                 break;
         }
+
+    }
+
+
+    /**
+     * 判断是否提交数据*
+     */
+    private View.OnClickListener submitbtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!isAbnormal()) {
+                alertDialog();
+            } else {
+                setResult(Constants.REFRESH);
+                finish();
+                MessageUtils.showMiddleToast(UdinspojxxmNew_Activity.this, "数据保存成功");
+            }
+        }
+    };
+
+
+    private void alertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UdinspojxxmNew_Activity.this);
+        builder.setMessage("你有未操作完成的单子,确定要提交吗？").setTitle("提示")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setResult(Constants.REFRESH);
+                finish();
+                dialogInterface.dismiss();
+
+
+            }
+        }).create().show();
+    }
+
+
+    /**
+     * 判断是否有异常的单子*
+     */
+    private boolean isAbnormal() {
+
+        List<Udinspojxxm> list = new UdinspojxxmDao(UdinspojxxmNew_Activity.this).findByabnormal(udinspoassetnum, "异常");
+        if (null == list || list.size() == 0) {
+            //表示正常
+            return true;
+        } else {
+            return false;
+        }
+
 
     }
 }

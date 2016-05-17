@@ -18,6 +18,7 @@ import java.util.concurrent.Callable;
  *检修项目标准
  */
 public class UdinspojxxmDao {
+    private static final String TAG="UdinspojxxmDao";
     private Context context;
     private Dao<Udinspojxxm, Integer> udinspojxxmDaoOpe;
     private DatabaseHelper helper;
@@ -43,6 +44,18 @@ public class UdinspojxxmDao {
         try {
             udinspojxxmDaoOpe.createOrUpdate(udinspojxxm);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     *
+     * 更新
+     */
+    public void update(Udinspojxxm udinspojxxm) {
+        try {
+            udinspojxxmDaoOpe.update(udinspojxxm);
+        } catch (SQLException e) {
+            Log.i(TAG,"this is sqlException");
             e.printStackTrace();
         }
     }
@@ -87,6 +100,18 @@ public class UdinspojxxmDao {
     public void deleteall(){
         try {
             udinspojxxmDaoOpe.delete(udinspojxxmDaoOpe.queryForAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**根据巡检备件编号删除信息**/
+    public void deleteudUdinspoassetNum(String udinspoassetnum) {
+        try {
+
+            List<Udinspojxxm> list = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum", udinspoassetnum).query();
+
+            udinspojxxmDaoOpe.delete(list);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -233,5 +258,33 @@ public class UdinspojxxmDao {
         }
         return udinspojxxms;
     }
+
+
+    /**计算未完成的单子**/
+    public List<Udinspojxxm> findByabnormal(String udinspoassetnum,String abnormal){
+        List<Udinspojxxm> udinspojxxms=null;
+        try {
+            udinspojxxms = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum",udinspoassetnum).and().eq("udinspojxxm1",abnormal).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return udinspojxxms;
+    }
+
+    /**根据udinspoassetnum查询本地已操作的单子**/
+    public List<Udinspojxxm> findByLocation(String udinspoassetnum,int local){
+        List<Udinspojxxm> udinspojxxms=null;
+        try {
+            udinspojxxms = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum",udinspoassetnum).and().eq("local",local).query();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return udinspojxxms;
+
+    }
+
+
 
 }
