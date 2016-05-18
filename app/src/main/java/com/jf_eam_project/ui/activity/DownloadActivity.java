@@ -28,7 +28,9 @@ import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Craftrate;
@@ -40,6 +42,7 @@ import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Location;
 import com.jf_eam_project.model.Person;
+import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
@@ -280,21 +283,23 @@ public class DownloadActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            if (NetWorkHelper.isNetwork(DownloadActivity.this)){
-                Toast.makeText(DownloadActivity.this,"无可用网络",Toast.LENGTH_SHORT).show();
-            }else {
+            Log.i(TAG, "点击一下");
+
+            if (NetWorkHelper.isNetwork(DownloadActivity.this)) {
+                Toast.makeText(DownloadActivity.this, "无可用网络", Toast.LENGTH_SHORT).show();
+            } else {
 
                 mProgressDialog = ProgressDialog.show(DownloadActivity.this, null,
                         getString(R.string.downloading), true, true);
-                mProgressDialog.setCanceledOnTouchOutside(false);
-                mProgressDialog.setCancelable(false);
+                mProgressDialog.setCanceledOnTouchOutside(true);
+                mProgressDialog.setCancelable(true);
 
 
                 String buttonText = childArray.get(group).get(child);
                 if (buttonText.equals(childArray.get(0).get(0))) {//位置
-                    downloaddata(HttpManager.getUrl(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
+                    downloaddata(HttpManager.getUrlPaging(Constants.LOCATION_APPID, Constants.LOCATION_NAME), buttonText, button);
                 } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
-                    downloaddata(HttpManager.getUrl(Constants.ASSET_APPID, Constants.ASSET_NAME), buttonText, button);
+                    downloaddata(HttpManager.getUrlPaging(Constants.ASSET_APPID, Constants.ASSET_NAME), buttonText, button);
                 } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
                     downloaddata(HttpManager.getUrl(Constants.UDWOCM_APPID, Constants.FAILURECODE_NAME), buttonText, button);
                 } else if (buttonText.equals(childArray.get(0).get(3))) {//问题代码
@@ -323,13 +328,26 @@ public class DownloadActivity extends BaseActivity {
         HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
+                Log.i(TAG, "download data=" + data);
+
                 if (data != null) {
                     try {
                         if (buttonText.equals(childArray.get(0).get(0))) {//位置
-                            List<Location> locations = Ig_Json_Model.parsingLocation(data);
+                            /**解析data**/
+                            Results result = JsonUtils.parsingResults2(DownloadActivity.this, data);
+                            Log.i(TAG, "result=" + result.getResultlist());
+
+                            List<Location> locations = Ig_Json_Model.parsingLocation(result.getResultlist());
+                            Log.i(TAG,"size="+locations.size());
                             new LocationDao(DownloadActivity.this).create(locations);
                         } else if (buttonText.equals(childArray.get(0).get(1))) {//资产
-                            List<Assets> assets = Ig_Json_Model.parsingAsset(data);
+                            /**解析data**/
+                            Results result = JsonUtils.parsingResults2(DownloadActivity.this, data);
+                            Log.i(TAG, "result=" + result.getResultlist());
+
+                            List<Assets> assets = Ig_Json_Model.parsingAsset(result.getResultlist());
+                            Log.i(TAG, "size=" + assets.size());
+
                             new AssetDao(DownloadActivity.this).create(assets);
                         } else if (buttonText.equals(childArray.get(0).get(2))) {//故障类
                             List<Failurecode> failurecodes = Ig_Json_Model.parsingFailurecode(data);
@@ -362,7 +380,7 @@ public class DownloadActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(DownloadActivity.this, "下载数据出现问题", Toast.LENGTH_SHORT).show();
+                    MessageUtils.showMiddleToast(DownloadActivity.this, "下载数据出现问题");
                     mProgressDialog.dismiss();
                 }
             }
@@ -379,6 +397,7 @@ public class DownloadActivity extends BaseActivity {
 
         });
     }
+
 
     private void downloaddata(String url, final String buttonText) {
         HttpManager.getData(DownloadActivity.this, url, new HttpRequestHandler<String>() {

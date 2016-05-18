@@ -171,7 +171,12 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
      */
     private void getLocalData() {
 
-        ArrayList<Udinspojxxm> list = (ArrayList<Udinspojxxm>) new UdinspojxxmDao(UdinspojxxmNew_Activity.this).queryByUdinspoassetnum(udinspoassetnum);
+        final ArrayList<Udinspojxxm> list = (ArrayList<Udinspojxxm>) new UdinspojxxmDao(UdinspojxxmNew_Activity.this).queryByUdinspoassetnum(udinspoassetnum);
+        for (Udinspojxxm udinspojxxm : list) {
+            Log.i(TAG, "udinspojxxm=" + udinspojxxm.getUdinspojxxmlinenum());
+        }
+
+
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
         if (list == null || list.isEmpty()) {
@@ -285,23 +290,23 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     public void onLoad() {
         page = 1;
 
-        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
-            getData(searchText);
-        } else {
-            refresh_layout.setRefreshing(false);
-            refresh_layout.setLoading(false);
-        }
+//        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
+//            getData(searchText);
+//        } else {
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+//        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
-            getData(searchText);
-        } else {
-            refresh_layout.setRefreshing(false);
-            refresh_layout.setLoading(false);
-        }
+//        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
+//            getData(searchText);
+//        } else {
+        refresh_layout.setRefreshing(false);
+        refresh_layout.setLoading(false);
+//        }
     }
 
 

@@ -39,6 +39,8 @@ public class HttpManager {
      */
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
+
+
         String loginIp = AccountUtils.getIpAddress(cxt) + "maximo/mobile/system/login";
         Log.i(TAG, "loginIp=" + loginIp);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -137,6 +139,16 @@ public class HttpManager {
         }
     }
 
+
+    /**
+     * 设置设备备件*
+     */
+    public static String getUdinspoasseturl1(String insponum) {
+        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOASSET_NAME + "','option':'read','orderby':'UDINSPOASSETLINENUM ASC','condition':{'INSPONUM':'" + insponum + "'}}";
+
+    }
+
+
     /**
      * 项目检修标准*
      */
@@ -146,6 +158,13 @@ public class HttpManager {
         } else {
             return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'" + insponum + "','UDINSPOJXXMLINENUM':'" + vlaue + "'}}";
         }
+    }
+
+    /**
+     * 项目检修标准*
+     */
+    public static String getUdinspojxxmUrl1(String udinspoassetnum) {
+        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'" + udinspoassetnum + "'}}";
     }
 
 
@@ -512,11 +531,22 @@ public class HttpManager {
     }
 
     /**
+     * 设置基础数据接口(分页)
+     */
+    public static String getUrlPaging(String appid, String objectname) {
+        return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                "'curpage':" + "1" + ",'showcount':" + "1000" + ",'option':'read'}";
+    }
+
+    /**
      * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
 
         String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
+
+        Log.i(TAG, "base_url=" + base_url + ",data=" + data);
+
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -604,6 +634,8 @@ public class HttpManager {
      */
     public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
         String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
+
+        Log.i(TAG, "base_url=" + base_url+",data="+data);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -615,6 +647,8 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.i(TAG,"responseString="+responseString);
+
                 Results result = JsonUtils.parsingResults(cxt, responseString);
                 if (result.getResultlist() == null) {
                     SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));

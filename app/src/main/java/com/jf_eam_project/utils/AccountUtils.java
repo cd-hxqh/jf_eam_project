@@ -43,6 +43,7 @@ public class AccountUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
         return sharedPreferences.getBoolean(cxt.getString(R.string.logined_member_ischeck), false);
     }
+
     /**
      * 记录登录人名称
      *
@@ -61,12 +62,12 @@ public class AccountUtils {
 
 
     /**
-     *  获取登录人名称
+     * 获取登录人名称
      */
     public static String getDisplayName(Context cxt) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
-        return sharedPreferences.getString(cxt.getString(R.string.logined_member_displayName),"");
+        return sharedPreferences.getString(cxt.getString(R.string.logined_member_displayName), "");
     }
 
 
@@ -107,7 +108,9 @@ public class AccountUtils {
     }
 
 
-    /**设置服务器IP地址**/
+    /**
+     * 设置服务器IP地址*
+     */
     public static void setIpAddress(Context cxt, String ip) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
@@ -115,7 +118,9 @@ public class AccountUtils {
 
     }
 
-    /**获取服务器IP地址**/
+    /**
+     * 获取服务器IP地址*
+     */
     public static String getIpAddress(Context cxt) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);

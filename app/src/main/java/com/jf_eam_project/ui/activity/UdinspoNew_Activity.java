@@ -249,12 +249,19 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
     private View.OnClickListener waitTaskOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.setClass(UdinspoNew_Activity.this, UdinspoLocation_Activity.class);
-            startActivityForResult(intent, 0);
+            startActivity();
         }
     };
 
+
+    /**
+     * 跳转界面*
+     */
+    private void startActivity() {
+        Intent intent = getIntent();
+        intent.setClass(UdinspoNew_Activity.this, UdinspoLocation_Activity.class);
+        startActivityForResult(intent, 0);
+    }
 
     private void NormalDialogStyleTwo(final ArrayList<Udinspo> list) {
         final NormalDialog dialog = new NormalDialog(UdinspoNew_Activity.this);
@@ -389,6 +396,8 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
 
 
                 try {
+                    Log.i(TAG, "results=" + results.getResultlist());
+
                     list = Ig_Json_Model.parseUdinspoString(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
@@ -400,6 +409,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                             udinspoListNewadapter = new UdinspoListNewadapter(UdinspoNew_Activity.this);
                             recyclerView.setAdapter(udinspoListNewadapter);
                         }
+
                         if (totalPages == page) {
                             for (Udinspo udinspo : list) {
                                 if (!isExists(udinspo.insponum, udinspo.inspotype))
@@ -442,6 +452,8 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
      * 判断数据是否下载*
      */
     private boolean isExists(String insponum, String inspotype) {
+
+
         List<Udinspo> list = new UdinspoDao(UdinspoNew_Activity.this).findByInspotype(inspotype);
         if (list != null && list.size() != 0) {
             for (Udinspo udinspo : list) {
@@ -474,11 +486,12 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                     } else {
                         new UdinspoDao(UdinspoNew_Activity.this).create(list1);
                         for (Udinspo udinspo : list1) {
-                            getUdinspoassetData(udinspo.insponum);
+                            getUdinspoassetData1(udinspo.insponum);
                         }
                         udinspoListNewadapter.notifyDataSetChanged();
                         chooseList = new ArrayList<Udinspo>();
-
+                        MessageUtils.showMiddleToast(UdinspoNew_Activity.this, "数据下载成功");
+                        startActivity();
                     }
 
                 } catch (IOException e) {
@@ -498,41 +511,46 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
      * 根据 Udinspo insponum获取Udinspoasset的信息
      * 孙表
      */
-    private void getUdinspoassetData(final String insponum) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspoasseturl(insponum, "", page, 20), new HttpRequestHandler<Results>() {
+    private void getUdinspoassetData1(final String insponum) {
+        HttpManager.getData(this, HttpManager.getUdinspoasseturl1(insponum), new HttpRequestHandler<String>() {
             @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
+            public void onSuccess(String data) {
+                Log.i(TAG, "sdata=" + data);
 
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspoasset> items = null;
 
                 try {
-                    items = Ig_Json_Model.parseUdinspoassetString(results.getResultlist());
+                    items = Ig_Json_Model.parseUdinspoassetString(data);
                     if (items == null || items.isEmpty()) {
 
                     } else {
                         new UdinspoAssetDao(UdinspoNew_Activity.this).create(items);
                         for (Udinspoasset udinspoasset : items) {
-                            getUdinspojxxmData(udinspoasset.udinspoassetnum);
+                            getUdinspojxxmData1(udinspoasset.udinspoassetnum);
 
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
+            public void onSuccess(String data, int totalPages, int currentPage) {
+                Log.i(TAG, "adata=" + data);
+            }
+
+            @Override
             public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                nodatalayout.setVisibility(View.VISIBLE);
+                Log.i(TAG, "bdata=" + error);
             }
         });
     }
+
+
+
 
 
     /**
@@ -549,7 +567,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspojxxm> items = null;
-
+                Log.i(TAG, "JXXM data=" + results);
                 try {
                     items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
                     if (items == null || items.isEmpty()) {
@@ -573,6 +591,51 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+
+    /**
+     * 根据 Udinspoasset udinspoassetnum获取Udinspojxxm的信息
+     * 孙表
+     */
+    private void getUdinspojxxmData1(final String udinspoassetnum) {
+        HttpManager.getData(this, HttpManager.getUdinspojxxmUrl1(udinspoassetnum), new HttpRequestHandler<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+                Log.i(TAG,"jxxm data="+data);
+                ArrayList<Udinspojxxm> items = null;
+
+                try {
+                    items = Ig_Json_Model.parseUdinspojxxmString(data);
+                    if (items == null || items.isEmpty()) {
+                    } else {
+                        new UdinspojxxmDao(UdinspoNew_Activity.this).create(items);
+                        for (Udinspojxxm udinspojxxm : items) {
+                            if (!udinspojxxm.reportnum.equals("")) {
+                                getUdreportData(udinspojxxm.reportnum);
+                            }
+                        }
+                    }
+
+                } catch (IOException e) {
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onSuccess(String data, int totalPages, int currentPage) {
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
             }
         });
     }

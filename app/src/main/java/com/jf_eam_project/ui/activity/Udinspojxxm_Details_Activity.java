@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -201,6 +202,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_udinspojxxm_details);
         initData();
         findViewById();
@@ -322,16 +324,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         }
 
 
-//        executionText.setFocusable(false);
-//        executionText.setFocusableInTouchMode(false);
-//        udinspojxxm1Text.setFocusable(false);
-//        udinspojxxm1Text.setFocusableInTouchMode(false);
-//        udinspojxxm2Text.setFocusable(false);
-//        udinspojxxm2Text.setFocusableInTouchMode(false);
-//        udinspojxxm3Text.setFocusable(false);
-//        udinspojxxm3Text.setFocusableInTouchMode(false);
-//        udinspojxxm4Text.setFocusable(false);
-//        udinspojxxm4Text.setFocusableInTouchMode(false);
         mRadioGroup1.setOnCheckedChangeListener(radiogpchange);
         submitBtn.setOnClickListener(submitBtnOnClickListener);
 
@@ -589,84 +581,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
     }
-//    /**
-//     * 数据封装*
-//     */
-//    private void encapsulationData() {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspojxxm_Details_Activity.this);
-//        builder.setMessage("确定更新检修项目标准吗？").setTitle("提示")
-//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.dismiss();
-//                mProgressDialog = ProgressDialog.show(Udinspojxxm_Details_Activity.this, null,
-//                        getString(R.string.inputing), true, true);
-//                mProgressDialog.setCanceledOnTouchOutside(false);
-//                mProgressDialog.setCancelable(false);
-//
-//                if (NetWorkHelper.isNetwork(Udinspojxxm_Details_Activity.this)) {
-//                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "暂无网络,现离线保存数据!");
-//                    mProgressDialog.dismiss();
-//                    saveUdinspo();
-//                    setResult(Constants.REFRESH);
-//                    finish();
-//                } else {
-//
-//
-//                    new AsyncTask<String, String, String>() {
-//                        @Override
-//                        protected String doInBackground(String... strings) {
-//                            String data = null;
-//                            try {
-//                                data = submitBtn();
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                            String result = getBaseApplication().getWsService().UpdatePO(Udinspojxxm_Details_Activity.this, data, "");
-//
-//                            return result;
-//                        }
-//
-//                        @Override
-//                        protected void onPostExecute(String s) {
-//
-//                            super.onPostExecute(s);
-//                            mProgressDialog.dismiss();
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(s);
-//                                String success = jsonObject.getString("status");
-//                                String errorNo = jsonObject.getString("errorNo");
-//                                if (success.equals("数据更新成功") && errorNo.equals("0")) {
-//                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新成功");
-//
-//                                } else {
-//                                    MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
-//                                }
-//                                setResult(Constants.REFRESH);
-//                                finish();
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                                MessageUtils.showMiddleToast(Udinspojxxm_Details_Activity.this, "数据更新失败");
-//                                setResult(Constants.REFRESH);
-//                                finish();
-//                            }
-//
-//
-//                        }
-//                    }.execute();
-//                }
-//            }
-//        }).create().show();
-//
-//
-//    }
 
 
     /**
@@ -844,11 +758,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udinspojxxm.setUdinspojxxm7(udinspojxxm.udinspojxxm7);
         udinspojxxm.setLocal(1); //已操作
         udinspojxxm.setCompletion(1);
-//        if (udinspojxxmvalue.equals("正常")) {
-//            udinspojxxm.setCompletion(1);
-//        } else if (udinspojxxmvalue.equals("异常")) {
-//            udinspojxxm.setCompletion(0);
-//        }
 
         udinspojxxm.setUdinspojxxm1(udinspojxxmvalue.equals("") ? "正常" : udinspojxxmvalue);
         new UdinspojxxmDao(Udinspojxxm_Details_Activity.this).update(udinspojxxm);
@@ -906,7 +815,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "requestCode=" + requestCode + ",resultCode=" + resultCode);
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (drr.size() < 9 && resultCode == -1) {

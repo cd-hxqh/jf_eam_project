@@ -40,7 +40,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppManager.getInstance().addActivity(this);
-        AccountUtils.setIpAddress(BaseActivity.this, Constants.HTTP_API_IP);
+
         tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 

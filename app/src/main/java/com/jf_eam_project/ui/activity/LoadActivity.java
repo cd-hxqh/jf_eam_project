@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.config.Constants;
+import com.jf_eam_project.utils.AccountUtils;
 
 /**
  * 登录界面*
@@ -22,6 +24,8 @@ public class LoadActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
+
+        AccountUtils.setIpAddress(LoadActivity.this, Constants.HTTP_API_IP);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Handler x = new Handler();
         x.postDelayed(new splashhandler(), 2000);

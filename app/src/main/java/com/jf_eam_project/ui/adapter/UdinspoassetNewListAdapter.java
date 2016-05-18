@@ -208,8 +208,7 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
         }
 
 
-        String com = (endCount / sizeCount) * 100 + "";
-
+        String com = (int) Math.rint((endCount / sizeCount) * 100) + "";
 
         return com;
     }

@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="cdhxqh.shekou.ui.activity.Wfassig_DetailsActivity">
+    android:orientation="vertical">
+
 
     <include layout="@layout/title_main" />
 
     <ScrollView
+        android:id="@+id/scrollview_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_relativelayout_id">
@@ -231,7 +232,7 @@
             <LinearLayout
                 android:id="@+id/execution_linearlayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -251,8 +252,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
-
                     android:hint="@string/have_not_data"
+                    android:inputType="textMultiLine"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -289,7 +290,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
-                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -325,7 +325,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
-                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -361,7 +360,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
-                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -376,7 +374,7 @@
             <GridView
                 android:id="@+id/noScrollgridview"
                 android:layout_width="290dp"
-                android:layout_height="350dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="@dimen/dimens_10"
                 android:horizontalSpacing="3dp"
@@ -408,10 +406,10 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/boottom_id"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-
         android:orientation="horizontal">
 
         <Button

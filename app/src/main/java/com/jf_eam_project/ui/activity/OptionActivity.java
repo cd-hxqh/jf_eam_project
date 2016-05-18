@@ -197,6 +197,11 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                 List<Assets> assets;
 //                if (searchText.equals("")) {
                 assets = new AssetDao(OptionActivity.this).queryByCount(page, searchText);
+
+//                assets = new AssetDao(OptionActivity.this).queryForAll();
+
+                Log.i(TAG,"assets="+assets.size());
+
 //                } else {
 //                    assets = new AssetDao(OptionActivity.this).queryByNum(searchText);
 //                }

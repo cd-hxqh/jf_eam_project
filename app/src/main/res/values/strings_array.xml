@@ -49,7 +49,7 @@
     </string-array>
     <string-array name="address_text">
         <item>http://1.202.243.112:7001/</item>
-        <item>http://10.1.3.45/7003/</item>
+        <item>http://10.1.3.45:7003/</item>
     </string-array>
 
 

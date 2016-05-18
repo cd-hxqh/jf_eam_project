@@ -169,204 +169,267 @@
         <!-- 采购计划 -->
         <activity
             android:name=".ui.activity.Pr_Activity"
-            android:label="@string/pr_title_text" />
+            android:label="@string/pr_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PR_Details_Activity"
-            android:label="@string/pr_detail_title" />
+            android:label="@string/pr_detail_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Prline_Activity"
-            android:label="@string/prline_title" />
+            android:label="@string/prline_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PRLine_Details_Activity"
-            android:label="@string/prline_detail_title" />
+            android:label="@string/prline_detail_title"
+            android:screenOrientation="portrait" />
 
         <!-- 采购订单 -->
 
         <activity
             android:name=".ui.activity.Po_order_Activity"
-            android:label="@string/title_activity_po_order_" />
+            android:label="@string/title_activity_po_order_"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PO_Details_Activity"
-            android:label="@string/title_activity_po_details_" />
+            android:label="@string/title_activity_po_details_"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Poline_Activity"
-            android:label="@string/title_activity_poline" />
+            android:label="@string/title_activity_poline"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PoLine_Details_Activity"
-            android:label="@string/title_activity_po_line_details" />
+            android:label="@string/title_activity_po_line_details"
+            android:screenOrientation="portrait" />
 
         <!-- 发票 -->
         <activity
             android:name=".ui.activity.Invoice_Activity"
-            android:label="@string/invoice_title_text" />
+            android:label="@string/invoice_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Invoice_Details_Activity"
-            android:label="@string/invoice_details_title" />
+            android:label="@string/invoice_details_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.InvoiceLine_Activity"
-            android:label="@string/invoiceline_text" />
+            android:label="@string/invoiceline_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.InvoiceLine_Details_Activity"
-            android:label="@string/invoiceline_details_text" />
+            android:label="@string/invoiceline_details_text"
+            android:screenOrientation="portrait" />
 
         <!-- 下载 -->
         <activity
             android:name=".ui.activity.DownloadActivity"
-            android:label="@string/data_download" />
+            android:label="@string/data_download"
+            android:screenOrientation="portrait" />
         <!-- 入库 -->
         <activity
             android:name=".ui.activity.Inventory_Activity"
-            android:label="@string/inventory_title" />
+            android:label="@string/inventory_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Inventory_Details_Activity"
-            android:label="@string/inventory_detail_title" />
+            android:label="@string/inventory_detail_title"
+            android:screenOrientation="portrait" />
 
         <!-- 巡检管理 -->
         <activity
             android:name=".ui.activity.Udinspo_Details_activity"
-            android:label="@string/udinspo_detail_title" />
+            android:label="@string/udinspo_detail_title"
+            android:screenOrientation="portrait"
+             />
         <!-- 巡检管理 -->
         <activity
             android:name=".ui.activity.UdinspoLocation_Activity"
-            android:label="@string/udinspo_title" />
+            android:label="@string/udinspo_title"
+            android:screenOrientation="portrait" />
         <!-- 设备备件 -->
         <activity
             android:name=".ui.activity.Udinspoasset_Activity"
-            android:label="@string/udinspoasset_title" />
+            android:label="@string/udinspoasset_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspoassetnew_Activity"
-            android:label="@string/udinspoasset_title" />
+            android:label="@string/udinspoasset_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UdinspojxxmNew_Activity"
-            android:label="@string/udinspojxxm_title" />
+            android:label="@string/udinspojxxm_title"
+            android:screenOrientation="portrait" />
 
         <!--故障提报单-->
         <activity
             android:name=".ui.activity.Udreport_Activity"
-            android:label="@string/udreport_title" />
+            android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udreport_Details_Activity"
-            android:label="@string/udreport_title" />
+            android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
 
 
         <!-- 通用选项页面 -->
         <activity
             android:name=".ui.activity.OptionActivity"
-            android:label="@string/activity_option_title" />
+            android:label="@string/activity_option_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspoasset_Details_Activity"
-            android:label="@string/udinspoasset_detail_title" />
+            android:label="@string/udinspoasset_detail_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspo_Activity"
-            android:label="@string/udinspo_title" />
+            android:label="@string/udinspo_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UdinspoNew_Activity"
-            android:label="@string/udinspo_title" />
+            android:label="@string/udinspo_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddUdinspoActivity"
-            android:label="@string/title_activity_add_udinspo" />
+            android:label="@string/title_activity_add_udinspo"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspojxxm_Activity"
-            android:label="@string/udinspojxxm_title" />
+            android:label="@string/udinspojxxm_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspojxxm_Details_Activity"
-            android:label="@string/udinspojxxm_detail_title" />
+            android:label="@string/udinspojxxm_detail_title"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.activity.Add_Udinspoasset_Activity"
-            android:label="@string/udinspoasset_title" />
+            android:label="@string/udinspoasset_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddUdinspoAssetActivity"
-            android:label="@string/add_udinspoasset_title" />
+            android:label="@string/add_udinspoasset_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Add_Udinspojxxm_Activity"
-            android:label="@string/udinspojxxm_title" />
+            android:label="@string/udinspojxxm_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddUdinspojxxmActivity"
-            android:label="@string/add_udinspojxxm_title" />
+            android:label="@string/add_udinspojxxm_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Createreport_Activity"
-            android:label="@string/createreport_text" />
+            android:label="@string/createreport_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PhotoActivity"
-            android:label="@string/photo_detail" />
+            android:label="@string/photo_detail"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ShowImageActivity"
-            android:label="相册选择" />
+            android:label="相册选择"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ViewPagerActivity"
-            android:label="相册预览" />
+            android:label="相册预览"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspo_History_Activity"
-            android:label="巡检单历史" />
+            android:label="巡检单历史"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspojxxm_History_Activity"
-            android:label="巡检单历史" />
+            android:label="巡检单历史"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Work_History_ListActivity"
-            android:label="工单历史" />
+            android:label="工单历史"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.About_us_Activity"
-            android:label="关于我们" />
+            android:label="关于我们"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MipcaActivityCapture"
-            android:label="@string/scanning_text" />
+            android:label="@string/scanning_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Results_Activity"
-            android:label="结果" />
+            android:label="结果"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AssetsDetailActivity"
-            android:label="@string/assets_title_text" />
+            android:label="@string/assets_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Location_Activity"
-            android:label="物资发放" />
+            android:label="物资发放"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Material_ListActivity"
-            android:label="@string/material_title_text" />
+            android:label="@string/material_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Material_Details_Activity"
-            android:label="@string/material_detail_text" />
+            android:label="@string/material_detail_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Uditemreq_listactivity"
-            android:label="@string/uditemreq_title_text" />
+            android:label="@string/uditemreq_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UditemreqLine_Detail_activity"
-            android:label="@string/uditemreqline_details_title" />
+            android:label="@string/uditemreqline_details_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Uditemreq_Details_Activity"
-            android:label="@string/uditemreq_detail_text" />
+            android:label="@string/uditemreq_detail_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UditemreqLine_listactivity"
-            android:label="@string/uditemreq_title_text" />
+            android:label="@string/uditemreq_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Wpmaterial_ListActivity"
-            android:label="物料" />
+            android:label="物料"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Wpmaterial_DetailsActivity"
-            android:label="物料详情" />
+            android:label="物料详情"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Materials_up_ListActivity"
-            android:label="@string/materials_up_title" />
+            android:label="@string/materials_up_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Material_Up_Details_Activity"
-            android:label="@string/material_up_detail_text" />
+            android:label="@string/material_up_detail_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Materials_Into_ListActivity"
-            android:label="@string/materials_into_text" />
+            android:label="@string/materials_into_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Material_Into_Details_Activity"
-            android:label="@string/material_into_details_text" />
+            android:label="@string/material_into_details_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udbr_ListActivity"
-            android:label="@string/udbr_title_text" />
+            android:label="@string/udbr_title_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udbr_Details_Activity"
-            android:label="@string/udbr_details_text" />
+            android:label="@string/udbr_details_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UdbrLine_ListActivity"
-            android:label="@string/udbrline_details_text" />
+            android:label="@string/udbrline_details_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UdbrLine_Details_Activity"
-            android:label="@string/udbrline_text" />
+            android:label="@string/udbrline_text"
+            android:screenOrientation="portrait" />
 
         <!-- Update Activitys Start -->
         <activity

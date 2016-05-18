@@ -192,6 +192,37 @@ public class JsonUtils {
     }
 
     /**
+     * 分页解析返回的结果*
+     */
+    public static Results parsingResults2(Context ctx, String data) {
+        String result = null;
+        Results results = null;
+        try {
+
+            JSONObject rJson = new JSONObject(data);
+            String curpage = rJson.getString("curpage");
+            String totalresult = rJson.getString("totalresult");
+            String resultlist = rJson.getString("resultlist");
+            String totalpage = rJson.getString("totalpage");
+            String showcount = rJson.getString("showcount");
+            results = new Results();
+            results.setCurpage(Integer.valueOf(curpage));
+            results.setTotalresult(totalresult);
+            results.setResultlist(resultlist);
+            results.setTotalpage(totalpage);
+            results.setShowcount(Integer.valueOf(showcount));
+
+
+            return results;
+
+
+        } catch (JSONException e) {
+            return null;
+        }
+
+    }
+
+    /**
      * 不分页解析返回的结果*
      */
     public static String parsingResults1(Context ctx, String data) {
@@ -417,4 +448,6 @@ public class JsonUtils {
         }
         return jsonArray;
     }
+
+
 }
