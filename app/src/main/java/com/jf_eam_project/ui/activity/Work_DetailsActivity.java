@@ -73,6 +73,8 @@ import java.util.Calendar;
  * 工单详情页面
  */
 public class Work_DetailsActivity extends BaseActivity {
+
+    private static final String TAG="Work_DetailsActivity";
     private WorkOrder workOrder;
 
     /**
@@ -625,6 +627,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener wfserviceOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+            Log.i(TAG,"审批工作流");
             MaterialDialogOneBtn();
         }
     };
@@ -658,7 +662,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 ,
                 new OnBtnClickL() {//不通过
                     @Override
-                    public void onBtnClick() {
+                    public void onBtnClick() {//不通过
                         Toast.makeText(Work_DetailsActivity.this, "不通过", Toast.LENGTH_SHORT).show();
                         MaterialDialogOneBtn1(false);
                         dialog.dismiss();
@@ -732,7 +736,7 @@ public class Work_DetailsActivity extends BaseActivity {
      * @return
      */
     private void getwfstatus(final boolean isok, final String desc) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, workOrder.workorderid), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, workOrder.workorderid,"","WORKORDER"), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -741,11 +745,13 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-                if (result != null && result.equals("Y")) {
-                    wfstart(workOrder.wonum);
-                } else if (result != null && result.equals("N")) {
+
+
+//                if (result != null && result.equals("Y")) {
+//                    wfstart(workOrder.wonum);
+//                } else if (result != null && result.equals("N")) {
                     wfgoon(workOrder.wonum, isok ? "1" : "0", desc);
-                }
+//                }
             }
 
             @Override
@@ -794,6 +800,8 @@ public class Work_DetailsActivity extends BaseActivity {
      * @param zx
      */
     private void wfgoon(final String wonum, final String zx, final String desc) {
+        Log.i(TAG,"wonum="+wonum+",zx="+zx+",desc="+desc);
+
         mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
                 getString(R.string.inputing), true, true);
         mProgressDialog.setCanceledOnTouchOutside(false);
@@ -802,11 +810,14 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             protected String doInBackground(String... strings) {
                 String result = getBaseApplication().getWfService().wfGoOn(Work_DetailsActivity.this,"UDFJHWO", "WORKORDER", wonum, "WONUM", zx, desc);
+                Log.i(TAG,"result="+result);
                 return result;
             }
 
             @Override
             protected void onPostExecute(String s) {
+                Log.i(TAG,"s="+s);
+
                 super.onPostExecute(s);
                 if (s == null || s.equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();

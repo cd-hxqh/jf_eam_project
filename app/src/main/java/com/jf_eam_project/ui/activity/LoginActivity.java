@@ -26,16 +26,22 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
+import com.jf_eam_project.Dao.PersonDao;
+import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
+import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.model.Person;
+import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -124,7 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void NormalEditTextDialog() {
         final NormalEditTextDialog dialog = new NormalEditTextDialog(LoginActivity.this);
         dialog.title("设置服务器地址");
-        String ip=AccountUtils.getIpAddress(LoginActivity.this);
+        String ip = AccountUtils.getIpAddress(LoginActivity.this);
 
         dialog.content(ip)
                 .showAnim(mBasIn)//
@@ -282,6 +288,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
 //                        }
                         getBaseApplication().setUsername(mUsername.getText().toString());
+
+                        /**根据yy**/
+                        String personId = AccountUtils.getPersonId(LoginActivity.this);
+
+                        Log.i(TAG, "personId=" + personId);
+                        getPersion(personId);
+
                         startIntent();
 
                     }
@@ -322,6 +335,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             AppManager.AppExit(LoginActivity.this);
         }
+    }
+
+
+    /**
+     * 根据persionid查询persion信息*
+     */
+
+    private void getPersion(final String personId) {
+        HttpManager.getData(this, HttpManager.getPersion(personId), new HttpRequestHandler<String>() {
+            @Override
+            public void onSuccess(String data) {
+                Log.i(TAG, "sdata=" + data);
+
+                ArrayList<Person> items = null;
+
+                try {
+                    items = Ig_Json_Model.parsingPerson(data);
+                    if (items == null || items.isEmpty()) {
+
+                    } else {
+                        new PersonDao(LoginActivity.this).create(items);
+                    }
+                } catch (IOException e) {
+
+                }
+            }
+
+            @Override
+            public void onSuccess(String data, int totalPages, int currentPage) {
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.i(TAG, "bdata=" + error);
+            }
+        });
     }
 
 

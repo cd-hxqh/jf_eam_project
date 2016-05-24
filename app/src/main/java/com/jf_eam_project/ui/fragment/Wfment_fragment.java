@@ -1,8 +1,10 @@
 package com.jf_eam_project.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,21 +22,34 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
+import com.flyco.dialog.widget.MaterialDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Wfassignment;
+import com.jf_eam_project.ui.activity.BaseActivity;
 import com.jf_eam_project.ui.activity.Invoice_Activity;
 import com.jf_eam_project.ui.activity.Po_order_Activity;
 import com.jf_eam_project.ui.activity.Pr_Activity;
+import com.jf_eam_project.ui.activity.QxUdreport_Details_Activity;
+import com.jf_eam_project.ui.activity.Wfm_Details_Activity;
 import com.jf_eam_project.ui.adapter.PoListAdapter;
 import com.jf_eam_project.ui.adapter.WfmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.AccountUtils;
+import com.jf_eam_project.webserviceclient.AndroidClientService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,10 +58,10 @@ import java.util.ArrayList;
 /**
  * 流程审批的fragment
  */
-public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener{
+public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
 
-    private static final String TAG="Wfment_fragment";
+    private static final String TAG = "Wfment_fragment";
 
 
     LinearLayoutManager layoutManager;
@@ -77,6 +92,12 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
      */
     private String searchText = "";
     private int page = 1;
+
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -131,21 +152,24 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
         refresh_layout.setOnLoadListener(this);
 
         getData(searchText);
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
     }
 
     @Override
     public void onLoad() {
-        page = 1;
+        page++;
 
         getData(searchText);
     }
 
     @Override
     public void onRefresh() {
-//        page++;
+
+        page = 1;
         getData(searchText);
     }
-
 
 
     private void setSearchEdit() {
@@ -183,7 +207,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWfmUrl(AccountUtils.getUserName(getActivity()),search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getWfmUrl(AccountUtils.getUserName(getActivity()), search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -199,7 +223,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
-                        if(wfmListAdapter.getItemCount()!=0){
+                        if (wfmListAdapter.getItemCount() != 0) {
                             wfmListAdapter.removeAllData();
                         }
                         nodatalayout.setVisibility(View.VISIBLE);
@@ -211,6 +235,16 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                         if (totalPages == page) {
                             wfmListAdapter.adddate(items);
                         }
+
+                        wfmListAdapter.onClickListener = new WfmListAdapter.OnClickListener() {
+                            @Override
+                            public void cOnClickListener(int postion, Wfassignment wfassignment) {
+                                Log.i(TAG, "postion=" + postion + ",wfassignment=" + wfassignment.ownertable);
+                                MaterialDialogOneBtn(wfassignment);
+                            }
+                        };
+
+
                     }
 
                 } catch (IOException e) {
@@ -228,13 +262,104 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
 
+    private void MaterialDialogOneBtn(final Wfassignment wfassignment) {//审批工作流
+        final MaterialDialog dialog = new MaterialDialog(getActivity());
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否填写输入意见")//
+                .btnText("是", "否，直接提交")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        EditDialog(wfassignment, true);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        wfgoon(wfassignment, wfassignment.getOwnerid(), "1", "");
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void EditDialog(final Wfassignment wfassignment, final boolean isok) {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(getActivity());
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content(isok ? "通过" : "不通过")//
+                .btnText("提交", "取消")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon(wfassignment, wfassignment.getOwnerid(), "1", text);
+
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
 
 
+    /**
+     * 审批工作流
+     *
+     * @param id
+     * @param zx
+     */
+    private void wfgoon(final Wfassignment wfassignment, final String id, final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(getActivity(), null,
+                getString(R.string.inputing), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                String result = null;
+                if (wfassignment.app.equals("UDUPRAPP") && wfassignment.ownertable.equals("UDREPORT") && wfassignment.processname.equals("UDQXTB1")) { //跳转至缺陷提报单界面
+                    Log.i(TAG, "缺陷单");
+                    result = AndroidClientService.wfGoOn1(getActivity(), "UDQXTB", "UDREPORT", wfassignment.ownerid, "UDREPORTID", zx, desc);
+                } else {
+                    result = AndroidClientService.wfGoOn1(getActivity(), wfassignment.getProcessname(), wfassignment.getOwnertable(), id, wfassignment.getOwnertable() + "ID", zx, desc);
+                }
+                return result;
+            }
 
-
-
-
-
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s == null || s.equals("")) {
+                    Toast.makeText(getActivity(), "审批失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "审批成功", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
 
 
 }

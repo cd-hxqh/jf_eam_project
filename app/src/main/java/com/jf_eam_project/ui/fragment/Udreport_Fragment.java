@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.ui.activity.UdinspoNew_Activity;
 import com.jf_eam_project.ui.activity.Udreport_Activity;
 
 

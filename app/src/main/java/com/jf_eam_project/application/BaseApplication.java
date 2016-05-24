@@ -43,7 +43,7 @@ public class BaseApplication extends Application {
         return mContext;
     }
 
-    public AndroidClientService getWsService() {
+    public  AndroidClientService getWsService() {
         return new AndroidClientService(Constants.getWsUrl(this));
     }
 

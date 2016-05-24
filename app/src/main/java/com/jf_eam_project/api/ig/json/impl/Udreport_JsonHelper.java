@@ -72,10 +72,18 @@ public final class Udreport_JsonHelper
         if ("REPORTNUM".equals(fieldName)) {
             instance.reportnum = jp.getValueAsString();
             return true;
-        } else if ("DESCRIPTION".equals(fieldName)) {
+        }
+
+        else if ("DESCRIPTION".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
-        } else if ("ASSETTYPE".equals(fieldName)) {
+        }
+        else if ("UDREPORTID".equals(fieldName)) {
+            instance.udreportid = jp.getValueAsString();
+            return true;
+        }
+
+        else if ("ASSETTYPE".equals(fieldName)) {
             instance.assettype = jp.getValueAsString();
         } else if ("QXTYPE".equals(fieldName)) {
             instance.qxtype = jp.getValueAsString();

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
 import com.jf_eam_project.model.Person;
+import com.jf_eam_project.model.Udinspojxxm;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,6 +29,19 @@ public class PersonDao {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * 新增
+     */
+    public void insert(Person person) {
+        try {
+            PersonDaoOpe.createOrUpdate(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 更新位置信息
@@ -65,12 +79,13 @@ public class PersonDao {
     }
 
     /**
-     *分页查询
+     * 分页查询
+     *
      * @param count
      * @param personid
      * @return
      */
-    public List<Person> queryByCount(int count,String personid){
+    public List<Person> queryByCount(int count, String personid) {
         try {
             return PersonDaoOpe.queryBuilder().offset((count - 1) * 20).limit(20).where().like("personid", "%" + personid + "%").query();
         } catch (SQLException e) {
@@ -120,5 +135,19 @@ public class PersonDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    /**
+     * 根据PersionId*
+     */
+    public Person getPersionId(String persionId) {
+        try {
+            List<Person> personList = PersonDaoOpe.queryBuilder().where().eq("personid", persionId).query();
+            return personList.get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -45,7 +45,10 @@ public class JsonUtils {
             JSONObject jsonObject = new JSONObject((result));
 
             String displayName = jsonObject.getString("displayName");
+            String personId = jsonObject.getString("personId");
+            Log.i(TAG, "personId=" + personId);
             AccountUtils.setDisplayName(cxt, displayName);
+            AccountUtils.setPersonId(cxt, personId);
 
             if (jsonString.equals(Constants.LOGINSUCCESS) || jsonString.equals(Constants.CHANGEIMEI)) {
                 errmsg = json.getString("errmsg");

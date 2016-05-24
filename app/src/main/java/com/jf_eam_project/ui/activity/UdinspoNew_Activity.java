@@ -426,8 +426,14 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
 
                         udinspoListNewadapter.setOnCheckedChangeListener(new UdinspoListNewadapter.OnCheckedChangeListener() {
                             @Override
-                            public void cOnCheckedChangeListener(int postion) {
-                                chooseList.add(list.get(postion));
+                            public void cOnCheckedChangeListener(boolean b, int postion) {
+                                if (b) {
+                                    chooseList.add(list.get(postion));
+                                } else {
+                                    if (chooseList != null && chooseList.size() != 0) {
+                                        chooseList.remove(postion);
+                                    }
+                                }
                             }
                         });
                     }
@@ -539,7 +545,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
 
             @Override
             public void onSuccess(String data, int totalPages, int currentPage) {
-                Log.i(TAG, "adata=" + data);
             }
 
             @Override
@@ -548,9 +553,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             }
         });
     }
-
-
-
 
 
     /**
@@ -567,7 +569,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<Udinspojxxm> items = null;
-                Log.i(TAG, "JXXM data=" + results);
                 try {
                     items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
                     if (items == null || items.isEmpty()) {
@@ -596,7 +597,6 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
     }
 
 
-
     /**
      * 根据 Udinspoasset udinspoassetnum获取Udinspojxxm的信息
      * 孙表
@@ -606,7 +606,7 @@ public class UdinspoNew_Activity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onSuccess(String data) {
 
-                Log.i(TAG,"jxxm data="+data);
+                Log.i(TAG, "jxxm data=" + data);
                 ArrayList<Udinspojxxm> items = null;
 
                 try {

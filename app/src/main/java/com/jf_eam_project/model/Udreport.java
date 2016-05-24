@@ -21,6 +21,10 @@ public class Udreport extends Entity {
     @JsonIgnore
     public int id;
 
+    @JsonField(fieldName = "udreportid")
+    @DatabaseField(columnName = "udreportid")
+    public String udreportid;// udreportid
+
     @JsonField(fieldName = "reportnum")
     @DatabaseField(columnName = "reportnum")
     public String reportnum;// 编号
@@ -144,6 +148,10 @@ public class Udreport extends Entity {
     @JsonField(fieldName = "apptype")
     public String apptype;//类型
 
+    @DatabaseField(columnName = "loc")
+    @JsonField(fieldName = "loc")
+    public int loc;//上传／未上传(0:上传，1:未上传)
+
 
     public int getId() {
         return id;
@@ -151,6 +159,14 @@ public class Udreport extends Entity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUdreportid() {
+        return udreportid;
+    }
+
+    public void setUdreportid(String udreportid) {
+        this.udreportid = udreportid;
     }
 
     public String getReportnum() {
@@ -383,5 +399,13 @@ public class Udreport extends Entity {
 
     public void setApptype(String apptype) {
         this.apptype = apptype;
+    }
+
+    public int getLoc() {
+        return loc;
+    }
+
+    public void setLoc(int loc) {
+        this.loc = loc;
     }
 }

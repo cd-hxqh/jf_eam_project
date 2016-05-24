@@ -70,6 +70,32 @@ public class AccountUtils {
         return sharedPreferences.getString(cxt.getString(R.string.logined_member_displayName), "");
     }
 
+    /**
+     * 记录登录人id
+     *
+     * @param cxt
+     * @param displayName *
+     */
+
+    public static void setPersonId(Context cxt, String displayName) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putString(cxt.getString(R.string.logined_member_personId), displayName).commit();
+
+    }
+
+    ;
+
+
+    /**
+     * 获取登录人id
+     */
+    public static String getPersonId(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getString(cxt.getString(R.string.logined_member_personId), "");
+    }
+
 
     /**
      * 记录用户名与密码

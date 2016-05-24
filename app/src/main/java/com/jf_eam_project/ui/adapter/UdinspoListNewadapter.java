@@ -77,9 +77,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    onCheckedChangeListener.cOnCheckedChangeListener(position);
-                }
+                onCheckedChangeListener.cOnCheckedChangeListener(b, position);
             }
         });
         if (isExists(udinspo.insponum, udinspo.inspotype)) {
@@ -203,7 +201,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
 
 
     public interface OnCheckedChangeListener {
-        public void cOnCheckedChangeListener(int postion);
+        public void cOnCheckedChangeListener(boolean b, int postion);
     }
 
 

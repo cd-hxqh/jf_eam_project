@@ -240,8 +240,7 @@
         <activity
             android:name=".ui.activity.Udinspo_Details_activity"
             android:label="@string/udinspo_detail_title"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <!-- 巡检管理 -->
         <activity
             android:name=".ui.activity.UdinspoLocation_Activity"
@@ -267,8 +266,18 @@
             android:label="@string/udreport_title"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.Udreport_Add_Activity"
+            android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
+
+
+        <activity
             android:name=".ui.activity.Udreport_Details_Activity"
             android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.QxUdreport_Details_Activity"
+            android:label="缺陷提报单"
             android:screenOrientation="portrait" />
 
 
@@ -300,8 +309,7 @@
         <activity
             android:name=".ui.activity.Udinspojxxm_Details_Activity"
             android:label="@string/udinspojxxm_detail_title"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Add_Udinspoasset_Activity"
             android:label="@string/udinspoasset_title"

@@ -25,6 +25,9 @@ public class Person extends Entity {
     @JsonField(fieldName = "department")
     @DatabaseField(columnName = "department")
     public String department;//部门
+    @JsonField(fieldName = "departmentms")
+    @DatabaseField(columnName = "departmentms")
+    public String departmentms;//部门名称
     @JsonField(fieldName = "location")
     @DatabaseField(columnName = "location")
     public String location;//人员的位置
@@ -37,4 +40,77 @@ public class Person extends Entity {
     @JsonField(fieldName = "title")
     @DatabaseField(columnName = "title")
     public String title;//头衔
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(String personid) {
+        this.personid = personid;
+    }
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getDepartmentms() {
+        return departmentms;
+    }
+
+    public void setDepartmentms(String departmentms) {
+        this.departmentms = departmentms;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocationorg() {
+        return locationorg;
+    }
+
+    public void setLocationorg(String locationorg) {
+        this.locationorg = locationorg;
+    }
+
+    public String getLocationsite() {
+        return locationsite;
+    }
+
+    public void setLocationsite(String locationsite) {
+        this.locationsite = locationsite;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

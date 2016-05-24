@@ -138,6 +138,7 @@ public class Createreport_Activity extends BaseActivity {
     private int mark;
     private Createreport report;
 
+    /**图片**/
     private GridView noScrollgridview;
     private GridAdapter adapter; //相片选择
 
@@ -189,6 +190,7 @@ public class Createreport_Activity extends BaseActivity {
             branch = getIntent().getExtras().getString("branch");
             udbelong = getIntent().getExtras().getString("udbelong");
             assettype = getIntent().getExtras().getString("assettype");
+            Log.i(TAG, "udinspojxxmid=" + udinspojxxmid + ",branch=" + branch + ",udbelong=" + udbelong + ",assettype=" + assettype);
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
             udinspojxxmid = report.udinspojxxmid;
@@ -336,7 +338,7 @@ public class Createreport_Activity extends BaseActivity {
     };
 
     /**
-     * 位置*
+     * 故障类*
      */
 
     private View.OnClickListener failurecodeTextOnClickListener = new View.OnClickListener() {
@@ -349,7 +351,7 @@ public class Createreport_Activity extends BaseActivity {
     };
 
     /**
-     * 故障类
+     * 位置
      */
 
     private View.OnClickListener locationTextOnClickListener = new View.OnClickListener() {
@@ -532,7 +534,7 @@ public class Createreport_Activity extends BaseActivity {
 
             createreport.setDescription(description);
             createreport.setDescriptionxx(descriptionxx);
-            createreport.setReportby(reportby);
+            createreport.setReportby(AccountUtils.getUserName(Createreport_Activity.this));
             createreport.setReporttime(reporttime);
             createreport.setBranck(branch);
             createreport.setCubelong(udbelong);
@@ -555,7 +557,7 @@ public class Createreport_Activity extends BaseActivity {
 
             report.setDescription(description);
             report.setDescriptionxx(descriptionxx);
-            report.setReportby(reportby);
+            report.setReportby(AccountUtils.getUserName(Createreport_Activity.this));
             report.setReporttime(reporttime);
             return report;
         }
@@ -663,6 +665,8 @@ public class Createreport_Activity extends BaseActivity {
                             String data = null;
                             Createreport createreport = saveReport();
                             data = JsonUtils.saveReport(createreport);
+
+                            Log.i(TAG,"data="+data);
                             String result = getBaseApplication().getWsService().addReport(Createreport_Activity.this, data, "");
                             return result;
                         }

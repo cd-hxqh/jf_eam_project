@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,10 +31,46 @@ import java.util.List;
  * 故障，缺陷单
  */
 public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapter.ViewHolder> {
+
+    private static final String TAG = "UdreportListAdapter";
     Context mContext;
     List<Udreport> udreports = new ArrayList<>();
 
+    /**
+     * checkbox
+     * 隐藏/显示
+     */
+    private int mark = 0;
+
+    /**
+     * 全选*
+     */
+    private boolean allChoose;
+
+    /**
+     * 入口*
+     */
+    private int cMark; //判断是在线还是离线状态; 0:在线，1:离线
+
+
+    /**
+     * 长按事件*
+     */
+    public OnLongClickListener onLongClickListener;
+
+    /**
+     * 选中事件*
+     */
+    public OnCheckedChangeListener onCheckedChangeListener;
+
+    /**
+     * 点击事件*
+     */
+    public OnClickListener onClickListener;
+
+
     public UdreportListAdapter(Context context) {
+
         this.mContext = context;
     }
 
@@ -52,15 +92,50 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Udreport_Details_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("mark", 0);
-                bundle.putSerializable("udreport", udreport);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, Udreport_Details_Activity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("mark", 0);
+//                bundle.putSerializable("udreport", udreport);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
+                Log.i(TAG, "22222");
+                onClickListener.cOnClickListener(position, udreport);
             }
         });
+
+        if (cMark == 1) { //离线
+            holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    onLongClickListener.cOnLongClickListener();
+
+                    return true;
+                }
+            });
+
+            if (mark == 0) {
+                holder.checkBox.setVisibility(View.GONE);
+                holder.item_more.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.item_more.setVisibility(View.GONE);
+            }
+
+            holder.checkBox.setChecked(allChoose);
+
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    onCheckedChangeListener.cOnCheckedChangeListener(b, position);
+                }
+            });
+
+        }
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -91,6 +166,16 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
          */
         public TextView itemDesc;
 
+
+        /**
+         * 选择*
+         */
+        private CheckBox checkBox;
+        /**
+         * 更多*
+         */
+        private ImageView item_more;
+
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view.findViewById(R.id.card_container);
@@ -101,6 +186,10 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
+
+
+            checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
+            item_more = (ImageView) view.findViewById(R.id.avatar);
         }
     }
 
@@ -141,4 +230,76 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
             udreports.removeAll(udreports);
         }
     }
+
+
+    /**
+     * 设置是否显示在线离线*
+     */
+    public void setIsShow(int cmark) {
+        this.cMark = cmark;
+    }
+
+
+    /**
+     * 传递值*
+     */
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    /**
+     * 设置全选*
+     */
+    public void setAllChoose(boolean allChoose) {
+        this.allChoose = allChoose;
+    }
+
+    /**
+     * 长按*
+     */
+    public interface OnLongClickListener {
+        public void cOnLongClickListener();
+    }
+
+    /**
+     * 选中*
+     */
+    public interface OnCheckedChangeListener {
+        public void cOnCheckedChangeListener(boolean b, int postion);
+    }
+
+    /**
+     * 点击*
+     */
+    public interface OnClickListener {
+        public void cOnClickListener(int postion, Udreport udreport);
+    }
+
+
+    public OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public OnLongClickListener getOnLongClickListener() {
+        return onLongClickListener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
+    }
+
+
+    public OnCheckedChangeListener getOnCheckedChangeListener() {
+        return onCheckedChangeListener;
+    }
+
+    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+        this.onCheckedChangeListener = onCheckedChangeListener;
+    }
+
+
 }

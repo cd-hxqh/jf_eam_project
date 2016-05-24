@@ -25,6 +25,7 @@ import java.io.IOException;
 public class AndroidClientService {
     private static final String TAG = "AndroidClientService";
     public String NAMESPACE = "http://www.ibm.com/maximo";
+    public static String NAMESPACE1 = "http://www.ibm.com/maximo";
     /**
      * 旧*
      */
@@ -134,7 +135,7 @@ public class AndroidClientService {
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
         soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
         soapReq.addProperty("mbo", mbo);//工单WORKORDER,采购申请pr
-        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送workorderid的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
@@ -164,6 +165,8 @@ public class AndroidClientService {
     public String wfGoOn(Context context, String processname, String mbo, String keyValue, String key, String zx, String desc) {
 
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
+
+        Log.i(TAG,"url="+url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -191,6 +194,50 @@ public class AndroidClientService {
             obj = soapEnvelope.getResponse().toString();
             result = JsonUtils.parsingwfserviceGoOnResult(obj);
         } catch (SoapFault soapFault) {
+            Log.i(TAG,"ssssss");
+            return null;
+        }
+        return result;
+    }
+
+    /**
+     * 审批工作流
+     *
+     * @return
+     */
+    public static String wfGoOn1(Context context, String processname, String mbo, String keyValue, String key, String zx, String desc) {
+
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
+
+        Log.i(TAG,"url="+url);
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE1, "wfservicewfGoOn");
+        soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
+        soapReq.addProperty("mboName", mbo);//工单WORKORDER,采购申请pr
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
+        soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapReq.addProperty("zx", zx);//审批的结果，1为审批通过，0为审批不通过
+        if (!desc.equals("")) {
+            soapReq.addProperty("desc", desc);//审批意见
+        }
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, 1200000);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            return null;
+        } catch (XmlPullParserException e) {
+            return null;
+        }
+        String obj = null;
+        String result = null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            result = JsonUtils.parsingwfserviceGoOnResult(obj);
+        } catch (SoapFault soapFault) {
+            Log.i(TAG,"ssssss");
             return null;
         }
         return result;

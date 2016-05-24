@@ -74,13 +74,15 @@ public final class Person_JsonHelper
             return true;
         } else if ("DEPARTMENT".equals(fieldName)) {
             instance.department = jp.getValueAsString();
+        } else if ("DEPARTMENTMS".equals(fieldName)) {
+            instance.departmentms = jp.getValueAsString();
         } else if ("LOCATION".equals(fieldName)) {
             instance.location = jp.getValueAsString();
-        }else if ("LOCATIONORG".equals(fieldName)) {
+        } else if ("LOCATIONORG".equals(fieldName)) {
             instance.locationorg = jp.getValueAsString();
-        }else if ("LOCATIONSITE".equals(fieldName)) {
+        } else if ("LOCATIONSITE".equals(fieldName)) {
             instance.locationsite = jp.getValueAsString();
-        }else if ("TITLE".equals(fieldName)) {
+        } else if ("TITLE".equals(fieldName)) {
             instance.title = jp.getValueAsString();
         }
         return false;

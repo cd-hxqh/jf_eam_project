@@ -61,20 +61,22 @@ public class UdreportDao {
                 }
             });
         } catch (Exception e) {
+            Log.i(TAG, "ssss=");
             e.printStackTrace();
         }
     }
 
-    /**更新提报单**/
+    /**
+     * 更新提报单*
+     */
     public void update(Udreport udreport) {
         try {
             udreportDao.update(udreport);
         } catch (SQLException e) {
-            Log.i(TAG,"this is SQLException");
+            Log.i(TAG, "this is SQLException");
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -187,5 +189,40 @@ public class UdreportDao {
     }
 
 
+    /**
+     * 根据类型查询故障，缺陷单
+     * FAULT 故障
+     * HIDDEN 巡检
+     * *
+     */
+    public List<Udreport> queryByapptype(String apptype) {
+        List<Udreport> list = null;
+        try {
+            list = udreportDao.queryBuilder().where().eq("apptype", apptype).query();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+
+    /**
+     * 根据类型，状态查询故障缺陷单
+     * apptype; FAULT 故障  HIDDEN 巡检
+     * loc; 0:已上传，1:未上传
+     * *
+     */
+    public List<Udreport> queryByApptypeandLoc(String apptype,int loc) {
+        List<Udreport> list = null;
+        try {
+            list = udreportDao.queryBuilder().where().eq("apptype", apptype).and().eq("loc",loc).query();
+            Log.i(TAG,"1111");
+            return list;
+        } catch (SQLException e) {
+            Log.i(TAG,"1111");
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

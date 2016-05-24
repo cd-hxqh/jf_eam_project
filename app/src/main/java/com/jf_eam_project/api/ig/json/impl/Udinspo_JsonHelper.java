@@ -12,7 +12,9 @@ import com.jf_eam_project.model.Udinspo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**巡检单**/
+/**
+ * 巡检单*
+ */
 public final class Udinspo_JsonHelper
         implements JsonHelper<Udinspo> {
     private static final String TAG = "Udinspo_JsonHelper";
@@ -83,13 +85,10 @@ public final class Udinspo_JsonHelper
         } else if ("INSPOBY".equals(fieldName)) {
             instance.inspoby = jp.getValueAsString();
             return true;
-        }else if ("INSPOBYDISPLAYNAME".equals(fieldName)) {
+        } else if ("INSPOBYDISPLAYNAME".equals(fieldName)) {
             instance.inspobydisplayname = jp.getValueAsString();
             return true;
-        }
-
-
-        else if ("INSPODATE".equals(fieldName)) {
+        } else if ("INSPODATE".equals(fieldName)) {
             instance.inspodate = jp.getValueAsString();
             return true;
         } else if ("INSPONUM".equals(fieldName)) {
@@ -110,58 +109,43 @@ public final class Udinspo_JsonHelper
         } else if ("UDINSPMAINPLANDESC".equals(fieldName)) {
             instance.udinspmainplandesc = jp.getValueAsString();
             return true;
-        }
-        else if ("ENDDATE".equals(fieldName)) {
+        } else if ("ENDDATE".equals(fieldName)) {
             instance.enddate = jp.getValueAsString();
             return true;
-        }
-
-        else if ("ASSETTYPE".equals(fieldName)) {
+        } else if ("ASSETTYPE".equals(fieldName)) {
             instance.assettype = jp.getValueAsString();
             return true;
-        }
-        else if ("CHECKTYPE".equals(fieldName)) {
+        } else if ("CHECKTYPE".equals(fieldName)) {
             instance.checktype = jp.getValueAsString();
             return true;
-        }
-        else if ("INSPMAINPLANNUM".equals(fieldName)) {
+        } else if ("INSPMAINPLANNUM".equals(fieldName)) {
             instance.inspmainplannum = jp.getValueAsString();
             return true;
-        }
-        else if ("INSPSCHEMENUM".equals(fieldName)) {
+        } else if ("INSPSCHEMENUM".equals(fieldName)) {
             instance.inspschemenum = jp.getValueAsString();
             return true;
-        }
-        else if ("INSPSCHEMENUMDESC".equals(fieldName)) {
+        } else if ("INSPSCHEMENUMDESC".equals(fieldName)) {
             instance.inspschemenumdesc = jp.getValueAsString();
             return true;
-        }
-        else if ("STARTDATE".equals(fieldName)) {
+        } else if ("STARTDATE".equals(fieldName)) {
             instance.startdate = jp.getValueAsString();
             return true;
-        }
-        else if ("STATUS".equals(fieldName)) {
+        } else if ("STATUS".equals(fieldName)) {
             instance.status = jp.getValueAsString();
             return true;
-        }
-        else if ("STATUSDESC".equals(fieldName)) {
+        } else if ("STATUSDESC".equals(fieldName)) {
             instance.statusdesc = jp.getValueAsString();
             return true;
-        }
-        else if ("TEMPERATURE".equals(fieldName)) {
+        } else if ("TEMPERATURE".equals(fieldName)) {
             instance.temperature = jp.getValueAsString();
             return true;
-        }
-
-        else if ("UDBELONG".equals(fieldName)) {
+        } else if ("UDBELONG".equals(fieldName)) {
             instance.udbelong = jp.getValueAsString();
             return true;
-        }
-        else if ("UDBELONGDESC".equals(fieldName)) {
+        } else if ("UDBELONGDESC".equals(fieldName)) {
             instance.udbelongdesc = jp.getValueAsString();
             return true;
-        }
-        else if ("WEATHER".equals(fieldName)) {
+        } else if ("WEATHER".equals(fieldName)) {
             instance.weather = jp.getValueAsString();
             return true;
         }

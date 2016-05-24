@@ -39,7 +39,7 @@ public class HttpManager {
      */
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
-
+        Log.i(TAG,"username="+username+",password="+password);
 
         String loginIp = AccountUtils.getIpAddress(cxt) + "maximo/mobile/system/login";
         Log.i(TAG, "loginIp=" + loginIp);
@@ -174,11 +174,11 @@ public class HttpManager {
     public static String getUdreport(String apptype, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
 
-            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'REPORTNUM DESC','condition':{'APPTYPE':'" + apptype + "'}}";
 
         } else {
 
-            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + apptype + "','REPORTNUM':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'REPORTNUM DESC','condition':{'APPTYPE':'" + apptype + "','REPORTNUM':'" + vlaue + "'}}";
         }
     }
 
@@ -188,6 +188,17 @@ public class HttpManager {
     public static String getUdreport(String reportnum) {
 
         return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + 1 + ",'showcount':" + 10 + ",'option':'read','condition':{'REPORTNUM':'=" + reportnum + "'}}";
+
+
+    }
+
+
+    /**
+     * 根据udreportid获取提报单信息
+     */
+    public static String getUdreportId(String udreportid) {
+
+        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + 1 + ",'showcount':" + 10 + ",'option':'read','condition':{'UDREPORTID':'=" + udreportid + "'}}";
 
 
     }
@@ -283,9 +294,9 @@ public class HttpManager {
     /**
      * 设置获取工作流状态接口*
      */
-    public static String getWfStatusUrl(int curpage, int showcount, String ownerid) {
+    public static String getWfStatusUrl(int curpage, int showcount, String ownerid,String processname,String ownertable) {
         return "{'appid':'" + Constants.WFINSTANCE_NAME + "','objectname':'" +
-                Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'UDWO','OWNERTABLE':'WORKORDER','OWNERID':'" + ownerid + "'}}";
+                Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'"+processname+"','OWNERTABLE':'"+ownertable+"','OWNERID':'" + ownerid + "'}}";
     }
 
     /**
@@ -522,6 +533,19 @@ public class HttpManager {
         return "{'appid':'" + Constants.ASSET_APPID + "','objectname':'" + Constants.ASSET_NAME + "'," +
                 "'curpage':1" + ",'showcount':10" + ",'option':'read','condition':{'ASSETNUM':'" + assetnum + "'}}";
     }
+
+
+    /**
+     * 根据Perisonid获取Persion信息
+     */
+    public static String getPersion(String perisonid) {
+        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','option':'read','condition':{'PERSONID':'" + perisonid + "'}}";
+    }
+
+
+
+
+
 
     /**
      * 设置基础数据接口
