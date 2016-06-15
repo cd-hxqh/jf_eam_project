@@ -295,10 +295,6 @@
             android:label="@string/udinspo_title"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.UdinspoNew_Activity"
-            android:label="@string/udinspo_title"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.AddUdinspoActivity"
             android:label="@string/title_activity_add_udinspo"
             android:screenOrientation="portrait" />

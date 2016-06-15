@@ -73,7 +73,6 @@ public class UdinspojxxmNewListAdapter extends RecyclerView.Adapter<UdinspojxxmN
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Udinspojxxm udinspojxxm = udinspojxxmList.get(position);
 
-        Log.i(TAG,"udinspojxxmlinenum="+udinspojxxm.udinspojxxmlinenum);
         holder.itemNumTitle.setText(mContext.getString(R.string.udinspoasset_udinspoassetlinenum_title));
         holder.itemDescTitle.setText(mContext.getString(R.string.ud_description_title));
         holder.checkBox.setVisibility(View.GONE);

@@ -73,7 +73,6 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         holder.item_more.setVisibility(View.GONE);
 
         holder.checkBox.setChecked(allChoose);
-
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

@@ -25,7 +25,7 @@ public class LoadActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        AccountUtils.setIpAddress(LoadActivity.this, Constants.HTTP_API_IP);
+
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Handler x = new Handler();
         x.postDelayed(new splashhandler(), 2000);

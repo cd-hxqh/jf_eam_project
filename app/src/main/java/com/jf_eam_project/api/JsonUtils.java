@@ -41,18 +41,22 @@ public class JsonUtils {
         try {
             JSONObject json = new JSONObject(data);
             String jsonString = json.getString("errcode");
-            String result = json.getString("result");
-            JSONObject jsonObject = new JSONObject((result));
+            errmsg = json.getString("errmsg");
 
-            String displayName = jsonObject.getString("displayName");
-            String personId = jsonObject.getString("personId");
-            Log.i(TAG, "personId=" + personId);
-            AccountUtils.setDisplayName(cxt, displayName);
-            AccountUtils.setPersonId(cxt, personId);
 
             if (jsonString.equals(Constants.LOGINSUCCESS) || jsonString.equals(Constants.CHANGEIMEI)) {
-                errmsg = json.getString("errmsg");
+
+                String result = json.getString("result");
+                JSONObject jsonObject = new JSONObject((result));
+
+                String displayName = jsonObject.getString("displayName");
+                String personId = jsonObject.getString("personId");
+                AccountUtils.setDisplayName(cxt, displayName);
+                AccountUtils.setPersonId(cxt, personId);
+            }else if(jsonString.equals(Constants.USERNAMEERROR)){
+                errmsg="用户名或密码错误";
             }
+
 
             return errmsg;
 

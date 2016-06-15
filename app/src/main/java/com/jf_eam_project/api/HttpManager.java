@@ -59,7 +59,6 @@ public class HttpManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 if (statusCode == 200) {
-                    Log.i(TAG, "responseString=" + responseString);
                     String errmsg = JsonUtils.parsingAuthStr(cxt, responseString);
                     SafeHandler.onSuccess(handler, errmsg);
                 }
@@ -73,9 +72,9 @@ public class HttpManager {
      */
     public static String getWfmUrl(String persionid, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'＝活动'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'＝活动'}}";
         }
     }
 

@@ -9,60 +9,45 @@ import com.jf_eam_project.utils.AccountUtils;
  */
 public class Constants {
 
-    /**测试版**/
-    public static final String HTTP_API_IP= "http://1.202.243.112:7001/";
-
-    /**正式版**/
-//    public static final String HTTP_API_IP= "http://10.1.3.45:7003/";
-
     /**
-     * 基础接口*
+     * 测试版*
      */
-//    public static final String HTTP_API_URL = "http://1.202.243.112/maximo/mobile/";
+    public static final String HTTP_API_IP = "http://1.202.243.112:7001/";
+
 
     /**
      * 旧*
      */
-    public static final String HTTP_API_URL = "http://1.202.243.112:7001/maximo/mobile/";
+    public static final String HTTP_API_URL = HTTP_API_IP + "maximo/mobile/";
 
-    /**新**/
-//    public static final String HTTP_API_URL = "http://10.1.3.45:7003/maximo/mobile/";
 
     /**
      * 登陆URL*
      */
 
-    public static final String SIGN_IN_URL = HTTP_API_URL + "system/login";
+    public static final String SIGN_IN_URL = HTTP_API_IP + "system/login";
 
 
     /**
-     *工单URL*
+     * 工单URL*
      */
+
+    public static String webserviceURL = HTTP_API_IP + "meaweb/services/MOBILESERVICE";//webservice接口地址
     /**
-     * 旧*
+     * 巡检Url*
      */
-    public static String webserviceURL = "http://1.202.243.112:7001/meaweb/services/MOBILESERVICE";//webservice接口地址
-    /**新**/
-//    public static String webserviceURL = "http://10.1.3.45:7003/meaweb/services/MOBILESERVICE";//webservice接口地址
-    /**巡检Url**/
+
+    public static String webserviceUdinsPoURL = HTTP_API_IP + "meaweb/services/COSERVICE";//巡检单接口地址
     /**
-     * 旧*
+     * 工作流审批地址*
      */
-    public static String webserviceUdinsPoURL = "http://1.202.243.112:7001/meaweb/services/COSERVICE";//巡检单接口地址
-    /**新**/
-//    public static String webserviceUdinsPoURL = "http://10.1.3.45:7003/meaweb/services/COSERVICE";//巡检单接口地址
-    /**工作流审批地址**/
-    /**
-     * 旧*
-     */
-    public static String webserviceWfserviceURL = "http://1.202.243.112:7001/meaweb/services/WFSERVICE";//审批工作流地址
-    /**新**/
-//    public static String webserviceWfserviceURL = "http://10.1.3.45:7003/meaweb/services/WFSERVICE";//审批工作流地址
+
+    public static String webserviceWfserviceURL = HTTP_API_IP + "meaweb/services/WFSERVICE";//审批工作流地址
 
     /**
      * 故障权限提报单*
      */
-    public static String webserviceCreatereportURL = "http://1.202.243.112:7001/meaweb/services/UDRPSERVICE";//故障缺陷提报单
+    public static String webserviceCreatereportURL = HTTP_API_IP + "meaweb/services/UDRPSERVICE";//故障缺陷提报单
 
     /**
      * 通用接口查询*
@@ -121,7 +106,9 @@ public class Constants {
     //检修项目标准
     public static final String UDINSPOJXXM_NAME = "UDINSPOJXXM";
 
-    /**故障,缺陷**/
+    /**
+     * 故障,缺陷*
+     */
     //故障缺陷的appid
     public static final String UDREPORT_APPID = "UDUPRAPP";
 

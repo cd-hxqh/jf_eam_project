@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 
 /**
- * 设备及部件
+ * 项目标准
  */
 @JsonType
 @DatabaseTable(tableName = "Udinspojxxm")

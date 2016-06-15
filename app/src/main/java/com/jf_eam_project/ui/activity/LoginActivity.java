@@ -83,7 +83,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.login_activity);
 
         setUmeng();
-
+        if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
+            AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
+        }
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
                 .getDeviceId();
 
@@ -131,7 +133,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         final NormalEditTextDialog dialog = new NormalEditTextDialog(LoginActivity.this);
         dialog.title("设置服务器地址");
         String ip = AccountUtils.getIpAddress(LoginActivity.this);
-
+        ip = ip.replaceAll("http://", "");
+        ip = ip.replaceAll("/", "");
         dialog.content(ip)
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -147,8 +150,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-
-                        AccountUtils.setIpAddress(LoginActivity.this, text);
+                        String ips = "http://" + text + "/";
+                        Log.i(TAG, "text=" + text);
+                        AccountUtils.setIpAddress(LoginActivity.this, ips);
                         dialog.dismiss();
                     }
                 }
@@ -205,7 +209,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private View.OnClickListener setIpTextViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            NormalListDialog();
+
             NormalEditTextDialog();
         }
     };
@@ -282,20 +286,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onSuccess(String data) {
 
                         MessageUtils.showMiddleToast(LoginActivity.this, data);
+
                         mProgressDialog.dismiss();
+
+                        if (data.equals("用户名或密码错误")) {
+                            return;
+                        } else {
+
+
 //                        if (isRemember) {
-                        AccountUtils.setChecked(LoginActivity.this, isRemember);
-                        AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
+                            AccountUtils.setChecked(LoginActivity.this, isRemember);
+                            AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
 //                        }
-                        getBaseApplication().setUsername(mUsername.getText().toString());
+                            getBaseApplication().setUsername(mUsername.getText().toString());
 
-                        /**根据yy**/
-                        String personId = AccountUtils.getPersonId(LoginActivity.this);
+                            /**根据yy**/
+                            String personId = AccountUtils.getPersonId(LoginActivity.this);
 
-                        Log.i(TAG, "personId=" + personId);
-                        getPersion(personId);
+                            getPersion(personId);
 
-                        startIntent();
+                            startIntent();
+                        }
 
                     }
 
@@ -310,7 +321,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onFailure(String error) {
                         MessageUtils.showErrorMessage(LoginActivity.this, error);
                         mProgressDialog.dismiss();
-//                        startIntent();
                     }
                 });
     }
@@ -346,7 +356,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HttpManager.getData(this, HttpManager.getPersion(personId), new HttpRequestHandler<String>() {
             @Override
             public void onSuccess(String data) {
-                Log.i(TAG, "sdata=" + data);
 
                 ArrayList<Person> items = null;
 

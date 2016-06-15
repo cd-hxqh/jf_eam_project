@@ -628,7 +628,6 @@ public class Work_DetailsActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
 
-            Log.i(TAG,"审批工作流");
             MaterialDialogOneBtn();
         }
     };
@@ -663,7 +662,6 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {//不通过
                     @Override
                     public void onBtnClick() {//不通过
-                        Toast.makeText(Work_DetailsActivity.this, "不通过", Toast.LENGTH_SHORT).show();
                         MaterialDialogOneBtn1(false);
                         dialog.dismiss();
                     }

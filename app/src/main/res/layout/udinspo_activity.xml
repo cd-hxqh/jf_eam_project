@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/activity_work"></include>
+    <include
+        layout="@layout/activity_work"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></include>
 
     <LinearLayout
         android:id="@+id/choose_linearlayout_id"
@@ -11,8 +14,8 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/ab_solid_example"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
 
         <TextView

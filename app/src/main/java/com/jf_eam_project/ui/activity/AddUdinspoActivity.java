@@ -127,9 +127,9 @@ public class AddUdinspoActivity extends BaseActivity {
         findViewById();
         initView();
 
-
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+
         addInspotypeData();
     }
 
