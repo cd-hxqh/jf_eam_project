@@ -96,18 +96,14 @@ public class HttpManager {
         if (vlaue.equals("")) {
             if (inspotype.equals("05")) {
                 return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
-//                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "','STATUS':'" + "APPR" + "'}}";
             } else {
                 return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPOTYPE':'" + inspotype + "'}}";
-//                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPOTYPE':'" + inspotype + "','STATUS':'" + "APPR" + "'}}";
             }
         } else {
             if (inspotype.equals("05")) {
                 return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
-//                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "','STATUS':'" + "APPR" + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "','STATUS':'" + "'}}";
-//                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "','STATUS':'" + "APPR" + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "','STATUS':'" + "APPR" + "'}}";
             }
         }
     }

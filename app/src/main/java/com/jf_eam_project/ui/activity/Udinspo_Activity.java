@@ -358,6 +358,8 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
                     udinspoListNewadapter.removeAllData();
+                    list = new ArrayList<Udinspo>();
+                    notDownlist=new ArrayList<Udinspo>();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -385,6 +387,7 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                 try {
 
                     list = Ig_Json_Model.parseUdinspoString(results.getResultlist());
+                    Log.i(TAG, "list=" + list.size());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (list == null || list.isEmpty()) {
@@ -392,8 +395,10 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                     } else {
                         nodatalayout.setVisibility(View.GONE);
                         if (page == 1) {
+                            Log.i(TAG, "page is");
                             udinspoListNewadapter = new UdinspoListNewadapter(Udinspo_Activity.this);
                             recyclerView.setAdapter(udinspoListNewadapter);
+                            udinspoListNewadapter.notifyDataSetChanged();
                         }
 
                         if (totalPages == page) {
