@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Udinspo_Activity";
+    private static final String TAG = "UdinspoLocation_Activity";
 
 
     /**
