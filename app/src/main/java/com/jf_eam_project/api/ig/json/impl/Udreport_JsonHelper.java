@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udreport;
 
 import java.io.IOException;
@@ -110,7 +109,14 @@ public final class Udreport_JsonHelper
         } else if ("STATUSTYPE".equals(fieldName)) {
             instance.statustype = jp.getValueAsString();
             return true;
-        } else if ("CREATEBY_DISPLAYNAME".equals(fieldName)) {
+        }else if ("STATUS".equals(fieldName)) {
+            instance.status = jp.getValueAsString();
+            return true;
+        }
+
+
+
+        else if ("CREATEBY_DISPLAYNAME".equals(fieldName)) {
             instance.createby_displayname = jp.getValueAsString();
             return true;
         } else if ("CREATEDATE".equals(fieldName)) {

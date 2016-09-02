@@ -75,30 +75,36 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         final WorkOrder workOrder = workOrderList.get(position);
         if (cMark == 2) { //领料单
             holder.itemNumTitle.setText(mContext.getString(R.string.requisition_text));
-        } else if(cMark == 3){
+        } else if (cMark == 3) {
             holder.itemNumTitle.setText(mContext.getString(R.string.materrial_up_num_text));
-        }else{
+        } else {
             holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
+            holder.udbelong_descriptionTitle.setVisibility(View.VISIBLE);
+            holder.ud_descriptionText.setVisibility(View.VISIBLE);
+            holder.ud_descriptionText.setText(workOrder.udbelong_description);
+            holder.stautsText.setVisibility(View.VISIBLE);
+            holder.stautsText.setText(workOrder.status);
         }
         holder.itemDescTitle.setText(mContext.getString(R.string.po_description_text));
+
         holder.itemNum.setText(workOrder.getWonum());
         holder.itemDesc.setText(workOrder.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cMark == 2){
+                if (cMark == 2) {
                     Intent intent = new Intent(mContext, Material_Details_Activity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("workOrder", workOrder);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
-                }else if(cMark == 3){
+                } else if (cMark == 3) {
                     Intent intent = new Intent(mContext, Material_Up_Details_Activity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("workOrder", workOrder);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
-                }else {
+                } else {
                     if (workOrder.isnew) {
                         Intent intent = new Intent(mContext, Work_AddNewActivity.class);
                         Bundle bundle = new Bundle();
@@ -169,6 +175,11 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
          * 描述名称*
          */
         public TextView itemDescTitle;
+
+        /**
+         * 风电场名称
+         **/
+        public TextView udbelong_descriptionTitle;
         /**
          * 编号*
          */
@@ -177,6 +188,15 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
          * 描述*
          */
         public TextView itemDesc;
+        /**
+         * 风电场
+         **/
+        public TextView ud_descriptionText;
+
+        /**
+         * 状态
+         **/
+        public TextView stautsText;
         /**
          * 选择*
          */
@@ -192,11 +212,14 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
 
             itemNumTitle = (TextView) view.findViewById(R.id.item_num_title);
             itemDescTitle = (TextView) view.findViewById(R.id.item_desc_title);
+            udbelong_descriptionTitle = (TextView) view.findViewById(R.id.udbelong_description_title);
 
 
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
+            ud_descriptionText = (TextView) view.findViewById(R.id.udbelong_description_text);
             checkBox = (CheckBox) view.findViewById(R.id.checkbox_id);
+            stautsText = (TextView) view.findViewById(R.id.status_text);
             item_more = (ImageView) view.findViewById(R.id.avatar);
         }
     }

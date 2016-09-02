@@ -261,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:button="@drawable/umeng_update_button_check_selector"
+                android:button="@drawable/checkbox"
                 android:gravity="center_vertical" />
         </LinearLayout>
 
@@ -291,7 +291,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:button="@drawable/umeng_update_button_check_selector"
+                android:button="@drawable/checkbox"
                 android:gravity="center_vertical" />
         </LinearLayout>
 
@@ -704,7 +704,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:button="@drawable/umeng_update_button_check_selector"
+                android:button="@drawable/checkbox"
                 android:gravity="center_vertical" />
         </LinearLayout>
 
@@ -734,7 +734,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:button="@drawable/umeng_update_button_check_selector"
+                android:button="@drawable/checkbox"
                 android:gravity="center_vertical" />
         </LinearLayout>
 

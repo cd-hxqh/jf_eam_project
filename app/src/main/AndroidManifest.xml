@@ -435,25 +435,31 @@
             android:label="@string/udbrline_text"
             android:screenOrientation="portrait" />
 
-        <!-- Update Activitys Start -->
+
+        <!-- 百度自动更新设置 -->
+        <meta-data
+            android:name="BDAPPID"
+            android:value="8580233" />
+        <meta-data
+            android:name="BDAPPKEY"
+            android:value="YPjsKWF7DryWFOsysk6XyluN3vXCiXnM" />
+
         <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
+            android:exported="false"
+            android:screenOrientation="sensor"
+            android:theme="@style/bdp_update_dialog_style_fullscreen" />
 
-        <!-- Update Activitys End -->
-
-
-        <!-- Caution! Do not change this app key. It is only for demo usage. -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="569c46bfe0f55ab159002f52" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Umeng" />
-
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" />
+        <receiver
+            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
 
 
     </application>

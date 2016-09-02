@@ -1,16 +1,12 @@
 package com.jf_eam_project.ui.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +21,12 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.JsonUtils;
-import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udreport;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.ui.adapter.UdreportListAdapter;
+import com.jf_eam_project.utils.MessageUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 提报单详情
@@ -242,6 +236,8 @@ public class Udreport_Details_Activity extends BaseActivity {
 //            MaterialDialogOneBtn();
             if (udreport.statustype.equals("未提报")) {
                 wfstart();
+            } else {
+                MessageUtils.showMiddleToast(Udreport_Details_Activity.this, "只允许启动未提报状态下的记录");
             }
         }
     };
@@ -318,13 +314,11 @@ public class Udreport_Details_Activity extends BaseActivity {
         HttpManager.getDataPagingInfo(this, HttpManager.getWfStatusUrl(1, 20, udreport.udreportid, processname, "UDREPORT"), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 String result = JsonUtils.parsingwfstatusResult(results.getResultlist());
-                Log.i(TAG, "result=" + result);
 
                 if (result != null && result.equals("Y")) { //yi
                     wfstart();
@@ -355,13 +349,14 @@ public class Udreport_Details_Activity extends BaseActivity {
             @Override
             protected String doInBackground(String... strings) {
                 String result = null;
-                if (udreport.equals("FAULT")) {
-                    result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDGZTB", "UDREPORT", udreport.udreportid, "REPORTNUM");
-                } else if (udreport.equals("HIDDEN")) {
-                    result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDQXTB", "UDREPORT", udreport.udreportid, "REPORTNUM");
+                Log.i(TAG, "udreport=" + udreport.apptype);
+                if (udreport.apptype.equals("FAULT")) {
+                    result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDGZTB", "UDREPORT", udreport.udreportid, "UDREPORTID");
+                } else if (udreport.apptype.equals("HIDDEN")) {
+                    result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDQXTB", "UDREPORT", udreport.udreportid, "UDREPORTID");
                 }
 
-                Log.i(TAG,"result="+result);
+                Log.i(TAG, "result=" + result);
                 return result;
             }
 
@@ -369,9 +364,19 @@ public class Udreport_Details_Activity extends BaseActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 if (s == null || s.equals("")) {
-                    Toast.makeText(Udreport_Details_Activity.this, "启动失败", Toast.LENGTH_SHORT).show();
+                    MessageUtils.showMiddleToast(Udreport_Details_Activity.this, "启动失败");
                 } else {
-                    Toast.makeText(Udreport_Details_Activity.this, s, Toast.LENGTH_SHORT).show();
+
+                    try {
+                        JSONObject json = new JSONObject(s);
+                        String udreportid = json.getString("UDREPORTID");
+                        String msg = json.getString("msg");
+                        MessageUtils.showMiddleToast(Udreport_Details_Activity.this, msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        MessageUtils.showMiddleToast(Udreport_Details_Activity.this, "启动失败");
+                    }
+
                 }
                 mProgressDialog.dismiss();
             }

@@ -3,41 +3,27 @@ package com.jf_eam_project.ui.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.jf_eam_project.Dao.AssetDao;
+import com.baidu.autoupdatesdk.AppUpdateInfo;
+import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.jf_eam_project.Dao.AssignmentDao;
-import com.jf_eam_project.Dao.CraftrateDao;
-import com.jf_eam_project.Dao.FailurecodeDao;
-import com.jf_eam_project.Dao.FailurelistDao;
-import com.jf_eam_project.Dao.ItemDao;
-import com.jf_eam_project.Dao.JobplanDao;
-import com.jf_eam_project.Dao.LaborDao;
-import com.jf_eam_project.Dao.LaborcraftrateDao;
 import com.jf_eam_project.Dao.LabtransDao;
-import com.jf_eam_project.Dao.LocationDao;
-import com.jf_eam_project.Dao.PersonDao;
-import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.WoactivityDao;
 import com.jf_eam_project.Dao.WorkOrderDao;
 import com.jf_eam_project.Dao.WplaborDao;
 import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.ui.activity.About_us_Activity;
 import com.jf_eam_project.ui.activity.DownloadActivity;
-import com.jf_eam_project.ui.activity.Invoice_Activity;
-import com.jf_eam_project.ui.activity.Po_order_Activity;
-import com.jf_eam_project.ui.activity.Pr_Activity;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
+import com.jf_eam_project.utils.MessageUtils;
 
 
 /**
@@ -51,6 +37,7 @@ public class Setting_Fragment extends BaseFragment {
     private RelativeLayout update;
     private ProgressDialog mProgressDialog;
     Intent intent;
+
     public Setting_Fragment() {
     }
 
@@ -110,14 +97,14 @@ public class Setting_Fragment extends BaseFragment {
                             "正在检测更新，请耐心等候...", true, true);
                     mProgressDialog.setCanceledOnTouchOutside(false);
                     mProgressDialog.setCancelable(false);
-                    setForceUpdate();
+                    updateVersion();
                     break;
             }
         }
     };
 
     //清除基础数据
-    private void clearData(){
+    private void clearData() {
         mProgressDialog = ProgressDialog.show(getActivity(), null,
                 getString(R.string.clearing), true, true);
         mProgressDialog.setCanceledOnTouchOutside(false);
@@ -132,36 +119,39 @@ public class Setting_Fragment extends BaseFragment {
     }
 
     /**
-     * 手动强制更新
+     * 手动更新*
      */
-    private void setForceUpdate() {
-        UmengUpdateAgent.setUpdateAutoPopup(false);
-        UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+    private void updateVersion() {
+        BDAutoUpdateSDK.cpUpdateCheck(getActivity(), new MyCPCheckUpdateCallback());
 
-            @Override
-            public void onUpdateReturned(int updateStatus,
-                                         UpdateResponse updateInfo) {
-                mProgressDialog.dismiss();
-                switch (updateStatus) {
-                    case UpdateStatus.Yes: // has update
-                        UmengUpdateAgent
-                                .showUpdateDialog(getActivity(), updateInfo);
-                        break;
-                    case UpdateStatus.No: // has no update
-                        Toast.makeText(getActivity(), "未发现新版本，当前安装的已是最新版本",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case UpdateStatus.NoneWifi: // none wifi
-                        Toast.makeText(getActivity(), "没有wifi连接， 只在wifi下更新",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case UpdateStatus.Timeout: // time out
-                        Toast.makeText(getActivity(), "更新超时,请检查网络",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
-        UmengUpdateAgent.forceUpdate(getActivity());
     }
+
+
+    private class MyCPCheckUpdateCallback implements CPCheckUpdateCallback {
+
+        @Override
+        public void onCheckUpdateCallback(AppUpdateInfo info, AppUpdateInfoForInstall infoForInstall) {
+            if (infoForInstall != null && !TextUtils.isEmpty(infoForInstall.getInstallPath())) {
+                mProgressDialog.dismiss();
+                BDAutoUpdateSDK.uiUpdateAction(getActivity(), new MyUICheckUpdateCallback());
+            } else if (info != null) {
+                mProgressDialog.dismiss();
+                BDAutoUpdateSDK.uiUpdateAction(getActivity(), new MyUICheckUpdateCallback());
+
+            } else {
+                MessageUtils.showMiddleToast(getActivity(), "已是最新版本");
+            }
+
+            mProgressDialog.dismiss();
+        }
+
+    }
+
+    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+        @Override
+        public void onCheckComplete() {
+        }
+
+    }
+
 }

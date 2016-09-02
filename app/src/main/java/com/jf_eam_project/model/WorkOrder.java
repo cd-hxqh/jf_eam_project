@@ -127,6 +127,9 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "udbelong")
     @DatabaseField(columnName = "udbelong")
     public String udbelong;//风电场
+    @JsonField(fieldName = "udbelong_description")
+    @DatabaseField(columnName = "udbelong_description")
+    public String udbelong_description;//风电场中文
     @JsonField(fieldName = "description_longdescription")
     @DatabaseField(columnName = "description_longdescription")
     public String description_longdescription;//详细描述
@@ -334,6 +337,15 @@ public class WorkOrder extends Entity {
 
     public void setUdbelong(String udbelong) {
         this.udbelong = udbelong;
+    }
+
+
+    public String getUdbelong_description() {
+        return udbelong_description;
+    }
+
+    public void setUdbelong_description(String udbelong_description) {
+        this.udbelong_description = udbelong_description;
     }
 
     public String getReportedby() {

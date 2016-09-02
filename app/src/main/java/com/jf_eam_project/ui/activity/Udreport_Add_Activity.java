@@ -14,16 +14,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -34,21 +31,14 @@ import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalListDialog;
-import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.Dao.UdreportDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Assignment;
-import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Person;
 import com.jf_eam_project.model.Udreport;
-import com.jf_eam_project.model.Woactivity;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.model.Wplabor;
-import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
@@ -970,8 +960,9 @@ public class Udreport_Add_Activity extends BaseActivity {
 
         udreport.setCreatedate(GetNowTime.getTime()); //提报日期
         udreport.setBranch_description("01001"); //分公司
+        udreport.setStatus("DRAFT"); //状态
+
         String udbelong = findByPersionId().department;
-        Log.i(TAG, "udbelong=" + udbelong);
 
         udreport.setUdbelong(udbelong); //运行单位
         return udreport;
@@ -1033,7 +1024,7 @@ public class Udreport_Add_Activity extends BaseActivity {
 
         udreport.setBranch_description("01001"); //分公司
         String udbelong = findByPersionId().department;
-        Log.i(TAG, "udbelong=" + udbelong);
+        udreport.setStatus("DRAFT"); //状态
 
         udreport.setUdbelong(udbelong); //运行单位
         return udreport;

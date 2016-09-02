@@ -29,14 +29,12 @@ import android.widget.TextView;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
-import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdreportDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.UdreportListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
@@ -361,7 +359,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         udreportListAdapter.setOnClickListener(new UdreportListAdapter.OnClickListener() {
             @Override
             public void cOnClickListener(int postion, Udreport udreport) {
-                Log.i(TAG, "点击一下");
 
                 if (operationLinearLayout.isShown()) {
                     operationLinearLayout.setVisibility(View.GONE);
@@ -382,7 +379,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         udreportListAdapter.setOnCheckedChangeListener(new UdreportListAdapter.OnCheckedChangeListener() {
             @Override
             public void cOnCheckedChangeListener(boolean b, int postion) {
-                Log.i(TAG, "b=" + b + ",postion=" + postion);
                 if (b) {
                     chooseList.add(list.get(postion));
                 } else {
@@ -414,7 +410,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
 
     private void operationIsShow(boolean isShow, Udreport udreport) {
 
-        Log.i(TAG, "isShow=" + isShow);
         if (isShow) {
             isShowLinearLayout.setVisibility(View.GONE);
             operationLinearLayout.setVisibility(View.VISIBLE);
@@ -577,7 +572,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                Log.i(TAG, "results=" + results.getResultlist());
 
                 ArrayList<Udreport> items = null;
                 try {

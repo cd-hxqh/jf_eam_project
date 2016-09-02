@@ -2,7 +2,6 @@ package com.jf_eam_project.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -16,18 +15,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
-import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.PersonDao;
-import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
@@ -35,11 +33,9 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.model.Person;
-import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
-import com.umeng.update.UmengUpdateAgent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,8 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
-        setUmeng();
+        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
@@ -170,11 +165,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    private void setUmeng() {
-        UmengUpdateAgent.update(this);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
-        UmengUpdateAgent.setDeltaUpdate(true);
-    }
 
     @Override
     protected void findViewById() {
@@ -382,5 +372,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
     }
 
+    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+        @Override
+        public void onCheckComplete() {
+            Log.i(TAG, "onCheckComplete");
+        }
 
+    }
 }

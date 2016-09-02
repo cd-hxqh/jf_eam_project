@@ -6,7 +6,8 @@
     <include
         layout="@layout/activity_work"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></include>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"></include>
 
     <LinearLayout
         android:id="@+id/choose_linearlayout_id"

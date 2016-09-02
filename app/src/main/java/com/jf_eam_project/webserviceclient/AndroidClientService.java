@@ -5,8 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.jf_eam_project.api.JsonUtils;
-import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.utils.AccountUtils;
 
 import org.ksoap2.SoapEnvelope;
@@ -128,6 +126,7 @@ public class AndroidClientService {
      * @return
      */
     public String startwf(Context context, String processname, String mbo, String keyValue, String key) {
+        Log.i(TAG,"processname="+processname+",mbo="+mbo+",keyValue="+keyValue.replace(",","")+",key="+key);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -135,7 +134,7 @@ public class AndroidClientService {
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
         soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
         soapReq.addProperty("mbo", mbo);//工单WORKORDER,采购申请pr
-        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送workorderid的值，采购申请prnum的值
+        soapReq.addProperty("keyValue", keyValue.replace(",",""));//对应的表ID的值，如工单需要传送workorderid的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
@@ -150,11 +149,12 @@ public class AndroidClientService {
         String result = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-            result = JsonUtils.parsingwfserviceResult(obj);
+            Log.i(TAG,"obj="+obj);
+//            result = JsonUtils.parsingwfserviceResult(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }
-        return result;
+        return obj;
     }
 
     /**

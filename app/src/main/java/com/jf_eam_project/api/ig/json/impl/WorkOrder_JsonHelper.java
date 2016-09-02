@@ -173,7 +173,13 @@ public final class WorkOrder_JsonHelper
         } else if ("UDBELONG".equals(fieldName)) {
             instance.udbelong = jp.getValueAsString();
             return true;
-        } else if ("DESCRIPTION_LONGDESCRIPTION".equals(fieldName)) {
+        }else if ("UDBELONG_DESCRIPTION".equals(fieldName)) {
+            instance.udbelong_description = jp.getValueAsString();
+            return true;
+        }
+
+
+        else if ("DESCRIPTION_LONGDESCRIPTION".equals(fieldName)) {
             instance.description_longdescription = jp.getValueAsString();
             return true;
         } else if ("ISXQ".equals(fieldName)) {

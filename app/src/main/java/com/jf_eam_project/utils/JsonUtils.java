@@ -16,7 +16,9 @@ public class JsonUtils {
     private final static String TAG = "JsonUtils";
 
 
-    /**巡检单故障，缺陷提报单**/
+    /**
+     * 巡检单故障，缺陷提报单
+     **/
     public static String saveReport(Createreport createreport) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
@@ -47,9 +49,9 @@ public class JsonUtils {
     }
 
 
-
-
-    /**故障提报单**/
+    /**
+     * 故障提报单
+     **/
     public static String saveUdreport(Udreport udreport) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
@@ -80,6 +82,8 @@ public class JsonUtils {
 
             jsonObject.put("createdate", udreport.getCreatedate()); //提报时间
 
+            jsonObject.put("status", udreport.getStatus()); //状态
+
 
             JSONObject json = new JSONObject();
             json.put("", "");
@@ -91,7 +95,10 @@ public class JsonUtils {
         Log.i(TAG, jsonObject.toString());
         return jsonObject.toString();
     }
-    /**缺陷提报单**/
+
+    /**
+     * 缺陷提报单
+     **/
     public static String saveQxUdreport(Udreport udreport) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
@@ -124,6 +131,7 @@ public class JsonUtils {
             jsonObject.put("CREATEBY", udreport.getCreateby_displayname()); //提报人
 
             jsonObject.put("createdate", udreport.getCreatedate()); //提报时间
+            jsonObject.put("status", udreport.getStatus()); //状态
 
 
             JSONObject json = new JSONObject();

@@ -69,7 +69,11 @@ public class Udreport extends Entity {
 
     @DatabaseField(columnName = "statustype")
     @JsonField(fieldName = "statustype")
-    public String statustype;//状态
+    public String statustype;//状态类型
+
+    @DatabaseField(columnName = "status")
+    @JsonField(fieldName = "status")
+    public String status;//状态
 
     @DatabaseField(columnName = "createby_displayname")
     @JsonField(fieldName = "createby_displayname")
@@ -407,5 +411,13 @@ public class Udreport extends Entity {
 
     public void setLoc(int loc) {
         this.loc = loc;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

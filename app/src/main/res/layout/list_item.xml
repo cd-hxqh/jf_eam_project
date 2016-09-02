@@ -67,9 +67,47 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <TextView
+                android:id="@+id/udbelong_description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_desc_title"
+                android:layout_marginTop="5dp"
+                android:text="@string/uddept_description_text"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/udbelong_description_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_desc_title"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/udbelong_description_title"
+                android:ellipsize="end"
+                android:ems="14"
+                android:hint="@string/hint_item_desc_title"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/avatar"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="关闭"
+            android:visibility="gone"
+            android:textColor="@color/nomal_button_color"
+            />
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="20dp"

@@ -1,7 +1,6 @@
 package com.jf_eam_project.api;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.jf_eam_project.bean.Results;
@@ -9,7 +8,6 @@ import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -20,9 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
