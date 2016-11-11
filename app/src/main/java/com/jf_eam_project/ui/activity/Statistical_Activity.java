@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -74,6 +75,10 @@ public class Statistical_Activity extends BaseActivity {
 
     /**月份**/
     private String[] months=null;
+
+    protected String[] mMonths = new String[] {
+            "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"
+    };
 
 
     @Override
@@ -205,8 +210,17 @@ public class Statistical_Activity extends BaseActivity {
         xAxis.setTypeface(mTfLight);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
-//        xAxis.setValueFormatter(monthAxisValueFormatter);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return mMonths[(int) value % mMonths.length];
+            }
 
+            @Override
+            public int getDecimalDigits() {
+                return 0;
+            }
+        });
 
 
 
@@ -286,7 +300,7 @@ public class Statistical_Activity extends BaseActivity {
         }
 
 
-        LineDataSet d1 = new LineDataSet(yValues, item1.get(1).FGSDES);
+        LineDataSet d1 = new LineDataSet(yValues, item1.get(0).FGSDES);
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4.5f);
         d1.setHighLightColor(R.color.holo_blue_bright);
@@ -296,13 +310,13 @@ public class Statistical_Activity extends BaseActivity {
         // 西北风公司
         ArrayList<Entry> yValues1 = new ArrayList<Entry>();
         ArrayList<Fgsyudlview> item2 = getFgsyudlview("01002", fgsyudlviews);
-        for (int i = 0; i < item1.size()+1; i++) {
+        for (int i = 0; i < item1.size(); i++) {
             float value = (float) item2.get(i).SWDL;
             yValues1.add(new Entry(i, value));
         }
 
 
-        LineDataSet d2 = new LineDataSet(yValues1, item2.get(1).FGSDES);
+        LineDataSet d2 = new LineDataSet(yValues1, item2.get(0).FGSDES);
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
         d2.setHighLightColor(R.color.holo_green_light);
@@ -470,10 +484,10 @@ public class Statistical_Activity extends BaseActivity {
     private ArrayList<Fgsyudlview> getFgsyudlview(String branch, ArrayList<Fgsyudlview> fgsyudlviews) {
 
         ArrayList<Fgsyudlview> fgsyudlviews1 = new ArrayList<Fgsyudlview>();
-        Fgsyudlview f=new Fgsyudlview();
-        f.setBRANCH("branch");
-        f.setSWDL(0);
-        fgsyudlviews1.size();
+//        Fgsyudlview f=new Fgsyudlview();
+//        f.setBRANCH(branch);
+//        f.setSWDL(0);
+//        fgsyudlviews1.add(f);
         for (Fgsyudlview fgsyudlview : fgsyudlviews) {
             if (branch.equals(fgsyudlview.BRANCH)) {
                 fgsyudlviews1.add(fgsyudlview);
