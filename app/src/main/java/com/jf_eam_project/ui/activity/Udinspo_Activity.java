@@ -143,6 +143,11 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
      */
     private boolean isAllChoose;
 
+    /**
+     * 下载条数
+     **/
+    private int count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +231,7 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
             }
             if (chooseList != null && chooseList.size() != 0) {
                 NormalDialogStyleTwo(chooseList);
+
             } else {
                 MessageUtils.showMiddleToast(Udinspo_Activity.this, "请选择需要下载的任务");
             }
@@ -359,7 +365,7 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                     searchText = search.getText().toString();
                     udinspoListNewadapter.removeAllData();
                     list = new ArrayList<Udinspo>();
-                    notDownlist=new ArrayList<Udinspo>();
+                    notDownlist = new ArrayList<Udinspo>();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -486,9 +492,13 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                             getUdinspoassetData1(udinspo.insponum);
                         }
                         udinspoListNewadapter.notifyDataSetChanged();
-                        chooseList = new ArrayList<Udinspo>();
-                        MessageUtils.showMiddleToast(Udinspo_Activity.this, "数据下载成功");
-                        startActivity();
+                        count++;
+                        if (count == chooseList.size()) {
+                            chooseList = new ArrayList<Udinspo>();
+                            MessageUtils.showMiddleToast(Udinspo_Activity.this, "数据下载成功");
+                            startActivity();
+                        }
+                        Log.i(TAG, "count=" + count + ",size=" + chooseList.size());
                     }
 
                 } catch (IOException e) {

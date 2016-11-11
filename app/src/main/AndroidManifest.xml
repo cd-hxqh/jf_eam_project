@@ -50,6 +50,10 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.Statistical_Activity"
+            android:label="统计界面"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" />

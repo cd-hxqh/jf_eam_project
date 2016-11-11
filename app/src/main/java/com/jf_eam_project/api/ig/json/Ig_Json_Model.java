@@ -10,6 +10,8 @@ import com.jf_eam_project.api.ig.json.impl.Craftrate_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Fgsnudlview_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Fgsyudlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.InvoiceLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
@@ -45,6 +47,8 @@ import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
+import com.jf_eam_project.model.Fgsnudlview;
+import com.jf_eam_project.model.Fgsyudlview;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.InvoiceLine;
@@ -306,5 +310,14 @@ public class Ig_Json_Model {
     /**解析故障，缺陷**/
     public static ArrayList<Udreport> parsingUdreport(String input) throws IOException {
         return Udreport_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析分公司年度上网电量**/
+    public static ArrayList<Fgsnudlview> parsingFgsnudlview(String input) throws IOException {
+        return Fgsnudlview_Jsonhelper.parseFromJsonList(input);
+    }
+    /**解析分公司月度上网电量**/
+    public static ArrayList<Fgsyudlview> parsingFgsyudlview(String input) throws IOException {
+        return Fgsyudlview_Jsonhelper.parseFromJsonList(input);
     }
 }

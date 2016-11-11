@@ -1,9 +1,7 @@
 package com.jf_eam_project.ui.adapter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,20 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.listener.OnBtnEditClickL;
-import com.flyco.dialog.widget.MaterialDialog;
-import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
-import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.model.Wfassignment;
-import com.jf_eam_project.ui.activity.PO_Details_Activity;
 import com.jf_eam_project.ui.activity.QxUdreport_Details_Activity;
 import com.jf_eam_project.ui.activity.Wfm_Details_Activity;
 import com.jf_eam_project.utils.MessageUtils;
@@ -121,7 +111,7 @@ public class WfmListAdapter extends RecyclerView.Adapter<WfmListAdapter.ViewHold
         /**
          * 审批*
          */
-        public Button approvalButton;
+        public ImageView approvalButton;
 
         public ViewHolder(View view) {
             super(view);
@@ -134,7 +124,7 @@ public class WfmListAdapter extends RecyclerView.Adapter<WfmListAdapter.ViewHold
             itemNum = (TextView) view.findViewById(R.id.item_num_text);
             itemDesc = (TextView) view.findViewById(R.id.item_desc_text);
 
-            approvalButton = (Button) view.findViewById(R.id.approval_id);
+            approvalButton = (ImageView) view.findViewById(R.id.approval_id);
         }
     }
 
@@ -191,7 +181,6 @@ public class WfmListAdapter extends RecyclerView.Adapter<WfmListAdapter.ViewHold
             mContext.startActivity(intent);
 
         } else if (wfassigment.app.equals("UDDJFADQ") && wfassigment.ownertable.equals("UDINSPSCHEME") && wfassigment.processname.equals("UDDJFADQ")) { //跳转至电气定检方案界面
-            Log.i(TAG, "电气定检方案");
 //            Intent intent = new Intent(mContext, QxUdreport_Details_Activity.class);
 //            Bundle bundle = new Bundle();
 //            bundle.putString("udreportid", wfassigment.ownerid.replace(",", ""));

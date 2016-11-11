@@ -650,6 +650,11 @@
     <string name="culevel1_text">故障等级:</string>
     <string name="stoptime_text">停机时间:</string>
     <string name="udbelong_text">运行单位:</string>
+    <string name="dltj_text">电量统计</string>
+    <string name="main_text_id">主菜单</string>
+    <string name="ndswdl_text">年度累计上网电量</string>
+    <string name="ydswdl_text">月度上网电量</string>
+    <string name="dyljswdl_text">当月累计上网电量</string>
 
 
 </resources>

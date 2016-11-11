@@ -2,8 +2,6 @@ package com.jf_eam_project.config;
 
 import android.content.Context;
 
-import com.jf_eam_project.utils.AccountUtils;
-
 /**
  * Created by think on 2015/10/19.
  */
@@ -13,6 +11,10 @@ public class Constants {
      * 测试版*
      */
     public static final String HTTP_API_IP = "http://1.202.243.112:7001/";
+    /**
+     * 正式版*
+     */
+//    public static final String HTTP_API_IP = "http://10.1.29.155:7002/";
 
 
     /**
@@ -207,6 +209,16 @@ public class Constants {
     public static final String UDBR_NAME = "UDBR";
     //物资借用归还主表
     public static final String UDBRLINE_NAME = "UDBRLINE";
+
+
+    /**上网电量统计**/
+    //上网电量统计appid
+    public static final String UDRUNLOG_APPID = "UDRUNLOG";
+    //分公司年度上网电量
+    public static final String FGSNUDLVIEW_NAME = "FGSNUDLVIEW";
+    //分公司年度上网电量
+    public static final String FGSYUDLVIEW_NAME = "FGSYUDLVIEW";
+
 
     /**
      * -----------表名配置--结束*

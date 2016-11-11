@@ -95,15 +95,15 @@ public class HttpManager {
     public static String getUdinspourl1(String inspotype, String assettype, String checktype, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPOTYPE':'" + inspotype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPOTYPE':'" + inspotype + "'}}";
             }
         } else {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + assettype + "','CHECKTYPE':'" + checktype + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "','STATUS':'" + "APPR" + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + inspotype + "'}}";
             }
         }
     }
@@ -557,14 +557,44 @@ public class HttpManager {
                 "'curpage':" + "1" + ",'showcount':" + "1000" + ",'option':'read'}";
     }
 
+
+
+    /**
+     * 分公司年度上网电量
+     */
+    public static String Fgsnudlview() {
+        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUDLVIEW_NAME + "','option':'read'}";
+    }
+    /**
+     * 分公司年度上网电量
+     */
+    public static String Fgsyudlview() {
+        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUDLVIEW_NAME + "','option':'read'}";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
-
+        Log.i(TAG,"data"+data);
         String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
 
-        Log.i(TAG, "base_url=" + base_url + ",data=" + data);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -580,6 +610,7 @@ public class HttpManager {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 Log.i(TAG, "responseString=" + responseString);
                 String result = JsonUtils.parsingResults1(cxt, responseString);
+                Log.i(TAG, "result=" + result);
                 SafeHandler.onSuccess(handler, result);
             }
 

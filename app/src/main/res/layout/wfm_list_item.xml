@@ -61,7 +61,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/item_desc_title"
                 android:ellipsize="end"
-                android:ems="14"
+                android:ems="13"
                 android:hint="@string/hint_item_desc_title"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -71,16 +71,14 @@
         </RelativeLayout>
 
 
-        <Button
+        <ImageView
             android:id="@+id/approval_id"
-            android:layout_width="50dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/btn_selector"
-            android:textColor="@color/white"
-            android:layout_marginRight="@dimen/dimens_10"
+            android:layout_marginRight="@dimen/dimen_5"
             android:layout_toLeftOf="@+id/avatar"
-            android:text="审批" />
+            android:src="@drawable/ic_sp" />
 
         <ImageView
             android:id="@+id/avatar"
