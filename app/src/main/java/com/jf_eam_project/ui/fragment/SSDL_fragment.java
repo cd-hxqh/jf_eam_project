@@ -379,6 +379,8 @@ public class SSDL_fragment extends BaseFragment {
                 yValues.add(new Entry(j, value));
             }
 
+
+
             LineDataSet d = new LineDataSet(yValues, item.get(0).FGSDES);
             d.setLineWidth(4.0f);
             d.setCircleRadius(4.5f);

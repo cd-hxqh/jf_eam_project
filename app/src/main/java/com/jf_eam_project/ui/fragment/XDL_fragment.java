@@ -31,6 +31,7 @@ import com.jf_eam_project.custom.DYMRDLMarkerView;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
 import com.jf_eam_project.custom.LineXAxisValueFormatter;
 import com.jf_eam_project.custom.MonthAxisValueFormatter;
+import com.jf_eam_project.custom.NDDLMarkerView;
 import com.jf_eam_project.custom.XAxisValueFormatter;
 import com.jf_eam_project.custom.XYMarkerView;
 import com.jf_eam_project.custom.YAxisValueFormatter;
@@ -194,7 +195,7 @@ public class XDL_fragment extends BaseFragment {
         setbarChartData(fgsnudlviews);
 
         barChart.setNoDataText("您需要提供的数据图表");
-        XYMarkerView mv = new XYMarkerView(getActivity(), xAxisFormatter);
+        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews,1);
         mv.setChartView(barChart); // For bounds control
         barChart.setMarker(mv); // Set the marker to the chart
 

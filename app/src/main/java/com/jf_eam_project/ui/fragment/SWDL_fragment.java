@@ -194,7 +194,7 @@ public class SWDL_fragment extends BaseFragment {
         setbarChartData(fgsnudlviews);
 
         barChart.setNoDataText("您需要提供的数据图表");
-        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews);
+        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews,0);
         mv.setChartView(barChart); // For bounds control
         barChart.setMarker(mv); // Set the marker to the chart
 

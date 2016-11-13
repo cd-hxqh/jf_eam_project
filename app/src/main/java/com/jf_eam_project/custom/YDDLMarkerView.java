@@ -39,7 +39,7 @@ public class YDDLMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText(fgsyudlviews.get((int)highlight.getX()).SWDL);
+        tvContent.setText(fgsyudlviews.get((int)highlight.getX()).SWDL+"");
 
         super.refreshContent(e, highlight);
     }

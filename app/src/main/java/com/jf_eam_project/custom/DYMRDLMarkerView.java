@@ -39,7 +39,7 @@ public class DYMRDLMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText(fgsrudlviews.get((int)highlight.getX()).SWDL);
+        tvContent.setText(fgsrudlviews.get((int)highlight.getX()).SWDL+"kWh");
 
         super.refreshContent(e, highlight);
     }

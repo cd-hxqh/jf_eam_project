@@ -26,10 +26,13 @@ public class NDDLMarkerView extends MarkerView {
     private DecimalFormat format;
 
     private ArrayList<Fgsnudlview> fgsnudlviews;
+    private int mark;
 
-    public NDDLMarkerView(Context context, ArrayList<Fgsnudlview> fgsnudlviews) {
+
+    public NDDLMarkerView(Context context, ArrayList<Fgsnudlview> fgsnudlviews,int mark) {
         super(context, R.layout.custom_marker_view);
         this.fgsnudlviews=fgsnudlviews;
+        this.mark=mark;
         tvContent = (TextView) findViewById(R.id.tvContent);
         format = new DecimalFormat("###.0");
     }
@@ -38,8 +41,11 @@ public class NDDLMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-
-        tvContent.setText(fgsnudlviews.get((int)highlight.getX()).SWDL);
+        if(mark==0) {
+            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).SWDL + "kWh");
+        }else if(mark==1){
+            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).XDL + "kWh");
+        }
 
         super.refreshContent(e, highlight);
     }
