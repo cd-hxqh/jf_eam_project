@@ -27,13 +27,13 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
-import com.jf_eam_project.custom.DYMRDLMarkerView;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
+import com.jf_eam_project.custom.LineXAxisValueFormatter;
 import com.jf_eam_project.custom.MonthAxisValueFormatter;
 import com.jf_eam_project.custom.NDDLMarkerView;
 import com.jf_eam_project.custom.XAxisValueFormatter;
+import com.jf_eam_project.custom.XYMarkerView;
 import com.jf_eam_project.custom.YAxisValueFormatter;
-import com.jf_eam_project.custom.YDDLMarkerView;
 import com.jf_eam_project.model.Fgsnudlview;
 import com.jf_eam_project.model.Fgsrudlview;
 import com.jf_eam_project.model.Fgsyudlview;
@@ -323,15 +323,18 @@ public class SWDL_fragment extends BaseFragment {
         lineChart.animateX(750);
 
 
-        lineChart.setScaleEnabled(false);
+        lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
         lineChart.moveViewToX(2);
 
-        YDDLMarkerView mv = new YDDLMarkerView(getActivity(), fgsyudlviews);
+//        YDDLMarkerView mv = new YDDLMarkerView(getActivity(), fgsyudlviews);
+//        mv.setChartView(lineChart); // For bounds control
+//        lineChart.setMarker(mv); // Set the marker to the chart
+
+        LineXAxisValueFormatter lineXAxisValueFormatter = new LineXAxisValueFormatter(fgsyudlviews);
+        XYMarkerView mv = new XYMarkerView(getActivity(), lineXAxisValueFormatter);
         mv.setChartView(lineChart); // For bounds control
         lineChart.setMarker(mv); // Set the marker to the chart
-
-
     }
 
 
@@ -463,10 +466,14 @@ public class SWDL_fragment extends BaseFragment {
         dayLineChart.setVisibleXRangeMaximum(8);
 
 
-        DYMRDLMarkerView mv = new DYMRDLMarkerView(getActivity(), fgsrudlviews);
+//        DYMRDLMarkerView mv = new DYMRDLMarkerView(getActivity(), fgsrudlviews);
+//        mv.setChartView(dayLineChart); // For bounds control
+//        dayLineChart.setMarker(mv); // Set the marker to the chart
+//
+
+        XYMarkerView mv = new XYMarkerView(getActivity(), null);
         mv.setChartView(dayLineChart); // For bounds control
         dayLineChart.setMarker(mv); // Set the marker to the chart
-
     }
 
 

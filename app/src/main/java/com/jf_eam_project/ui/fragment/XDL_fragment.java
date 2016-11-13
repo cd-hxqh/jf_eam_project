@@ -30,7 +30,6 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.custom.DYMRDLMarkerView;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
 import com.jf_eam_project.custom.LineXAxisValueFormatter;
-import com.jf_eam_project.custom.MonthAxisValueFormatter;
 import com.jf_eam_project.custom.NDDLMarkerView;
 import com.jf_eam_project.custom.XAxisValueFormatter;
 import com.jf_eam_project.custom.XYMarkerView;
@@ -297,7 +296,6 @@ public class XDL_fragment extends BaseFragment {
         lineChart.getDescription().setEnabled(false);
 
         //X轴下边
-        MonthAxisValueFormatter monthAxisValueFormatter = new MonthAxisValueFormatter();
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -324,7 +322,7 @@ public class XDL_fragment extends BaseFragment {
         lineChart.animateX(750);
 
 
-        lineChart.setScaleEnabled(false);
+        lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
         lineChart.moveViewToX(2);
 

@@ -352,7 +352,7 @@ public class SSDL_fragment extends BaseFragment {
         lineChart.animateX(750);
 
 
-        lineChart.setScaleEnabled(false);
+        lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
         lineChart.moveViewToX(2);
 
