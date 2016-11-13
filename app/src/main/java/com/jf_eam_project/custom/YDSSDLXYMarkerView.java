@@ -45,7 +45,8 @@ public class YDSSDLXYMarkerView extends MarkerView {
                 + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJFJH + "/kwh"
                 + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJJH + "/kwh"
                 + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).DWGZ + "/kwh"
-                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).ZRZH + "/kwh");
+                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).ZRZH + "/kwh"
+                + "\n" + "共计:" + fgsnussdlviews.get((int) highlight.getX()).TOTAL + "/kwh");
 
         super.refreshContent(e, highlight);
     }
