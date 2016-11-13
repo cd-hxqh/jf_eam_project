@@ -50,9 +50,12 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.Statistical_Activity"
-            android:label="统计界面"
+            android:name=".ui.activity.ElectricityActivity"
+            android:label="电量统计"
             android:screenOrientation="portrait" />
+
+
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
@@ -264,7 +267,7 @@
             android:label="@string/udinspojxxm_title"
             android:screenOrientation="portrait" />
 
-        <!--故障提报单-->
+        <!-- 故障提报单 -->
         <activity
             android:name=".ui.activity.Udreport_Activity"
             android:label="@string/udreport_title"
@@ -273,8 +276,6 @@
             android:name=".ui.activity.Udreport_Add_Activity"
             android:label="@string/udreport_title"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".ui.activity.Udreport_Details_Activity"
             android:label="@string/udreport_title"
@@ -283,7 +284,6 @@
             android:name=".ui.activity.QxUdreport_Details_Activity"
             android:label="缺陷提报单"
             android:screenOrientation="portrait" />
-
 
         <!-- 通用选项页面 -->
         <activity
@@ -438,7 +438,6 @@
             android:name=".ui.activity.UdbrLine_Details_Activity"
             android:label="@string/udbrline_text"
             android:screenOrientation="portrait" />
-
 
         <!-- 百度自动更新设置 -->
         <meta-data

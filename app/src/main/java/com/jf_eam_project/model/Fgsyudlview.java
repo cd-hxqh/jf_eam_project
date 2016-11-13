@@ -5,7 +5,7 @@ import com.instagram.common.json.annotation.JsonType;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * 获取分公司上网电量
+ * 获取分公司月度上网电量
  *
  */
 @JsonType
@@ -21,9 +21,18 @@ public class Fgsyudlview extends Entity {
     public String MONTH;//月
     @JsonField(fieldName = "SWDL")
     public int SWDL;//上网电量
+    @JsonField(fieldName = "XDL")
+    public int XDL;//限电量
     @JsonField(fieldName = "YEAR")
     public String YEAR;//年
 
+    public int getXDL() {
+        return XDL;
+    }
+
+    public void setXDL(int XDL) {
+        this.XDL = XDL;
+    }
 
     public String getBRANCH() {
         return BRANCH;

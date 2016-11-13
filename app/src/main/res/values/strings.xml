@@ -652,9 +652,18 @@
     <string name="udbelong_text">运行单位:</string>
     <string name="dltj_text">电量统计</string>
     <string name="main_text_id">主菜单</string>
-    <string name="ndswdl_text">年度累计上网电量</string>
+    <string name="ndswdl_text">年度上网电量</string>
     <string name="ydswdl_text">月度上网电量</string>
-    <string name="dyljswdl_text">当月累计上网电量</string>
+    <string name="dyljswdl_text">当月每日上网电量</string>
+    <string name="title_activity_electricity">ElectricityActivity</string>
+    <string name="swdl_text">上网电量</string>
+    <string name="ssdl_text">损失电量</string>
+    <string name="xdl_text">限电量</string>
+    <string name="ndxdl_text">年度限电量</string>
+    <string name="ydxdl_text">月度限电量</string>
+    <string name="dymrxdl_text">当月每日限电量</string>
+    <string name="ndssdl_text">年度损失电量</string>
+    <string name="ydssdl_text">月度损失电量</string>
 
 
 </resources>

@@ -5,18 +5,21 @@ import com.instagram.common.json.annotation.JsonType;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * 获取分公司上网电量
+ * 分公司当月单日电量
  *
  */
 @JsonType
-@DatabaseTable(tableName = "FGSNUDLVIEW")
-public class Fgsnudlview extends Entity {
-    private static final String TAG = "FGSNUDLVIEW";
-    private static final long serialVersionUID = 2015050105L;
+@DatabaseTable(tableName = "FGSRUDLVIEW")
+public class Fgsrudlview extends Entity {
+    private static final String TAG = "FGSRUDLVIEW";
     @JsonField(fieldName = "BRANCH")
     public String BRANCH;//编号
+    @JsonField(fieldName = "DAY")
+    public String DAY;//天
     @JsonField(fieldName = "FGSDES")
-    public String FGSDES;//分公司名称
+    public String FGSDES;//分公司
+    @JsonField(fieldName = "MONTH")
+    public String MONTH;//月
     @JsonField(fieldName = "SWDL")
     public int SWDL;//上网电量
     @JsonField(fieldName = "XDL")
@@ -24,13 +27,6 @@ public class Fgsnudlview extends Entity {
     @JsonField(fieldName = "YEAR")
     public String YEAR;//年
 
-    public int getXDL() {
-        return XDL;
-    }
-
-    public void setXDL(int XDL) {
-        this.XDL = XDL;
-    }
 
     public String getBRANCH() {
         return BRANCH;
@@ -40,12 +36,28 @@ public class Fgsnudlview extends Entity {
         this.BRANCH = BRANCH;
     }
 
+    public String getDAY() {
+        return DAY;
+    }
+
+    public void setDAY(String DAY) {
+        this.DAY = DAY;
+    }
+
     public String getFGSDES() {
         return FGSDES;
     }
 
     public void setFGSDES(String FGSDES) {
         this.FGSDES = FGSDES;
+    }
+
+    public String getMONTH() {
+        return MONTH;
+    }
+
+    public void setMONTH(String MONTH) {
+        this.MONTH = MONTH;
     }
 
     public int getSWDL() {

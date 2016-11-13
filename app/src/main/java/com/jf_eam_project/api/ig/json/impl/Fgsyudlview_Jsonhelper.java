@@ -79,6 +79,8 @@ public final class Fgsyudlview_Jsonhelper
             instance.MONTH = jp.getValueAsString();
         } else if ("SWDL".equals(fieldName)) {
             instance.SWDL = jp.getValueAsInt();
+        } else if ("XDL".equals(fieldName)) {
+            instance.XDL = jp.getValueAsInt();
         } else if ("YEAR".equals(fieldName)) {
             instance.YEAR = jp.getValueAsString();
         }

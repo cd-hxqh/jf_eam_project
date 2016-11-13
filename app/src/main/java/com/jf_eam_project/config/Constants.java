@@ -218,6 +218,12 @@ public class Constants {
     public static final String FGSNUDLVIEW_NAME = "FGSNUDLVIEW";
     //分公司年度上网电量
     public static final String FGSYUDLVIEW_NAME = "FGSYUDLVIEW";
+    //分公司当月单日电量
+    public static final String FGSRUDLVIEW_NAME = "FGSRUDLVIEW";
+    //分公司年度损失电量
+    public static final String FGSNUSSDLVIEW_NAME = "FGSNUSSDLVIEW";
+    //分公司年度损失电量
+    public static final String FGSYUSSDLVIEW_NAME = "FGSYUSSDLVIEW";
 
 
     /**

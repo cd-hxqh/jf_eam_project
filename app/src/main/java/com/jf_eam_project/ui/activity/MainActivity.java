@@ -1,25 +1,16 @@
 package com.jf_eam_project.ui.activity;
 
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -33,13 +24,10 @@ import com.jf_eam_project.ui.fragment.Inventory_fragment;
 import com.jf_eam_project.ui.fragment.NavigationDrawerFragment;
 import com.jf_eam_project.ui.fragment.Po_Fragment;
 import com.jf_eam_project.ui.fragment.Polling_Fragment;
-import com.jf_eam_project.ui.fragment.QrCode_Fragment;
 import com.jf_eam_project.ui.fragment.Setting_Fragment;
-import com.jf_eam_project.ui.fragment.Udinspo_fragment;
 import com.jf_eam_project.ui.fragment.Udreport_Fragment;
 import com.jf_eam_project.ui.fragment.Wfment_fragment;
 import com.jf_eam_project.ui.fragment.WorkFragment;
-import com.jf_eam_project.ui.widget.CustomDialog;
 
 
 public class MainActivity extends BaseActivity
@@ -270,7 +258,6 @@ public class MainActivity extends BaseActivity
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-//                        dialog.dismiss();
                         AppManager.AppExit(MainActivity.this);
                     }
                 });
@@ -323,12 +310,6 @@ public class MainActivity extends BaseActivity
             return;
         }
 
-//        if ((System.currentTimeMillis() - exitTime) > 2000) {
-//            Toast.makeText(this, getResources().getString(R.string.exit_text), Toast.LENGTH_LONG).show();
-//            exitTime = System.currentTimeMillis();
-//        } else {
-//            AppManager.AppExit(MainActivity.this);
-//        }
         showAlertDialog();
     }
 

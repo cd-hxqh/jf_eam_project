@@ -1,35 +1,35 @@
 package com.jf_eam_project.api.ig.json.impl;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
-import com.jf_eam_project.model.Fgsnudlview;
+import com.jf_eam_project.model.Fgsnussdlview;
 
 import java.io.IOException;
 import java.util.ArrayList;
-/**分公司年度上网统计**/
 
-public final class Fgsnudlview_Jsonhelper
-        implements JsonHelper<Fgsnudlview> {
-    private static final String TAG = "Fgsnudlview_Jsonhelper";
+/**
+ * 分公司年度损失电量
+ **/
+
+public final class Fgsnussdlview_Jsonhelper
+        implements JsonHelper<Fgsnussdlview> {
+    private static final String TAG = "Fgsnussdlview_Jsonhelper";
 
     /**
      * 解析List*
      */
-    public static ArrayList<Fgsnudlview> parseFromJsonList(JsonParser jp)
+    public static ArrayList<Fgsnussdlview> parseFromJsonList(JsonParser jp)
             throws IOException {
 
-        ArrayList<Fgsnudlview> results = null;
+        ArrayList<Fgsnussdlview> results = null;
 
         // validate that we're on the right token
         if (jp.getCurrentToken() == JsonToken.START_ARRAY) {
-            results = new ArrayList<Fgsnudlview>();
+            results = new ArrayList<Fgsnussdlview>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
-                Fgsnudlview parsed = parseFromJson(jp);
-                Log.i(TAG, "parsed=" + parsed);
+                Fgsnussdlview parsed = parseFromJson(jp);
                 if (parsed != null) {
                     results.add(parsed);
                 }
@@ -42,11 +42,11 @@ public final class Fgsnudlview_Jsonhelper
 
 
     /**
-     * 解析Fgsnudlview
+     * 解析Fgsnussdlview
      */
-    public static Fgsnudlview parseFromJson(JsonParser jp)
+    public static Fgsnussdlview parseFromJson(JsonParser jp)
             throws IOException {
-        Fgsnudlview instance = new Fgsnudlview();
+        Fgsnussdlview instance = new Fgsnussdlview();
 
         // validate that we're on the right token
         if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
@@ -64,7 +64,7 @@ public final class Fgsnudlview_Jsonhelper
         return instance;
     }
 
-    public static boolean processSingleField(Fgsnudlview instance, String fieldName, JsonParser jp)
+    public static boolean processSingleField(Fgsnussdlview instance, String fieldName, JsonParser jp)
             throws IOException {
         if ("BRANCH".equals(fieldName)) {
             instance.BRANCH = jp.getValueAsString();
@@ -72,20 +72,30 @@ public final class Fgsnudlview_Jsonhelper
         } else if ("FGSDES".equals(fieldName)) {
             instance.FGSDES = jp.getValueAsString();
             return true;
-        } else if ("SWDL".equals(fieldName)) {
-            instance.SWDL = jp.getValueAsInt();
-        } else if ("XDL".equals(fieldName)) {
-            instance.XDL = jp.getValueAsInt();
+        } else if ("DWGZ".equals(fieldName)) {
+            instance.DWGZ = jp.getValueAsInt();
+        } else if ("FJFJH".equals(fieldName)) {
+            instance.FJFJH = jp.getValueAsInt();
+        } else if ("FJJH".equals(fieldName)) {
+            instance.FJJH = jp.getValueAsInt();
+        } else if ("SBDFJH".equals(fieldName)) {
+            instance.SBDFJH = jp.getValueAsInt();
+        } else if ("SBDJH".equals(fieldName)) {
+            instance.SBDJH = jp.getValueAsInt();
+        } else if ("TOTAL".equals(fieldName)) {
+            instance.TOTAL = jp.getValueAsInt();
         } else if ("YEAR".equals(fieldName)) {
             instance.YEAR = jp.getValueAsString();
+        } else if ("ZRZH".equals(fieldName)) {
+            instance.ZRZH = jp.getValueAsInt();
         }
         return false;
     }
 
     /**
-     * 解析Fgsnudlview_List*
+     * 解析Fgsnussdlview_List*
      */
-    public static ArrayList<Fgsnudlview> parseFromJsonList(String inputString)
+    public static ArrayList<Fgsnussdlview> parseFromJsonList(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();
@@ -93,9 +103,9 @@ public final class Fgsnudlview_Jsonhelper
     }
 
     /**
-     * 解析Fgsnudlview*
+     * 解析Fgsnussdlview*
      */
-    public static Fgsnudlview parseFromJson(String inputString)
+    public static Fgsnussdlview parseFromJson(String inputString)
             throws IOException {
         JsonParser jp = JsonFactoryHolder.APP_FACTORY.createParser(inputString);
         jp.nextToken();

@@ -318,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startIntent() {
         Intent inetnt = new Intent();
-        inetnt.setClass(this, Statistical_Activity.class);
+        inetnt.setClass(this, ElectricityActivity.class);
         startActivity(inetnt);
     }
 

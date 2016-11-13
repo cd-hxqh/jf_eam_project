@@ -11,7 +11,10 @@ import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsnudlview_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Fgsnussdlview_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Fgsrudlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsyudlview_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Fgsyussdlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.InvoiceLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
@@ -48,7 +51,10 @@ import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
 import com.jf_eam_project.model.Fgsnudlview;
+import com.jf_eam_project.model.Fgsnussdlview;
+import com.jf_eam_project.model.Fgsrudlview;
 import com.jf_eam_project.model.Fgsyudlview;
+import com.jf_eam_project.model.Fgsyussdlview;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.InvoiceLine;
@@ -319,5 +325,17 @@ public class Ig_Json_Model {
     /**解析分公司月度上网电量**/
     public static ArrayList<Fgsyudlview> parsingFgsyudlview(String input) throws IOException {
         return Fgsyudlview_Jsonhelper.parseFromJsonList(input);
+    }
+    /**解析分公司月度上网电量**/
+    public static ArrayList<Fgsrudlview> parsingFgsrudlview(String input) throws IOException {
+        return Fgsrudlview_Jsonhelper.parseFromJsonList(input);
+    }
+    /**解析分公司年度损失电量**/
+    public static ArrayList<Fgsnussdlview> parsingFgsnussdlview(String input) throws IOException {
+        return Fgsnussdlview_Jsonhelper.parseFromJsonList(input);
+    }
+    /**解析分公司月度损失电量**/
+    public static ArrayList<Fgsyussdlview> parsingFgsyussdlview(String input) throws IOException {
+        return Fgsyussdlview_Jsonhelper.parseFromJsonList(input);
     }
 }

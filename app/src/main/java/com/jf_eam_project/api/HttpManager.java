@@ -571,6 +571,24 @@ public class HttpManager {
     public static String Fgsyudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUDLVIEW_NAME + "','option':'read'}";
     }
+    /**
+     * 分公司年度上网电量
+     */
+    public static String Fgsrudlview() {
+        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSRUDLVIEW_NAME + "','option':'read'}";
+    }
+    /**
+     * 分公司年度损失电量
+     */
+    public static String Fgsnussdlview() {
+        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUSSDLVIEW_NAME + "','option':'read'}";
+    }
+    /**
+     * 分公司月度损失电量
+     */
+    public static String Fgsyussdlview() {
+        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUSSDLVIEW_NAME + "','option':'read'}";
+    }
 
 
 
