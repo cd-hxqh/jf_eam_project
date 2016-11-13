@@ -116,6 +116,7 @@ public class ElectricityActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent inetnt = new Intent();
+            inetnt.putExtra("mark",1);
             inetnt.setClass(ElectricityActivity.this, MainActivity.class);
             startActivity(inetnt);
         }

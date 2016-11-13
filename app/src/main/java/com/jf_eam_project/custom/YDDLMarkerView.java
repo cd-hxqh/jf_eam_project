@@ -9,7 +9,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Fgsnussdlview;
+import com.jf_eam_project.model.Fgsyudlview;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,19 +19,17 @@ import java.util.ArrayList;
  *
  * @author Philipp Jahoda
  */
-public class PieXYMarkerView extends MarkerView {
+public class YDDLMarkerView extends MarkerView {
 
     private TextView tvContent;
 
-
     private DecimalFormat format;
 
-    private ArrayList<Fgsnussdlview> fgsnussdlviews;
+    private ArrayList<Fgsyudlview> fgsyudlviews;
 
-    public PieXYMarkerView(Context context, ArrayList<Fgsnussdlview> fgsnussdlviews) {
+    public YDDLMarkerView(Context context, ArrayList<Fgsyudlview> fgsyudlviews) {
         super(context, R.layout.custom_marker_view);
-        this.fgsnussdlviews = fgsnussdlviews;
-
+        this.fgsyudlviews=fgsyudlviews;
         tvContent = (TextView) findViewById(R.id.tvContent);
         format = new DecimalFormat("###.0");
     }
@@ -40,13 +38,8 @@ public class PieXYMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText("输变电非计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDFJH + "/kwh"
-                + "\n" + "输变电计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDJH + "/kwh"
-                + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJFJH + "/kwh"
-                + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJJH + "/kwh"
-                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).DWGZ + "/kwh"
-                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).ZRZH + "/kwh"
-                + "\n" + "共计:" + fgsnussdlviews.get((int) highlight.getX()).TOTAL + "/kwh");
+
+        tvContent.setText(fgsyudlviews.get((int)highlight.getX()).SWDL);
 
         super.refreshContent(e, highlight);
     }

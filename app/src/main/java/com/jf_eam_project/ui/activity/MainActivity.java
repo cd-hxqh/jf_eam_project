@@ -76,7 +76,9 @@ public class MainActivity extends BaseActivity
      * 采购管理*
      */
     private Po_Fragment po_fragment;
-    /**故障缺陷**/
+    /**
+     * 故障缺陷
+     **/
     private Udreport_Fragment udreport_fragment;
     /**
      * 本地历史*
@@ -96,11 +98,14 @@ public class MainActivity extends BaseActivity
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
 
+    private int mark;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mark = getIntent().getExtras().getInt("mark");
         findViewById();
 
         initView();
@@ -309,8 +314,11 @@ public class MainActivity extends BaseActivity
             mNavigationDrawerFragment.closeDrawer();
             return;
         }
-
-        showAlertDialog();
+        if (mark == 0) {
+            showAlertDialog();
+        } else if (mark == 1) {
+            finish();
+        }
     }
 
 

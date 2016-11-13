@@ -27,12 +27,13 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.custom.DYMRDLMarkerView;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
-import com.jf_eam_project.custom.LineXAxisValueFormatter;
 import com.jf_eam_project.custom.MonthAxisValueFormatter;
+import com.jf_eam_project.custom.NDDLMarkerView;
 import com.jf_eam_project.custom.XAxisValueFormatter;
-import com.jf_eam_project.custom.XYMarkerView;
 import com.jf_eam_project.custom.YAxisValueFormatter;
+import com.jf_eam_project.custom.YDDLMarkerView;
 import com.jf_eam_project.model.Fgsnudlview;
 import com.jf_eam_project.model.Fgsrudlview;
 import com.jf_eam_project.model.Fgsyudlview;
@@ -193,7 +194,7 @@ public class SWDL_fragment extends BaseFragment {
         setbarChartData(fgsnudlviews);
 
         barChart.setNoDataText("您需要提供的数据图表");
-        XYMarkerView mv = new XYMarkerView(getActivity(), xAxisFormatter);
+        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews);
         mv.setChartView(barChart); // For bounds control
         barChart.setMarker(mv); // Set the marker to the chart
 
@@ -326,8 +327,7 @@ public class SWDL_fragment extends BaseFragment {
         lineChart.setPinchZoom(false);//
         lineChart.moveViewToX(2);
 
-        LineXAxisValueFormatter lineXAxisValueFormatter = new LineXAxisValueFormatter(fgsyudlviews);
-        XYMarkerView mv = new XYMarkerView(getActivity(), lineXAxisValueFormatter);
+        YDDLMarkerView mv = new YDDLMarkerView(getActivity(), fgsyudlviews);
         mv.setChartView(lineChart); // For bounds control
         lineChart.setMarker(mv); // Set the marker to the chart
 
@@ -461,6 +461,11 @@ public class SWDL_fragment extends BaseFragment {
         // holder.chart.invalidate();
         dayLineChart.animateX(750);
         dayLineChart.setVisibleXRangeMaximum(8);
+
+
+        DYMRDLMarkerView mv = new DYMRDLMarkerView(getActivity(), fgsrudlviews);
+        mv.setChartView(dayLineChart); // For bounds control
+        dayLineChart.setMarker(mv); // Set the marker to the chart
 
     }
 

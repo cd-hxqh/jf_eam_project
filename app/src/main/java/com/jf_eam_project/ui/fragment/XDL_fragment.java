@@ -27,6 +27,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
+import com.jf_eam_project.custom.DYMRDLMarkerView;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
 import com.jf_eam_project.custom.LineXAxisValueFormatter;
 import com.jf_eam_project.custom.MonthAxisValueFormatter;
@@ -461,6 +462,10 @@ public class XDL_fragment extends BaseFragment {
         // holder.chart.invalidate();
         dayLineChart.animateX(750);
         dayLineChart.setVisibleXRangeMaximum(8);
+
+        DYMRDLMarkerView mv = new DYMRDLMarkerView(getActivity(), fgsrudlviews);
+        mv.setChartView(dayLineChart); // For bounds control
+        dayLineChart.setMarker(mv); // Set the marker to the chart
 
     }
 
