@@ -41,7 +41,6 @@ public class PieXYMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        Log.i("sss", highlight.getX() + "");
         tvContent.setText("输变电非计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDFJH + "/kwh"
                 + "\n" + "输变电计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDJH + "/kwh"
                 + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJFJH + "/kwh"
