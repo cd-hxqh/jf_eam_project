@@ -1,5 +1,6 @@
 package com.jf_eam_project.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,8 +21,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
@@ -29,14 +32,13 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.custom.DayAxisValueFormatter;
 import com.jf_eam_project.custom.LineXAxisValueFormatter;
-import com.jf_eam_project.custom.MonthAxisValueFormatter;
 import com.jf_eam_project.custom.NDDLMarkerView;
 import com.jf_eam_project.custom.XAxisValueFormatter;
 import com.jf_eam_project.custom.XYMarkerView;
-import com.jf_eam_project.custom.YAxisValueFormatter;
 import com.jf_eam_project.model.Fgsnudlview;
 import com.jf_eam_project.model.Fgsrudlview;
 import com.jf_eam_project.model.Fgsyudlview;
+import com.jf_eam_project.ui.activity.WindActivity;
 import com.jf_eam_project.utils.DateUtils;
 import com.jf_eam_project.utils.MessageUtils;
 
@@ -88,7 +90,6 @@ public class SWDL_fragment extends BaseFragment {
         mTfRegular = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Regular.ttf");
         mTfLight = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
 
-
         findViewById(settingLayout);
 
         getFgsnudlview();  //年度
@@ -98,6 +99,7 @@ public class SWDL_fragment extends BaseFragment {
 
         return settingLayout;
     }
+
 
     protected void findViewById(View view) {
         barChart = (BarChart) view.findViewById(R.id.chart1);
@@ -146,7 +148,7 @@ public class SWDL_fragment extends BaseFragment {
     /**
      * 年累计上网电量
      **/
-    private void setbarChart(ArrayList<Fgsnudlview> fgsnudlviews) {
+    private void setbarChart(final ArrayList<Fgsnudlview> fgsnudlviews) {
         barChart.setPinchZoom(false);//
         barChart.setScaleEnabled(false);// 是否可以缩放
         barChart.setDrawBarShadow(false);
@@ -169,15 +171,12 @@ public class SWDL_fragment extends BaseFragment {
         xAxis.setLabelCount(6, false);
         xAxis.setValueFormatter(xAxisFormatter);
 
-        IAxisValueFormatter custom = new YAxisValueFormatter();
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
         leftAxis.setLabelCount(5, false);
-//        leftAxis.setValueFormatter(custom);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
         barChart.getAxisRight().setEnabled(false);
 
 
@@ -194,10 +193,26 @@ public class SWDL_fragment extends BaseFragment {
         setbarChartData(fgsnudlviews);
 
         barChart.setNoDataText("您需要提供的数据图表");
-        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews,0);
+        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews, 0);
         mv.setChartView(barChart); // For bounds control
         barChart.setMarker(mv); // Set the marker to the chart
 
+
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                if (e == null)
+                    return;
+                Intent i = new Intent(getActivity(), WindActivity.class);
+                i.putExtra("branch", fgsnudlviews.get((int) h.getX()).BRANCH);
+                startActivityForResult(i, 0);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
     }
 
@@ -296,13 +311,14 @@ public class SWDL_fragment extends BaseFragment {
         lineChart.getDescription().setEnabled(false);
 
         //X轴下边
-        MonthAxisValueFormatter monthAxisValueFormatter = new MonthAxisValueFormatter();
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTfLight);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
+        xAxis.setLabelCount(13, false);
+        xAxis.setGranularity(1f); //
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -325,7 +341,6 @@ public class SWDL_fragment extends BaseFragment {
 
         lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
-        lineChart.moveViewToX(2);
 
 //        YDDLMarkerView mv = new YDDLMarkerView(getActivity(), fgsyudlviews);
 //        mv.setChartView(lineChart); // For bounds control

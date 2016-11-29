@@ -62,7 +62,7 @@
     <string name="error_title">错误</string>
     <string name="error_obtain_once">无法获取ONCE</string>
     <string name="error_network_exception">网络通信异常，请稍后重试</string>
-    <string name="error_network_disconnect">网络不可达,请开启Wifi或者移动数据网络</string>
+    <string name="error_network_disconnect">网络不可达,请连接Wifi或者移动数据网络</string>
     <string name="error_reply">提交失败</string>
     <string name="error_create_topic">无法创建新话题</string>
     <string name="error_login">无法登录</string>
@@ -664,6 +664,15 @@
     <string name="dymrxdl_text">当月每日限电量</string>
     <string name="ndssdl_text">年度损失电量</string>
     <string name="ydssdl_text">月度损失电量</string>
+    <string name="lcsp_text">流程审批</string>
+    <string name="gdgl_text">工单管理</string>
+    <string name="xjgl_text">巡检管理</string>
+    <string name="kcgl_text">库存管理</string>
+    <string name="gcgl_text">采购管理</string>
+    <string name="gzqx_text">故障缺陷</string>
+    <string name="bdls_text">本地历史</string>
+    <string name="tmsm_text">二维码/条码</string>
+    <string name="sz_text">设置</string>
 
 
 </resources>

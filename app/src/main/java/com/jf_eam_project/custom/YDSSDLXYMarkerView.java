@@ -33,20 +33,23 @@ public class YDSSDLXYMarkerView extends MarkerView {
         this.fgsnussdlviews = fgsnussdlviews;
 
         tvContent = (TextView) findViewById(R.id.tvContent);
-        format = new DecimalFormat("###.0");
+        format = new DecimalFormat("###");
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText("输变电非计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDFJH + "kWh"
-                + "\n" + "输变电计划:" + fgsnussdlviews.get((int) highlight.getX()).SBDJH + "kWh"
-                + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJFJH + "kWh"
-                + "\n" + "风机非计划:" + fgsnussdlviews.get((int) highlight.getX()).FJJH + "kWh"
-                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).DWGZ + "kWh"
-                + "\n" + "电网故障:" + fgsnussdlviews.get((int) highlight.getX()).ZRZH + "kWh"
-                + "\n" + "共计:" + fgsnussdlviews.get((int) highlight.getX()).TOTAL + "kWh");
+
+        Fgsyussdlview item = getFgsyussdlview(format.format(e.getY()), fgsnussdlviews);
+
+        tvContent.setText("输变电非计划:" + item.SBDFJH + "万kWh"
+                + "\n" + "输变电计划:" + item.SBDJH + "万kWh"
+                + "\n" + "风机非计划:" + item.FJFJH + "万kWh"
+                + "\n" + "风机非计划:" + item.FJJH + "万kWh"
+                + "\n" + "电网故障:" + item.DWGZ + "万kWh"
+                + "\n" + "电网故障:" + item.ZRZH + "万kWh"
+                + "\n" + "共计:" + format.format(e.getY()) + "万kWh");
 
         super.refreshContent(e, highlight);
     }
@@ -54,5 +57,20 @@ public class YDSSDLXYMarkerView extends MarkerView {
     @Override
     public MPPointF getOffset() {
         return new MPPointF(-(getWidth() / 2), -getHeight());
+    }
+
+
+    /**
+     * 判断显示的电量
+     **/
+
+    private Fgsyussdlview getFgsyussdlview(String branch, ArrayList<Fgsyussdlview> fgsyussdlviews) {
+        for (Fgsyussdlview fgsyussdlview : fgsyussdlviews) {
+            if (branch.equals(fgsyussdlview.TOTAL + "")) {
+                return fgsyussdlview;
+            }
+
+        }
+        return null;
     }
 }

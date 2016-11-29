@@ -10,11 +10,11 @@ public class Constants {
     /**
      * 测试版*
      */
-    public static final String HTTP_API_IP = "http://1.202.243.112:7001/";
+//    public static final String HTTP_API_IP = "http://1.202.243.112:7001/";
     /**
      * 正式版*
      */
-//    public static final String HTTP_API_IP = "http://10.1.29.155:7002/";
+    public static final String HTTP_API_IP = "http://10.1.3.45:7003/";
 
 
     /**

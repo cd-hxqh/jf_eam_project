@@ -72,7 +72,6 @@ public class WfmListAdapter extends RecyclerView.Adapter<WfmListAdapter.ViewHold
         holder.approvalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "点击了一下审批");
                 onClickListener.cOnClickListener(position, wfm);
             }
         });

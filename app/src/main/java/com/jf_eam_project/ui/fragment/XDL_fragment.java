@@ -102,8 +102,26 @@ public class XDL_fragment extends BaseFragment {
     protected void findViewById(View view) {
         barChart = (BarChart) view.findViewById(R.id.chart1);
         lineChart = (LineChart) view.findViewById(R.id.chart2);
+
         dayLineChart = (LineChart) view.findViewById(R.id.chart3);
+
+//        initView();
+
+
     }
+//    /**设置事件监听**/
+//    private void initView() {
+//        lineChart.setOnClickListener(lineChartOnClickListener);
+//    }
+
+
+    private View.OnClickListener lineChartOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            MessageUtils.showMiddleToast(getActivity(), "月度限电量");
+            getFGSYUDLVIEW();
+        }
+    };
 
 
     /**
@@ -154,8 +172,9 @@ public class XDL_fragment extends BaseFragment {
         barChart.getDescription().setEnabled(false);
         barChart.setDrawGridBackground(false); //设置图表内格子背景是否显示，默认是false
         barChart.animateY(700);
+        barChart.fitScreen(); //适应屏幕
 
-        barChart.setBorderWidth(20);
+//        barChart.setBorderWidth(20);
         barChart.setNoDataText("您需要提供的数据图表");
 
 
@@ -194,7 +213,7 @@ public class XDL_fragment extends BaseFragment {
         setbarChartData(fgsnudlviews);
 
         barChart.setNoDataText("您需要提供的数据图表");
-        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews,1);
+        NDDLMarkerView mv = new NDDLMarkerView(getActivity(), fgsnudlviews, 1);
         mv.setChartView(barChart); // For bounds control
         barChart.setMarker(mv); // Set the marker to the chart
 
@@ -300,8 +319,11 @@ public class XDL_fragment extends BaseFragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTfLight);
-        xAxis.setDrawGridLines(false);
+        xAxis.setDrawGridLines(false);  //是否显示X坐标轴上的刻度竖线，默认是true
         xAxis.setDrawAxisLine(true);
+        xAxis.setLabelCount(13, false);//第一个参数是X轴坐标的个数，第二个参数是 是否不均匀分布，true是不均匀分布
+        xAxis.setGranularity(1f); //
+
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -313,19 +335,18 @@ public class XDL_fragment extends BaseFragment {
                 return 0;
             }
         });
+        //lineChart设置
+        lineChart.getAxisRight().setEnabled(false);  //右边默认不显示
+        lineChart.setData(generateDataLine(fgsyudlviews)); //设置数据
+        lineChart.setNoDataText("没有可用的图表数据");
+
+        lineChart.animateX(750); //设置动画
 
 
-        lineChart.getAxisRight().setEnabled(false);
-        // set data
-        lineChart.setData(generateDataLine(fgsyudlviews));
+        lineChart.setScaleEnabled(true);  // 是否可以缩放 x和y轴, 默认是true
+        lineChart.setPinchZoom(false);// //设置x轴和y轴能否同时缩放。默认是否
 
-        lineChart.animateX(750);
-
-
-        lineChart.setScaleEnabled(true);
-        lineChart.setPinchZoom(false);//
-        lineChart.moveViewToX(2);
-
+        //设置XYMarkerView弹出框
         LineXAxisValueFormatter lineXAxisValueFormatter = new LineXAxisValueFormatter(fgsyudlviews);
         XYMarkerView mv = new XYMarkerView(getActivity(), lineXAxisValueFormatter);
         mv.setChartView(lineChart); // For bounds control
@@ -341,6 +362,7 @@ public class XDL_fragment extends BaseFragment {
     private LineData generateDataLine(ArrayList<Fgsyudlview> fgsyudlviews) {
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
         for (int i = 0; i < fgsnudlviews.size(); i++) {
+
             // y轴的数据
             ArrayList<Entry> yValues = new ArrayList<Entry>();
             ArrayList<Fgsyudlview> item = getFgsyudlview(fgsnudlviews.get(i).BRANCH, fgsyudlviews);
@@ -351,7 +373,7 @@ public class XDL_fragment extends BaseFragment {
             }
 
             LineDataSet d = new LineDataSet(yValues, item.get(0).FGSDES);
-            d.setLineWidth(4.0f);
+            d.setLineWidth(3.0f);
             d.setCircleRadius(4.5f);
             d.setHighLightColor(ColorTemplate.VORDIPLOM_COLORS[i]);
             d.setColor(ColorTemplate.VORDIPLOM_COLORS[i]);

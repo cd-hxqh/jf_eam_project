@@ -368,9 +368,8 @@
                     "startLine": 21,
                     "startColumn": 4,
                     "startOffset": 1249,
-                    "endLine": 30,
-                    "endColumn": 12,
-                    "endOffset": 1873
+                    "endColumn": 42,
+                    "endOffset": 1287
                 },
                 "from": {
                     "file": "E:\\work_space\\AndroidProjects\\jf_eam_project\\bDIntegrationSDK_LibProject\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
@@ -378,51 +377,71 @@
                         "startLine": 21,
                         "startColumn": 4,
                         "startOffset": 1249,
-                        "endLine": 30,
-                        "endColumn": 12,
-                        "endOffset": 1873
+                        "endColumn": 42,
+                        "endOffset": 1287
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 31,
+                    "startLine": 22,
                     "startColumn": 4,
-                    "startOffset": 1878,
-                    "endLine": 33,
+                    "startOffset": 1292,
+                    "endLine": 31,
                     "endColumn": 12,
-                    "endOffset": 2038
+                    "endOffset": 1916
                 },
                 "from": {
                     "file": "E:\\work_space\\AndroidProjects\\jf_eam_project\\bDIntegrationSDK_LibProject\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 31,
+                        "startLine": 22,
                         "startColumn": 4,
-                        "startOffset": 1878,
-                        "endLine": 33,
+                        "startOffset": 1292,
+                        "endLine": 31,
                         "endColumn": 12,
-                        "endOffset": 2038
+                        "endOffset": 1916
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 34,
+                    "startLine": 32,
                     "startColumn": 4,
-                    "startOffset": 2043,
-                    "endLine": 39,
+                    "startOffset": 1921,
+                    "endLine": 34,
                     "endColumn": 12,
-                    "endOffset": 2353
+                    "endOffset": 2081
                 },
                 "from": {
                     "file": "E:\\work_space\\AndroidProjects\\jf_eam_project\\bDIntegrationSDK_LibProject\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 34,
+                        "startLine": 32,
                         "startColumn": 4,
-                        "startOffset": 2043,
-                        "endLine": 39,
+                        "startOffset": 1921,
+                        "endLine": 34,
                         "endColumn": 12,
-                        "endOffset": 2353
+                        "endOffset": 2081
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 35,
+                    "startColumn": 4,
+                    "startOffset": 2086,
+                    "endLine": 40,
+                    "endColumn": 12,
+                    "endOffset": 2396
+                },
+                "from": {
+                    "file": "E:\\work_space\\AndroidProjects\\jf_eam_project\\bDIntegrationSDK_LibProject\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 35,
+                        "startColumn": 4,
+                        "startOffset": 2086,
+                        "endLine": 40,
+                        "endColumn": 12,
+                        "endOffset": 2396
                     }
                 }
             }

@@ -3,9 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="cdhxqh.shekou.ui.fragment.WorkFragment">
+    android:orientation="vertical">
+
+    <include layout="@layout/title_main"></include>
 
     <TableLayout
+        android:id="@+id/tablelayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -14,7 +17,7 @@
         <TableRow android:layout_marginTop="30dp">
 
             <LinearLayout
-                android:id="@+id/work_order_linearlayout_id"
+                android:id="@+id/udinspo_dqdjd_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -24,23 +27,22 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/work_img2" />
+                    android:src="@drawable/ic_gztbd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="工单"
+                    android:padding="@dimen/dimen_5"
+                    android:text="故障提报单"
                     android:textColor="@color/light_black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
+
 
             <LinearLayout
-                android:id="@+id/udinspo_linearlayout_id"
+                android:id="@+id/udinspo_fjdjd_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -51,21 +53,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/work_img3" />
+                    android:src="@drawable/ic_qxtbd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="巡检单"
+                    android:padding="@dimen/dimen_5"
+                    android:text="缺陷提报单"
                     android:textColor="@color/light_black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/dimens_18_sp" />
 
             </LinearLayout>
+
+
         </TableRow>
+
 
     </TableLayout>
 
 </LinearLayout>
+
+
+

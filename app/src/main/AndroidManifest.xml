@@ -53,20 +53,33 @@
             android:name=".ui.activity.ElectricityActivity"
             android:label="电量统计"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.activity.WindActivity"
+            android:label="电量统计"
+            android:screenOrientation="portrait" />
 
 
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.MainNewActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" />
 
         <!-- 流程审批 -->
         <activity
+            android:name=".ui.activity.Wfment_Activity"
+            android:label="@string/title_activity_wfm"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/title_activity_wfm"
             android:screenOrientation="portrait" />
 
+
+        <!-- 工单管理 -->
+        <activity
+            android:name=".ui.activity.WorkOrderActivity"
+            android:label="@string/title_activity_work_list"
+            android:screenOrientation="portrait" />
         <!-- 工单管理 -->
         <activity
             android:name=".ui.activity.Work_ListActivity"
@@ -194,6 +207,10 @@
         <!-- 采购订单 -->
 
         <activity
+            android:name=".ui.activity.CaiGou_Activity"
+            android:label="@string/gcgl_text"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.Po_order_Activity"
             android:label="@string/title_activity_po_order_"
             android:screenOrientation="portrait" />
@@ -239,11 +256,19 @@
             android:label="@string/inventory_title"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.KuCun_Activity"
+            android:label="@string/kcgl_text"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.Inventory_Details_Activity"
             android:label="@string/inventory_detail_title"
             android:screenOrientation="portrait" />
 
         <!-- 巡检管理 -->
+        <activity
+            android:name=".ui.activity.XunJan_Activity"
+            android:label="@string/udinspo_detail_title"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udinspo_Details_activity"
             android:label="@string/udinspo_detail_title"
@@ -268,6 +293,10 @@
             android:screenOrientation="portrait" />
 
         <!-- 故障提报单 -->
+        <activity
+            android:name=".ui.activity.GuZhang_Activity"
+            android:label="@string/gzqx_text"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Udreport_Activity"
             android:label="@string/udreport_title"
@@ -349,6 +378,10 @@
         <activity
             android:name=".ui.activity.Udinspojxxm_History_Activity"
             android:label="巡检单历史"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Lishi_Activity"
+            android:label="工单历史"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.Work_History_ListActivity"
@@ -437,6 +470,10 @@
         <activity
             android:name=".ui.activity.UdbrLine_Details_Activity"
             android:label="@string/udbrline_text"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SheZhi_Activity"
+            android:label="@string/sz_text"
             android:screenOrientation="portrait" />
 
         <!-- 百度自动更新设置 -->

@@ -33,7 +33,6 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
-import com.jf_eam_project.custom.MonthAxisValueFormatter;
 import com.jf_eam_project.custom.PieXYMarkerView;
 import com.jf_eam_project.custom.YDSSDLXYMarkerView;
 import com.jf_eam_project.model.Fgsnussdlview;
@@ -325,13 +324,14 @@ public class SSDL_fragment extends BaseFragment {
         lineChart.getDescription().setEnabled(false);
 
         //X轴下边
-        MonthAxisValueFormatter monthAxisValueFormatter = new MonthAxisValueFormatter();
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTfLight);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
+        xAxis.setLabelCount(13, false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -348,13 +348,11 @@ public class SSDL_fragment extends BaseFragment {
         lineChart.getAxisRight().setEnabled(false);
         // set data
         lineChart.setData(generateDataLine(fgsyussdlviews));
-
         lineChart.animateX(750);
 
 
         lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
-        lineChart.moveViewToX(2);
 
         YDSSDLXYMarkerView mv = new YDSSDLXYMarkerView(getActivity(), fgsyussdlviews);
         mv.setChartView(lineChart); // For bounds control

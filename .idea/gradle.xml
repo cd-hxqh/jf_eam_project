@@ -16,16 +16,7 @@
             <option value="$PROJECT_DIR$/bDIntegrationSDK_LibProject" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/FlycoAnimation_Lib" />
-            <option value="$PROJECT_DIR$/FlycoDialog_Lib" />
-            <option value="$PROJECT_DIR$/MPChartLib" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/bDIntegrationSDK_LibProject" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

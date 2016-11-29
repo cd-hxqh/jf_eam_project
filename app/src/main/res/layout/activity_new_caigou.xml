@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <include layout="@layout/title_main"></include>
+
+    <TableLayout
+        android:id="@+id/tablelayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+
+        <TableRow android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:id="@+id/po_linear_plan_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/po_image_plan_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_pr" />
+
+                <TextView
+                    android:id="@+id/po_text_plan_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/po_plan_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/po_linear_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/po_image_order_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_po" />
+
+                <TextView
+                    android:id="@+id/po_text_order_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/po_order_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/po_linear_invoice_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/po_image_invoice_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_invoice" />
+
+                <TextView
+                    android:id="@+id/po_text_invoice_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/po_invoice_text"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+            </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

@@ -46,6 +46,7 @@ public final class R {
 		public static final int bdp_update_title_as = 0x7f040010;
 		public static final int bdp_update_title_download = 0x7f040011;
 		public static final int bdp_update_title_install = 0x7f040012;
+		public static final int kpi_text = 0x7f040013;
 	}
 	public static final class style {
 		public static final int bdp_update_dialog_style = 0x7f050000;

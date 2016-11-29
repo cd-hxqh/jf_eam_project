@@ -1,13 +1,13 @@
-package com.jf_eam_project.ui.fragment;
+package com.jf_eam_project.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.AppUpdateInfo;
 import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
@@ -21,79 +21,102 @@ import com.jf_eam_project.Dao.WorkOrderDao;
 import com.jf_eam_project.Dao.WplaborDao;
 import com.jf_eam_project.Dao.WpmeterialDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.ui.activity.About_us_Activity;
-import com.jf_eam_project.ui.activity.DownloadActivity;
 import com.jf_eam_project.utils.MessageUtils;
 
-
 /**
- * 设置的fragment
+ * 设置界面
  */
-public class Setting_Fragment extends BaseFragment {
 
-    private RelativeLayout downlayout;
+public class SheZhi_Activity extends BaseActivity {
+
+    private static final String TAG = "SheZhi_Activity";
+    /**
+     * 标题*
+     */
+    private TextView titleText;
+    /**
+     * 返回按钮
+     **/
+    private ImageView backImageView;
+
+    /**
+     * 数据下载
+     **/
+    private TextView downlayout;
+    /**
+     * 清楚缓存
+     **/
     private RelativeLayout clearlayout;
-    private RelativeLayout about;
-    private RelativeLayout update;
+    /**
+     * 关于我们
+     **/
+    private TextView about;
+    /**
+     * 检查更新
+     **/
+    private TextView update;
     private ProgressDialog mProgressDialog;
     Intent intent;
 
-    public Setting_Fragment() {
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
+
+        findViewById();
+
+        initView();
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container,
-                false);
+    protected void findViewById() {
+        titleText = (TextView) findViewById(R.id.title_name);
+        backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        findByIdView(view);
-        setListener();
-        return view;
+        downlayout = (TextView) findViewById(R.id.down_text_id);
+        clearlayout = (RelativeLayout) findViewById(R.id.setting_data_clear);
+        about = (TextView) findViewById(R.id.about);
+        update = (TextView) findViewById(R.id.update);
     }
 
-    /**
-     * 初始化界面组件*
-     */
-    private void findByIdView(View view) {
-        downlayout = (RelativeLayout) view.findViewById(R.id.setting_download);
-        clearlayout = (RelativeLayout) view.findViewById(R.id.setting_data_clear);
-        about = (RelativeLayout) view.findViewById(R.id.about);
-        update = (RelativeLayout) view.findViewById(R.id.update);
-    }
-
-    /**
-     * 设置跳转监听
-     */
-    private void setListener() {
+    @Override
+    protected void initView() {
+        titleText.setText(getString(R.string.gzqx_text));
+        backImageView.setOnClickListener(backImageViewOnClickListener);
         downlayout.setOnClickListener(onClickListener);
         clearlayout.setOnClickListener(onClickListener);
         about.setOnClickListener(onClickListener);
         update.setOnClickListener(onClickListener);
     }
 
+
+    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    };
+
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.setting_download: //数据下载
-                    intent = new Intent(getActivity(), DownloadActivity.class);
+                case R.id.down_text_id: //数据下载
+                    intent = new Intent(SheZhi_Activity.this, DownloadActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.setting_data_clear: //清除缓存
                     clearData();
                     break;
                 case R.id.about: //关于
-                    intent = new Intent(getActivity(), About_us_Activity.class);
+                    intent = new Intent(SheZhi_Activity.this, About_us_Activity.class);
                     startActivity(intent);
                     break;
                 case R.id.update://检查更新
-                    mProgressDialog = ProgressDialog.show(getActivity(), null,
+                    mProgressDialog = ProgressDialog.show(SheZhi_Activity.this, null,
                             "正在检测更新，请耐心等候...", true, true);
                     mProgressDialog.setCanceledOnTouchOutside(false);
                     mProgressDialog.setCancelable(false);
@@ -105,16 +128,16 @@ public class Setting_Fragment extends BaseFragment {
 
     //清除基础数据
     private void clearData() {
-        mProgressDialog = ProgressDialog.show(getActivity(), null,
+        mProgressDialog = ProgressDialog.show(SheZhi_Activity.this, null,
                 getString(R.string.clearing), true, true);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setCancelable(false);
-        new WorkOrderDao(getActivity()).deleteall();
-        new WoactivityDao(getActivity()).deleteall();
-        new WplaborDao(getActivity()).deleteall();
-        new WpmeterialDao(getActivity()).deleteall();
-        new AssignmentDao(getActivity()).deleteall();
-        new LabtransDao(getActivity()).deleteall();
+        new WorkOrderDao(SheZhi_Activity.this).deleteall();
+        new WoactivityDao(SheZhi_Activity.this).deleteall();
+        new WplaborDao(SheZhi_Activity.this).deleteall();
+        new WpmeterialDao(SheZhi_Activity.this).deleteall();
+        new AssignmentDao(SheZhi_Activity.this).deleteall();
+        new LabtransDao(SheZhi_Activity.this).deleteall();
         mProgressDialog.dismiss();
     }
 
@@ -122,7 +145,7 @@ public class Setting_Fragment extends BaseFragment {
      * 手动更新*
      */
     private void updateVersion() {
-        BDAutoUpdateSDK.cpUpdateCheck(getActivity(), new MyCPCheckUpdateCallback());
+        BDAutoUpdateSDK.cpUpdateCheck(SheZhi_Activity.this, new MyCPCheckUpdateCallback());
 
     }
 
@@ -133,13 +156,13 @@ public class Setting_Fragment extends BaseFragment {
         public void onCheckUpdateCallback(AppUpdateInfo info, AppUpdateInfoForInstall infoForInstall) {
             if (infoForInstall != null && !TextUtils.isEmpty(infoForInstall.getInstallPath())) {
                 mProgressDialog.dismiss();
-                BDAutoUpdateSDK.uiUpdateAction(getActivity(), new MyUICheckUpdateCallback());
+                BDAutoUpdateSDK.uiUpdateAction(SheZhi_Activity.this, new MyUICheckUpdateCallback());
             } else if (info != null) {
                 mProgressDialog.dismiss();
-                BDAutoUpdateSDK.uiUpdateAction(getActivity(), new MyUICheckUpdateCallback());
+                BDAutoUpdateSDK.uiUpdateAction(SheZhi_Activity.this, new MyUICheckUpdateCallback());
 
             } else {
-                MessageUtils.showMiddleToast(getActivity(), "已是最新版本");
+                MessageUtils.showMiddleToast(SheZhi_Activity.this, "已是最新版本");
             }
 
             mProgressDialog.dismiss();
@@ -153,5 +176,6 @@ public class Setting_Fragment extends BaseFragment {
         }
 
     }
+
 
 }

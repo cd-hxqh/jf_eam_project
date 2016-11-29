@@ -31,7 +31,7 @@ public class DYMRDLMarkerView extends MarkerView {
         super(context, R.layout.custom_marker_view);
         this.fgsrudlviews=fgsrudlviews;
         tvContent = (TextView) findViewById(R.id.tvContent);
-        format = new DecimalFormat("###.0");
+        format = new DecimalFormat("###");
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
@@ -39,7 +39,7 @@ public class DYMRDLMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText(fgsrudlviews.get((int)highlight.getX()).SWDL+"kWh");
+        tvContent.setText(format.format(e.getY())+"万kWh");
 
         super.refreshContent(e, highlight);
     }

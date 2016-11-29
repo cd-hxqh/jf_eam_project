@@ -225,12 +225,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     userName = mUsername.getText().toString();
                     userPassWorld = mPassword.getText().toString();
-                    /**判断网络条件**/
-                    if (NetWorkHelper.isNetwork(LoginActivity.this)) {
-                        localLogin();
-                    } else {
-                        login();
-                    }
+
+//                    String ipAddress=AccountUtils.getIpAddress(LoginActivity.this);
+//
+//                    if(ipAddress.equals(Constants.HTTP_API_IP)) {
+
+
+                        /**判断网络条件**/
+                        if (NetWorkHelper.isNetwork(LoginActivity.this)) {
+//                        localLogin();
+                            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.error_network_disconnect));
+                        } else {
+                            login();
+                        }
+//                    }
+//                    else{
+//                        MessageUtils.showMiddleToast(LoginActivity.this, "请输入正确的服务器地址");
+//                    }
                 }
                 break;
 
@@ -318,7 +329,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startIntent() {
         Intent inetnt = new Intent();
-        inetnt.setClass(this, ElectricityActivity.class);
+        inetnt.setClass(this, MainNewActivity.class);
         startActivity(inetnt);
     }
 

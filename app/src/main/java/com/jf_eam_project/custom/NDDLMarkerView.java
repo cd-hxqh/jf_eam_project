@@ -42,9 +42,9 @@ public class NDDLMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         if(mark==0) {
-            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).SWDL + "kWh");
+            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).SWDL + "万kWh");
         }else if(mark==1){
-            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).XDL + "kWh");
+            tvContent.setText(fgsnudlviews.get((int) highlight.getX()).XDL + "万kWh");
         }
 
         super.refreshContent(e, highlight);

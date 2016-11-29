@@ -2,7 +2,6 @@ package com.jf_eam_project.ui.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +11,7 @@ import android.widget.TextView;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
-import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
-import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.ui.fragment.SSDL_fragment;
 import com.jf_eam_project.ui.fragment.SWDL_fragment;
 import com.jf_eam_project.ui.fragment.XDL_fragment;
@@ -102,25 +98,25 @@ public class ElectricityActivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        backImageView.setVisibility(View.GONE);
+        backImageView.setVisibility(View.VISIBLE);
         titleView.setText(R.string.dltj_text);
-        mainBtn.setVisibility(View.VISIBLE);
-        mainBtn.setOnClickListener(mainBtnOnClickListener);
+        mainBtn.setVisibility(View.GONE);
+
+        backImageView.setOnClickListener(backImageViewOnClickListener);
         swdlBtn.setOnClickListener(swdlBtnOnClickListener);
         ssdlBtn.setOnClickListener(ssdlBtnOnClickListener);
         xdlBtn.setOnClickListener(xdlBtnOnClickListener);
     }
 
-
-    private View.OnClickListener mainBtnOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent inetnt = new Intent();
-            inetnt.putExtra("mark",1);
-            inetnt.setClass(ElectricityActivity.this, MainActivity.class);
-            startActivity(inetnt);
+            finish();
         }
     };
+
+
+
 
     private View.OnClickListener swdlBtnOnClickListener = new View.OnClickListener() {
         @Override
@@ -228,40 +224,5 @@ public class ElectricityActivity extends BaseActivity {
 
 
 
-
-    /**
-     * 退出程序
-     */
-    public void showAlertDialog() {
-        final NormalDialog dialog = new NormalDialog(ElectricityActivity.this);
-        dialog.content("确定退出程序吗")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {
-
-
-                    @Override
-                    public void onBtnClick() {
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {
-                    @Override
-                    public void onBtnClick() {
-//                        dialog.dismiss();
-                        AppManager.AppExit(ElectricityActivity.this);
-                    }
-                });
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        showAlertDialog();
-    }
 
 }

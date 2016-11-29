@@ -1,19 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +17,7 @@ import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.jf_eam_project.R;
-import com.jf_eam_project.api.HttpManager;
-import com.jf_eam_project.api.HttpRequestHandler;
-import com.jf_eam_project.api.JsonUtils;
-import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Wfassignment;
-import com.jf_eam_project.utils.MessageUtils;
 
 /**
  * 流程审批详情
@@ -134,15 +120,15 @@ public class Wfm_Details_Activity extends BaseActivity {
     private View.OnClickListener approveOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            MaterialDialogOneBtn1();
+                MaterialDialogOneBtn1();
         }
     };
 
 
     private void MaterialDialogOneBtn1() {//审批工作流
         final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
                 .btnNum(2)
                 .content("是否填写输入意见")//
@@ -171,8 +157,8 @@ public class Wfm_Details_Activity extends BaseActivity {
 
     private void EditDialog(final boolean isok) {//输入审核意见
         final NormalEditTextDialog dialog = new NormalEditTextDialog(Wfm_Details_Activity.this);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
                 .btnNum(2)
                 .content(isok ? "通过" : "不通过")//
@@ -210,8 +196,8 @@ public class Wfm_Details_Activity extends BaseActivity {
     private void wfgoon(final String id, final String zx, final String desc) {
         mProgressDialog = ProgressDialog.show(Wfm_Details_Activity.this, null,
                 getString(R.string.inputing), true, true);
-        mProgressDialog.setCanceledOnTouchOutside(false);
-        mProgressDialog.setCancelable(false);
+//        mProgressDialog.setCanceledOnTouchOutside(false);
+//        mProgressDialog.setCancelable(false);
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {

@@ -38,13 +38,16 @@ public class XYMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText(format.format(e.getY())+"kWh");
+        tvContent.setText(format.format(e.getY())+"万kWh");
 
         super.refreshContent(e, highlight);
+
+
     }
 
     @Override
     public MPPointF getOffset() {
+
         return new MPPointF(-(getWidth() / 2), -getHeight());
     }
 }

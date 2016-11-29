@@ -38,9 +38,12 @@ public class HttpManager {
      */
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
-        Log.i(TAG,"username="+username+",password="+password);
+        Log.i(TAG, "username=" + username + ",password=" + password);
 
-        String loginIp = AccountUtils.getIpAddress(cxt) + "maximo/mobile/system/login";
+
+
+        String loginIp = AccountUtils.getIpAddress(cxt) + "mobile/system/login";
+
         Log.i(TAG, "loginIp=" + loginIp);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -52,7 +55,7 @@ public class HttpManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.i(TAG,"statusCode="+statusCode+",responseString="+responseString);
+                Log.i(TAG, "statusCode=" + statusCode + ",responseString=" + responseString);
                 SafeHandler.onFailure(handler, IMErrorType.errorMessage(cxt, IMErrorType.ErrorLoginFailure));
             }
 
@@ -72,9 +75,9 @@ public class HttpManager {
      */
     public static String getWfmUrl(String persionid, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','PROCESSNAME':'=UDNPWO,=INSPODJDQ,=INSPODJFJ,=INSPOE,=INSPOB,=INSPOA,=INSPOC,=INSPOD,=INSPOF,=UDGZTB,=UDQXTB" + "','ASSIGNSTATUS':'=活动'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'＝活动'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid +"','PROCESSNAME':'=UDNPWO,=INSPODJDQ,=INSPODJFJ,=INSPOE,=INSPOB,=INSPOA,=INSPOC,=INSPOD,=INSPOF,=UDGZTB,=UDQXTB" +  "','ASSIGNSTATUS':'＝活动'}"+ ",'sinorsearch':{'WFASSIGNMENTID':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'}}";
         }
     }
 
@@ -289,9 +292,9 @@ public class HttpManager {
     /**
      * 设置获取工作流状态接口*
      */
-    public static String getWfStatusUrl(int curpage, int showcount, String ownerid,String processname,String ownertable) {
+    public static String getWfStatusUrl(int curpage, int showcount, String ownerid, String processname, String ownertable) {
         return "{'appid':'" + Constants.WFINSTANCE_NAME + "','objectname':'" +
-                Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'"+processname+"','OWNERTABLE':'"+ownertable+"','OWNERID':'" + ownerid + "'}}";
+                Constants.WFINSTANCE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PROCESSNAME':'" + processname + "','OWNERTABLE':'" + ownertable + "','OWNERID':'" + ownerid + "'}}";
     }
 
     /**
@@ -538,10 +541,6 @@ public class HttpManager {
     }
 
 
-
-
-
-
     /**
      * 设置基础数据接口
      */
@@ -558,31 +557,34 @@ public class HttpManager {
     }
 
 
-
     /**
      * 分公司年度上网电量
      */
     public static String Fgsnudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUDLVIEW_NAME + "','option':'read'}";
     }
+
     /**
      * 分公司年度上网电量
      */
     public static String Fgsyudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUDLVIEW_NAME + "','option':'read'}";
     }
+
     /**
      * 分公司年度上网电量
      */
     public static String Fgsrudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSRUDLVIEW_NAME + "','option':'read'}";
     }
+
     /**
      * 分公司年度损失电量
      */
     public static String Fgsnussdlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUSSDLVIEW_NAME + "','option':'read'}";
     }
+
     /**
      * 分公司月度损失电量
      */
@@ -591,27 +593,13 @@ public class HttpManager {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<String> handler) {
-        Log.i(TAG,"data"+data);
-        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
+        Log.i(TAG, "data" + data);
+
+        String base_url = AccountUtils.getIpAddress(cxt) + "mobile/" + "common/api";
 
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -640,7 +628,7 @@ public class HttpManager {
      * 不分页获取信息方法*
      */
     public static void getData1(final Context cxt, String data, final HttpRequestHandler<String> handler) {
-        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
+        String base_url = AccountUtils.getIpAddress(cxt) + "mobile/" + "common/api";
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -701,9 +689,9 @@ public class HttpManager {
      * 解析返回的结果--分页*
      */
     public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-        String base_url = AccountUtils.getIpAddress(cxt) + "maximo/mobile/" + "common/api";
+        String base_url = AccountUtils.getIpAddress(cxt) + "mobile/" + "common/api";
 
-        Log.i(TAG, "base_url=" + base_url+",data="+data);
+        Log.i(TAG, "base_url=" + base_url + ",data=" + data);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -715,7 +703,7 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.i(TAG,"responseString="+responseString);
+                Log.i(TAG, "responseString=" + responseString);
 
                 Results result = JsonUtils.parsingResults(cxt, responseString);
                 if (result.getResultlist() == null) {

@@ -28,8 +28,8 @@ public class DrawerAdapter extends BaseAdapter {
             R.drawable.ic_udreport,
             R.drawable.ic_history,
             R.drawable.ic_qrcode,
-            R.drawable.ic_setting,
-            R.drawable.ic_exit
+            R.drawable.ic_kpi,
+            R.drawable.ic_setting
 
 
     };
