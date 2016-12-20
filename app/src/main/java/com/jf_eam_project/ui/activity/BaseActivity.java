@@ -1,6 +1,5 @@
 package com.jf_eam_project.ui.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,18 +11,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
-import com.jf_eam_project.utils.AccountUtils;
 
 
 public abstract class BaseActivity extends ActionBarActivity {
-
-    public static final String TAG = BaseActivity.class.getSimpleName();
-
+    public static final String TAG = "BaseActivity";
     protected InputMethodManager imm;
     private TelephonyManager tManager;
 
@@ -139,9 +134,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
-    public void DisplayToast(String str) {
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-    }
 
     protected void hideOrShowSoftInput(boolean isShowSoft, EditText editText) {
         if (isShowSoft) {
@@ -161,26 +153,12 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
 
-    //獲得設備信息
+    //获取设备ID
     protected String getDeviceId() throws Exception {
         String deviceId = tManager.getDeviceId();
 
         return deviceId;
 
-    }
-
-
-
-    /**
-     * 退出登陆*
-     */
-    public void exit(Context context) {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            AppManager.AppExit(context);
-        }
     }
 
 

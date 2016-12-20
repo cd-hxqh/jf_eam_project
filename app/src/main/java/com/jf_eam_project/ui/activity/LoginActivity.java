@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,7 +34,6 @@ import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.model.Person;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
-import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,9 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EditText mPassword;
     private Button mLogin;
     private ProgressDialog mProgressDialog;
-    //    private MemberModel mProfile;
     private CheckBox checkBox; //记住密码
-
     private boolean isRemember; //记住密码
 
     private TextView setIpTextView; //设置服务器地址
@@ -157,15 +153,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-
-    /**
-     * 设置服务器地址*
-     */
-    private void setIpAddress() {
-
-    }
-
-
     @Override
     protected void findViewById() {
         mUsername = (EditText) findViewById(R.id.user_login_id);
@@ -225,50 +212,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     userName = mUsername.getText().toString();
                     userPassWorld = mPassword.getText().toString();
-
-//                    String ipAddress=AccountUtils.getIpAddress(LoginActivity.this);
-//
-//                    if(ipAddress.equals(Constants.HTTP_API_IP)) {
-
-
-                        /**判断网络条件**/
-                        if (NetWorkHelper.isNetwork(LoginActivity.this)) {
-//                        localLogin();
-                            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.error_network_disconnect));
-                        } else {
-                            login();
-                        }
-//                    }
-//                    else{
-//                        MessageUtils.showMiddleToast(LoginActivity.this, "请输入正确的服务器地址");
-//                    }
+                    login();
                 }
                 break;
 
         }
-    }
-
-
-    /**
-     * 离线登陆
-     */
-    private void localLogin() {
-        String username = AccountUtils.getUserName(LoginActivity.this);
-        String password = AccountUtils.getUserPassword(LoginActivity.this);
-        if (TextUtils.isEmpty(username) && TextUtils.isEmpty(password)) {
-            // SharedPreferences中数据为空：首次登陆，必须访问网络
-            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.offline_login_text));
-            return;
-        }
-        if (username.equals(userName) && password.equals(userPassWorld)
-                ) {
-            // 密码校验正确，跳转到主页面
-            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_text));
-            startIntent();
-        } else {
-            MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.username_or_password_error));
-        }
-
     }
 
 
@@ -293,12 +241,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if (data.equals("用户名或密码错误")) {
                             return;
                         } else {
-
-
-//                        if (isRemember) {
                             AccountUtils.setChecked(LoginActivity.this, isRemember);
                             AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
-//                        }
                             getBaseApplication().setUsername(mUsername.getText().toString());
 
                             /**根据yy**/
@@ -329,7 +273,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startIntent() {
         Intent inetnt = new Intent();
-        inetnt.setClass(this, MainNewActivity.class);
+        inetnt.setClass(this, MainActivity.class);
         startActivity(inetnt);
     }
 

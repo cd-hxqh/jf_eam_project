@@ -63,10 +63,6 @@ public class SWDL_fragment extends BaseFragment {
     protected Typeface mTfLight;
 
 
-    /**
-     * 月份
-     **/
-    private String[] months = null;
 
     protected String[] mMonths = new String[]{
             "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"
@@ -330,22 +326,12 @@ public class SWDL_fragment extends BaseFragment {
                 return 0;
             }
         });
-
-
         lineChart.getAxisRight().setEnabled(false);
         // set data
         lineChart.setData(generateDataLine(fgsyudlviews));
-
         lineChart.animateX(750);
-
-
         lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(false);//
-
-//        YDDLMarkerView mv = new YDDLMarkerView(getActivity(), fgsyudlviews);
-//        mv.setChartView(lineChart); // For bounds control
-//        lineChart.setMarker(mv); // Set the marker to the chart
-
         LineXAxisValueFormatter lineXAxisValueFormatter = new LineXAxisValueFormatter(fgsyudlviews);
         XYMarkerView mv = new XYMarkerView(getActivity(), lineXAxisValueFormatter);
         mv.setChartView(lineChart); // For bounds control
@@ -444,10 +430,8 @@ public class SWDL_fragment extends BaseFragment {
 
         dayLineChart.getDescription().setEnabled(false);
         dayLineChart.setTouchEnabled(true); // 设置是否可以触摸
-//        dayLineChart.setDragEnabled(true);// 是否可以拖拽
         dayLineChart.setPinchZoom(false);//
         dayLineChart.setScaleEnabled(true);// 是否可以缩放
-//        dayLineChart.setScaleX(1.0f);
 
 
         /**设置X轴坐标**/
@@ -455,12 +439,14 @@ public class SWDL_fragment extends BaseFragment {
         XAxis xAxis = dayLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTfLight);
-        xAxis.setLabelCount(DateUtils.getDays() + 1, false);
+        xAxis.setLabelCount(DateUtils.getDays(), false);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setValueFormatter(dayAxisValueFormatter);
         xAxis.setLabelRotationAngle(1.0f);
+
+
 
 
         /**设置Y轴坐标**/

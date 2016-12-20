@@ -1,6 +1,5 @@
 package com.jf_eam_project.ui.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,13 +10,6 @@ import com.jf_eam_project.R;
 
 public class LoadActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE = 0; // 请求码
-
-    // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.INTERNET,
-    };
 
 
     @Override

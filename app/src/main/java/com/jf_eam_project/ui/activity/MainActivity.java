@@ -19,7 +19,7 @@ import com.jf_eam_project.manager.AppManager;
  * 新的主菜单信息
  */
 
-public class MainNewActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
     /**
@@ -125,7 +125,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener lcspLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, Wfment_Activity.class);
+            Intent intent = new Intent(MainActivity.this, Wfment_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -133,7 +133,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener gdglLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, WorkOrderActivity.class);
+            Intent intent = new Intent(MainActivity.this, WorkOrderActivity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -141,7 +141,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener xjglLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, XunJan_Activity.class);
+            Intent intent = new Intent(MainActivity.this, XunJan_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -149,7 +149,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener kcglLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, KuCun_Activity.class);
+            Intent intent = new Intent(MainActivity.this, KuCun_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -157,7 +157,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener cgglLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, CaiGou_Activity.class);
+            Intent intent = new Intent(MainActivity.this, CaiGou_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -165,7 +165,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener gzqxLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, GuZhang_Activity.class);
+            Intent intent = new Intent(MainActivity.this, GuZhang_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -173,7 +173,7 @@ public class MainNewActivity extends BaseActivity {
     private View.OnClickListener bdlsLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainNewActivity.this, Lishi_Activity.class);
+            Intent intent = new Intent(MainActivity.this, Lishi_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -182,7 +182,7 @@ public class MainNewActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent();
-            intent.setClass(MainNewActivity.this, MipcaActivityCapture.class);
+            intent.setClass(MainActivity.this, MipcaActivityCapture.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -191,7 +191,7 @@ public class MainNewActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent();
-            intent.setClass(MainNewActivity.this, ElectricityActivity.class);
+            intent.setClass(MainActivity.this, ElectricityActivity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -200,7 +200,7 @@ public class MainNewActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent();
-            intent.setClass(MainNewActivity.this, SheZhi_Activity.class);
+            intent.setClass(MainActivity.this, SheZhi_Activity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -210,7 +210,7 @@ public class MainNewActivity extends BaseActivity {
      * 退出程序
      */
     public void showAlertDialog() {
-        final NormalDialog dialog = new NormalDialog(MainNewActivity.this);
+        final NormalDialog dialog = new NormalDialog(MainActivity.this);
         dialog.content("确定退出程序吗")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -228,7 +228,7 @@ public class MainNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        AppManager.AppExit(MainNewActivity.this);
+                        AppManager.AppExit(MainActivity.this);
                     }
                 });
 

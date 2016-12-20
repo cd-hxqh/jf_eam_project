@@ -60,7 +60,7 @@
 
 
         <activity
-            android:name=".ui.activity.MainNewActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" />
 
@@ -503,5 +503,4 @@
 
 
     </application>
-
 </manifest>
