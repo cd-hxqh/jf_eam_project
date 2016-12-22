@@ -9,16 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.flyco.animation.BaseAnimatorSet;
-import com.flyco.animation.BounceEnter.BounceTopEnter;
-import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.jf_eam_project.R;
+import com.jf_eam_project.ui.fragment.FDSWDL_fragment;
 import com.jf_eam_project.ui.fragment.SSDL_fragment;
-import com.jf_eam_project.ui.fragment.SWDL_fragment;
 import com.jf_eam_project.ui.fragment.XDL_fragment;
 
 /**
- * 风电场电量统计
+ * 分公司风电场电量统计
  **/
 public class WindActivity extends BaseActivity {
     /**
@@ -42,9 +39,9 @@ public class WindActivity extends BaseActivity {
 
 
     /**
-     * 上网电量
+     * 风电场上网电量
      **/
-    private SWDL_fragment swdl_fragment;
+    private FDSWDL_fragment fdswdl_fragment;
     /**
      * 损失电量
      **/
@@ -68,12 +65,14 @@ public class WindActivity extends BaseActivity {
     private TextView xdlBtn;
 
 
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
-
-
-    /**分公司编号**/
+    /**
+     * 分公司编号
+     **/
     private String branch;
+    /**
+     * 分公司名称
+     **/
+    private String fgsdes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +87,13 @@ public class WindActivity extends BaseActivity {
     }
 
 
-    /**获取分公司电量**/
+    /**
+     * 获取分公司电量
+     **/
     private void getInitData() {
-        branch=getIntent().getStringExtra("branch");
-        Log.i("WindActivity","branch="+branch);
+        branch = getIntent().getStringExtra("branch");
+        fgsdes = getIntent().getStringExtra("fgsdes");
+        Log.i("WindActivity", "branch=" + branch);
     }
 
     @Override
@@ -109,10 +111,8 @@ public class WindActivity extends BaseActivity {
     @Override
     protected void initView() {
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
         backImageView.setVisibility(View.VISIBLE);
-        titleView.setText(R.string.dltj_text);
+        titleView.setText(fgsdes);
         mainBtn.setVisibility(View.GONE);
 
         backImageView.setOnClickListener(backImageViewOnClickListener);
@@ -127,8 +127,6 @@ public class WindActivity extends BaseActivity {
             finish();
         }
     };
-
-
 
 
     private View.OnClickListener swdlBtnOnClickListener = new View.OnClickListener() {
@@ -168,11 +166,11 @@ public class WindActivity extends BaseActivity {
                 // 当点击了上网tab时，
                 swdlBtn.setBackgroundColor(getResources().getColor(R.color.blue_color));
 
-                if (swdl_fragment == null) {
-                    swdl_fragment = new SWDL_fragment();
-                    transaction.add(R.id.content, swdl_fragment);
+                if (fdswdl_fragment == null) {
+                    fdswdl_fragment = new FDSWDL_fragment();
+                    transaction.add(R.id.content, fdswdl_fragment);
                 } else {
-                    transaction.show(swdl_fragment);
+                    transaction.show(fdswdl_fragment);
                 }
                 break;
             case 1:
@@ -195,11 +193,11 @@ public class WindActivity extends BaseActivity {
                 break;
 
             default:
-                if (swdl_fragment == null) {
-                    swdl_fragment = new SWDL_fragment();
-                    transaction.add(R.id.content, swdl_fragment);
+                if (fdswdl_fragment == null) {
+                    fdswdl_fragment = new FDSWDL_fragment();
+                    transaction.add(R.id.content, fdswdl_fragment);
                 } else {
-                    transaction.show(swdl_fragment);
+                    transaction.show(fdswdl_fragment);
                 }
                 break;
         }
@@ -213,8 +211,8 @@ public class WindActivity extends BaseActivity {
      * @param transaction 用于对Fragment执行操作的事务
      */
     private void hideFragments(FragmentTransaction transaction) {
-        if (swdl_fragment != null) {
-            transaction.hide(swdl_fragment);
+        if (fdswdl_fragment != null) {
+            transaction.hide(fdswdl_fragment);
         }
         if (ssdl_fragment != null) {
             transaction.hide(ssdl_fragment);
@@ -234,8 +232,6 @@ public class WindActivity extends BaseActivity {
         ssdlBtn.setBackgroundColor(getResources().getColor(R.color.color0));
         xdlBtn.setBackgroundColor(getResources().getColor(R.color.color0));
     }
-
-
 
 
 }

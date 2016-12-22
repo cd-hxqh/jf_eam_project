@@ -1,8 +1,14 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 
     defaultConfig {
         applicationId "com.jf_eam_project"

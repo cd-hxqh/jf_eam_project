@@ -10,6 +10,7 @@ import com.jf_eam_project.api.ig.json.impl.Craftrate_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Fdcnudlview_jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsnudlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsnussdlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsrudlview_Jsonhelper;
@@ -50,6 +51,7 @@ import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
+import com.jf_eam_project.model.Fdcnudlview;
 import com.jf_eam_project.model.Fgsnudlview;
 import com.jf_eam_project.model.Fgsnussdlview;
 import com.jf_eam_project.model.Fgsrudlview;
@@ -338,4 +340,11 @@ public class Ig_Json_Model {
     public static ArrayList<Fgsyussdlview> parsingFgsyussdlview(String input) throws IOException {
         return Fgsyussdlview_Jsonhelper.parseFromJsonList(input);
     }
+
+    /**解析风电场年度上网电量**/
+    public static ArrayList<Fdcnudlview> parsingFdcnudlview(String input) throws IOException {
+        return Fdcnudlview_jsonhelper.parseFromJsonList(input);
+    }
+
+
 }

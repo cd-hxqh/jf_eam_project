@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * 上网电量**
  */
 
-public class SWDL_fragment extends BaseFragment {
+public class FDSWDL_fragment extends BaseFragment {
 
     private static final String TAG="SWDL_fragment";
 
@@ -71,7 +71,7 @@ public class SWDL_fragment extends BaseFragment {
 
 
     /**
-     * 分公司年度电量统计
+     * 风电场年度电量统计
      **/
     private ArrayList<Fgsnudlview> fgsnudlviews=new ArrayList<Fgsnudlview>();
 
@@ -202,7 +202,6 @@ public class SWDL_fragment extends BaseFragment {
                     return;
                 Intent i = new Intent(getActivity(), WindActivity.class);
                 i.putExtra("branch", fgsnudlviews.get((int) h.getX()).BRANCH);
-                i.putExtra("fgsdes", fgsnudlviews.get((int) h.getX()).FGSDES);
                 startActivityForResult(i, 0);
             }
 
