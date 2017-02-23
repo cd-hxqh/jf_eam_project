@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * 资产详情
  */
 public class AssetsDetailActivity extends BaseActivity {
-
     private static final String TAG = "AssetsDetailActivity";
 
     /**
