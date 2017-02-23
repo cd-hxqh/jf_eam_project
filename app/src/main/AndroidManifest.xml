@@ -475,6 +475,10 @@
             android:name=".ui.activity.SheZhi_Activity"
             android:label="@string/sz_text"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Meterial_AddActivity"
+            android:label="@string/meterial_title"
+            android:screenOrientation="portrait" />
 
         <!-- 百度自动更新设置 -->
         <meta-data

@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.WorkOrder;
 
 /**
@@ -40,6 +38,7 @@ public class Material_Details_Activity extends BaseActivity {
      */
     private TextView wonumText; //领料单号
     private TextView descriptionText; //描述
+    private TextView udwonumText; //关联工单号
     private TextView displaynameText; //申请人
     private TextView createdateText; //创建时间
     private TextView udescriptionText; //分公司
@@ -84,6 +83,7 @@ public class Material_Details_Activity extends BaseActivity {
 
         wonumText = (TextView) findViewById(R.id.material_title_text_id);
         descriptionText = (TextView) findViewById(R.id.inventory_description_text);
+        udwonumText = (TextView) findViewById(R.id.udwonum_text_id);
         displaynameText = (TextView) findViewById(R.id.material_displayname_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
         udescriptionText = (TextView) findViewById(R.id.description_text_id);
@@ -105,6 +105,7 @@ public class Material_Details_Activity extends BaseActivity {
         if (workOrder != null) {
             wonumText.setText(workOrder.getWonum() == null ? "" : workOrder.getWonum());
             descriptionText.setText(workOrder.getDescription() == null ? "" : workOrder.getDescription());
+            udwonumText.setText(workOrder.getUdwonum() == null ? "" : workOrder.getUdwonum());
             displaynameText.setText(workOrder.getReportedby() == null ? "" : workOrder.getReportedby());
             createdateText.setText(workOrder.getCreatedate() == null ? "" : workOrder.getCreatedate());
             udescriptionText.setText(workOrder.getUddeptdescription() == null ? "" : workOrder.getUddeptdescription());

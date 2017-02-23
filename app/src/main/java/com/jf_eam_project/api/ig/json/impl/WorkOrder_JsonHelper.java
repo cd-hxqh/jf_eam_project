@@ -177,8 +177,6 @@ public final class WorkOrder_JsonHelper
             instance.udbelong_description = jp.getValueAsString();
             return true;
         }
-
-
         else if ("DESCRIPTION_LONGDESCRIPTION".equals(fieldName)) {
             instance.description_longdescription = jp.getValueAsString();
             return true;
@@ -202,6 +200,9 @@ public final class WorkOrder_JsonHelper
             return true;
         } else if ("SHUTDOWN".equals(fieldName)) {
             instance.shutdown = jp.getValueAsString();
+            return true;
+        }else if ("UDWONUM".equals(fieldName)) {
+            instance.udwonum = jp.getValueAsString();
             return true;
         }
 

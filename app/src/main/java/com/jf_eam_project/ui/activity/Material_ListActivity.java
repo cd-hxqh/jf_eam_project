@@ -28,6 +28,7 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
  */
 public class Material_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG="Material_ListActivity";
+    private static final String TAG = "Material_ListActivity";
     /**
      * 标题*
      */
@@ -49,8 +50,11 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
     private ImageView backImage;
 
     /**
-     * 菜单按钮*
-     */
+     * 新增
+     **/
+    private ImageView addImagView;
+
+
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
@@ -60,8 +64,11 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
     private String searchText = "";
     private int page = 1;
 
-    /**资产编号**/
+    /**
+     * 资产编号
+     **/
     private String assetsNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +83,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImage = (ImageView) findViewById(R.id.title_back_id);
+        addImagView = (ImageView) findViewById(R.id.title_add);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
@@ -86,7 +94,15 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
     protected void initView() {
         setSearchEdit();
         titlename.setText(R.string.material_title_text);
-
+        addImagView.setImageResource(R.drawable.add_ico);
+        addImagView.setVisibility(View.VISIBLE);
+        addImagView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Material_ListActivity.this, Meterial_AddActivity.class);
+                startActivity(intent);
+            }
+        });
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +115,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this,2);
+        workListAdapter = new WorkListAdapter(this, 2);
         recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
@@ -113,7 +129,8 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
     }
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getMaterialUrl( search, page, 20), new HttpRequestHandler<Results>() {
+        Log.i(TAG,"部门="+AccountUtils.getDepartment(Material_ListActivity.this));
+        HttpManager.getDataPagingInfo(this, HttpManager.getMaterialUrl(search, AccountUtils.getDepartment(Material_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -130,7 +147,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
                             nodatalayout.setVisibility(View.VISIBLE);
                         } else {
                             if (page == 1) {
-                                workListAdapter = new WorkListAdapter(Material_ListActivity.this,2);
+                                workListAdapter = new WorkListAdapter(Material_ListActivity.this, 2);
                                 recyclerView.setAdapter(workListAdapter);
                                 nodatalayout.setVisibility(View.GONE);
                             }
@@ -174,7 +191,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     refresh_layout.setRefreshing(true);
                     searchText = search.getText().toString();
-                    workListAdapter = new WorkListAdapter(Material_ListActivity.this,2);
+                    workListAdapter = new WorkListAdapter(Material_ListActivity.this, 2);
                     recyclerView.setAdapter(workListAdapter);
                     getData(searchText);
                     return true;

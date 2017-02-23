@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
+ * 工单Adapter
  */
 public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHolder> {
     Context mContext;
@@ -92,7 +93,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cMark == 2) {
+                if (cMark == 2) {//领料单详情
                     Intent intent = new Intent(mContext, Material_Details_Activity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("workOrder", workOrder);
@@ -105,13 +106,13 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 } else {
-                    if (workOrder.isnew) {
+                    if (workOrder.isnew) {//工单新增
                         Intent intent = new Intent(mContext, Work_AddNewActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("workOrder", workOrder);
                         intent.putExtras(bundle);
                         mContext.startActivity(intent);
-                    } else {
+                    } else {//工单详情
                         Intent intent = new Intent(mContext, Work_DetailsActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("workOrder", workOrder);

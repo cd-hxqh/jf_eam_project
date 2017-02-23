@@ -98,7 +98,7 @@ public class AddUdinspoActivity extends BaseActivity {
 
     StringBuffer sb;
 
-    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<DialogMenuItem>();
     private String[] inspotypeTexts;
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;

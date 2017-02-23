@@ -305,10 +305,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ArrayList<Person> items = null;
 
                 try {
+                    Log.i(TAG,"data="+data);
                     items = Ig_Json_Model.parsingPerson(data);
                     if (items == null || items.isEmpty()) {
 
                     } else {
+                        AccountUtils.setPerson(LoginActivity.this, items.get(0));
                         new PersonDao(LoginActivity.this).create(items);
                     }
                 } catch (IOException e) {

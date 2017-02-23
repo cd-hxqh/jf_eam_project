@@ -5,7 +5,7 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.1'
     // resourcePrefix 'mpcht'
     defaultConfig {
         minSdkVersion 9
@@ -25,6 +25,8 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true // this prevents "not mocked" error
     }
+
+
 }
 
 repositories {
@@ -38,7 +40,7 @@ dependencies {
     //compile 'com.android.support:support-v4:19.+'
     //provided 'io.realm:realm-android:0.87.5' // "optional" dependency to realm-database API
     testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile 'org.mockito:mockito-core:1.9.5'
 }
 
 android.libraryVariants.all { variant ->

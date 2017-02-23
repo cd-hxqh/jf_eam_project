@@ -27,6 +27,9 @@
     <string name="logined_member_personId">logined_member_personId</string>
 
     <string name="ip_address">ip_address</string>
+    <string name="department">department</string>
+    <string name="departmentms">departmentms</string>
+    <string name="displayname">displayname</string>
     <string name="login_error_empty_user">用户名不能为空</string>
     <string name="login_error_empty_passwd">密码不能为空</string>
 
@@ -278,6 +281,7 @@
     <string name="title_activity_po_details_">订单详情</string>
     <string name="po_num_title">PO:</string>
     <string name="po_description_text">描述:</string>
+    <string name="udwonum_text">关联工单号:</string>
     <string name="po_potype_title">类型:</string>
     <string name="po_siteid_title">地点:</string>
     <string name="po_status_title">状态:</string>
@@ -673,6 +677,8 @@
     <string name="bdls_text">本地历史</string>
     <string name="tmsm_text">二维码/条码</string>
     <string name="sz_text">设置</string>
+    <!--新建领料单-->
+    <string name="meterial_title">新建领料单</string>
 
 
 </resources>

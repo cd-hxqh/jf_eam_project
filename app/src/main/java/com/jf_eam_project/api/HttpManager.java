@@ -14,7 +14,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import org.apache.http.Header;
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -39,7 +39,6 @@ public class HttpManager {
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
         Log.i(TAG, "username=" + username + ",password=" + password);
-
 
 
         String loginIp = AccountUtils.getIpAddress(cxt) + "mobile/system/login";
@@ -77,7 +76,7 @@ public class HttpManager {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','PROCESSNAME':'=UDNPWO,=INSPODJDQ,=INSPODJFJ,=INSPOE,=INSPOB,=INSPOA,=INSPOC,=INSPOD,=INSPOF,=UDGZTB,=UDQXTB" + "','ASSIGNSTATUS':'=活动'}}";
         } else {
-            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid +"','PROCESSNAME':'=UDNPWO,=INSPODJDQ,=INSPODJFJ,=INSPOE,=INSPOB,=INSPOA,=INSPOC,=INSPOD,=INSPOF,=UDGZTB,=UDQXTB" +  "','ASSIGNSTATUS':'＝活动'}"+ ",'sinorsearch':{'WFASSIGNMENTID':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.WFM_APPID + "','objectname':'" + Constants.WFM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','PROCESSNAME':'=UDNPWO,=INSPODJDQ,=INSPODJFJ,=INSPOE,=INSPOB,=INSPOA,=INSPOC,=INSPOD,=INSPOF,=UDGZTB,=UDQXTB" + "','ASSIGNSTATUS':'＝活动'}" + ",'sinorsearch':{'WFASSIGNMENTID':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'}}";
         }
     }
 
@@ -426,13 +425,23 @@ public class HttpManager {
     /**
      * 设置领料单接口*
      */
-    public static String getMaterialUrl(String search, int curpage, int showcount) {
-        if (search.equals("")) {
-            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM DESC'}";
+    public static String getMaterialUrl(String search, String udbelong, int curpage, int showcount) {
+        if (udbelong.equals("01")) {
+            if (search.equals("")) {
+                return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) desc','condition':{'UDAPPTYPE':'=UDMATAPP'}}";
+            } else {
+                return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) desc','condition':{'UDAPPTYPE':'=UDMATAPP'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+            }
         } else {
-            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'" + search + "'}}";
+            if (search.equals("")) {
+                return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) desc','condition':{'UDAPPTYPE':'=UDMATAPP','UDBELONG':'=" + udbelong + "'}}";
+            } else {
+                return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) desc','condition':{'UDAPPTYPE':'=UDMATAPP','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+            }
         }
 
     }
@@ -537,7 +546,7 @@ public class HttpManager {
      * 根据Perisonid获取Persion信息
      */
     public static String getPersion(String perisonid) {
-        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','option':'read','condition':{'PERSONID':'" + perisonid + "'}}";
+        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','option':'read','condition':{'PERSONID':'=" + perisonid + "'}}";
     }
 
 
@@ -601,6 +610,7 @@ public class HttpManager {
 
         String base_url = AccountUtils.getIpAddress(cxt) + "mobile/" + "common/api";
 
+        Log.i(TAG, "base_url=" + base_url);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();

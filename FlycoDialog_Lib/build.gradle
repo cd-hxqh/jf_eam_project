@@ -20,13 +20,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':FlycoAnimation_Lib')
     //    compile 'com.flyco.animation:FlycoAnimation_Lib:1.0.0'
-}
+  }
 
 //def siteUrl = 'https://github.com/H07000223'  // 项目的主页
 //def gitUrl = 'https://github.com/H07000223'   // Git仓库的url

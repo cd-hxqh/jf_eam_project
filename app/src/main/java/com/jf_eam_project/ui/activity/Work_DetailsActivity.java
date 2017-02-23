@@ -553,9 +553,12 @@ public class Work_DetailsActivity extends BaseActivity {
             String updataInfo = null;
             if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
                 updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWplaborList(), getWpmaterialList(), getAssignmentList(), null);
+
             } else if (workOrder.status.equals(Constants.APPROVALED)) {
                 updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
             }
+
+            Log.i(TAG,"updataInfo="+updataInfo);
             final String finalUpdataInfo = updataInfo;
             new AsyncTask<String, String, String>() {
                 @Override

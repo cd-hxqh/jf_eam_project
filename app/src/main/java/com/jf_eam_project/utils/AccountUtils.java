@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.model.Person;
 
 
 /**
@@ -152,5 +153,40 @@ public class AccountUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
         return sharedPreferences.getString(cxt.getString(R.string.ip_address), "");
     }
+
+
+
+
+    /**
+     * 获取部门编号*
+     */
+    public static void setPerson(Context cxt, Person person) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putString(cxt.getString(R.string.department), person.getDepartment()).putString(cxt.getString(R.string.departmentms), person.getDepartmentms())
+                .putString(cxt.getString(R.string.displayname), person.getDisplayname()).commit();
+
+    }
+
+    /**
+     * 部门编号-分公司*
+     */
+    public static String getDepartment(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getString(cxt.getString(R.string.department), "");
+    }
+    /**
+     * 部门名称-分公司*
+     */
+    public static String getDepartmentms(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getString(cxt.getString(R.string.departmentms), "");
+    }
+
+
+
+
 
 }

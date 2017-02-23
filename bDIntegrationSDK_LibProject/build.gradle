@@ -13,6 +13,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
 }
 
 dependencies {
@@ -21,4 +22,5 @@ dependencies {
     compile files('libs/BDAutoUpdateSDK_20150605_V1.2.0.jar')
     compile files('libs/need_lib.jar')
     compile files('libs/patchupdate.jar')
+
 }

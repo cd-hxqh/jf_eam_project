@@ -1,17 +1,13 @@
 package com.jf_eam_project.ui.activity;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -48,9 +43,7 @@ import com.jf_eam_project.R;
 import com.jf_eam_project.api.JsonUtils;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
-import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.Webservice_result;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.model.Wplabor;
@@ -60,15 +53,8 @@ import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
-import org.apache.commons.lang3.math.NumberUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by think on 2015/11/30.
@@ -176,7 +162,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private void geiIntentData() {
         if (getIntent().hasExtra("worktype")) {
             workOrder.setUdwotype(getIntent().getStringExtra("worktype"));
-        }else {
+        } else {
             workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
         }
     }
@@ -231,12 +217,12 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
         wonumlayout.setVisibility(View.GONE);
-        if (workOrder.ishistory){
+        if (workOrder.ishistory) {
             description.setText(workOrder.description);
 //        parent.setText(workOrder.parent);
-            if(workOrder.udwotype.equals("PLAN")){
+            if (workOrder.udwotype.equals("PLAN")) {
                 udwotype.setText(getString(R.string.work_plan_type));
-            }else if(workOrder.udwotype.equals("UNPLAN")){
+            } else if (workOrder.udwotype.equals("UNPLAN")) {
                 udwotype.setText(getString(R.string.work_unplan_type));
             }
 
@@ -246,7 +232,7 @@ public class Work_AddNewActivity extends BaseActivity {
             locationdesc.setText(workOrder.locationdesc);
             status.setText(workOrder.status);
 //        statusdate.setText(workOrder.statusdate);
-            isxq.setChecked(workOrder.isxq!=null&&workOrder.isxq.equals("Y"));
+            isxq.setChecked(workOrder.isxq != null && workOrder.isxq.equals("Y"));
             isyhpc.setChecked(workOrder.isyhpc != null && workOrder.isyhpc.equals("Y"));
             lctype.setText(workOrder.lctype);
             powerloss.setText(workOrder.powerloss);
@@ -270,11 +256,11 @@ public class Work_AddNewActivity extends BaseActivity {
             actfinish.setText(workOrder.actfinish);
             reportedby.setText(workOrder.reportedby);
             reportdate.setText(workOrder.reportdate);
-        }else {
+        } else {
             workOrder.isnew = true;
-            if(workOrder.udwotype.equals("PLAN")){
+            if (workOrder.udwotype.equals("PLAN")) {
                 udwotype.setText(getString(R.string.work_plan_type));
-            }else if(workOrder.udwotype.equals("UNPLAN")){
+            } else if (workOrder.udwotype.equals("UNPLAN")) {
                 udwotype.setText(getString(R.string.work_unplan_type));
             }
 //            udwotype.setText(workOrder.udwotype);
@@ -471,6 +457,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     closeProgressDialog();
                 } else {
                     final String updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wplaborList, wpmaterialList, assignmentList, null);
+                    Log.i(TAG,"updataInfo="+updataInfo);
                     new AsyncTask<String, String, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
@@ -484,13 +471,13 @@ public class Work_AddNewActivity extends BaseActivity {
                             super.onPostExecute(s);
                             if (s == null || s.equals("")) {
                                 MessageUtils.showMiddleToast(Work_AddNewActivity.this, "新增工单失败");
-                            } else if (!NumberUtils.isDigits(s)) {
+                            } else if (!s.isEmpty()) {
                                 MessageUtils.showMiddleToast(Work_AddNewActivity.this, s);
                             } else {
                                 Toast.makeText(Work_AddNewActivity.this, "新增工单" + s + "成功", Toast.LENGTH_SHORT).show();
                                 wonumlayout.setVisibility(View.VISIBLE);
                                 wonum.setText(s);
-                                if (workOrder.ishistory){
+                                if (workOrder.ishistory) {
                                     new WorkOrderDao(Work_AddNewActivity.this).deleteById(workOrder.id);
                                 }
                             }
@@ -559,7 +546,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private WorkOrder getWorkOrder() {
         workOrder.wonum = "";
         workOrder.description = description.getText().toString();
-        workOrder.udwotype = udwotype.getText().toString();
+//        workOrder.udwotype = workOrder.udwotype;
         workOrder.assetnum = assetnum.getText().toString();
         workOrder.assetdesc = assetdesc.getText().toString();
         workOrder.location = location.getText().toString();
@@ -568,8 +555,8 @@ public class Work_AddNewActivity extends BaseActivity {
 //        workOrder.statusdate = statusdate.getText().toString();
         workOrder.isxq = isxq.isChecked() ? "Y" : "N";
         workOrder.isyhpc = isyhpc.isChecked() ? "Y" : "N";
-        workOrder.issuematerial = issuematerial.isChecked()?"Y":"N";
-        workOrder.shutdown = shutdown.isChecked()?"Y":"N";
+        workOrder.issuematerial = issuematerial.isChecked() ? "Y" : "N";
+        workOrder.shutdown = shutdown.isChecked() ? "Y" : "N";
         workOrder.description_longdescription = longdescription.getText().toString().trim();
         workOrder.lctype = lctype.getText().toString();
         workOrder.powerloss = powerloss.getText().toString().trim();

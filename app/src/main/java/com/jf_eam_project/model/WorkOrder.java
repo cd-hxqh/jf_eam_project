@@ -154,6 +154,9 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "shutdown")
     @DatabaseField(columnName = "shutdown")
     public String shutdown;//停机
+    @JsonField(fieldName = "udwonum")
+    @DatabaseField(columnName = "udwonum")
+    public String udwonum;//关联工单号
 
     public String getWonum() {
         return wonum;
@@ -356,5 +359,11 @@ public class WorkOrder extends Entity {
         this.reportedby = reportedby;
     }
 
+    public String getUdwonum() {
+        return udwonum;
+    }
 
+    public void setUdwonum(String udwonum) {
+        this.udwonum = udwonum;
+    }
 }

@@ -2,23 +2,14 @@ package com.jf_eam_project.ui.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,9 +26,7 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.ui.adapter.UdinspoListadapter;
 import com.jf_eam_project.ui.adapter.UdinspoLocationadapter;
-import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
@@ -588,9 +577,8 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                         @Override
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
-
-
                             mProgressDialog.dismiss();
+                            Log.i(TAG,"s="+s);
                             try {
                                 JSONObject jsonObject = new JSONObject(s);
                                 String success = jsonObject.getString("status");
