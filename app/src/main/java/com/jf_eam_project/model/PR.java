@@ -40,6 +40,8 @@ public class PR extends Entity {
     public String totalcost;//成本总计
     @JsonField(fieldName = "currencycode")
     public String currencycode;//货币
+    @JsonField(fieldName = "udbelong")
+    public String udbelong;//运行单位
 
 
     public String getDescription() {
@@ -144,5 +146,13 @@ public class PR extends Entity {
 
     public void setCurrencycode(String currencycode) {
         this.currencycode = currencycode;
+    }
+
+    public String getUdbelong() {
+        return udbelong;
+    }
+
+    public void setUdbelong(String udbelong) {
+        this.udbelong = udbelong;
     }
 }

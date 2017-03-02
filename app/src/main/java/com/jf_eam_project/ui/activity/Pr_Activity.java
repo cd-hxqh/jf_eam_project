@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,10 +26,9 @@ import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.PR;
-import com.jf_eam_project.model.Po;
-import com.jf_eam_project.ui.adapter.PoListAdapter;
 import com.jf_eam_project.ui.adapter.PrListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
     /**
      * 菜单按钮*
      */
-    private ImageView menuImageView;
+    private ImageView addImageView;
 
 
     LinearLayoutManager layoutManager;
@@ -98,7 +98,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-        menuImageView = (ImageView) findViewById(R.id.title_add);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -112,8 +112,9 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
 
         titlename.setText(getString(R.string.pr_title_text));
-        menuImageView.setImageResource(R.drawable.ic_drawer);
-//        menuImageView.setVisibility(View.VISIBLE);
+        addImageView.setImageResource(R.drawable.add_ico);
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setOnClickListener(addImageViewOnClickListener);
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
 
@@ -139,6 +140,15 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
         @Override
         public void onClick(View v) {
             finish();
+        }
+    };
+
+
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Pr_Activity.this, Pr_AddActivity.class);
+            startActivityForResult(intent, 0);
         }
     };
 
@@ -191,7 +201,7 @@ public class Pr_Activity extends BaseActivity implements SwipeRefreshLayout.OnRe
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getPrUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getPrUrl(search, AccountUtils.getDepartment(Pr_Activity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);

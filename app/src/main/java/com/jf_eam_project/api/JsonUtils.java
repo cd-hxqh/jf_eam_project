@@ -7,6 +7,7 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Labtrans;
+import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Woactivity;
 import com.jf_eam_project.model.WorkOrder;
@@ -32,6 +33,7 @@ public class JsonUtils {
      * 解析登录信息*
      */
     public static String parsingAuthStr(final Context cxt, String data) {
+        Log.i(TAG,"data="+data);
         String isSuccess = null;
         String errmsg = null;
         try {
@@ -450,6 +452,68 @@ public class JsonUtils {
             return null;
         }
         return jsonArray;
+    }
+
+
+
+    /**
+     * 封装Po的json
+     */
+    public static String potoJson(Po po) {
+
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("DESCRIPTION", po.description);  //描述
+            json.put("PURCHASEAGENT", po.purchaseagent); //录入人
+            json.put("ORDERDATE", po.orderdate); //录入日期
+            json.put("BUYERCOMPANY", po.buyercompany); //买方公司
+            json.put("CONTRACTREFNUM", po.contractrefnum); //合同引用
+            json.put("REQUIREDDATE", po.requireddate);//计划到货日期
+            json.put("FOLLOWUPDATE", po.followupdate);//实际到货日期
+            json.put("PRETAXTOTAL", po.pretaxtotal);////税前总计
+            json.put("TOTALTAX1", po.totaltax1);//税款总计
+            json.put("TOTALCOST", po.totalcost);//成本总计
+            json.put("CURRENCYCODE", po.currencycode);//货币
+            json.put("VENDOR", po.vendor);//供应商
+            json.put("CONTACT", po.contact);//联系人
+            json.put("SITEID", po.siteid);//站点
+            json.put("UDAPPNAME", po.udappname);//应用程序名称
+            json.put("BRANCH", po.branch);//分公司
+            json.put("UDBELONG", po.udbelong);//运行单位
+
+
+            JSONArray jsonArray = new JSONArray();
+            json.put("relationShip", jsonArray);
+            return json.toString();
+
+        } catch (JSONException e) {
+            return null;
+        }
+
+    }
+
+
+
+    /**
+     * 解析新增采购单返回信息
+     *
+     * @param data
+     * @return
+     */
+    public static String parsingInsertPO(String data) {
+        String woNum = null;
+        try {
+            JSONObject object = new JSONObject(data);
+            if (object.has("success") && object.getString("success").equals("成功")) {
+                if (object.has("PONUM")) {
+                    woNum = object.getString("PONUM");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return woNum;
     }
 
 

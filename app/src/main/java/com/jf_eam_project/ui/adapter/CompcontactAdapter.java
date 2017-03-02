@@ -1,8 +1,5 @@
 package com.jf_eam_project.ui.adapter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Invoice;
-import com.jf_eam_project.ui.activity.Invoice_Details_Activity;
+import com.jf_eam_project.model.Compcontact;
+import com.jf_eam_project.ui.activity.Compcontact_Choose_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +18,13 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 发票
+ * 联系人
  */
-public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.ViewHolder> {
-    Context mContext;
-    List<Invoice> invoices = new ArrayList<>();
-
-    public InvoiceListAdapter(Context context) {
-        this.mContext = context;
+public class CompcontactAdapter extends RecyclerView.Adapter<CompcontactAdapter.ViewHolder> {
+    Compcontact_Choose_Activity activity;
+    List<Compcontact> curList = new ArrayList<>();
+    public CompcontactAdapter(Compcontact_Choose_Activity activity) {
+        this.activity=activity;
     }
 
 
@@ -40,26 +36,22 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Invoice invoice = invoices.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.invoice_title_text));
-        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
-        holder.itemNum.setText(invoice.getInvoicenum());
-        holder.itemDesc.setText(invoice.getDescription());
+        final Compcontact compcontact = curList.get(position);
+        holder.itemNumTitle.setText(R.string.contact_text);
+        holder.itemDescTitle.setText(R.string.voicephone_text);
+        holder.itemNum.setText(compcontact.getContact());
+        holder.itemDesc.setText(compcontact.getVoicephone());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Invoice_Details_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("invoice", invoice);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                activity.responseCompcontactData(compcontact);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return invoices.size();
+        return curList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,31 +91,31 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
         }
     }
 
-    public void update(ArrayList<Invoice> data, boolean merge) {
-        if (merge && invoices.size() > 0) {
-            for (int i = 0; i < invoices.size(); i++) {
-                Invoice invoice = invoices.get(i);
+    public void update(ArrayList<Compcontact> data, boolean merge) {
+        if (merge && curList.size() > 0) {
+            for (int i = 0; i < curList.size(); i++) {
+                Compcontact compcontact = curList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == invoice) {
+                    if (data.get(j) == compcontact) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(invoice);
+                data.add(compcontact);
             }
         }
-        invoices = data;
+        curList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Invoice> data) {
+    public void adddate(ArrayList<Compcontact> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!invoices.contains(data.get(i))) {
-                    invoices.add(data.get(i));
+                if (!curList.contains(data.get(i))) {
+                    curList.add(data.get(i));
                 }
             }
         }
@@ -132,8 +124,8 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
 
 
     public void removeAllData() {
-        if (invoices.size() > 0) {
-            invoices.removeAll(invoices);
+        if (curList.size() > 0) {
+            curList.removeAll(curList);
         }
     }
 }

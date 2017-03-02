@@ -28,8 +28,9 @@
 
     <string name="ip_address">ip_address</string>
     <string name="department">department</string>
-    <string name="departmentms">departmentms</string>
     <string name="displayname">displayname</string>
+    <string name="departmentms">departmentms</string>
+    <string name="locationsite">locationsite</string>
     <string name="login_error_empty_user">用户名不能为空</string>
     <string name="login_error_empty_passwd">密码不能为空</string>
 
@@ -679,6 +680,26 @@
     <string name="sz_text">设置</string>
     <!--新建领料单-->
     <string name="meterial_title">新建领料单</string>
+    <!--采购订单-->
+    <string name="lrr_text">录入人:</string>
+    <string name="lrrq_text">录入日期:</string>
+    <string name="contractrefnum_text">合同引用:</string>
+    <string name="requireddate_text">计划到货日期:</string>
+    <string name="followupdate_text">实际到货日期:</string>
+    <string name="vendor_text">供应商:</string>
+    <string name="contact_text">联系人:</string>
+    <string name="po_add_title">创建采购订单</string>
+    <string name="udwztype_text">物资类别:</string>
+    <string name="udprojectnum_text">项目编号:</string>
+    <string name="udprtype_text">采购类型:</string>
+    <string name="requireddate1_text">要求日期:</string>
+    <string name="pr_add_text">创建采购申请</string>
+    <string name="po_num_text">采购订单:</string>
+    <string name="currencycode_title">货币</string>
+    <string name="companies_title">公司:</string>
+    <string name="companiess_title">供应商</string>
+    <string name="voicephone_text">电话:</string>
+    <string name="compcontact_title">联系人</string>
 
 
 </resources>

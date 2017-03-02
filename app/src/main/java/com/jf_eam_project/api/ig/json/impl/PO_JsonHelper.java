@@ -10,7 +10,6 @@ import com.jf_eam_project.model.Po;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public final class PO_JsonHelper
@@ -163,6 +162,21 @@ public final class PO_JsonHelper
             return true;
         } else if ("VENDORDESC".equals(fieldName)) {
             instance.vendordesc = jp.getValueAsString();
+            return true;
+        }else if ("UDBELONG".equals(fieldName)) {
+            instance.udbelong = jp.getValueAsString();
+            return true;
+        }else if ("CONTRACTREFNUM".equals(fieldName)) {
+            instance.contractrefnum = jp.getValueAsString();
+            return true;
+        }else if ("FOLLOWUPDATE".equals(fieldName)) {
+            instance.followupdate = jp.getValueAsString();
+            return true;
+        }else if ("UDAPPNAME".equals(fieldName)) {
+            instance.udappname = jp.getValueAsString();
+            return true;
+        }else if ("BRANCH".equals(fieldName)) {
+            instance.branch = jp.getValueAsString();
             return true;
         }
 

@@ -87,6 +87,57 @@ public class AndroidClientService {
         return wonum;
     }
 
+
+
+    /**
+     * 新增采购订单
+     *
+     * @param string
+     * @return
+     */
+    public String InsertPO(Context context, String string, String personId) {
+        Log.i(TAG,"personId="+personId);
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
+
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
+        soapReq.addProperty("json", string);
+        soapReq.addProperty("flag", 1);
+        soapReq.addProperty("mboObjectName", "PO");
+        soapReq.addProperty("mboKey", "PONUM");
+        soapReq.addProperty("personId", personId);
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        String obj = null;
+        String ponum=null;
+        try {
+            obj = soapEnvelope.getResponse().toString();
+            ponum = JsonUtils.parsingInsertPO(obj);
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return ponum;
+    }
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 更新工单
      */

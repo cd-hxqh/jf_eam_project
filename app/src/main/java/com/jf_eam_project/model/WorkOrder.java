@@ -126,7 +126,7 @@ public class WorkOrder extends Entity {
     public String uddeptdescription;//分公司
     @JsonField(fieldName = "udbelong")
     @DatabaseField(columnName = "udbelong")
-    public String udbelong;//风电场
+    public String udbelong;//风电场/运行单位
     @JsonField(fieldName = "udbelong_description")
     @DatabaseField(columnName = "udbelong_description")
     public String udbelong_description;//风电场中文

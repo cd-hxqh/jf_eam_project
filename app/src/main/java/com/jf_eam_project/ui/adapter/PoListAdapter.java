@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Po;
 import com.jf_eam_project.ui.activity.Material_Into_Details_Activity;
-import com.jf_eam_project.ui.activity.PO_Details_Activity;
+import com.jf_eam_project.ui.activity.Po_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class PoListAdapter extends RecyclerView.Adapter<PoListAdapter.ViewHolder
             public void onClick(View view) {
                 Intent intent=null;
                 if(mark==0) {
-                    intent  = new Intent(mContext, PO_Details_Activity.class);
+                    intent  = new Intent(mContext, Po_Details_Activity.class);
                 }else{
                     intent  = new Intent(mContext, Material_Into_Details_Activity.class);
                 }

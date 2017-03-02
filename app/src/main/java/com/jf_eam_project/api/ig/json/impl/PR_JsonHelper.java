@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
 import com.jf_eam_project.model.PR;
-import com.jf_eam_project.model.Po;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -109,6 +108,9 @@ public final class PR_JsonHelper
             return true;
         } else if ("CURRENCYCODE".equals(fieldName)) {
             instance.currencycode = jp.getValueAsString();
+            return true;
+        }else if ("UDBELONG".equals(fieldName)) {
+            instance.udbelong = jp.getValueAsString();
             return true;
         }
 

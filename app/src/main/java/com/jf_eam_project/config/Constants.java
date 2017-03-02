@@ -226,6 +226,16 @@ public class Constants {
     public static final String FGSYUSSDLVIEW_NAME = "FGSYUSSDLVIEW";
 
 
+    /**货币选择**/
+    public static final String CURRENCY_NAME = "CURRENCY";
+    /**供应商appid**/
+    public static final String UDCOMPANY_APPID = "UDCOMPANY";
+    /**供应商选择表名**/
+    public static final String COMPANIES_NAME = "COMPANIES";
+    /**联系人选择表名**/
+    public static final String COMPCONTACT_NAME = "COMPCONTACT";
+
+
     /**
      * -----------表名配置--结束*
      */

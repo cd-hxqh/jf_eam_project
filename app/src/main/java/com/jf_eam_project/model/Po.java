@@ -37,7 +37,7 @@ public class Po extends Entity {
     @JsonField(fieldName = "internal")
     public String internal;//指定供应商是否在您公司范围内
     @JsonField(fieldName = "orderdate")
-    public String orderdate;//订购日期
+    public String orderdate;//录入日期
     @JsonField(fieldName = "paymentterms")
     public String paymentterms;//支付条款
     @JsonField(fieldName = "ponum")
@@ -51,7 +51,7 @@ public class Po extends Entity {
     @JsonField(fieldName = "purchaseagent")
     public String purchaseagent;//买方
     @JsonField(fieldName = "requireddate")
-    public String requireddate;//要求日期
+    public String requireddate;//计划到货日期
     @JsonField(fieldName = "shipvia")
     public String shipvia;//装运方式
     @JsonField(fieldName = "sitedesc")
@@ -77,9 +77,22 @@ public class Po extends Entity {
     @JsonField(fieldName = "vendeliverydate")
     public String vendeliverydate;//供应商日期
     @JsonField(fieldName = "vendor")
-    public String vendor;//公司
+    public String vendor;//供应商
     @JsonField(fieldName = "vendordesc")
-    public String vendordesc;//公司描述
+    public String vendordesc;//供应商名称
+    @JsonField(fieldName = "udbelong")
+    public String udbelong;//运行单位
+    @JsonField(fieldName = "contractrefnum")
+    public String contractrefnum;//合同引用
+    @JsonField(fieldName = "followupdate")
+    public String followupdate;//实际到货日期
+    @JsonField(fieldName = "udappname")
+    public String udappname;//udappname
+    @JsonField(fieldName = "branch")
+    public String branch;//分公司
+
+
+
 
 
     public String getBuyercompany() {
@@ -336,5 +349,45 @@ public class Po extends Entity {
 
     public void setVendordesc(String vendordesc) {
         this.vendordesc = vendordesc;
+    }
+
+    public String getUdbelong() {
+        return udbelong;
+    }
+
+    public void setUdbelong(String udbelong) {
+        this.udbelong = udbelong;
+    }
+
+    public String getContractrefnum() {
+        return contractrefnum;
+    }
+
+    public void setContractrefnum(String contractrefnum) {
+        this.contractrefnum = contractrefnum;
+    }
+
+    public String getFollowupdate() {
+        return followupdate;
+    }
+
+    public void setFollowupdate(String followupdate) {
+        this.followupdate = followupdate;
+    }
+
+    public String getUdappname() {
+        return udappname;
+    }
+
+    public void setUdappname(String udappname) {
+        this.udappname = udappname;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 }

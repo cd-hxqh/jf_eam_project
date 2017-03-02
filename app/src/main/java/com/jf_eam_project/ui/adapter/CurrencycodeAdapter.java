@@ -1,8 +1,5 @@
 package com.jf_eam_project.ui.adapter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Invoice;
-import com.jf_eam_project.ui.activity.Invoice_Details_Activity;
+import com.jf_eam_project.model.Currency;
+import com.jf_eam_project.ui.activity.Currencycode_Choose_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +18,13 @@ import java.util.List;
 
 /**
  * Created by think on 2015/11/26.
- * 发票
+ * 货币
  */
-public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.ViewHolder> {
-    Context mContext;
-    List<Invoice> invoices = new ArrayList<>();
-
-    public InvoiceListAdapter(Context context) {
-        this.mContext = context;
+public class CurrencycodeAdapter extends RecyclerView.Adapter<CurrencycodeAdapter.ViewHolder> {
+    Currencycode_Choose_Activity activity;
+    List<Currency> curList = new ArrayList<>();
+    public CurrencycodeAdapter(Currencycode_Choose_Activity activity) {
+        this.activity=activity;
     }
 
 
@@ -40,26 +36,21 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Invoice invoice = invoices.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.invoice_title_text));
-        holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
-        holder.itemNum.setText(invoice.getInvoicenum());
-        holder.itemDesc.setText(invoice.getDescription());
+        final Currency currency = curList.get(position);
+        holder.itemDescTitle.setText(activity.getString(R.string.po_currencycode_title));
+        holder.itemNum.setText(currency.getCurrencycode());
+        holder.itemDesc.setText(currency.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Invoice_Details_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("invoice", invoice);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                activity.responseCurrencycodeData(currency);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return invoices.size();
+        return curList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,31 +90,31 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
         }
     }
 
-    public void update(ArrayList<Invoice> data, boolean merge) {
-        if (merge && invoices.size() > 0) {
-            for (int i = 0; i < invoices.size(); i++) {
-                Invoice invoice = invoices.get(i);
+    public void update(ArrayList<Currency> data, boolean merge) {
+        if (merge && curList.size() > 0) {
+            for (int i = 0; i < curList.size(); i++) {
+                Currency currency = curList.get(i);
                 boolean exist = false;
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j) == invoice) {
+                    if (data.get(j) == currency) {
                         exist = true;
                         break;
                     }
                 }
                 if (exist) continue;
-                data.add(invoice);
+                data.add(currency);
             }
         }
-        invoices = data;
+        curList = data;
         notifyDataSetChanged();
     }
 
     //
-    public void adddate(ArrayList<Invoice> data) {
+    public void adddate(ArrayList<Currency> data) {
         if (data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-                if (!invoices.contains(data.get(i))) {
-                    invoices.add(data.get(i));
+                if (!curList.contains(data.get(i))) {
+                    curList.add(data.get(i));
                 }
             }
         }
@@ -132,8 +123,8 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
 
 
     public void removeAllData() {
-        if (invoices.size() > 0) {
-            invoices.removeAll(invoices);
+        if (curList.size() > 0) {
+            curList.removeAll(curList);
         }
     }
 }

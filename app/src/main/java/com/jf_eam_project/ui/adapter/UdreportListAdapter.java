@@ -1,8 +1,6 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,11 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
-import com.jf_eam_project.model.Po;
 import com.jf_eam_project.model.Udreport;
-import com.jf_eam_project.ui.activity.Material_Into_Details_Activity;
-import com.jf_eam_project.ui.activity.PO_Details_Activity;
-import com.jf_eam_project.ui.activity.Udreport_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;

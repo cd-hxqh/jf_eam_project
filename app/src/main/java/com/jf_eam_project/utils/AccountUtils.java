@@ -158,13 +158,13 @@ public class AccountUtils {
 
 
     /**
-     * 获取部门编号*
+     * 记录PERSON*
      */
     public static void setPerson(Context cxt, Person person) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
         sharedPreferences.edit().putString(cxt.getString(R.string.department), person.getDepartment()).putString(cxt.getString(R.string.departmentms), person.getDepartmentms())
-                .putString(cxt.getString(R.string.displayname), person.getDisplayname()).commit();
+                .putString(cxt.getString(R.string.displayname), person.getDisplayname()).putString(cxt.getString(R.string.locationsite), person.getLocationsite()).commit();
 
     }
 
@@ -185,7 +185,12 @@ public class AccountUtils {
         return sharedPreferences.getString(cxt.getString(R.string.departmentms), "");
     }
 
+    /**站点**/
+    public static String getSite(Context cxt) {
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getString(cxt.getString(R.string.locationsite), "");
+    }
 
 
 

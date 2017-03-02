@@ -100,7 +100,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Material_ListActivity.this, Meterial_AddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
 

@@ -6,7 +6,10 @@ import android.util.Log;
 
 import com.jf_eam_project.api.ig.json.impl.Asset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Companies_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Compcontact_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Craftrate_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Currencycode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurecode_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurelist_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Failurereport_JsonHelper;
@@ -47,7 +50,10 @@ import com.jf_eam_project.api.ig.json.impl.Wpservice_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Wptool_JsonHelper;
 import com.jf_eam_project.model.Assets;
 import com.jf_eam_project.model.Assignment;
+import com.jf_eam_project.model.Companies;
+import com.jf_eam_project.model.Compcontact;
 import com.jf_eam_project.model.Craftrate;
+import com.jf_eam_project.model.Currency;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
@@ -344,6 +350,18 @@ public class Ig_Json_Model {
     /**解析风电场年度上网电量**/
     public static ArrayList<Fdcnudlview> parsingFdcnudlview(String input) throws IOException {
         return Fdcnudlview_jsonhelper.parseFromJsonList(input);
+    }
+    /**解析货币**/
+    public static ArrayList<Currency> parsingCurrency(String input) throws IOException {
+        return Currencycode_JsonHelper.parseFromJsonList(input);
+    }
+    /**解析供应商**/
+    public static ArrayList<Companies> parsingCompanies(String input) throws IOException {
+        return Companies_JsonHelper.parseFromJsonList(input);
+    }
+    /**解析联系人**/
+    public static ArrayList<Compcontact> parsingCompcontact(String input) throws IOException {
+        return Compcontact_JsonHelper.parseFromJsonList(input);
     }
 
 

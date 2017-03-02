@@ -144,4 +144,13 @@ public class JsonUtils {
         Log.i(TAG, jsonObject.toString());
         return jsonObject.toString();
     }
+
+
+    /**根据运行单位截取分公司的编号**/
+    public static String CutOutBranch(String udbelong){
+            return udbelong.substring(0,5);
+    }
+
+
+
 }

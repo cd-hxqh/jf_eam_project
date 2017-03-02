@@ -215,7 +215,7 @@
             android:label="@string/title_activity_po_order_"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.PO_Details_Activity"
+            android:name=".ui.activity.Po_Details_Activity"
             android:label="@string/title_activity_po_details_"
             android:screenOrientation="portrait" />
         <activity
@@ -478,6 +478,26 @@
         <activity
             android:name=".ui.activity.Meterial_AddActivity"
             android:label="@string/meterial_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Po_AddActivity"
+            android:label="@string/po_add_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Pr_AddActivity"
+            android:label="@string/pr_add_text"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Currencycode_Choose_Activity"
+            android:label="@string/currencycode_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Companies_Choose_Activity"
+            android:label="@string/companiess_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Compcontact_Choose_Activity"
+            android:label="@string/compcontact_title"
             android:screenOrientation="portrait" />
 
         <!-- 百度自动更新设置 -->

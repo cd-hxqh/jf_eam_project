@@ -83,7 +83,7 @@ public class SheZhi_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleText.setText(getString(R.string.gzqx_text));
+        titleText.setText(getString(R.string.sz_text));
         backImageView.setOnClickListener(backImageViewOnClickListener);
         downlayout.setOnClickListener(onClickListener);
         clearlayout.setOnClickListener(onClickListener);
