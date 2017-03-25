@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_main"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimens_10dp"
+        android:background="@drawable/content_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/electricity_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_10"
+            android:drawableLeft="@drawable/ic_ele"
+            android:drawablePadding="@dimen/dimen_5"
+            android:drawableRight="@drawable/in_ico"
+            android:gravity="center_vertical"
+            android:text="@string/electricity_text"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/dimens_18sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"></View>
+
+        <LinearLayout
+            android:id="@+id/setting_data_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimens_10">
+
+
+            <TextView
+                android:id="@+id/gz_text_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_gz"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableRight="@drawable/in_ico"
+                android:text="@string/gz_text"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/dimens_18sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

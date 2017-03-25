@@ -1,12 +1,9 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import android.widget.TextView;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.ui.activity.Udinspo_Details_activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +59,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Udinspo udinspo = udinspoList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.djdh_text));
+        holder.itemNumTitle.setText(mContext.getString(R.string.udbrnum_text));
         holder.itemDescTitle.setText(mContext.getString(R.string.prline_description));
         holder.itemNum.setText(udinspo.insponum);
         holder.itemDesc.setText(udinspo.description);
@@ -224,7 +220,6 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
      * 判断数据是否下载*
      */
     private boolean isExists(String insponum, String inspotype) {
-        Log.i(TAG, "inspotype=" + inspotype);
         List<Udinspo> list = new UdinspoDao(mContext).findByInspotype(inspotype);
         if (list != null && list.size() != 0) {
             for (Udinspo udinspo : list) {

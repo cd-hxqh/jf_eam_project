@@ -12,6 +12,12 @@
     <string name="action_settings">Settings</string>
 
 
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="string_help_text">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。</string>
+    <string name="quit">退出</string>
+
+
     <!--登录界面-->
     <string name="log">天润新能资产管理系统</string>
     <string name="please_userid">请输入用户名</string>
@@ -31,6 +37,7 @@
     <string name="displayname">displayname</string>
     <string name="departmentms">departmentms</string>
     <string name="locationsite">locationsite</string>
+    <string name="permissions">permissions</string>
     <string name="login_error_empty_user">用户名不能为空</string>
     <string name="login_error_empty_passwd">密码不能为空</string>
 
@@ -675,7 +682,6 @@
     <string name="kcgl_text">库存管理</string>
     <string name="gcgl_text">采购管理</string>
     <string name="gzqx_text">故障缺陷</string>
-    <string name="bdls_text">本地历史</string>
     <string name="tmsm_text">二维码/条码</string>
     <string name="sz_text">设置</string>
     <!--新建领料单-->
@@ -700,6 +706,28 @@
     <string name="companiess_title">供应商</string>
     <string name="voicephone_text">电话:</string>
     <string name="compcontact_title">联系人</string>
+    <string name="electricity_text">电量统计</string>
+    <string name="gz_text">故障统计</string>
+    <string name="gztj_text">电气故障</string>
+    <string name="fjgz_text">风机故障</string>
+    <string name="dqqx_text">电气缺陷</string>
+    <string name="fjgz_title_text">风机一.二级故障(20天以上)</string>
+    <string name="dqgz_title_text">电气一.二级故障(20天以上)</string>
+    <string name="dqgz_title1_text">电气一、二级故障(10天--20天)</string>
+    <string name="fgs_text">分公司</string>
+    <string name="fdc_text">风电场</string>
+    <string name="ms_text">描述</string>
+    <string name="gzdj_text">故障等级</string>
+    <string name="zt_text">状态</string>
+    <string name="tbsj_text">提报时间</string>
+    <string name="gztbbh_text">提报编号</string>
+    <string name="work_order_choose">工单选择</string>
+    <string name="workorder_text">工单:</string>
+    <string name="lyd_xj_hint">确定新增领料单吗?</string>
+    <string name="fjgz1_text">风机一、二级故障(20天以上)</string>
+    <string name="fj_gz_10_text">风机一、二级故障(10天--20天)</string>
+    <string name="dqqx1_text">电气一、二类缺陷(20天以上)</string>
+    <string name="dqqx_10_text">电气一、二类缺陷(10天--20天)</string>
 
 
 </resources>

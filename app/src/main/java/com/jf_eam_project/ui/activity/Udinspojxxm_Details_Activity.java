@@ -1,14 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -42,14 +39,11 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Createreport;
-import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.GridAdapter;
-import com.jf_eam_project.utils.Bimp;
 import com.jf_eam_project.utils.DataUtils;
 import com.jf_eam_project.utils.MessageUtils;
-import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -218,6 +212,8 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         branch = getIntent().getExtras().getString("branch");
         udbelong = getIntent().getExtras().getString("udbelong");
         assettype = getIntent().getExtras().getString("assettype");
+
+        Log.i(TAG,"branch="+branch+",udbelong="+udbelong+",assettype="+assettype);
     }
 
     @Override
@@ -376,12 +372,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            submitBtn.setVisibility(View.VISIBLE);
-//            //设置编辑状态
-//            statusEdit();
-            if (udinspojxxm.reportnum.equals("")) {
-                Createreport createreport = isData();
-                if (null == createreport) {
+            if(udinspojxxmvalue.equals("异常")&&udinspojxxm.reportnum==null){
                     Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
                     intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
                     intent.putExtra("mark", ADD_REPORT);
@@ -389,9 +380,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                     intent.putExtra("udbelong", udbelong);
                     intent.putExtra("assettype", assettype);
                     startActivityForResult(intent, 0);
-                } else {
-                    NormalDialogStyleTwo(createreport);
-                }
             } else {
                 NormalDialogReport(udinspojxxm.reportnum);
             }
@@ -448,7 +436,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(reportnum), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override

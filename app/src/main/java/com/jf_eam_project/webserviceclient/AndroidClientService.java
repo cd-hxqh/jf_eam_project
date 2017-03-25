@@ -95,18 +95,18 @@ public class AndroidClientService {
      * @param string
      * @return
      */
-    public String InsertPO(Context context, String string, String personId) {
+    public String InsertGENERAL(Context context, String string, String mboObjectName,String mboKey, String personId) {
         Log.i(TAG,"personId="+personId);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
-
+        Log.i(TAG,"url="+url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
         soapReq.addProperty("json", string);
         soapReq.addProperty("flag", 1);
-        soapReq.addProperty("mboObjectName", "PO");
-        soapReq.addProperty("mboKey", "PONUM");
+        soapReq.addProperty("mboObjectName", mboObjectName);
+        soapReq.addProperty("mboKey", mboKey);
         soapReq.addProperty("personId", personId);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);

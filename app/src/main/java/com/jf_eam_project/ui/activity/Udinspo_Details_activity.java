@@ -1,20 +1,16 @@
 package com.jf_eam_project.ui.activity;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -27,16 +23,12 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalDialog;
-import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Option;
 import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.MessageUtils;
@@ -46,7 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * 巡检单详情
@@ -488,9 +479,7 @@ public class Udinspo_Details_activity extends BaseActivity {
      */
     private void updateUdinspo() {
 
-        Log.i(TAG,"udinspo.getStartdate()="+udinspo.getStartdate());
         if (udinspo.getStartdate() == null||udinspo.getStartdate().equals("")) {
-            Log.i(TAG,"time="+GetNowTime.getTime());
             udinspo.setStartdate(GetNowTime.getTime());
         }
         if (udinspo.getOperation() == null) {

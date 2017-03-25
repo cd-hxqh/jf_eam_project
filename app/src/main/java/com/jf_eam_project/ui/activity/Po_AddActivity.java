@@ -298,9 +298,7 @@ public class Po_AddActivity extends BaseActivity {
                         }
                     });
 
-        }
-
-        ;
+        };
     };
 
     /**
@@ -313,7 +311,7 @@ public class Po_AddActivity extends BaseActivity {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String addresult = getBaseApplication().getWsService().InsertPO(Po_AddActivity.this, updataInfo, AccountUtils.getPersonId(Po_AddActivity.this));
+                String addresult = getBaseApplication().getWsService().InsertGENERAL(Po_AddActivity.this, updataInfo,"PO","PONUM",AccountUtils.getPersonId(Po_AddActivity.this));
                 Log.i(TAG, "addresult=" + addresult);
                 return addresult;
             }

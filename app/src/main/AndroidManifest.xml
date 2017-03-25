@@ -499,6 +499,26 @@
             android:name=".ui.activity.Compcontact_Choose_Activity"
             android:label="@string/compcontact_title"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PermissionsActivity"
+            android:label="PermissionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LeadershipActivity"
+            android:label="LeadershipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GzStatisticalActivity"
+            android:label="@string/gz_text"
+            android:screenOrientation="portrait" />
+
+
+
+        <!--选择项-->
+         <activity
+            android:name=".ui.activity.WorkOrder_Choose_Activity"
+            android:label="@string/work_order_choose"
+            android:screenOrientation="portrait" />
 
         <!-- 百度自动更新设置 -->
         <meta-data

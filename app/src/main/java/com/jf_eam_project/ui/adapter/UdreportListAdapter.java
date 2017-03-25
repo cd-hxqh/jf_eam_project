@@ -86,13 +86,6 @@ public class UdreportListAdapter extends RecyclerView.Adapter<UdreportListAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, Udreport_Details_Activity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("mark", 0);
-//                bundle.putSerializable("udreport", udreport);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
-                Log.i(TAG, "22222");
                 onClickListener.cOnClickListener(position, udreport);
             }
         });

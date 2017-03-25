@@ -1,24 +1,15 @@
 package com.jf_eam_project.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,11 +22,9 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.ui.adapter.UdinspojxxmListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspojxxmNewListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
-import com.jf_eam_project.utils.NetWorkHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -207,7 +196,6 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
         HttpManager.getDataPagingInfo(this, HttpManager.getUdinspojxxmUrl(udinspoassetnum, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override
@@ -245,36 +233,6 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     }
 
 
-//    private void setSearchEdit() {
-//
-//        SpannableString msp = new SpannableString("XX搜索");
-//        Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
-//        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-//        search.setHint(msp);
-//        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    // 隐藏软件盘
-//                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-//                            .hideSoftInputFromWindow(
-//                                    UdinspojxxmNew_Activity.this.getCurrentFocus()
-//                                            .getWindowToken(),
-//                                    InputMethodManager.HIDE_NOT_ALWAYS);
-//                    searchText = search.getText().toString();
-//                    udinspojxxmNewListAdapter.removeAllData();
-//                    nodatalayout.setVisibility(View.GONE);
-//                    refresh_layout.setRefreshing(true);
-//                    page = 1;
-//                    getData(searchText);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//    }
 
     /**
      * 返回点击
@@ -289,24 +247,15 @@ public class UdinspojxxmNew_Activity extends BaseActivity implements SwipeRefres
     @Override
     public void onLoad() {
         page = 1;
-
-//        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
-//            getData(searchText);
-//        } else {
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
-//        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-//        if (!NetWorkHelper.isNetwork(UdinspojxxmNew_Activity.this)) { //没有网络
-//            getData(searchText);
-//        } else {
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
-//        }
     }
 
 

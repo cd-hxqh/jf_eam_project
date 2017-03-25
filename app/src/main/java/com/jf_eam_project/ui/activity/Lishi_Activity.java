@@ -52,7 +52,7 @@ public class Lishi_Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titleText.setText(getString(R.string.bdls_text));
+//        titleText.setText(getString(R.string.bdls_text));
         backImageView.setOnClickListener(backImageViewOnClickListener);
         workorder_layout.setOnClickListener(workorderOnClickListener);
     }

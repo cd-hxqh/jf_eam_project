@@ -233,7 +233,6 @@ public class Udreport_Details_Activity extends BaseActivity {
     private View.OnClickListener approvalBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            MaterialDialogOneBtn();
             if (udreport.statustype.equals("未提报")) {
                 wfstart();
             } else {
@@ -349,14 +348,12 @@ public class Udreport_Details_Activity extends BaseActivity {
             @Override
             protected String doInBackground(String... strings) {
                 String result = null;
-                Log.i(TAG, "udreport=" + udreport.apptype);
                 if (udreport.apptype.equals("FAULT")) {
                     result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDGZTB", "UDREPORT", udreport.udreportid, "UDREPORTID");
                 } else if (udreport.apptype.equals("HIDDEN")) {
                     result = getBaseApplication().getWfService().startwf(Udreport_Details_Activity.this, "UDQXTB", "UDREPORT", udreport.udreportid, "UDREPORTID");
                 }
 
-                Log.i(TAG, "result=" + result);
                 return result;
             }
 

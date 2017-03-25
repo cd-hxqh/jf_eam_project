@@ -250,7 +250,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                             getPersion(personId);
 
-                            startIntent();
+
                         }
 
                     }
@@ -305,13 +305,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ArrayList<Person> items = null;
 
                 try {
-                    Log.i(TAG,"data="+data);
                     items = Ig_Json_Model.parsingPerson(data);
                     if (items == null || items.isEmpty()) {
 
                     } else {
                         AccountUtils.setPerson(LoginActivity.this, items.get(0));
+                        isShowData(items.get(0).getDepartment() .replace(",",""));
                         new PersonDao(LoginActivity.this).create(items);
+                        MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_hint));
+                        startIntent();
                     }
                 } catch (IOException e) {
 
@@ -332,8 +334,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
         @Override
         public void onCheckComplete() {
-            Log.i(TAG, "onCheckComplete");
         }
 
     }
+
+
+    /**判断用户权限**/
+    private void isShowData(String department){
+        if(department.length()==2){ //总公司
+            Log.i(TAG,"总公司"+department);
+            AccountUtils.setPermissions(LoginActivity.this,1);
+
+        }else if(department.length()==5){//分公司
+            Log.i(TAG,"分公司"+department);
+            AccountUtils.setPermissions(LoginActivity.this,2);
+        }else if(department.length()==8){//风电场/维操队/集控中心
+            Log.i(TAG,"风电场"+department);
+            AccountUtils.setPermissions(LoginActivity.this,3);
+        }else if(department.length()==7){//总公司/分公司
+            AccountUtils.setPermissions(LoginActivity.this,4);
+        }else if(department.length()==14){//分公司/风电场/维操队/集控中心
+            AccountUtils.setPermissions(LoginActivity.this,5);
+        }
+
+    }
+
 }

@@ -1,23 +1,35 @@
 package com.jf_eam_project.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
 import com.jf_eam_project.R;
+import com.jf_eam_project.utils.PermissionsChecker;
 
 
 public class LoadActivity extends BaseActivity {
 
 
+    private static final int REQUEST_CODE = 0; // 请求码
 
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.INTERNET,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-
+        mPermissionsChecker = new PermissionsChecker(this);
     }
 
     @Override
@@ -55,10 +67,28 @@ public class LoadActivity extends BaseActivity {
         super.onResume();
 
 
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Handler x = new Handler();
-        x.postDelayed(new splashhandler(), 2000);
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            startPermissionsActivity();
+        } else {
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            Handler x = new Handler();
+            x.postDelayed(new splashhandler(), 2000);
+        }
     }
 
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
+    }
 
 }

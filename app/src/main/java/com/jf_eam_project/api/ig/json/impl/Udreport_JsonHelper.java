@@ -1,7 +1,5 @@
 package com.jf_eam_project.api.ig.json.impl;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 /**故障，缺陷提报单**/
 public final class Udreport_JsonHelper
         implements JsonHelper<Udreport> {
-    private static final String TAG = "Udreport_JsonHelper";
 
     /**
      * 解析List*
@@ -31,7 +28,6 @@ public final class Udreport_JsonHelper
             results = new ArrayList<Udreport>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
                 Udreport parsed = parseFromJson(jp);
-                Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
                 }

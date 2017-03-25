@@ -36,6 +36,7 @@ public class JsonUtils {
             jsonObject.put("branch", createreport.getBranck());
             jsonObject.put("udbelong", createreport.getCubelong());
             jsonObject.put("failurecode", createreport.getFailurecode());
+            jsonObject.put("statustype", createreport.getStatustype());
 
             JSONObject json = new JSONObject();
             json.put("", "");

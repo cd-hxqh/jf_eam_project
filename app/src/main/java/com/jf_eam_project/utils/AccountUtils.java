@@ -193,5 +193,20 @@ public class AccountUtils {
     }
 
 
+    /**设置用户的显示权限**/
+    public static void setPermissions(Context cxt,int level) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putInt(cxt.getString(R.string.permissions), level).commit();
+
+    }
+
+    /**获取用户的显示权限**/
+    public static int getPermissions(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getInt(cxt.getString(R.string.permissions), 0);
+    }
+
 
 }

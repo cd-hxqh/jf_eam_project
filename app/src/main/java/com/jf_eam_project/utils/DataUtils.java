@@ -33,6 +33,7 @@ public class DataUtils {
         }
         File dir = new File(path);
         if (!dir.exists()) {
+            Log.i(TAG,"2222");
             dir.mkdirs();
         }
         String DB_NAME = path + Constants.TB_NAME;

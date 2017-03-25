@@ -19,6 +19,7 @@ import com.jf_eam_project.api.ig.json.impl.Fgsnussdlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsrudlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsyudlview_Jsonhelper;
 import com.jf_eam_project.api.ig.json.impl.Fgsyussdlview_Jsonhelper;
+import com.jf_eam_project.api.ig.json.impl.Fjdq20view_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.InvoiceLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
@@ -54,6 +55,7 @@ import com.jf_eam_project.model.Companies;
 import com.jf_eam_project.model.Compcontact;
 import com.jf_eam_project.model.Craftrate;
 import com.jf_eam_project.model.Currency;
+import com.jf_eam_project.model.FJDQ20VIEW;
 import com.jf_eam_project.model.Failurecode;
 import com.jf_eam_project.model.Failurelist;
 import com.jf_eam_project.model.Failurereport;
@@ -350,6 +352,10 @@ public class Ig_Json_Model {
     /**解析风电场年度上网电量**/
     public static ArrayList<Fdcnudlview> parsingFdcnudlview(String input) throws IOException {
         return Fdcnudlview_jsonhelper.parseFromJsonList(input);
+    }
+    /**解析故障统计20天以上**/
+    public static ArrayList<FJDQ20VIEW> parsingFJDQ20VIEW(String input) throws IOException {
+        return Fjdq20view_JsonHelper.parseFromJsonList(input);
     }
     /**解析货币**/
     public static ArrayList<Currency> parsingCurrency(String input) throws IOException {

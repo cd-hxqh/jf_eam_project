@@ -224,6 +224,10 @@ public class Constants {
     public static final String FGSNUSSDLVIEW_NAME = "FGSNUSSDLVIEW";
     //分公司年度损失电量
     public static final String FGSYUSSDLVIEW_NAME = "FGSYUSSDLVIEW";
+    //故障统计20天以上
+    public static final String FJDQ20VIEW_NAME = "FJDQ20VIEW";
+    //故障统计10-20天以上
+    public static final String FJDQ10VIEW_NAME = "FJDQ10VIEW";
 
 
     /**货币选择**/

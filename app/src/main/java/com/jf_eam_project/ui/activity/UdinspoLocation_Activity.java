@@ -162,11 +162,9 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     private void initData() {
         title = getIntent().getStringExtra("title");
         inspotype = getIntent().getStringExtra("inspotype");
-        Log.i(TAG, "inspotype=" + inspotype);
         if (inspotype.equals("05")) {
             assettype = getIntent().getStringExtra("assettype");
             checktype = getIntent().getStringExtra("checktype");
-            Log.i(TAG, "assettype=" + assettype + ",checktype=" + checktype);
         }
     }
 

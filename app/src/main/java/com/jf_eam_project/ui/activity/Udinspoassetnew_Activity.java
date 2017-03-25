@@ -1,20 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,20 +13,11 @@ import android.widget.TextView;
 
 import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.api.HttpManager;
-import com.jf_eam_project.api.HttpRequestHandler;
-import com.jf_eam_project.api.ig.json.Ig_Json_Model;
-import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.ui.adapter.UdinspoListNewadapter;
-import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
 import com.jf_eam_project.ui.adapter.UdinspoassetNewListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
-import com.jf_eam_project.utils.MessageUtils;
-import com.jf_eam_project.utils.NetWorkHelper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -129,7 +111,6 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
         titleView.setText(getResources().getString(R.string.udinspoasset_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
         addImageView.setImageResource(R.drawable.add_ico);
-//        addImageView.setVisibility(View.VISIBLE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
 
 

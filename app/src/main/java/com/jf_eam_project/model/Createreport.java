@@ -66,6 +66,10 @@ public class Createreport extends Entity {
     @DatabaseField(columnName = "failurecode")
     public String failurecode;//故障类
 
+    @JsonField(fieldName = "statustype")
+    @DatabaseField(columnName = "statustype")
+    public String statustype;//状态
+
 
     public int getId() {
         return id;
@@ -193,5 +197,13 @@ public class Createreport extends Entity {
 
     public void setFailurecode(String failurecode) {
         this.failurecode = failurecode;
+    }
+
+    public String getStatustype() {
+        return statustype;
+    }
+
+    public void setStatustype(String statustype) {
+        this.statustype = statustype;
     }
 }

@@ -1,7 +1,5 @@
 package com.jf_eam_project.api.ig.json.impl;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
@@ -29,7 +27,6 @@ public final class WorkOrder_JsonHelper
             results = new ArrayList<WorkOrder>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
                 WorkOrder parsed = parseFromJson(jp);
-                Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
                 }

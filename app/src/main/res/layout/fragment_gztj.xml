@@ -1,0 +1,190 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="5dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dqgz_20_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/dqgz_title_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color0"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/gztbbh_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/fdc_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/ms_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/gzdj_text"></TextView>
+
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/dqgz20_recyclerView_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/gztj20have_not_data_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/have_not_data_txt"
+                            android:textSize="@dimen/abc_action_bar_content_inset_material" />
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dqgz_10_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/dqgz_title1_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_18_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color0"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/gztbbh_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/fdc_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/ms_text"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shapee"
+                        android:gravity="center"
+                        android:text="@string/gzdj_text"></TextView>
+
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/dqgz10_recyclerView_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="400dp"
+                        android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/gztj10have_not_data_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/have_not_data_txt"
+                            android:textSize="@dimen/abc_action_bar_content_inset_material" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

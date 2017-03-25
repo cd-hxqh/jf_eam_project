@@ -313,7 +313,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         operationLinearLayout.setVisibility(View.GONE);
 
         if (NetWorkHelper.isNetwork(Udreport_Activity.this)) {
-//            MessageUtils.showMiddleToast(Udreport_Activity.this, "世界上最遥远的距离就是没网。检查设置");
             getLocalData();
         } else {
             getData(searchText);
@@ -327,11 +326,8 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     private void findByUdreport(String apptype, int loc) {
         udreportListAdapter.removeAllData();
         udreportListAdapter.setIsShow(1);
-//        isShowLinearLayout.setVisibility(View.GONE);
-        Log.i(TAG, "apptype=" + apptype + ",loc=" + loc);
         final ArrayList<Udreport> list = (ArrayList<Udreport>) new UdreportDao(Udreport_Activity.this).queryByApptypeandLoc(apptype, loc);
         if (null == list || list.size() == 0) {
-            Log.i(TAG, "ssss");
             nodatalayout.setVisibility(View.VISIBLE);
 
         } else {
@@ -492,13 +488,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         intent.putExtra("apptype", apptype);
         startActivityForResult(intent, 0);
 
-//        Intent intent = new Intent(Udreport_Activity.this, Createreport_Activity.class);
-//        intent.putExtra("udinspojxxmid","");
-//        intent.putExtra("mark", ADD_REPORT);
-//        intent.putExtra("branch", "华北分公司");
-//        intent.putExtra("udbelong", "01001001");
-//        intent.putExtra("assettype", "");
-//        startActivityForResult(intent, 0);
     }
 
 
@@ -519,7 +508,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         page = 1;
 
         if (!NetWorkHelper.isNetwork(Udreport_Activity.this)) { //没有网络
-            Log.i(TAG, "刷新");
             udreportListAdapter.removeAllData();
             getData(searchText);
         } else {
@@ -566,7 +554,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(apptype, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override

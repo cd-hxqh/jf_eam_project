@@ -3,8 +3,10 @@ package com.jf_eam_project.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.flyco.animation.BaseAnimatorSet;
@@ -14,6 +16,12 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.jf_eam_project.R;
 import com.jf_eam_project.manager.AppManager;
+import com.jf_eam_project.utils.AccountUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 新的主菜单信息
@@ -33,46 +41,15 @@ public class MainActivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
 
-    /**
-     * 流程审批
-     **/
-    private LinearLayout lcspLayout;
-    /**
-     * 工单管理
-     **/
-    private LinearLayout gdglLayout;
-    /**
-     * 巡检管理
-     **/
-    private LinearLayout xjglLayout;
-    /**
-     * 库存管理
-     **/
-    private LinearLayout kcglLayout;
-    /**
-     * 采购管理
-     **/
-    private LinearLayout cgglLayout;
-    /**
-     * 故障缺陷
-     **/
-    private LinearLayout gzqxLayout;
-    /**
-     * 本地历史
-     **/
-    private LinearLayout bdlsLayout;
-    /**
-     * 二维码/条码
-     **/
-    private LinearLayout tmsmLayout;
-    /**
-     * KPI统计
-     **/
-    private LinearLayout kpiLayout;
-    /**
-     * 设置
-     **/
-    private LinearLayout szLayout;
+    private GridView gridView;
+
+    private List<Map<String, Object>> data_list;
+    private SimpleAdapter sim_adapter;
+    // 图片封装为一个数组
+    private int[] icon = null;
+    private String[] iconName = null;
+
+    private int permissions = 0;
 
 
     @Override
@@ -89,17 +66,7 @@ public class MainActivity extends BaseActivity {
     protected void findViewById() {
         titleText = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-
-        lcspLayout = (LinearLayout) findViewById(R.id.lcsp_layout_id);
-        gdglLayout = (LinearLayout) findViewById(R.id.gdgl_layout_id);
-        xjglLayout = (LinearLayout) findViewById(R.id.xjgl_layout_id);
-        kcglLayout = (LinearLayout) findViewById(R.id.kcgl_layout_id);
-        cgglLayout = (LinearLayout) findViewById(R.id.cggl_layout_id);
-        gzqxLayout = (LinearLayout) findViewById(R.id.gzqx_layout_id);
-        bdlsLayout = (LinearLayout) findViewById(R.id.bdls_layout_id);
-        tmsmLayout = (LinearLayout) findViewById(R.id.tmsm_layout_id);
-        kpiLayout = (LinearLayout) findViewById(R.id.kpitj_layout_id);
-        szLayout = (LinearLayout) findViewById(R.id.sz_layout_id);
+        gridView = (GridView) findViewById(R.id.noScrollgridview);
     }
 
     @Override
@@ -109,99 +76,196 @@ public class MainActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
-        lcspLayout.setOnClickListener(lcspLayoutOnClickListener);
-        gdglLayout.setOnClickListener(gdglLayoutOnClickListener);
-        xjglLayout.setOnClickListener(xjglLayoutOnClickListener);
-        kcglLayout.setOnClickListener(kcglLayoutOnClickListener);
-        cgglLayout.setOnClickListener(cgglLayoutOnClickListener);
-        gzqxLayout.setOnClickListener(gzqxLayoutOnClickListener);
-        bdlsLayout.setOnClickListener(bdlsLayoutOnClickListener);
-        tmsmLayout.setOnClickListener(tmsmLayoutOnClickListener);
-        kpiLayout.setOnClickListener(kpiLayoutOnClickListener);
-        szLayout.setOnClickListener(szLayoutOnClickListener);
+
+        isShowPage();
+
+        //新建List
+        data_list = new ArrayList<Map<String, Object>>();
+        //获取数据
+        getData();
+        //新建适配器
+        String[] from = {"image", "text"};
+        int[] to = {R.id.image, R.id.text};
+        sim_adapter = new SimpleAdapter(this, data_list, R.layout.gridview_item, from, to);
+        //配置适配器
+        gridView.setAdapter(sim_adapter);
+        gridView.setOnItemClickListener(gridViewOnItemClickListener);
     }
 
-    //流程审批
-    private View.OnClickListener lcspLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, Wfment_Activity.class);
-            startActivityForResult(intent, 0);
+
+    public List<Map<String, Object>> getData() {
+        //cion和iconName的长度是相同的，这里任选其一都可以
+        for (int i = 0; i < icon.length; i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("image", icon[i]);
+            map.put("text", iconName[i]);
+            data_list.add(map);
         }
-    };
-    //工单管理
-    private View.OnClickListener gdglLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, WorkOrderActivity.class);
-            startActivityForResult(intent, 0);
+
+        return data_list;
+    }
+
+
+    //判断需要显示的页面
+    private void isShowPage() {
+        permissions = AccountUtils.getPermissions(MainActivity.this);
+        if (permissions == 1) {
+            icon = new int[]{R.drawable.ic_lcsp, R.drawable.ic_cggl,R.drawable.ic_tmsm,
+                    R.drawable.ic_gzqx, R.drawable.ic_sz};
+            iconName = new String[]{"流程审批", "采购管理","二维码/条码", "Kpi统计",
+                    "设置"};
+        } else if (permissions == 2) {
+            icon = new int[]{R.drawable.ic_lcsp, R.drawable.ic_cggl,
+                    R.drawable.ic_gzqx, R.drawable.ic_sz};
+            iconName = new String[]{"流程审批", "采购管理", "二维码/条码","Kpi统计",
+                    "设置"};
+        } else if (permissions == 3) {
+            icon = new int[]{R.drawable.ic_lcsp, R.drawable.ic_gdgl,
+                    R.drawable.ic_xjgl, R.drawable.ic_kcgl, R.drawable.ic_cggl,
+                    R.drawable.ic_gzqx, R.drawable.ic_tmsm, R.drawable.ic_sz};
+            iconName = new String[]{"流程审批", "工单管理", "巡检管理", "库存管理", "采购管理", "故障缺陷", "二维码/条码",
+                    "设置"};
+
+        } else if (permissions == 4 || permissions == 5) {
+            icon = new int[]{R.drawable.ic_lcsp, R.drawable.ic_gdgl,
+                    R.drawable.ic_xjgl, R.drawable.ic_kcgl, R.drawable.ic_cggl,
+                    R.drawable.ic_gzqx, R.drawable.ic_tmsm, R.drawable.ic_kpitj, R.drawable.ic_sz};
+            iconName = new String[]{"流程审批", "工单管理", "巡检管理", "库存管理", "采购管理", "故障缺陷", "二维码/条码", "Kpi统计",
+                    "设置"};
+
         }
-    };
-    //巡检管理
-    private View.OnClickListener xjglLayoutOnClickListener = new View.OnClickListener() {
+    }
+
+    private AdapterView.OnItemClickListener gridViewOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, XunJan_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //库存管理
-    private View.OnClickListener kcglLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, KuCun_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //采购管理
-    private View.OnClickListener cgglLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, CaiGou_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //故障缺陷管理
-    private View.OnClickListener gzqxLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, GuZhang_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //本地历史
-    private View.OnClickListener bdlsLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, Lishi_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //二维码扫描
-    private View.OnClickListener tmsmLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, MipcaActivityCapture.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //Kpi统计
-    private View.OnClickListener kpiLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, ElectricityActivity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
-    //Kpi统计
-    private View.OnClickListener szLayoutOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, SheZhi_Activity.class);
-            startActivityForResult(intent, 0);
+        public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
+            Intent intent = null;
+            if (permissions == 1) {
+                switch (postion) {
+                    case 0:
+                        intent = new Intent(MainActivity.this, Wfment_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 1:
+                        intent = new Intent(MainActivity.this, CaiGou_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, MipcaActivityCapture.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, LeadershipActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 4:
+                        intent = new Intent(MainActivity.this, SheZhi_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                }
+            } else if (permissions == 2) {
+                switch (postion) {
+                    case 0:
+                        intent = new Intent(MainActivity.this, Wfment_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 1:
+                        intent = new Intent(MainActivity.this, CaiGou_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, MipcaActivityCapture.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, LeadershipActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 4:
+                        intent = new Intent(MainActivity.this, SheZhi_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                }
+            } else if (permissions == 3) {
+                switch (postion) {
+                    case 0:
+                        intent = new Intent(MainActivity.this, Wfment_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 1:
+                        intent = new Intent(MainActivity.this, WorkOrderActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, XunJan_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, KuCun_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 4:
+                        intent = new Intent(MainActivity.this, CaiGou_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 5:
+                        intent = new Intent(MainActivity.this, GuZhang_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 6:
+                        intent = new Intent(MainActivity.this, MipcaActivityCapture.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 7:
+                        intent = new Intent(MainActivity.this, LeadershipActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 8:
+                        intent = new Intent(MainActivity.this, SheZhi_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                }
+            } else if (permissions == 4 || permissions == 5) {
+                switch (postion) {
+                    case 0:
+                        intent = new Intent(MainActivity.this, Wfment_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 1:
+                        intent = new Intent(MainActivity.this, WorkOrderActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, XunJan_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, KuCun_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 4:
+                        intent = new Intent(MainActivity.this, CaiGou_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 5:
+                        intent = new Intent(MainActivity.this, GuZhang_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 6:
+                        intent = new Intent(MainActivity.this, MipcaActivityCapture.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 7:
+                        intent = new Intent(MainActivity.this, LeadershipActivity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                    case 8:
+                        intent = new Intent(MainActivity.this, SheZhi_Activity.class);
+                        startActivityForResult(intent, 0);
+                        break;
+                }
+            }
+
         }
     };
 
@@ -234,8 +298,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
-    private long exitTime = 0;
 
     @Override
     public void onBackPressed() {

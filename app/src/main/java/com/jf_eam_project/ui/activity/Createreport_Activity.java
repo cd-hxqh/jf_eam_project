@@ -14,15 +14,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -37,13 +34,8 @@ import com.jf_eam_project.Dao.CreatereportDao;
 import com.jf_eam_project.Dao.LocationDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.config.Constants;
-import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Option;
-import com.jf_eam_project.model.Woactivity;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.model.Wplabor;
-import com.jf_eam_project.model.Wpmaterial;
 import com.jf_eam_project.ui.adapter.GridAdapter;
 import com.jf_eam_project.ui.widget.CumTimePickerDialog;
 import com.jf_eam_project.utils.AccountUtils;
@@ -52,9 +44,6 @@ import com.jf_eam_project.utils.GetNowTime;
 import com.jf_eam_project.utils.JsonUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -138,7 +127,9 @@ public class Createreport_Activity extends BaseActivity {
     private int mark;
     private Createreport report;
 
-    /**图片**/
+    /**
+     * 图片
+     **/
     private GridView noScrollgridview;
     private GridAdapter adapter; //相片选择
 
@@ -190,7 +181,6 @@ public class Createreport_Activity extends BaseActivity {
             branch = getIntent().getExtras().getString("branch");
             udbelong = getIntent().getExtras().getString("udbelong");
             assettype = getIntent().getExtras().getString("assettype");
-            Log.i(TAG, "udinspojxxmid=" + udinspojxxmid + ",branch=" + branch + ",udbelong=" + udbelong + ",assettype=" + assettype);
         } else { //详情
             report = (Createreport) getIntent().getSerializableExtra("createreport");
             udinspojxxmid = report.udinspojxxmid;
@@ -265,7 +255,6 @@ public class Createreport_Activity extends BaseActivity {
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
         adapter = new GridAdapter(this, readFile());
-//        adapter.update();
         noScrollgridview.setAdapter(adapter);
         noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -538,6 +527,7 @@ public class Createreport_Activity extends BaseActivity {
             createreport.setReporttime(reporttime);
             createreport.setBranck(branch);
             createreport.setCubelong(udbelong);
+            createreport.setStatustype("未提报");
             return createreport;
 
         } else if (mark == 2) { //更新
@@ -666,8 +656,8 @@ public class Createreport_Activity extends BaseActivity {
                             Createreport createreport = saveReport();
                             data = JsonUtils.saveReport(createreport);
 
-                            Log.i(TAG,"data="+data);
-                            String result = getBaseApplication().getWsService().addReport(Createreport_Activity.this, data, "");
+                            Log.i(TAG, "data=" + data);
+                            String result = getBaseApplication().getWsService().InsertGENERAL(Createreport_Activity.this, data, "UDREPORT", "REPORTNUM", AccountUtils.getPersonId(Createreport_Activity.this));
                             return result;
                         }
 
@@ -676,30 +666,12 @@ public class Createreport_Activity extends BaseActivity {
 
                             super.onPostExecute(s);
                             mProgressDialog.dismiss();
-                            Log.i(TAG, "s=" + s);
-                            try {
-                                if (s != null) {
-                                    JSONObject jsonObject = new JSONObject(s);
-                                    String Msg = jsonObject.getString("Msg");
-                                    String errorNo = jsonObject.getString("errorNo");
-                                    if (errorNo.equals("0")) {
-                                        MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增成功");
-
-                                    } else {
-                                        MessageUtils.showMiddleToast(Createreport_Activity.this, Msg);
-                                    }
-                                    setResult(Constants.REFRESH);
-                                    finish();
-                                } else {
-                                    MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增失败");
-                                    setResult(Constants.REFRESH);
-                                    finish();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                MessageUtils.showMiddleToast(Createreport_Activity.this, "数据新增失败");
-                                setResult(Constants.REFRESH);
-                                finish();
+                            if (s == null || s.equals("")) {
+                                MessageUtils.showMiddleToast(Createreport_Activity.this, "新增失败");
+                            } else if (!s.isEmpty()) {
+                                MessageUtils.showMiddleToast(Createreport_Activity.this, s);
+                            } else {
+                                MessageUtils.showMiddleToast(Createreport_Activity.this, "新增" + s + "成功");
                             }
 
 

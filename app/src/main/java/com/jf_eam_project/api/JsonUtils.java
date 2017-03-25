@@ -33,7 +33,6 @@ public class JsonUtils {
      * 解析登录信息*
      */
     public static String parsingAuthStr(final Context cxt, String data) {
-        Log.i(TAG,"data="+data);
         String isSuccess = null;
         String errmsg = null;
         try {
@@ -492,6 +491,32 @@ public class JsonUtils {
         }
 
     }
+    /**
+     * 封装WorkOder的json
+     */
+    public static String potoWorlOrder(WorkOrder workOrder) {
+
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("DESCRIPTION", workOrder.description);  //描述
+            json.put("UDWONUM", workOrder.udwonum); //关联工单号
+            json.put("CREATEBY", workOrder.displayname); //申请人
+            json.put("CREATEDATE", workOrder.createdate); //创建时间
+            json.put("BRANCH", workOrder.udbelong_description); //分公司
+            json.put("UDBELONG", workOrder.udbelong);//运行单位
+            json.put("UDAPPTYPE", workOrder.udapptype);//类型
+
+
+            JSONArray jsonArray = new JSONArray();
+            json.put("relationShip", jsonArray);
+            return json.toString();
+
+        } catch (JSONException e) {
+            return null;
+        }
+
+    }
 
 
 
@@ -506,8 +531,12 @@ public class JsonUtils {
         try {
             JSONObject object = new JSONObject(data);
             if (object.has("success") && object.getString("success").equals("成功")) {
-                if (object.has("PONUM")) {
+                if (object.has("PONUM")) { //采购单
                     woNum = object.getString("PONUM");
+                }else if(object.has("WONUM")){ //领料单，工单
+                    woNum = object.getString("WONUM");
+                }else if(object.has("REPORTNUM")){ //故障提报单
+                    woNum = object.getString("REPORTNUM");
                 }
             }
         } catch (JSONException e) {

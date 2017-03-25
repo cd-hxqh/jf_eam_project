@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -96,13 +95,7 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
         titlename.setText(R.string.material_title_text);
         addImagView.setImageResource(R.drawable.add_ico);
         addImagView.setVisibility(View.VISIBLE);
-        addImagView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Material_ListActivity.this, Meterial_AddActivity.class);
-                startActivityForResult(intent,0);
-            }
-        });
+        addImagView.setOnClickListener(addImagViewOnClickListener);
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +121,24 @@ public class Material_ListActivity extends BaseActivity implements SwipeRefreshL
         refresh_layout.setOnLoadListener(this);
     }
 
+
+    /**返回事件**/
+    private View.OnClickListener addImagViewOnClickListener =new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Material_ListActivity.this, Meterial_AddActivity.class);
+            startActivityForResult(intent,0);
+        }
+    };
+
+
+
+
+
+
+
+
     private void getData(String search) {
-        Log.i(TAG,"部门="+AccountUtils.getDepartment(Material_ListActivity.this));
         HttpManager.getDataPagingInfo(this, HttpManager.getMaterialUrl(search, AccountUtils.getDepartment(Material_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {

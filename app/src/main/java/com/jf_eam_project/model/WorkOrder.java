@@ -157,6 +157,9 @@ public class WorkOrder extends Entity {
     @JsonField(fieldName = "udwonum")
     @DatabaseField(columnName = "udwonum")
     public String udwonum;//关联工单号
+    @JsonField(fieldName = "udapptype")
+    @DatabaseField(columnName = "udapptype")
+    public String udapptype;//类型
 
     public String getWonum() {
         return wonum;
@@ -365,5 +368,21 @@ public class WorkOrder extends Entity {
 
     public void setUdwonum(String udwonum) {
         this.udwonum = udwonum;
+    }
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
+    }
+
+    public String getUdapptype() {
+        return udapptype;
+    }
+
+    public void setUdapptype(String udapptype) {
+        this.udapptype = udapptype;
     }
 }

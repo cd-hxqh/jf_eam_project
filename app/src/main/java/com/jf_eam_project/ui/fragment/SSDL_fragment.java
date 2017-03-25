@@ -47,6 +47,7 @@ import java.util.ArrayList;
  */
 
 public class SSDL_fragment extends BaseFragment {
+    private final String TAG = "SSDL_fragment";
     // 分公司年度上网电量 饼状图
     protected PieChart piechart;
     //分公司月度上网电量 线形图
@@ -92,7 +93,6 @@ public class SSDL_fragment extends BaseFragment {
 
         findViewById(view);
         initView();
-
 
 
         return view;
@@ -183,40 +183,26 @@ public class SSDL_fragment extends BaseFragment {
      **/
     private void setPieChartData(ArrayList<Fgsnussdlview> fgsnussdlviews) {
 
-        float mult = 100;
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+        ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < fgsnussdlviews.size(); i++) {
-            entries.add(new PieEntry((float) fgsnussdlviews.get(i).TOTAL, fgsnussdlviews.get(i % mParties.length).FGSDES));
+            entries.add(new PieEntry((float) fgsnussdlviews.get(i).TOTAL, fgsnussdlviews.get(i).FGSDES));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(0f);
         dataSet.setSelectionShift(5f);
 
         // add a lot of colors
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+        for (int c : ColorTemplate.VORDIPLOM_COLORS) {
             colors.add(c);
+        }
 
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
 
         dataSet.setColors(colors);
         //dataSet.setSelectionShift(0f);
@@ -376,7 +362,6 @@ public class SSDL_fragment extends BaseFragment {
 
                 yValues.add(new Entry(j, value));
             }
-
 
 
             LineDataSet d = new LineDataSet(yValues, item.get(0).FGSDES);
