@@ -26,6 +26,7 @@ public class GuZhang_Activity extends BaseActivity {
         ButterKnife.bind(this);
         findViewById();
 
+
         initView();
 
     }
