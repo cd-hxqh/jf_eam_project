@@ -302,6 +302,10 @@
             android:label="@string/udreport_title"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.UdreportHis_Activity"
+            android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.Udreport_Add_Activity"
             android:label="@string/udreport_title"
             android:screenOrientation="portrait" />
@@ -311,8 +315,25 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.QxUdreport_Details_Activity"
-            android:label="缺陷提报单"
+            android:label="@string/udreport_title"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LG_Udreport_Details_Activity"
+            android:label="@string/udreport_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Wzff_ListActivity"
+            android:label="@string/wzff_text"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Wlh_ListActivity"
+            android:label="@string/wz_text"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Xzwl_Activity"
+            android:label="@string/xuwl_text"
+            android:screenOrientation="portrait" />
+
 
         <!-- 通用选项页面 -->
         <activity
@@ -513,9 +534,8 @@
             android:screenOrientation="portrait" />
 
 
-
         <!--选择项-->
-         <activity
+        <activity
             android:name=".ui.activity.WorkOrder_Choose_Activity"
             android:label="@string/work_order_choose"
             android:screenOrientation="portrait" />

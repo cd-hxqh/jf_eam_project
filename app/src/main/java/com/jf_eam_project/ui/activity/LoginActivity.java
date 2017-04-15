@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,9 +18,7 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnEditClickL;
-import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalEditTextDialog;
-import com.flyco.dialog.widget.NormalListDialog;
 import com.jf_eam_project.Dao.PersonDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
@@ -38,27 +33,33 @@ import com.jf_eam_project.utils.MessageUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+
 
 /**
  * 登录界面
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity {
 
-
-    private static final String TAG = "Activity_Login";
-    private EditText mUsername;
-    private EditText mPassword;
-    private Button mLogin;
+    @Bind(R.id.user_login_id) //用户名
+            EditText mUsername;
+    @Bind(R.id.user_login_password) //密码
+            EditText mPassword;
+    @Bind(R.id.user_login)
+    Button mLogin;
     private ProgressDialog mProgressDialog;
-    private CheckBox checkBox; //记住密码
+
+    @Bind(R.id.isremenber_password)
+    CheckBox checkBox; //记住密码
+
     private boolean isRemember; //记住密码
 
-    private TextView setIpTextView; //设置服务器地址
+    @Bind(R.id.ip_address_text)
+    TextView setIpTextView; //设置服务器地址
 
-
-    String userName; //用户名
-
-    String userPassWorld; //密码
 
     String imei; //imei
 
@@ -73,6 +74,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        ButterKnife.bind(this);
         BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
@@ -97,32 +99,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    /**
-     * 设置服务器地址
-     */
-    private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(LoginActivity.this, cMenuItems);
-        dialog.title("请选择服务器地址")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                AccountUtils.setIpAddress(LoginActivity.this, cMenuItems.get(position).mOperName);
-                dialog.dismiss();
-            }
-        });
-    }
-
 
     /**
      * 设置服务器地址
      */
     private void NormalEditTextDialog() {
         final NormalEditTextDialog dialog = new NormalEditTextDialog(LoginActivity.this);
-        dialog.title("设置服务器地址");
+        dialog.title(getString(R.string.setting_address_text));
         String ip = AccountUtils.getIpAddress(LoginActivity.this);
         ip = ip.replaceAll("http://", "");
         ip = ip.replaceAll("/", "");
@@ -155,12 +138,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void findViewById() {
-        mUsername = (EditText) findViewById(R.id.user_login_id);
-        mPassword = (EditText) findViewById(R.id.user_login_password);
-        checkBox = (CheckBox) findViewById(R.id.isremenber_password);
-        mLogin = (Button) findViewById(R.id.user_login);
-
-        setIpTextView = (TextView) findViewById(R.id.ip_address_text);
     }
 
     @Override
@@ -173,52 +150,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
             checkBox.setChecked(isRemember);
         }
-        checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
-        mLogin.setOnClickListener(this);
 
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
-        setIpTextView.setOnClickListener(setIpTextViewOnClickListener);
     }
 
-    private View.OnClickListener setIpTextViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
 
-            NormalEditTextDialog();
-        }
-    };
-
-
-    private CompoundButton.OnCheckedChangeListener cheBoxOnCheckedChangListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            isRemember = isChecked;
-        }
-    };
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.user_login:
-                if (mUsername.getText().length() == 0) {
-                    mUsername.setError(getString(R.string.login_error_empty_user));
-                    mUsername.requestFocus();
-                } else if (mPassword.getText().length() == 0) {
-                    mPassword.setError(getString(R.string.login_error_empty_passwd));
-                    mPassword.requestFocus();
-                } else {
-                    userName = mUsername.getText().toString();
-                    userPassWorld = mPassword.getText().toString();
-                    login();
-                }
-                break;
-
-        }
+    @OnClick(R.id.ip_address_text)
+    void setSetIpTextViewOnClickListener() {
+        NormalEditTextDialog();
     }
 
+
+    @OnCheckedChanged(R.id.isremenber_password)
+    void onChecked(boolean isChecked) {
+        isRemember = isChecked;
+    }
+
+    //登陆按钮
+    @OnClick(R.id.user_login)
+    void setOnClick() {
+        if (mUsername.getText().length() == 0) {
+            mUsername.setError(getString(R.string.login_error_empty_user));
+            mUsername.requestFocus();
+        } else if (mPassword.getText().length() == 0) {
+            mPassword.setError(getString(R.string.login_error_empty_passwd));
+            mPassword.requestFocus();
+        } else {
+            login();
+        }
+    }
 
     /**
      * 登录界面
@@ -238,19 +201,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         mProgressDialog.dismiss();
 
-                        if (data.equals("用户名或密码错误")) {
+                        if (data.equals(getString(R.string.yhmhmmcw_text))) {
                             return;
                         } else {
                             AccountUtils.setChecked(LoginActivity.this, isRemember);
                             AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
                             getBaseApplication().setUsername(mUsername.getText().toString());
-
                             /**根据yy**/
                             String personId = AccountUtils.getPersonId(LoginActivity.this);
-
                             getPersion(personId);
-
-
                         }
 
                     }
@@ -310,7 +269,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     } else {
                         AccountUtils.setPerson(LoginActivity.this, items.get(0));
-                        isShowData(items.get(0).getDepartment() .replace(",",""));
+                        isShowData(items.get(0).getDepartment().replace(",", ""));
                         new PersonDao(LoginActivity.this).create(items);
                         MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_hint));
                         startIntent();
@@ -339,22 +298,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    /**判断用户权限**/
-    private void isShowData(String department){
-        if(department.length()==2){ //总公司
-            Log.i(TAG,"总公司"+department);
-            AccountUtils.setPermissions(LoginActivity.this,1);
+    /**
+     * 判断用户权限
+     **/
+    private void isShowData(String department) {
+        if (department.length() == 2) { //总公司
+            AccountUtils.setPermissions(LoginActivity.this, 1);
 
-        }else if(department.length()==5){//分公司
-            Log.i(TAG,"分公司"+department);
-            AccountUtils.setPermissions(LoginActivity.this,2);
-        }else if(department.length()==8){//风电场/维操队/集控中心
-            Log.i(TAG,"风电场"+department);
-            AccountUtils.setPermissions(LoginActivity.this,3);
-        }else if(department.length()==7){//总公司/分公司
-            AccountUtils.setPermissions(LoginActivity.this,4);
-        }else if(department.length()==14){//分公司/风电场/维操队/集控中心
-            AccountUtils.setPermissions(LoginActivity.this,5);
+        } else if (department.length() == 5) {//分公司
+            AccountUtils.setPermissions(LoginActivity.this, 2);
+        } else if (department.length() == 8) {//风电场/维操队/集控中心
+            AccountUtils.setPermissions(LoginActivity.this, 3);
+        } else if (department.length() == 7) {//总公司/分公司
+            AccountUtils.setPermissions(LoginActivity.this, 4);
+        } else if (department.length() == 14) {//分公司/风电场/维操队/集控中心
+            AccountUtils.setPermissions(LoginActivity.this, 5);
         }
 
     }

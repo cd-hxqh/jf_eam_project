@@ -1,13 +1,19 @@
 package com.jf_eam_project.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udreport;
+import com.jf_eam_project.model.Xzwl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * json工具解析类
@@ -153,5 +159,52 @@ public class JsonUtils {
     }
 
 
+
+
+    /**
+     * 选择物料
+     */
+    public static ArrayList<Xzwl> parsingXzwl(Context ctx, String data) {
+        ArrayList<Xzwl> list = null;
+        Xzwl xzwl = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Xzwl>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                xzwl = new Xzwl();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = xzwl.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = xzwl.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(xzwl);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = xzwl.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(xzwl, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(xzwl);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
 }

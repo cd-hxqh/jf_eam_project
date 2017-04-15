@@ -16,6 +16,8 @@ import com.jf_eam_project.application.BaseApplication;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.manager.AppManager;
 
+import butterknife.ButterKnife;
+
 
 public abstract class BaseActivity extends ActionBarActivity {
     public static final String TAG = "BaseActivity";
@@ -165,6 +167,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ButterKnife.unbind(this);
         if (progressDialog != null) {
             progressDialog.dismiss();
         }

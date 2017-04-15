@@ -26,9 +26,14 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by think on 2015/11/20.
@@ -37,21 +42,25 @@ import java.util.ArrayList;
 public class Work_History_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
     private static final String TAG = "Work_History_ListActivity";
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回*
-     */
-    private ImageView backImage;
+    @Bind(R.id.title_name)
+    TextView titlename; //标题
+
+    @Bind(R.id.title_back_id)
+    ImageView backImage;//返回
+
+    private String worktype;
 
     LinearLayoutManager layoutManager;
-    public RecyclerView recyclerView;
-    private LinearLayout nodatalayout;
-    private SwipeRefreshLayout refresh_layout = null;
+
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView; //recyclerView
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout;
+    @Bind(R.id.search_edit)
+    EditText search;
     private WorkListAdapter workListAdapter;
-    private EditText search;
     private String searchText = "";
     private int page = 1;
 
@@ -60,20 +69,20 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-
+        ButterKnife.bind(this);
+        initData();
         findViewById();
         initView();
+    }
+
+    //获取界面数据
+    private void initData() {
+        worktype = getIntent().getStringExtra("worktype");
     }
 
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImage = (ImageView) findViewById(R.id.title_back_id);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
@@ -81,7 +90,6 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         setSearchEdit();
         titlename.setText(R.string.title_activity_work_list);
 
-        backImage.setOnClickListener(backImageOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -100,18 +108,16 @@ public class Work_History_ListActivity extends BaseActivity implements SwipeRefr
         refresh_layout.setOnLoadListener(this);
     }
 
-
-    private View.OnClickListener backImageOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            finish();
-        }
-    };
+    //返回
+    @OnClick(R.id.title_back_id)
+    void setBackImageOnClickListener() {
+        finish();
+    }
 
 
     private void getData(String search) {
 
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderAllUrl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getWORKORDERHisUrl(search, worktype, AccountUtils.getDepartment(Work_History_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }

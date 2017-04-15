@@ -1,15 +1,18 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.FJDQ20VIEW;
+import com.jf_eam_project.ui.activity.LG_Udreport_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,17 +44,17 @@ public class Fjdq20viewListAdapter extends RecyclerView.Adapter<Fjdq20viewListAd
         holder.fdcTextView.setText(fjdq20VIEW.udbelong);
         holder.msTextView.setText(fjdq20VIEW.description);
         holder.gzdjTextView.setText(fjdq20VIEW.culevel);
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(mContext, PoLine_Details_Activity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("poLine", poline);
-//                bundle.putInt("mark", mark);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
-//            }
-//        });
+        holder.linearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, LG_Udreport_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("apptype", fjdq20VIEW.apptype);
+                bundle.putString("reportnum", fjdq20VIEW.reportnum);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Fjdq20viewListAdapter extends RecyclerView.Adapter<Fjdq20viewListAd
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public RelativeLayout relativeLayout;
+        public LinearLayout linearlayout;
 
         /**
          * 编号*
@@ -82,6 +85,8 @@ public class Fjdq20viewListAdapter extends RecyclerView.Adapter<Fjdq20viewListAd
 
         public ViewHolder(View view) {
             super(view);
+
+            linearlayout = (LinearLayout) view.findViewById(R.id.card_container);
 
             gztbbhTextView = (TextView) view.findViewById(R.id.gztbbh_text_id);
             fdcTextView = (TextView) view.findViewById(R.id.fdc_text_id);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.bean.Wlh;
 import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.Assignment;
 import com.jf_eam_project.model.Labtrans;
@@ -19,7 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -50,8 +55,8 @@ public class JsonUtils {
                 String personId = jsonObject.getString("personId");
                 AccountUtils.setDisplayName(cxt, displayName);
                 AccountUtils.setPersonId(cxt, personId);
-            }else if(jsonString.equals(Constants.USERNAMEERROR)){
-                errmsg="用户名或密码错误";
+            } else if (jsonString.equals(Constants.USERNAMEERROR)) {
+                errmsg = "用户名或密码错误";
             }
 
 
@@ -426,6 +431,7 @@ public class JsonUtils {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("GRADESON", jsonUdinspojxxmInfo(json.toString()));
+            Log.i(TAG, "json=" + jsonObject.toString());
             return jsonObject.toString();
 
         } catch (JSONException e) {
@@ -452,7 +458,6 @@ public class JsonUtils {
         }
         return jsonArray;
     }
-
 
 
     /**
@@ -491,10 +496,11 @@ public class JsonUtils {
         }
 
     }
+
     /**
      * 封装WorkOder的json
      */
-    public static String potoWorlOrder(WorkOrder workOrder) {
+    public static String potoWorlOrder(WorkOrder workOrder, List<Wlh> wlhList) {
 
         JSONObject json = new JSONObject();
 
@@ -507,17 +513,55 @@ public class JsonUtils {
             json.put("UDBELONG", workOrder.udbelong);//运行单位
             json.put("UDAPPTYPE", workOrder.udapptype);//类型
 
+            if (wlhList != null || wlhList.size() != 0) {
+                JSONArray wlhArray = new JSONArray();
+                JSONObject wlhObj;
+                for (int i = 0; i < wlhList.size(); i++) {
+                    wlhObj = new JSONObject();
+                    Field[] field1 = wlhList.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = wlhList.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(wlhList.get(i));
+                            if (value != null) {
+                                wlhObj.put(name, value + "");
+
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    wlhArray.put(wlhObj);
+                }
+                try {
+                    json.put("SHOWPLANMATERIAL", wlhArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
             JSONArray jsonArray = new JSONArray();
             json.put("relationShip", jsonArray);
-            return json.toString();
+
 
         } catch (JSONException e) {
             return null;
         }
 
-    }
+        Log.i(TAG, "json=" + json);
+        return json.toString();
 
+    }
 
 
     /**
@@ -533,9 +577,9 @@ public class JsonUtils {
             if (object.has("success") && object.getString("success").equals("成功")) {
                 if (object.has("PONUM")) { //采购单
                     woNum = object.getString("PONUM");
-                }else if(object.has("WONUM")){ //领料单，工单
+                } else if (object.has("WONUM")) { //领料单，工单
                     woNum = object.getString("WONUM");
-                }else if(object.has("REPORTNUM")){ //故障提报单
+                } else if (object.has("REPORTNUM")) { //故障提报单
                     woNum = object.getString("REPORTNUM");
                 }
             }

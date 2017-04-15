@@ -1,6 +1,7 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,19 +26,26 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.Inventory;
-import com.jf_eam_project.ui.adapter.InventoryListAdapter;
+import com.jf_eam_project.model.Locations;
+import com.jf_eam_project.model.Xzwl;
+import com.jf_eam_project.ui.adapter.XzwlListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
+import com.jf_eam_project.utils.JsonUtils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 库存记录Acitivity*
+ * 选择物料
  */
-public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Xzwl_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Inventory_Activity";
+    private static final String TAG = "Xzwl_Activity";
+
+    public static final int CHOOSE=1000; //选择项
 
 
     /**
@@ -48,7 +57,10 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
      */
     private ImageView backImageView;
 
-
+    /**
+     * 确定按钮*
+     */
+    private Button submitBtn;
 
 
     LinearLayoutManager layoutManager;
@@ -69,7 +81,7 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
     /**
      * 适配器*
      */
-    private InventoryListAdapter inventoryListAdapter;
+    private XzwlListAdapter xzwlListAdapter;
     /**
      * 编辑框*
      */
@@ -80,6 +92,10 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
     private String searchText = "";
     private int page = 1;
 
+    private String locationstr = "";
+
+    ArrayList<Xzwl> items = new ArrayList<Xzwl>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +105,12 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
         initView();
     }
 
+
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        submitBtn = (Button) findViewById(R.id.main_btn_id);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -103,26 +121,24 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
     @Override
     protected void initView() {
         setSearchEdit();
-
-
-        titlename.setText(getString(R.string.inventory_title_1));
+        titlename.setText(getString(R.string.xuwl_text));
         backImageView.setOnClickListener(backImageViewOnClickListener);
-
-
+        submitBtn.setVisibility(View.VISIBLE);
+        submitBtn.setText(getString(R.string.confirm_btn));
+        submitBtn.setOnClickListener(submitBtnOnClckListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        inventoryListAdapter = new InventoryListAdapter(this);
-        recyclerView.setAdapter(inventoryListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        getData(searchText);
+        initAdapter(items);
 
+        getLocationData();
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
     }
@@ -135,17 +151,34 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
     };
 
 
+    /**确定按钮**/
+    private View.OnClickListener submitBtnOnClckListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            xzwlListAdapter.getdata(new XzwlListAdapter.MycheckListener() {
+                @Override
+                public void getcheckeddata(List<Xzwl> listBean) {
+                    Intent intent=getIntent();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("xzwl", (Serializable) listBean);
+                    intent.putExtras(bundle);
+                    setResult(CHOOSE,intent);
+                    finish();
+                }
+            });
+        }
+    };
+
     @Override
     public void onLoad() {
-        page = 1;
-
-        getData(searchText);
+        page++;
+        getINVENTORYData();
     }
 
     @Override
     public void onRefresh() {
-        page++;
-        getData(searchText);
+        page = 1;
+        getINVENTORYData();
     }
 
 
@@ -163,15 +196,17 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Inventory_Activity.this.getCurrentFocus()
+                                    Xzwl_Activity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
+                    refresh_layout.setRefreshing(true);
                     searchText = search.getText().toString();
-                    inventoryListAdapter.removeAllData();
+                    xzwlListAdapter.removeAll(items);
+                    items = new ArrayList<Xzwl>();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
-                    getData(searchText);
+                    getINVENTORYData();
                     return true;
                 }
                 return false;
@@ -179,35 +214,31 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
         });
     }
 
+
     /**
-     * 获取数据*
+     * 根据udbelong获取库房信息
      */
-    private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getInventoryUrl(search, page, 20), new HttpRequestHandler<Results>() {
+    private void getLocationData() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getLocatiosUrl("", AccountUtils.getDepartment(Xzwl_Activity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
 
-                ArrayList<Inventory> items = null;
+                ArrayList<Locations> items = null;
                 try {
-                    items = Ig_Json_Model.parseFromInventoryString(results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
+                    items = Ig_Json_Model.parsingLocations(results.getResultlist());
                     if (items == null || items.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
                     } else {
-                        if (page == 1) {
-                            inventoryListAdapter = new InventoryListAdapter(Inventory_Activity.this);
-                            recyclerView.setAdapter(inventoryListAdapter);
+
+                        for (Locations locations : items) {
+                            locationstr += locations.location + ",=";
                         }
-                        if (totalPages == page) {
-                            inventoryListAdapter.adddate(items);
-                        }
+                        locationstr = locationstr.substring(0, locationstr.length() - 2);
+                        getINVENTORYData();
                     }
 
                 } catch (IOException e) {
@@ -223,4 +254,70 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
             }
         });
     }
+
+
+    /**
+     * 根据所属库房查询备件
+     */
+    private void getINVENTORYData() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getINVENTORYUrl(searchText, locationstr, page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                Log.i(TAG, "data=" + results);
+                ArrayList<Xzwl> item = JsonUtils.parsingXzwl(Xzwl_Activity.this, results.getResultlist());
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
+                if (item == null || item.isEmpty()) {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                } else {
+
+                    if (item != null || item.size() != 0) {
+                        if (page == 1) {
+                            items = new ArrayList<Xzwl>();
+                            initAdapter(items);
+                        }
+                        for (int i = 0; i < item.size(); i++) {
+                            items.add(item.get(i));
+                        }
+                        addData(item);
+                        xzwlListAdapter.notifyDataSetChanged();
+                    }
+                    nodatalayout.setVisibility(View.GONE);
+
+//                    initAdapter(items);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+    /**
+     * 获取数据*
+     */
+    private void initAdapter(final List<Xzwl> list) {
+        xzwlListAdapter = new XzwlListAdapter(Xzwl_Activity.this, R.layout.xzwl_list_item, list);
+        recyclerView.setAdapter(xzwlListAdapter);
+
+
+
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addData(final List<Xzwl> list) {
+        xzwlListAdapter.addData(list);
+    }
+
+
 }

@@ -96,7 +96,7 @@ public class AndroidClientService {
      * @return
      */
     public String InsertGENERAL(Context context, String string, String mboObjectName,String mboKey, String personId) {
-        Log.i(TAG,"personId="+personId);
+        Log.i(TAG,"string="+string);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
         Log.i(TAG,"url="+url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

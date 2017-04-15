@@ -14,7 +14,7 @@ public class Constants {
     /**
      * 正式版*
      */
-    public static final String HTTP_API_IP = "http://10.1.3.45:7003/";
+    public static final String HTTP_API_IP = "http://10.1.3.46:7003/";
 
 
     /**

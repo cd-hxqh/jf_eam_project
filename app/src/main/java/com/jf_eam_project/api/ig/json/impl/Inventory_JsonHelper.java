@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
 import com.jf_eam_project.api.ig.json.JsonHelper;
 import com.jf_eam_project.model.Inventory;
-import com.jf_eam_project.model.Invoice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public final class Inventory_JsonHelper
         } else if ("INVENTORYID".equals(fieldName)) {
             instance.inventoryid = jp.getValueAsString();
             return true;
-        }else if ("ITEM.DESCRIPTION".equals(fieldName)) {
+        }else if ("ITEMDESC".equals(fieldName)) {
             instance.description = jp.getValueAsString();
             return true;
         } else if ("SITEID".equals(fieldName)) {

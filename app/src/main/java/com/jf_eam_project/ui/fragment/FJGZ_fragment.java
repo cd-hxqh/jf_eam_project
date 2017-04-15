@@ -162,7 +162,7 @@ public class FJGZ_fragment extends BaseFragment {
      * 获取电气故障统计10-20天
      **/
     private void getfjdq10to20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("风机", "'FAULT'", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("风机", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();

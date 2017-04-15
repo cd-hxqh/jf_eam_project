@@ -29,6 +29,10 @@ public class KuCun_Activity extends BaseActivity {
      * 库存
      */
     private LinearLayout inventory_layout;
+    /**
+     * 物资发放
+     */
+    private LinearLayout wzff_layout;
 
     /**
      * 领料单
@@ -73,6 +77,7 @@ public class KuCun_Activity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         inventory_layout = (LinearLayout) findViewById(R.id.inventory_linear_id);
+        wzff_layout = (LinearLayout) findViewById(R.id.wzff_layout_id);
         material_layout = (LinearLayout) findViewById(R.id.material_layout_id);
         uditemreq_layout = (LinearLayout) findViewById(R.id.uditemreq_linear_id);
         material_up_layout = (LinearLayout) findViewById(R.id.material_up_layout_id);
@@ -85,6 +90,7 @@ public class KuCun_Activity extends BaseActivity {
         titleText.setText(getString(R.string.kcgl_text));
         backImageView.setOnClickListener(backImageViewOnClickListener);
         inventory_layout.setOnClickListener(onClickListener);
+        wzff_layout.setOnClickListener(onClickListener);
         material_layout.setOnClickListener(onClickListener);
         uditemreq_layout.setOnClickListener(onClickListener);
         material_up_layout.setOnClickListener(onClickListener);
@@ -153,6 +159,11 @@ public class KuCun_Activity extends BaseActivity {
                 case R.id.udbr_linearlayout_id: //物资借用归还
                     Intent intent5 = new Intent(KuCun_Activity.this, Udbr_ListActivity.class);
                     startActivityForResult(intent5, 0);
+                    break;
+
+                case R.id.wzff_layout_id: //物资发放
+                    Intent intent6 = new Intent(KuCun_Activity.this, Wzff_ListActivity.class);
+                    startActivityForResult(intent6, 0);
                     break;
 
             }

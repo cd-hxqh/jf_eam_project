@@ -180,7 +180,7 @@ public class Udreport_Details_Activity extends BaseActivity {
         } else if (udreport.apptype.equals("HIDDEN")) {
             titleView.setText(getString(R.string.qxtbd_title));
         } else {
-            titleView.setText("提报单详情");
+            titleView.setText(getString(R.string.tbdxq_text));
         }
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 

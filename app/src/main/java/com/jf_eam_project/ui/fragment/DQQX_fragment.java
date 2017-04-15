@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,7 +162,7 @@ public class DQQX_fragment extends BaseFragment {
      * 获取电气故障统计10-20天
      **/
     private void getfjdq10to20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("电气", "'FAULT'", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("电气", "HIDDEN", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -171,7 +170,6 @@ public class DQQX_fragment extends BaseFragment {
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG,"2123123");
                 mProgressDialog.dismiss();
 
                 ArrayList<FJDQ20VIEW> items = null;

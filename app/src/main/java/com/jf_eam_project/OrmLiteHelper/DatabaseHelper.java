@@ -42,7 +42,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
-
         super(context, DataUtils.getFilePath(context), null, DATABASE_VERSION);
     }
 

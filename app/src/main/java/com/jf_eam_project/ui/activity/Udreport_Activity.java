@@ -14,9 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.flyco.animation.BaseAnimatorSet;
@@ -38,6 +41,7 @@ import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.UdreportListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.JsonUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
@@ -49,6 +53,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 提报单列表
  */
@@ -57,44 +65,36 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     private static final String TAG = "Udreport_Activity";
     private static final int ADD_REPORT = 1; //提报单新增
 
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
-
-    /**
-     * 菜单按钮*
-     */
-    private ImageView menuImageView;
-
+    @Bind(R.id.title_name)
+    TextView titlename; //标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView; //返回按钮
+    @Bind(R.id.title_add)
+    ImageView menuImageView; //菜单按钮
+    PopupWindow popupWindow;
 
     LinearLayoutManager layoutManager;
 
 
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
-    /**
-     * 暂无数据*
-     */
-    private LinearLayout nodatalayout;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView; //RecyclerView
+
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout; //暂无数据
     /**
      * 界面刷新*
      */
-    private SwipeRefreshLayout refresh_layout = null;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout;
+
+    @Bind(R.id.search_edit)
+    EditText search; //编辑框
     /**
      * 适配器*
      */
     private UdreportListAdapter udreportListAdapter;
-    /**
-     * 编辑框*
-     */
-    private EditText search;
+
+
     /**
      * 查询条件*
      */
@@ -111,15 +111,14 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     private String apptype;
 
 
-    /**
-     * 在线*
-     */
-    private Button onLineButton;
+    @Bind(R.id.online_button_id)
+    Button onLineButton; //在线
 
     /**
      * 离线*
      */
-    private Button offLineButton;
+    @Bind(R.id.offline_button_id)
+    Button offLineButton;//离线
 
     /**
      * 是否在线*
@@ -130,12 +129,14 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     /**
      * 在线离线*
      */
-    private LinearLayout isShowLinearLayout;
+    @Bind(R.id.loc_operation_linearlayout_id)
+    LinearLayout isShowLinearLayout;
 
     /**
      * 本地操作*
      */
-    private LinearLayout operationLinearLayout;
+    @Bind(R.id.choose_linearlayout_id)
+    LinearLayout operationLinearLayout;
 
 
     /**
@@ -152,15 +153,18 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     /**
      * 全选*
      */
-    private Button allButton;
+    @Bind(R.id.all_choose_id)
+    Button allButton;
     /**
      * 上传*
      */
-    private Button uploadButton;
+    @Bind(R.id.upload_choose_id)
+    Button uploadButton;
     /**
      * 删除*
      */
-    private Button deleteButton;
+    @Bind(R.id.delete_choose_id)
+    Button deleteButton;
 
 
     /**
@@ -178,6 +182,7 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_udreport_list);
+        ButterKnife.bind(this);
         initData();
         findViewById();
         initView();
@@ -193,25 +198,7 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
-
-
-        isShowLinearLayout = (LinearLayout) findViewById(R.id.loc_operation_linearlayout_id);
-        onLineButton = (Button) findViewById(R.id.online_button_id);
-        offLineButton = (Button) findViewById(R.id.offline_button_id);
-
-
-        operationLinearLayout = (LinearLayout) findViewById(R.id.choose_linearlayout_id);
-        allButton = (Button) findViewById(R.id.all_choose_id);
-        uploadButton = (Button) findViewById(R.id.upload_choose_id);
-        deleteButton = (Button) findViewById(R.id.delete_choose_id);
     }
 
     @Override
@@ -220,10 +207,8 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
 
 
         titlename.setText(title);
-        menuImageView.setImageResource(R.drawable.add_ico);
+        menuImageView.setImageResource(R.drawable.ic_more);
         menuImageView.setVisibility(View.VISIBLE);
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-        menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 
         layoutManager = new LinearLayoutManager(this);
@@ -242,7 +227,7 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
         if (NetWorkHelper.isNetwork(Udreport_Activity.this)) {
-            MessageUtils.showMiddleToast(Udreport_Activity.this, "世界上最遥远的距离就是没网。检查设置");
+            MessageUtils.showMiddleToast(Udreport_Activity.this, getString(R.string.hava_not_netwok_text));
             getLocalData();
         } else {
             getData(searchText);
@@ -253,38 +238,29 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
 
         /**默认在线选中**/
 
-        onLineButton.setOnClickListener(onLineButtonOnClickListener);
-        offLineButton.setOnClickListener(offLineButtonOnClickListener);
 
         isShowLinearLayout.setVisibility(View.VISIBLE);
         operationLinearLayout.setVisibility(View.GONE);
 
-        allButton.setOnClickListener(allOnClickListener);
-        uploadButton.setOnClickListener(uploadOnClickListener);
-        deleteButton.setOnClickListener(deleteOnClickListener);
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
     }
 
+    //在线
+    @OnClick(R.id.online_button_id)
+    void setOnLineButtonOnClickListener() {
+        isShow = true;
+        isShow(true);
+    }
 
-    private View.OnClickListener onLineButtonOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            isShow = true;
-            isShow(true);
-        }
-    };
-
-
-    private View.OnClickListener offLineButtonOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            isShow = false;
-            isShow(false);
-        }
-    };
+    //离线
+    @OnClick(R.id.offline_button_id)
+    void setOffLineButtonOnClickListener() {
+        isShow = false;
+        isShow(false);
+    }
 
 
     /**
@@ -462,32 +438,16 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
 
     }
 
+    //点击返回
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
-
-
-    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity();
-        }
-    };
-
-
-    /**
-     * 跳转至新建故障或者缺陷单界面*
-     */
-    private void startActivity() {
-        Intent intent = new Intent(Udreport_Activity.this, Udreport_Add_Activity.class);
-        Log.i(TAG, "apptype=" + apptype);
-        intent.putExtra("apptype", apptype);
-        startActivityForResult(intent, 0);
-
+    //菜单事件
+    @OnClick(R.id.title_add)
+    void setMenuImageViewOnClickListener() {
+        showPopupWindow(menuImageView);
     }
 
 
@@ -551,7 +511,8 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(apptype, search, page, 20), new HttpRequestHandler<Results>() {
+        String statustype = "=未提报,=已提报,=处理中,=已处理";
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(apptype, AccountUtils.getDepartment(Udreport_Activity.this), statustype, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -582,7 +543,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
                         udreportListAdapter.setOnClickListener(new UdreportListAdapter.OnClickListener() {
                             @Override
                             public void cOnClickListener(int postion, Udreport udreport) {
-                                Log.i(TAG, "postion=" + postion + ",");
 
                                 if (operationLinearLayout.isShown()) {
                                     operationLinearLayout.setVisibility(View.GONE);
@@ -618,52 +578,47 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
     /**
      * 全选*
      */
-    private View.OnClickListener allOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (aBoolean) {
-                aBoolean = false;
-                allButton.setText("全选");
-                chooseList = new ArrayList<Udreport>();
-            } else {
-                allButton.setText("全不选");
-                aBoolean = true;
-            }
-            udreportListAdapter.setAllChoose(aBoolean);
-            udreportListAdapter.notifyDataSetChanged();
-
+    @OnClick(R.id.all_choose_id)
+    void setAllOnClickListener() {
+        if (aBoolean) {
+            aBoolean = false;
+            allButton.setText("全选");
+            chooseList = new ArrayList<Udreport>();
+        } else {
+            allButton.setText("全不选");
+            aBoolean = true;
         }
-    };
+        udreportListAdapter.setAllChoose(aBoolean);
+        udreportListAdapter.notifyDataSetChanged();
+    }
 
 
     /**
      * 上传*
      */
-    private View.OnClickListener uploadOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+    @OnClick(R.id.upload_choose_id)
+    void setUploadOnClickListener() {
+        {
             if (null == chooseList || chooseList.size() == 0) {
                 MessageUtils.showMiddleToast(Udreport_Activity.this, "请选择上传数据...");
             } else {
                 alerDialog(chooseList.size());
             }
         }
-    };
+    }
 
 
     /**
      * 删除*
      */
-    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (chooseList != null && chooseList.size() != 0) {
-                deleteData(chooseList);
-            } else {
-                MessageUtils.showMiddleToast(Udreport_Activity.this, "请选择需要删除的任务");
-            }
+    @OnClick(R.id.delete_choose_id)
+    void setDeleteOnClickListener() {
+        if (chooseList != null && chooseList.size() != 0) {
+            deleteData(chooseList);
+        } else {
+            MessageUtils.showMiddleToast(Udreport_Activity.this, "请选择需要删除的任务");
         }
-    };
+    }
 
 
     /**
@@ -699,7 +654,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
                                 for (int i = 0; i < chooseList.size(); i++) {
                                     String data = JsonUtils.saveUdreport(chooseList.get(i));
 
-                                    Log.i(TAG, "choose data=" + data);
                                     if (data != null || !data.isEmpty()) {
                                         result = getBaseApplication().getWsService().addReport(Udreport_Activity.this, data, "");
 
@@ -707,7 +661,6 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
                                 }
                             }
 
-                            Log.i(TAG, "result=" + result);
                             return result;
                         }
 
@@ -809,5 +762,64 @@ public class Udreport_Activity extends BaseActivity implements SwipeRefreshLayou
         new UdreportDao(Udreport_Activity.this).deleteList(list);
 
     }
+
+
+    /**
+     * 初始化showPopupWindow*
+     */
+    private void showPopupWindow(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View contentView = LayoutInflater.from(Udreport_Activity.this).inflate(
+                R.layout.workorder_popup_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.drawable.popup_background_mtrl_mult));
+
+        // 设置好参数之后再show
+        popupWindow.showAsDropDown(view);
+        TextView addTextView = (TextView) contentView.findViewById(R.id.add_text_id);
+
+        TextView lsTextView = (TextView) contentView.findViewById(R.id.workorder_ls_text_id);
+        addTextView.setOnClickListener(addTextViewOnClickListener);
+        lsTextView.setOnClickListener(lsTextViewOnClickListener);
+
+    }
+
+    private View.OnClickListener addTextViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Udreport_Activity.this, Udreport_Add_Activity.class);
+            intent.putExtra("apptype", apptype);
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+        }
+    };
+
+    private View.OnClickListener lsTextViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            intent.setClass(Udreport_Activity.this, UdreportHis_Activity.class);
+            intent.putExtra("apptype", apptype);
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+        }
+    };
 
 }

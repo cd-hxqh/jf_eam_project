@@ -24,4 +24,7 @@
     <dimen name="dimens_18sp">18sp</dimen>
 
     <dimen name="text_size_small">14sp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="dimens_line">0.5dp</dimen>
 </resources>

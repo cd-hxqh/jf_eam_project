@@ -1,7 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,16 +10,12 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jf_eam_project.R;
@@ -28,91 +23,82 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.WorkOrder;
-import com.jf_eam_project.ui.adapter.WorkListAdapter;
+import com.jf_eam_project.model.Locations;
+import com.jf_eam_project.ui.adapter.WzffListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * Created by think on 2015/11/20.
- * 工单列表界面
+ * 物资发放
  */
-public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Work_ListActivity";
-    @Bind(R.id.title_name)
-    TextView titlename; //标题
-    @Bind(R.id.title_back_id)
-    ImageView backImage;//返回
+    private static final String TAG = "Wzff_ListActivity";
+    /**
+     * 标题*
+     */
+    private TextView titlename;
+    /**
+     * 返回*
+     */
+    private ImageView backImage;
 
-    @Bind(R.id.title_add)
-    ImageView meunImageView;//菜单
-    PopupWindow popupWindow;
 
 
-    private String worktype;
+
     LinearLayoutManager layoutManager;
+    public RecyclerView recyclerView;
+    private LinearLayout nodatalayout;
+    private SwipeRefreshLayout refresh_layout = null;
 
-    @Bind(R.id.recyclerView_id)
-    RecyclerView recyclerView; //recyclerView
-    @Bind(R.id.have_not_data_id) //暂无数据
-            LinearLayout nodatalayout;
-    @Bind(R.id.swipe_container)
-    SwipeRefreshLayout refresh_layout;
-    @Bind(R.id.search_edit)
-    EditText search;
-    private WorkListAdapter workListAdapter;
+    private WzffListAdapter wzffListAdapter;
+    private EditText search;
     private String searchText = "";
     private int page = 1;
-
-    /**
-     * 资产编号
-     **/
-    private String assetsNum;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-        ButterKnife.bind(this);
-        getIntentData();
+
         findViewById();
         initView();
     }
 
-    private void getIntentData() {
-        worktype = getIntent().getStringExtra("worktype");
-        assetsNum = getIntent().getStringExtra("assetnum");
-
-
-    }
 
     @Override
     protected void findViewById() {
-
+        titlename = (TextView) findViewById(R.id.title_name);
+        backImage = (ImageView) findViewById(R.id.title_back_id);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
+        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
+        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
+        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.title_activity_work_list);
-        meunImageView.setImageResource(R.drawable.ic_more);
-        meunImageView.setVisibility(View.VISIBLE);
+        titlename.setText(R.string.wzff_text);
+
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this, 0);
-        recyclerView.setAdapter(workListAdapter);
+        wzffListAdapter = new WzffListAdapter(this);
+        recyclerView.setAdapter(wzffListAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
@@ -124,45 +110,33 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-    //返回
-    @OnClick(R.id.title_back_id)
-    void setBackImageOnClickListener() {
-        finish();
-    }
 
-
-    //菜单
-    @OnClick(R.id.title_add)
-    void setAddimgOnClickListener() {
-        showPopupWindow(meunImageView);
-    }
 
 
     private void getData(String search) {
-
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, AccountUtils.getDepartment(Work_ListActivity.this), search, assetsNum, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getLocatiosUrl(search, AccountUtils.getDepartment(Wzff_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<WorkOrder> items = null;
+                ArrayList<Locations> items = null;
                 if (totalPages != 0 && currentPage != 0) {
                     try {
-                        items = Ig_Json_Model.parsingWorkOrder(results.getResultlist());
+                        items = Ig_Json_Model.parsingLocations(results.getResultlist());
                         refresh_layout.setRefreshing(false);
                         refresh_layout.setLoading(false);
                         if (items == null || items.isEmpty()) {
                             nodatalayout.setVisibility(View.VISIBLE);
                         } else {
                             if (page == 1) {
-                                workListAdapter = new WorkListAdapter(Work_ListActivity.this, 0);
-                                recyclerView.setAdapter(workListAdapter);
+                                wzffListAdapter = new WzffListAdapter(Wzff_ListActivity.this);
+                                recyclerView.setAdapter(wzffListAdapter);
                                 nodatalayout.setVisibility(View.GONE);
                             }
                             if (totalPages == page) {
-                                workListAdapter.adddate(items);
+                                wzffListAdapter.adddate(items);
                             }
                         }
                     } catch (IOException e) {
@@ -180,7 +154,6 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     private void setSearchEdit() {
@@ -197,13 +170,13 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Work_ListActivity.this.getCurrentFocus()
+                                    Wzff_ListActivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     refresh_layout.setRefreshing(true);
                     searchText = search.getText().toString();
-                    workListAdapter = new WorkListAdapter(Work_ListActivity.this, 0);
-                    recyclerView.setAdapter(workListAdapter);
+                    wzffListAdapter = new WzffListAdapter(Wzff_ListActivity.this);
+                    recyclerView.setAdapter(wzffListAdapter);
                     getData(searchText);
                     return true;
                 }
@@ -225,63 +198,4 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         page++;
         getData(searchText);
     }
-
-
-    /**
-     * 初始化showPopupWindow*
-     */
-    private void showPopupWindow(View view) {
-
-        // 一个自定义的布局，作为显示的内容
-        View contentView = LayoutInflater.from(Work_ListActivity.this).inflate(
-                R.layout.workorder_popup_window, null);
-
-
-        popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setTouchable(true);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popup_background_mtrl_mult));
-
-        // 设置好参数之后再show
-        popupWindow.showAsDropDown(view);
-        TextView addTextView = (TextView) contentView.findViewById(R.id.add_text_id);
-
-        TextView lsTextView = (TextView) contentView.findViewById(R.id.workorder_ls_text_id);
-        addTextView.setOnClickListener(addTextViewOnClickListener);
-        lsTextView.setOnClickListener(lsTextViewOnClickListener);
-
-    }
-
-    private View.OnClickListener addTextViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Work_ListActivity.this, Work_AddNewActivity.class);
-            intent.putExtra("worktype", worktype);
-            startActivityForResult(intent, 0);
-            popupWindow.dismiss();
-        }
-    };
-
-    private View.OnClickListener lsTextViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Work_ListActivity.this, Work_History_ListActivity.class);
-            intent.putExtra("worktype", worktype);
-            startActivityForResult(intent, 0);
-            popupWindow.dismiss();
-        }
-    };
-
 }

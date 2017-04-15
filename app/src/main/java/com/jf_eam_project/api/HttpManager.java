@@ -165,14 +165,14 @@ public class HttpManager {
     /**
      * 设置故障，巡检提报单
      */
-    public static String getUdreport(String apptype, String vlaue, int curpage, int showcount) {
+    public static String getUdreport(String apptype, String udbelong, String statustype, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
 
-            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(REPORTNUM,999999999) DESC','condition':{'APPTYPE':'=" + apptype + "','STATUSTYPE':'=未提报,=已提报,=处理中,=已处理'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(REPORTNUM,999999999) DESC','condition':{'APPTYPE':'=" + apptype + "','UDBELONG':'=" + udbelong + "','STATUSTYPE':'" + statustype + "'}}";
 
         } else {
 
-            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(REPORTNUM,999999999) DESC','condition':{'APPTYPE':'=" + apptype + "','STATUSTYPE':'=未提报,=已提报,=处理中,=已处理'},'sinorsearch':{'REPORTNUM':'" + vlaue + ",'DESCRIPTION':'" + vlaue + "'}}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(REPORTNUM,999999999) DESC','condition':{'APPTYPE':'=" + apptype + "','UDBELONG':'=" + udbelong + "','STATUSTYPE':''},'sinorsearch':{'REPORTNUM':'" + vlaue + ",'DESCRIPTION':'" + vlaue + "'}}";
         }
     }
 
@@ -201,39 +201,39 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(String type, String search, String assetNum, int curpage, int showcount) {
+    public static String getworkorderUrl(String type, String udbelong, String search, String assetNum, int curpage, int showcount) {
         if (search.equals("") && assetNum == null) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + type + "','STATUS':'=等待核准,=已核准'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + type + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'}}";
         } else if (search.equals("") && assetNum != null) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'}}";
         } else if (!search.equals("")) {
             if (assetNum == null) {
                 return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'STATUS':'=等待核准,=已核准'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
             } else {
                 return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum +"','STATUS':'=等待核准,=已核准'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
             }
         } else {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + type + "','STATUS':'=等待核准,=已核准'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + type + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
         }
 
     }
 
 
     /**
-     * 设置工单接口*
+     * 设置工单历史接口*
      */
-    public static String getworkorderAllUrl(String search, int curpage, int showcount) {
+    public static String getWORKORDERHisUrl(String search, String udwotype, String udbelong, int curpage, int showcount) {
         if (search.equals("")) {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'status':'=CLOSE'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + udwotype + "','STATUS':'=关闭','UDBELONG':'=" + udbelong + "'}}";
         } else {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'status':'=CLOSE'},'sinorsearch':{'WONUM':'" + search + "'DESCRIPTION':'" + search + "'}}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + udwotype + "','STATUS':'=关闭','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "'DESCRIPTION':'" + search + "'}}";
         }
 
     }
@@ -726,6 +726,40 @@ public class HttpManager {
 
     }
 
+    /**
+     * 根据编号获取提报单*
+     */
+    public static String getUdreport(String reportnum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(REPORTNUM,999999999) DESC','condition':{'REPORTNUM':'=" + reportnum + "'}}";
+
+    }
+
+
+    /**
+     * 设置物资发放*
+     */
+    public static String getLocatiosUrl(String search, String udbelong, int curpage, int showcount) {
+        if (search.equals("")) {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udbelong':'=" + udbelong + "','type':'=库房'}}";
+        } else {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udbelong':'=" + udbelong + "','type':'=库房'},'sinorsearch':{'LOCATION':'" + search + "','DESCRIPTION':'" + search + "'}}";
+        }
+
+    }
+
+
+    /**
+     * 设置选择物资数据*
+     */
+    public static String getINVENTORYUrl(String vlaue, String location, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LOCATION':'=" + location + "','STATUS':'=活动'}}";
+        } else {
+            return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LOCATION':'=" + location + "','STATUS':'=活动'},'sinorsearch':{'ITEMNUM':'" + vlaue + "','ITEMDESC':'" + vlaue + "'}}";
+        }
+    }
 
 
     /**
@@ -741,6 +775,7 @@ public class HttpManager {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
+        client.setMaxConnections(5);
         client.setTimeout(600000);
         client.get(base_url, params, new TextHttpResponseHandler() {
             @Override
@@ -768,6 +803,7 @@ public class HttpManager {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
+        client.setMaxConnections(5);
         client.setTimeout(600000);
         client.get(base_url, params, new AsyncHttpResponseHandler() {
 
@@ -830,6 +866,8 @@ public class HttpManager {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
+        client.setMaxConnections(5);
+        client.setTimeout(600000);
         client.get(base_url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

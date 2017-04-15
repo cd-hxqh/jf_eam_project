@@ -713,7 +713,7 @@
     <string name="dqqx_text">电气缺陷</string>
     <string name="fjgz_title_text">风机一.二级故障(20天以上)</string>
     <string name="dqgz_title_text">电气一.二级故障(20天以上)</string>
-    <string name="dqgz_title1_text">电气一、二级故障(10天--20天)</string>
+    <string name="dqgz_title1_text">电气一、二级故障(10天至20天)</string>
     <string name="fgs_text">分公司</string>
     <string name="fdc_text">风电场</string>
     <string name="ms_text">描述</string>
@@ -725,9 +725,25 @@
     <string name="workorder_text">工单:</string>
     <string name="lyd_xj_hint">确定新增领料单吗?</string>
     <string name="fjgz1_text">风机一、二级故障(20天以上)</string>
-    <string name="fj_gz_10_text">风机一、二级故障(10天--20天)</string>
+    <string name="fj_gz_10_text">风机一、二级故障(10天至20天)</string>
     <string name="dqqx1_text">电气一、二类缺陷(20天以上)</string>
-    <string name="dqqx_10_text">电气一、二类缺陷(10天--20天)</string>
+    <string name="dqqx_10_text">电气一、二类缺陷(10天至20天)</string>
+    <string name="hava_not_netwok_text">世界上最遥远的距离就是没网。检查设置</string>
+    <string name="tbdxq_text">提报单详情</string>
+    <string name="kc_text">库存</string>
+    <string name="lld_text">领料单</string>
+    <string name="wzff_text">物资发放</string>
+    <string name="jygh_text">借用归还</string>
+    <string name="ykf_text">原库房:</string>
+    <string name="wz_text">物资</string>
+    <string name="xuwl_text">选择物料</string>
+    <string name="loading">正在加载中...</string>
+    <string name="xm_text">项目:</string>
+    <string name="llxz_bt_hint_text">请填写描述或关联工单号</string>
+    <string name="setting_address_text">设置服务器地址</string>
+    <string name="yhmhmmcw_text">用户名或密码错误</string>
+    <string name="add_text">新建记录</string>
+    <string name="ls_data_text">历史数据</string>
 
 
 </resources>

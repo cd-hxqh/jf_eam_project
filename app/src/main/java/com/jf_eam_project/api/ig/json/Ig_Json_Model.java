@@ -29,6 +29,7 @@ import com.jf_eam_project.api.ig.json.impl.Labor_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Laborcraftrate_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labtrans_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Location_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Locations_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PO_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PRLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.PR_JsonHelper;
@@ -74,6 +75,7 @@ import com.jf_eam_project.model.Labor;
 import com.jf_eam_project.model.Laborcraftrate;
 import com.jf_eam_project.model.Labtrans;
 import com.jf_eam_project.model.Location;
+import com.jf_eam_project.model.Locations;
 import com.jf_eam_project.model.PR;
 import com.jf_eam_project.model.PRLine;
 import com.jf_eam_project.model.Person;
@@ -368,6 +370,11 @@ public class Ig_Json_Model {
     /**解析联系人**/
     public static ArrayList<Compcontact> parsingCompcontact(String input) throws IOException {
         return Compcontact_JsonHelper.parseFromJsonList(input);
+    }
+
+    /**解析物资发放**/
+    public static ArrayList<Locations> parsingLocations(String input) throws IOException {
+        return Locations_JsonHelper.parseFromJsonList(input);
     }
 
 

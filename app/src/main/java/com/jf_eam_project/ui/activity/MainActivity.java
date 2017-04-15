@@ -217,13 +217,10 @@ public class MainActivity extends BaseActivity {
                         startActivityForResult(intent, 0);
                         break;
                     case 7:
-                        intent = new Intent(MainActivity.this, LeadershipActivity.class);
-                        startActivityForResult(intent, 0);
-                        break;
-                    case 8:
                         intent = new Intent(MainActivity.this, SheZhi_Activity.class);
                         startActivityForResult(intent, 0);
                         break;
+
                 }
             } else if (permissions == 4 || permissions == 5) {
                 switch (postion) {

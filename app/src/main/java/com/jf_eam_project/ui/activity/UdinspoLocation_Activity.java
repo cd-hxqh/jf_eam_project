@@ -335,13 +335,11 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
             }
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                Log.i(TAG, "results=" + results.getResultlist());
 
                 ArrayList<Udinspo> items = null;
                 try {
@@ -474,7 +472,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
     /**根据udinspoassetnum编号删除Udinspojxxm信息**/
     private void delUdinspojxxm(String udinspoassetnum) {
-        Log.i(TAG,"删除——————udinspoassetnum="+udinspoassetnum);
         List<Udinspojxxm> list=new UdinspojxxmDao(this).queryByUdinspoassetnum(udinspoassetnum);
         new UdinspojxxmDao(this).deleteList(list);
     }
@@ -488,7 +485,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
         if (null != list && list.size() != 0) {
             for (Udinspo udinspo : list) {
-                Log.i(TAG, "insponum=" + udinspo.getInsponum());
                 findByUdinspoasset(udinspo.getInsponum());
             }
 
@@ -504,7 +500,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         List<Udinspoasset> list = new UdinspoAssetDao(UdinspoLocation_Activity.this).queryByInsponum(insponum);
         if (null != list && list.size() != 0) {
             for (Udinspoasset udinspoasset : list) {
-                Log.i(TAG, "udinspoassetnum=" + udinspoasset.getUdinspoassetnum());
                 findByUdinspojxxm(udinspoasset.getUdinspoassetnum());
             }
         }
@@ -519,7 +514,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         List<Udinspojxxm> list = new UdinspojxxmDao(UdinspoLocation_Activity.this).findByLocation(udinspoassetnum, 1);
         if (null != list && list.size() != 0) {
             for (Udinspojxxm udinspojxxm : list) {
-                Log.i(TAG, "getUdinspojxxmlinenum" + udinspojxxm.getUdinspojxxmlinenum());
                 chooseUdinspojxxmList.add(udinspojxxm);
             }
         }
@@ -553,7 +547,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                     MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "暂无网络,上传失败");
                 } else {
 
-
+                    Log.i(TAG,"11111");
                     new AsyncTask<String, String, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
@@ -561,8 +555,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                             if (chooseUdinspojxxmList != null && chooseUdinspojxxmList.size() != 0) {
                                 for (int i = 0; i < chooseUdinspojxxmList.size(); i++) {
                                     String data = JsonUtils.udinspojxxmJson(chooseUdinspojxxmList.get(i));
-
-                                    Log.i(TAG, "choose data=" + data);
+                                    Log.i(TAG,"data="+data);
                                     if (data != null || !data.isEmpty()) {
                                         result = getBaseApplication().getWsService().UpdatePO(UdinspoLocation_Activity.this, data, "");
 
@@ -576,7 +569,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                         protected void onPostExecute(String s) {
                             super.onPostExecute(s);
                             mProgressDialog.dismiss();
-                            Log.i(TAG,"s="+s);
                             try {
                                 JSONObject jsonObject = new JSONObject(s);
                                 String success = jsonObject.getString("status");
