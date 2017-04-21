@@ -20,9 +20,13 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.FJDQ20VIEW;
 import com.jf_eam_project.ui.adapter.Fjdq20viewListAdapter;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 风机故障*
@@ -33,19 +37,25 @@ public class FJGZ_fragment extends BaseFragment {
 
     private View view;
 
-    private TextView dqgz20TextView; //电气故障统计20天以上
+    @Bind(R.id.dqgz_20_text_id)
+    TextView dqgz20TextView; //电气故障统计20天以上
     private LinearLayoutManager dq20layoutManager;
-    public RecyclerView dq20recyclerView;
-    public LinearLayout dq20nodatalayout;
+    @Bind(R.id.dqgz20_recyclerView_id)
+    RecyclerView dq20recyclerView;
+    @Bind(R.id.gztj20have_not_data_id)
+    LinearLayout dq20nodatalayout;
 
     private Fjdq20viewListAdapter fjdq20viewListAdapter;
 
-
-    private TextView dqgz10TextView; //电气故障统计10-20天以上
+    @Bind(R.id.dqgz_10_text_id)
+    TextView dqgz10TextView; //电气故障统计10-20天以上
 
     private LinearLayoutManager dq10layoutManager;
-    public RecyclerView dq10recyclerView;
-    public LinearLayout dq10nodatalayout;
+
+    @Bind(R.id.dqgz10_recyclerView_id)
+    RecyclerView dq10recyclerView;
+    @Bind(R.id.gztj10have_not_data_id)
+    LinearLayout dq10nodatalayout;
     private Fjdq20viewListAdapter fjdq10viewListAdapter;
 
 
@@ -63,6 +73,7 @@ public class FJGZ_fragment extends BaseFragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         view = inflater.inflate(R.layout.fragment_gztj,
                 container, false);
+        ButterKnife.bind(this, view);
 
 
         findViewById(view);
@@ -78,15 +89,7 @@ public class FJGZ_fragment extends BaseFragment {
 
 
     protected void findViewById(View view) {
-        dqgz20TextView = (TextView) view.findViewById(R.id.dqgz_20_text_id);
 
-        dq20recyclerView = (RecyclerView) view.findViewById(R.id.dqgz20_recyclerView_id);
-        dq20nodatalayout = (LinearLayout) view.findViewById(R.id.gztj20have_not_data_id);
-
-        dqgz10TextView = (TextView) view.findViewById(R.id.dqgz_10_text_id);
-
-        dq10recyclerView = (RecyclerView) view.findViewById(R.id.dqgz10_recyclerView_id);
-        dq10nodatalayout = (LinearLayout) view.findViewById(R.id.gztj10have_not_data_id);
 
     }
 
@@ -118,7 +121,7 @@ public class FJGZ_fragment extends BaseFragment {
      * 获取电气故障统计20天以上
      **/
     private void getfjdq20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW("风机", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW(AccountUtils.getDepartment(getActivity()), "风机", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -162,7 +165,7 @@ public class FJGZ_fragment extends BaseFragment {
      * 获取电气故障统计10-20天
      **/
     private void getfjdq10to20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("风机", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW(AccountUtils.getDepartment(getActivity()), "风机", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -170,7 +173,7 @@ public class FJGZ_fragment extends BaseFragment {
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG,"2123123");
+                Log.i(TAG, "2123123");
                 mProgressDialog.dismiss();
 
                 ArrayList<FJDQ20VIEW> items = null;

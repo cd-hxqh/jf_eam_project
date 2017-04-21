@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,28 +12,21 @@ import com.jf_eam_project.ui.fragment.DQGZ_fragment;
 import com.jf_eam_project.ui.fragment.DQQX_fragment;
 import com.jf_eam_project.ui.fragment.FJGZ_fragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 故障统计
  **/
 public class GzStatisticalActivity extends BaseActivity {
-    /**
-     * 标题*
-     */
-    private TextView titleView;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
+    @Bind(R.id.title_name)
+    TextView titleView;//标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
-    /**
-     * 主菜单
-     **/
-    private Button mainBtn;
 
-    /**
-     * 用于对Fragment进行管理
-     */
-    private FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;//用于对Fragment进行管理
 
 
     /**
@@ -50,24 +42,19 @@ public class GzStatisticalActivity extends BaseActivity {
      **/
     private DQQX_fragment dqqx_fragment;
 
-    /**
-     * 电气故障
-     **/
-    private TextView dqgzText;
-    /**
-     * 风机故障
-     **/
-    private TextView fjgzText;
-    /**
-     * 电气缺陷
-     **/
-    private TextView dqqxText;
+    @Bind(R.id.gztj_text_id)
+    TextView dqgzText;//电气故障
+    @Bind(R.id.fjgz_text_id)
+    TextView fjgzText;//风机故障
+    @Bind(R.id.dqqx_text_id)
+    TextView dqqxText;//电气缺陷
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gzstatistical);
+        ButterKnife.bind(this);
         findViewById();
         initView();
         fragmentManager = getFragmentManager();
@@ -77,13 +64,6 @@ public class GzStatisticalActivity extends BaseActivity {
 
     @Override
     protected void findViewById() {
-        titleView = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        mainBtn = (Button) findViewById(R.id.main_btn_id);
-
-        dqgzText = (TextView) findViewById(R.id.gztj_text_id);
-        fjgzText = (TextView) findViewById(R.id.fjgz_text_id);
-        dqqxText = (TextView) findViewById(R.id.dqqx_text_id);
 
     }
 
@@ -92,40 +72,28 @@ public class GzStatisticalActivity extends BaseActivity {
 
         backImageView.setVisibility(View.VISIBLE);
         titleView.setText(R.string.gz_text);
-        mainBtn.setVisibility(View.GONE);
 
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-        dqgzText.setOnClickListener(dqgzTextOnClickListener);
-        fjgzText.setOnClickListener(fjgzTextOnClickListener);
-        dqqxText.setOnClickListener(dqqxTextOnClickListener);
     }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            finish();
-        }
-    };
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
+    @OnClick(R.id.gztj_text_id)
+    void setDqgzTextOnClickListener() {
+        setTabSelection(0);
+    }
 
-    private View.OnClickListener dqgzTextOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(0);
-        }
-    };
-    private View.OnClickListener fjgzTextOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(1);
-        }
-    };
-    private View.OnClickListener dqqxTextOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(2);
-        }
-    };
+    @OnClick(R.id.fjgz_text_id)
+    void setFjgzTextOnClickListener() {
+        setTabSelection(1);
+    }
+
+    @OnClick(R.id.dqqx_text_id)
+    void setDqqxTextOnClickListener() {
+        setTabSelection(2);
+    }
 
 
     /**

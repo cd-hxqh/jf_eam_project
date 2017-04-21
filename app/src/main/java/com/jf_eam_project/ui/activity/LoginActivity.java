@@ -269,6 +269,7 @@ public class LoginActivity extends BaseActivity {
 
                     } else {
                         AccountUtils.setPerson(LoginActivity.this, items.get(0));
+
                         isShowData(items.get(0).getDepartment().replace(",", ""));
                         new PersonDao(LoginActivity.this).create(items);
                         MessageUtils.showMiddleToast(LoginActivity.this, getString(R.string.login_successful_hint));

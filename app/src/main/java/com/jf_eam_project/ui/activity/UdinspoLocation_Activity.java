@@ -28,6 +28,7 @@ import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspoLocationadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
+import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
@@ -332,7 +333,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, AccountUtils.getDepartment(UdinspoLocation_Activity.this), search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -470,9 +471,11 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
     }
 
-    /**根据udinspoassetnum编号删除Udinspojxxm信息**/
+    /**
+     * 根据udinspoassetnum编号删除Udinspojxxm信息
+     **/
     private void delUdinspojxxm(String udinspoassetnum) {
-        List<Udinspojxxm> list=new UdinspojxxmDao(this).queryByUdinspoassetnum(udinspoassetnum);
+        List<Udinspojxxm> list = new UdinspojxxmDao(this).queryByUdinspoassetnum(udinspoassetnum);
         new UdinspojxxmDao(this).deleteList(list);
     }
 
@@ -547,7 +550,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                     MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "暂无网络,上传失败");
                 } else {
 
-                    Log.i(TAG,"11111");
+                    Log.i(TAG, "11111");
                     new AsyncTask<String, String, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
@@ -555,7 +558,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                             if (chooseUdinspojxxmList != null && chooseUdinspojxxmList.size() != 0) {
                                 for (int i = 0; i < chooseUdinspojxxmList.size(); i++) {
                                     String data = JsonUtils.udinspojxxmJson(chooseUdinspojxxmList.get(i));
-                                    Log.i(TAG,"data="+data);
+                                    Log.i(TAG, "data=" + data);
                                     if (data != null || !data.isEmpty()) {
                                         result = getBaseApplication().getWsService().UpdatePO(UdinspoLocation_Activity.this, data, "");
 

@@ -22,6 +22,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by think on 2015/11/20.
  * 领料单物料行列表
@@ -29,29 +33,25 @@ import java.util.List;
 public class Wlh_ListActivity extends BaseActivity {
 
     private static final String TAG = "Wlh_ListActivity";
-    public static  final int WLH_CODE=1001; //物料行
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回*
-     */
-    private ImageView backImage;
+    public static final int WLH_CODE = 1001; //物料行
+    @Bind(R.id.title_name)
+    TextView titlename; // 标题
+    @Bind(R.id.title_back_id)
+    ImageView backImage;//返回
 
-    /**
-     * 选择物料
-     **/
-    private Button wlBtn;
-
-    private Button sbumitBtn;
+    @Bind(R.id.main_btn_id)
+    Button wlBtn; //选择物料
+    @Bind(R.id.submit_btn_id)
+    Button sbumitBtn;
 
 
     LinearLayoutManager layoutManager;
 
-    public RecyclerView recyclerView;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView;
 
-    private LinearLayout nodatalayout;
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;
 
     private WlhListAdapter wlhListAdapter;
 
@@ -63,7 +63,7 @@ public class Wlh_ListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wlh);
-
+        ButterKnife.bind(this);
         findViewById();
         initView();
     }
@@ -71,19 +71,13 @@ public class Wlh_ListActivity extends BaseActivity {
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImage = (ImageView) findViewById(R.id.title_back_id);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        wlBtn = (Button) findViewById(R.id.main_btn_id);
-        sbumitBtn = (Button) findViewById(R.id.submit_btn_id);
+
     }
 
     @Override
     protected void initView() {
         titlename.setText(R.string.wz_text);
 
-        backImage.setOnClickListener(backOnClickListener);
 
         wlBtn.setVisibility(View.VISIBLE);
         wlBtn.setText(R.string.xuwl_text);
@@ -93,39 +87,35 @@ public class Wlh_ListActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        wlBtn.setOnClickListener(wlBtnOnClickListener);
         nodatalayout.setVisibility(View.VISIBLE);
         initAdapter(wlhs);
-        sbumitBtn.setOnClickListener(sbumitBtnOnClickListener);
     }
 
-    private View.OnClickListener backOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            finish();
-        }
-    };
+    //返回事件
+    @OnClick(R.id.title_back_id)
+    void setBackOnClickListener() {
+        finish();
+    }
 
 
-    private View.OnClickListener wlBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Wlh_ListActivity.this, Xzwl_Activity.class);
-            startActivityForResult(intent, 0);
-        }
-    };
+    //选择物料
+    @OnClick(R.id.main_btn_id)
+    void setWlBtnOnClickListener() {
+        Intent intent = new Intent(Wlh_ListActivity.this, Xzwl_Activity.class);
+        startActivityForResult(intent, 0);
+    }
 
-    private View.OnClickListener sbumitBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = getIntent();
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("wlhs", (Serializable) wlhs);
-            intent.putExtras(bundle);
-            setResult(WLH_CODE,intent);
-            finish();
-        }
-    };
+
+    //提交
+    @OnClick(R.id.submit_btn_id)
+    void setSbumitBtnOnClickListener() {
+        Intent intent = getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("wlhs", (Serializable) wlhs);
+        intent.putExtras(bundle);
+        setResult(WLH_CODE, intent);
+        finish();
+    }
 
 
     /**
@@ -155,7 +145,7 @@ public class Wlh_ListActivity extends BaseActivity {
                 if (xzwls != null || xzwls.size() != 0) {
                     sbumitBtn.setVisibility(View.VISIBLE);
                     nodatalayout.setVisibility(View.GONE);
-                    wlhs=addWlh(xzwls);
+                    wlhs = addWlh(xzwls);
                     addData(wlhs);
                 }
                 break;

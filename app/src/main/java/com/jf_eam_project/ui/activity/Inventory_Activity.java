@@ -31,49 +31,39 @@ import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 库存记录Acitivity*
  */
 public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Inventory_Activity";
 
-
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
-
-
+    @Bind(R.id.title_name)
+    TextView titlename;//标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
 
     LinearLayoutManager layoutManager;
 
 
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
-    /**
-     * 暂无数据*
-     */
-    private LinearLayout nodatalayout;
-    /**
-     * 界面刷新*
-     */
-    private SwipeRefreshLayout refresh_layout = null;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView;//RecyclerView
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout; //暂无数据
+
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout = null;//界面刷新
     /**
      * 适配器*
      */
     private InventoryListAdapter inventoryListAdapter;
-    /**
-     * 编辑框*
-     */
-    private EditText search;
+
+    @Bind(R.id.search_edit)
+    EditText search; //编辑框
     /**
      * 查询条件*
      */
@@ -85,30 +75,19 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
+        ButterKnife.bind(this);
         findViewById();
         initView();
     }
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
     protected void initView() {
         setSearchEdit();
-
-
         titlename.setText(getString(R.string.inventory_title_1));
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-
-
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -127,12 +106,10 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
         refresh_layout.setOnLoadListener(this);
     }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
 
     @Override
@@ -183,7 +160,17 @@ public class Inventory_Activity extends BaseActivity implements SwipeRefreshLayo
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getInventoryUrl(search, page, 20), new HttpRequestHandler<Results>() {
+
+        String url = "";
+        if (isCount(search)) {
+            url = HttpManager.getInventory1Url(search, page, 20);
+        } else {
+
+            url = HttpManager.getInventoryUrl(search, page, 20);
+        }
+
+
+        HttpManager.getDataPagingInfo(this, url, new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);

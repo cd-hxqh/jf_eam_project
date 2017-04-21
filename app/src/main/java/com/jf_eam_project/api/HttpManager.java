@@ -91,20 +91,27 @@ public class HttpManager {
     /**
      * 设置巡检单(下载已下载的内容)
      */
-    public static String getUdinspourl1(String inspotype, String assettype, String checktype, String vlaue, int curpage, int showcount) {
+    public static String getUdinspourl1(String inspotype, String assettype, String checktype, String udbelong, String vlaue, int curpage, int showcount) {
         if (vlaue.equals("")) {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'}}";
             }
         } else {
             if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT'},'sinorsearch':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + vlaue + "','CHECKTYPE':'" + vlaue + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + vlaue + "','CHECKTYPE':'" + vlaue + "'}}";
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT'},'sinorsearch':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + vlaue + "'}}";
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "','INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + vlaue + "'}}";
             }
         }
+    }
+
+    /**
+     * 设置根据编号精确查询巡检单
+     */
+    public static String getUdinspourl1(String vlaue, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "'}}";
     }
 
 
@@ -158,7 +165,7 @@ public class HttpManager {
      * 项目检修标准*
      */
     public static String getUdinspojxxmUrl1(String udinspoassetnum) {
-        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'=" + udinspoassetnum + "'}}";
+        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPOJXXM_NAME + "','option':'read','orderby':'UDINSPOJXXMLINENUM ASC','condition':{'UDINSPOASSETNUM':'" + udinspoassetnum + "'}}";
     }
 
 
@@ -220,6 +227,17 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'UDWOTYPE':'=" + type + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
         }
+
+    }
+
+
+    /**
+     * 根据工单编号接口*
+     */
+    public static String getWorkorderByNumUrl(String wonum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'WONUM':'=" + wonum + "','STATUS':'=等待核准,=已核准,=完成'}}";
+
 
     }
 
@@ -489,8 +507,18 @@ public class HttpManager {
         } else {
             return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" +
                     Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" +
-                    showcount + ",'option':'read','condition':{'ITEMNUM':'=" + vlaue + "'}}";
+                    showcount + ",'option':'read','sinorsearch':{'ITEMNUM':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'}}";
         }
+    }
+
+    /**
+     * 设置库存接口*
+     */
+    public static String getInventory1Url(String vlaue, int curpage, int showcount) {
+
+        return "{'appid':'" + Constants.INVENTORY_APPID + "','objectname':'" +
+                Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" +
+                showcount + ",'option':'read','condition':{'ITEMNUM':'=" + vlaue + "'}}";
     }
 
 
@@ -672,35 +700,35 @@ public class HttpManager {
 
 
     /**
-     * 分公司年度上网电量
+     * 分公司年度上网电量(总公司查询)
      */
     public static String Fgsnudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUDLVIEW_NAME + "','option':'read'}";
     }
 
     /**
-     * 分公司年度上网电量
+     * 分公司月度上网电量(总公司查询)
      */
     public static String Fgsyudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUDLVIEW_NAME + "','option':'read'}";
     }
 
     /**
-     * 分公司年度上网电量
+     * 分公司当月单日电量(总公司查询)
      */
     public static String Fgsrudlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSRUDLVIEW_NAME + "','option':'read'}";
     }
 
     /**
-     * 分公司年度损失电量
+     * 分公司年度损失电量(总公司查询)
      */
     public static String Fgsnussdlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSNUSSDLVIEW_NAME + "','option':'read'}";
     }
 
     /**
-     * 分公司月度损失电量
+     * 分公司月度损失电量(总公司查询)
      */
     public static String Fgsyussdlview() {
         return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FGSYUSSDLVIEW_NAME + "','option':'read'}";
@@ -710,20 +738,34 @@ public class HttpManager {
     /**
      * 设置电气故障20天*
      */
-    public static String getFjdq20VIEW(String assettype, String apptype, int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ20VIEW_NAME + "'," +
-                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "'}}";
-
+    public static String getFjdq20VIEW(String branch, String assettype, String apptype, int curpage, int showcount) {
+        if (branch.length() == 5) {//分公司
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ20VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "','BRANCH':'=" + branch + "'}}";
+        } else if (branch.length() == 8) {//风电场
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ20VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "','UDBELONG':'=" + branch + "'}}";
+        } else { //总公司
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ20VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "'}}";
+        }
     }
 
 
     /**
      * 设置电气故障10至20天*
      */
-    public static String getFjdq10VIEW(String assettype, String apptype, int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ10VIEW_NAME + "'," +
-                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "'}}";
-
+    public static String getFjdq10VIEW(String branch, String assettype, String apptype, int curpage, int showcount) {
+        if (branch.length() == 5) {//分公司
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ10VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "','BRANCH':'=" + branch + "'}}";
+        } else if (branch.length() == 8) {//风电场
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ10VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "','UDBELONG':'=" + branch + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDRUNLOG_APPID + "','objectname':'" + Constants.FJDQ10VIEW_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ASSETTYPE':'=" + assettype + "','apptype':'=" + apptype + "'}}";
+        }
     }
 
     /**
@@ -742,6 +784,9 @@ public class HttpManager {
         if (search.equals("")) {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udbelong':'=" + udbelong + "','type':'=库房'}}";
+        } else if (search.matches("[0-9]+")) {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LOCATION':'=" + search + "','udbelong':'=" + udbelong + "','type':'=库房'}}";
         } else {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'udbelong':'=" + udbelong + "','type':'=库房'},'sinorsearch':{'LOCATION':'" + search + "','DESCRIPTION':'" + search + "'}}";

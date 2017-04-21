@@ -10,43 +10,31 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flyco.animation.BaseAnimatorSet;
-import com.flyco.animation.BounceEnter.BounceTopEnter;
-import com.flyco.animation.SlideExit.SlideBottomExit;
-import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.widget.NormalDialog;
-import com.jf_eam_project.Dao.UdinspoAssetDao;
-import com.jf_eam_project.Dao.UdinspoDao;
-import com.jf_eam_project.Dao.UdinspojxxmDao;
-import com.jf_eam_project.Dao.UdreportDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.model.Udinspoasset;
-import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.model.Udreport;
 import com.jf_eam_project.ui.adapter.UdinspoListNewadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
-import com.jf_eam_project.utils.MessageUtils;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 巡检单列表
@@ -56,44 +44,32 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
     private static final String TAG = "Udinspo_Activity";
 
 
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
-
-    /**
-     * 全选*
-     */
-    private CheckBox allCheckBox;
+    @Bind(R.id.title_name)
+    TextView titlename; //标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
 
     LinearLayoutManager layoutManager;
 
 
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView; //RecyclerView
     /**
      * 暂无数据*
      */
-    private LinearLayout nodatalayout;
-    /**
-     * 界面刷新*
-     */
-    private SwipeRefreshLayout refresh_layout = null;
+
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout; //界面刷新
     /**
      * 适配器*
      */
     private UdinspoListNewadapter udinspoListNewadapter;
-    /**
-     * 编辑框*
-     */
-    private EditText search;
+
+    @Bind(R.id.search_edit)
+    EditText search; //编辑框
     /**
      * 查询条件*
      */
@@ -119,39 +95,16 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
 
 
     ArrayList<Udinspo> list = new ArrayList<>();
-    /**
-     * 未下载的巡检单子*
-     */
-    ArrayList<Udinspo> notDownlist = new ArrayList<>();
 
-    ArrayList<Udinspo> chooseList = new ArrayList<Udinspo>();
 
-    /**
-     * 下载任务*
-     */
-    private TextView downBtn;
-    /**
-     * 等待操作*
-     */
-    private TextView waitTask;
 
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
 
-    /**
-     * 是否全选*
-     */
-    private boolean isAllChoose;
-
-    /**
-     * 下载条数
-     **/
-    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.udinspo_activity);
+        ButterKnife.bind(this);
         initData();
         findViewById();
         initView();
@@ -171,27 +124,13 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        allCheckBox = (CheckBox) findViewById(R.id.all_checkbox);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
-        downBtn = (TextView) findViewById(R.id.upload_choose_id);
-        waitTask = (TextView) findViewById(R.id.wait_operating_task_id);
     }
 
     @Override
     protected void initView() {
         setSearchEdit();
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
-        allCheckBox.setVisibility(View.VISIBLE);
         titlename.setText(getString(R.string.online_text));
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-        allCheckBox.setOnCheckedChangeListener(allCheckBoxOmCheckedChangeListener);
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -211,121 +150,19 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        downBtn.setOnClickListener(downBtnOnClickListener);
-        waitTask.setOnClickListener(waitTaskOnClickListener);
     }
 
+    //返回事件
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
-
-    private View.OnClickListener downBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (isAllChoose) {
-                addListData();
-            }
-            if (chooseList != null && chooseList.size() != 0) {
-                NormalDialogStyleTwo(chooseList);
-
-            } else {
-                MessageUtils.showMiddleToast(Udinspo_Activity.this, "请选择需要下载的任务");
-            }
-        }
-    };
-
-
-    private View.OnClickListener waitTaskOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startActivity();
-        }
-    };
-
-
-    /**
-     * 跳转界面*
-     */
-    private void startActivity() {
+    //待执行任务
+    @OnClick(R.id.wait_operating_task_id)void setWaitOperatingOnClickListener(){
         Intent intent = getIntent();
         intent.setClass(Udinspo_Activity.this, UdinspoLocation_Activity.class);
         startActivityForResult(intent, 0);
-    }
-
-    private void NormalDialogStyleTwo(final ArrayList<Udinspo> list) {
-        final NormalDialog dialog = new NormalDialog(Udinspo_Activity.this);
-        dialog.content("已选中" + list.size() + "条任务，是否需要下载")//
-                .style(NormalDialog.STYLE_TWO)//
-                .titleTextSize(23)//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {
-                    @Override
-                    public void onBtnClick() {
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {
-                    @Override
-                    public void onBtnClick() {
-                        downUdinspo(list);
-                        dialog.dismiss();
-                    }
-                });
-
-    }
-
-
-    /**
-     * 下载选择的数据*
-     *
-     * @param list
-     */
-
-    private void downUdinspo(ArrayList<Udinspo> list) {
-        for (int i = 0; i < list.size(); i++) {
-            getUdinspoData(list.get(i).insponum);
-        }
-    }
-
-
-    /**
-     * 点击全选*
-     */
-    private CompoundButton.OnCheckedChangeListener allCheckBoxOmCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            isAllChoose = b;
-            if (b) {
-
-                allCheckBox.setText("取消");
-
-            } else {
-                allCheckBox.setText("全选");
-                chooseList = new ArrayList<Udinspo>();
-            }
-            udinspoListNewadapter.setAllChoose(b);
-            udinspoListNewadapter.notifyDataSetChanged();
-        }
-    };
-
-    /**
-     * 全选*
-     */
-    private void addListData() {
-        chooseList = new ArrayList<Udinspo>();
-        if (list != null && list.size() != 0) {
-            for (int i = 0; i < list.size(); i++) {
-                chooseList.add(list.get(i));
-            }
-        }
     }
 
 
@@ -339,8 +176,6 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         page = 1;
-        allCheckBox.setChecked(false);
-        notDownlist = new ArrayList<Udinspo>();
         getData(searchText);
     }
 
@@ -365,7 +200,6 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                     searchText = search.getText().toString();
                     udinspoListNewadapter.removeAllData();
                     list = new ArrayList<Udinspo>();
-                    notDownlist = new ArrayList<Udinspo>();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -381,7 +215,22 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, search, page, 20), new HttpRequestHandler<Results>() {
+        String url = "";
+        if (isCount(search)) {
+            url = HttpManager.getUdinspourl1(search, page, 20);
+        } else {
+            String[] depatments = separatedString(AccountUtils.getDepartment(Udinspo_Activity.this));
+            String department = "";
+            if (depatments.length == 1) {
+                department = depatments[0];
+            } else {
+                for (String s : depatments) {
+                    department += s + ",=";
+                }
+            }
+            url = HttpManager.getUdinspourl1(inspotype, assettype, checktype, department, search, page, 20);
+        }
+        HttpManager.getDataPagingInfo(this, url, new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -393,7 +242,6 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                 try {
 
                     list = Ig_Json_Model.parseUdinspoString(results.getResultlist());
-                    Log.i(TAG, "list=" + list.size());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (list == null || list.isEmpty()) {
@@ -401,276 +249,24 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                     } else {
                         nodatalayout.setVisibility(View.GONE);
                         if (page == 1) {
-                            Log.i(TAG, "page is");
                             udinspoListNewadapter = new UdinspoListNewadapter(Udinspo_Activity.this);
                             recyclerView.setAdapter(udinspoListNewadapter);
-                            udinspoListNewadapter.notifyDataSetChanged();
                         }
-
-                        if (totalPages == page) {
-                            for (Udinspo udinspo : list) {
-                                if (!isExists(udinspo.insponum, udinspo.inspotype))
-                                    notDownlist.add(udinspo);
-                            }
-
-                            if (notDownlist == null || notDownlist.isEmpty()) {
-                                nodatalayout.setVisibility(View.VISIBLE);
-                            } else {
-
-                                udinspoListNewadapter.adddate(notDownlist);
-                            }
-                        }
-
-                        udinspoListNewadapter.setOnCheckedChangeListener(new UdinspoListNewadapter.OnCheckedChangeListener() {
-                            @Override
-                            public void cOnCheckedChangeListener(boolean b, int postion) {
-                                if (b) {
-                                    chooseList.add(list.get(postion));
-                                } else {
-                                    if (chooseList != null && chooseList.size() != 0) {
-                                        chooseList.remove(postion);
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-
-    /**
-     * 判断数据是否下载*
-     */
-    private boolean isExists(String insponum, String inspotype) {
-
-
-        List<Udinspo> list = new UdinspoDao(Udinspo_Activity.this).findByInspotype(inspotype);
-        if (list != null && list.size() != 0) {
-            for (Udinspo udinspo : list) {
-                if (udinspo.getInsponum().equals(insponum))
-                    return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    /**
-     * 根据 编号下载数据
-     */
-    private void getUdinspoData(final String insponum) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspo(inspotype, assettype, checktype, insponum, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-
-
-                try {
-                    ArrayList<Udinspo> list1 = Ig_Json_Model.parseUdinspoString(results.getResultlist());
-                    if (list1 == null || list1.isEmpty()) {
-                    } else {
-                        new UdinspoDao(Udinspo_Activity.this).create(list1);
-                        for (Udinspo udinspo : list1) {
-                            getUdinspoassetData1(udinspo.insponum);
-                        }
+                        udinspoListNewadapter.adddate(list);
                         udinspoListNewadapter.notifyDataSetChanged();
-                        count++;
-                        if (count == chooseList.size()) {
-                            chooseList = new ArrayList<Udinspo>();
-                            MessageUtils.showMiddleToast(Udinspo_Activity.this, "数据下载成功");
-                            startActivity();
-                        }
-                        Log.i(TAG, "count=" + count + ",size=" + chooseList.size());
+
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-            }
-        });
-    }
-
-
-    /**
-     * 根据 Udinspo insponum获取Udinspoasset的信息
-     * 孙表
-     */
-    private void getUdinspoassetData1(final String insponum) {
-        HttpManager.getData(this, HttpManager.getUdinspoasseturl1(insponum), new HttpRequestHandler<String>() {
-            @Override
-            public void onSuccess(String data) {
-
-                ArrayList<Udinspoasset> items = null;
-
-                try {
-                    items = Ig_Json_Model.parseUdinspoassetString(data);
-                    if (items == null || items.isEmpty()) {
-
-                    } else {
-                        new UdinspoAssetDao(Udinspo_Activity.this).create(items);
-                        for (Udinspoasset udinspoasset : items) {
-                            getUdinspojxxmData1(udinspoasset.udinspoassetnum);
-
-                        }
-                    }
-                } catch (IOException e) {
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
-            }
 
-            @Override
-            public void onSuccess(String data, int totalPages, int currentPage) {
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Log.i(TAG, "bdata=" + error);
-            }
-        });
-    }
-
-
-    /**
-     * 根据 Udinspoasset udinspoassetnum获取Udinspojxxm的信息
-     * 孙表
-     */
-    private void getUdinspojxxmData(final String udinspoassetnum) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspojxxmUrl(udinspoassetnum, "", page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<Udinspojxxm> items = null;
-                try {
-                    items = Ig_Json_Model.parseUdinspojxxmString(results.getResultlist());
-                    if (items == null || items.isEmpty()) {
-                    } else {
-                        new UdinspojxxmDao(Udinspo_Activity.this).create(items);
-                        for (Udinspojxxm udinspojxxm : items) {
-                            if (!udinspojxxm.reportnum.equals("")) {
-                                getUdreportData(udinspojxxm.reportnum);
-                            }
-                        }
-                    }
-                    MessageUtils.showMiddleToast(Udinspo_Activity.this, "数据下载成功");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(String error) {
-
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-
-    /**
-     * 根据 Udinspoasset udinspoassetnum获取Udinspojxxm的信息
-     * 孙表
-     */
-    private void getUdinspojxxmData1(final String udinspoassetnum) {
-        HttpManager.getData(this, HttpManager.getUdinspojxxmUrl1(udinspoassetnum), new HttpRequestHandler<String>() {
-            @Override
-            public void onSuccess(String data) {
-
-                ArrayList<Udinspojxxm> items = null;
-
-                try {
-                    items = Ig_Json_Model.parseUdinspojxxmString(data);
-                    if (items == null || items.isEmpty()) {
-                    } else {
-                        new UdinspojxxmDao(Udinspo_Activity.this).create(items);
-                        for (Udinspojxxm udinspojxxm : items) {
-                            if (!udinspojxxm.reportnum.equals("")) {
-                                getUdreportData(udinspojxxm.reportnum);
-                            }
-                        }
-                    }
-
-                } catch (IOException e) {
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onSuccess(String data, int totalPages, int currentPage) {
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-
-            }
-        });
-    }
-
-
-    /**
-     * 根据 Udinspoasset udinspoassetnum获取Udreport的信息
-     * 孙表
-     */
-    private void getUdreportData(final String reportnum) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdreport(reportnum), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<Udreport> items = null;
-
-                try {
-                    items = Ig_Json_Model.parsingUdreport(results.getResultlist());
-                    if (items == null || items.isEmpty()) {
-                    } else {
-                        new UdreportDao(Udinspo_Activity.this).create(items);
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });

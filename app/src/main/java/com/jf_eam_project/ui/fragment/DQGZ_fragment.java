@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.FJDQ20VIEW;
 import com.jf_eam_project.ui.adapter.Fjdq20viewListAdapter;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -117,7 +117,10 @@ public class DQGZ_fragment extends BaseFragment {
      * 获取电气故障统计20天以上
      **/
     private void getfjdq20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW("电气", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
+
+
+
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW(AccountUtils.getDepartment(getActivity()), "电气", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -161,7 +164,7 @@ public class DQGZ_fragment extends BaseFragment {
      * 获取电气故障统计10-20天
      **/
     private void getfjdq10to20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("电气", "'FAULT'", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW(AccountUtils.getDepartment(getActivity()),"电气", "FAULT", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -169,7 +172,6 @@ public class DQGZ_fragment extends BaseFragment {
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG,"2123123");
                 mProgressDialog.dismiss();
 
                 ArrayList<FJDQ20VIEW> items = null;

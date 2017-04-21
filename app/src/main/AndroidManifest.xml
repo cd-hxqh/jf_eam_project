@@ -57,8 +57,6 @@
             android:name=".ui.activity.WindActivity"
             android:label="电量统计"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
@@ -73,7 +71,6 @@
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/title_activity_wfm"
             android:screenOrientation="portrait" />
-
 
         <!-- 工单管理 -->
         <activity
@@ -334,7 +331,6 @@
             android:label="@string/xuwl_text"
             android:screenOrientation="portrait" />
 
-
         <!-- 通用选项页面 -->
         <activity
             android:name=".ui.activity.OptionActivity"
@@ -533,8 +529,7 @@
             android:label="@string/gz_text"
             android:screenOrientation="portrait" />
 
-
-        <!--选择项-->
+        <!-- 选择项 -->
         <activity
             android:name=".ui.activity.WorkOrder_Choose_Activity"
             android:label="@string/work_order_choose"
@@ -565,6 +560,10 @@
             </intent-filter>
         </receiver>
 
-
+        <service
+            android:name=".ui.service.DownLoadService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
+
 </manifest>

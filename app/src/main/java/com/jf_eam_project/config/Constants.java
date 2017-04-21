@@ -14,7 +14,7 @@ public class Constants {
     /**
      * 正式版*
      */
-    public static final String HTTP_API_IP = "http://10.1.3.46:7003/";
+    public static final String HTTP_API_IP = "http://10.1.3.45:7003/";
 
 
     /**
@@ -216,7 +216,7 @@ public class Constants {
     public static final String UDRUNLOG_APPID = "UDRUNLOG";
     //分公司年度上网电量
     public static final String FGSNUDLVIEW_NAME = "FGSNUDLVIEW";
-    //分公司年度上网电量
+    //分公司月度上网电量
     public static final String FGSYUDLVIEW_NAME = "FGSYUDLVIEW";
     //分公司当月单日电量
     public static final String FGSRUDLVIEW_NAME = "FGSRUDLVIEW";

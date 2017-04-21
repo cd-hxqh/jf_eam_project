@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,23 +15,21 @@ import com.jf_eam_project.ui.fragment.SSDL_fragment;
 import com.jf_eam_project.ui.fragment.SWDL_fragment;
 import com.jf_eam_project.ui.fragment.XDL_fragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 电量统计
  **/
 public class ElectricityActivity extends BaseActivity {
-    /**
-     * 标题*
-     */
-    private TextView titleView;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
+    @Bind(R.id.title_name)
+    TextView titleView; //标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
-    /**
-     * 主菜单
-     **/
-    private Button mainBtn;
+    @Bind(R.id.title_add)
+    ImageView refreshImageView;//刷新
 
     /**
      * 用于对Fragment进行管理
@@ -56,15 +53,18 @@ public class ElectricityActivity extends BaseActivity {
     /**
      * 上网电量
      **/
-    private TextView swdlBtn;
+    @Bind(R.id.swdl_btn_id)
+    TextView swdlBtn;//上网电量
     /**
-     * 损失电量
+     *
      **/
-    private TextView ssdlBtn;
+    @Bind(R.id.ssdl_btn_id)
+    TextView ssdlBtn;//损失电量
     /**
-     * 限电量
+     *
      **/
-    private TextView xdlBtn;
+    @Bind(R.id.xdl_btn_id)
+    TextView xdlBtn;//限电量
 
 
     private BaseAnimatorSet mBasIn;
@@ -74,6 +74,7 @@ public class ElectricityActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_electricity);
+        ButterKnife.bind(this);
         findViewById();
         initView();
         fragmentManager = getFragmentManager();
@@ -83,13 +84,6 @@ public class ElectricityActivity extends BaseActivity {
 
     @Override
     protected void findViewById() {
-        titleView = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        mainBtn = (Button) findViewById(R.id.main_btn_id);
-
-        swdlBtn = (TextView) findViewById(R.id.swdl_btn_id);
-        ssdlBtn = (TextView) findViewById(R.id.ssdl_btn_id);
-        xdlBtn = (TextView) findViewById(R.id.xdl_btn_id);
 
     }
 
@@ -98,44 +92,32 @@ public class ElectricityActivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        backImageView.setVisibility(View.VISIBLE);
         titleView.setText(R.string.dltj_text);
-        mainBtn.setVisibility(View.GONE);
+        refreshImageView.setImageResource(R.drawable.ic_refresh);
+        refreshImageView.setVisibility(View.VISIBLE);
 
-        backImageView.setOnClickListener(backImageViewOnClickListener);
-        swdlBtn.setOnClickListener(swdlBtnOnClickListener);
-        ssdlBtn.setOnClickListener(ssdlBtnOnClickListener);
-        xdlBtn.setOnClickListener(xdlBtnOnClickListener);
     }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            finish();
-        }
-    };
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
 
+    @OnClick(R.id.swdl_btn_id)
+    void setSwdlBtnOnClickListener() {
+        setTabSelection(0);
+    }
 
+    @OnClick(R.id.ssdl_btn_id)
+    void setSsdlBtnOnClickListener() {
+        setTabSelection(1);
+    }
 
-    private View.OnClickListener swdlBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(0);
-        }
-    };
-    private View.OnClickListener ssdlBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(1);
-        }
-    };
-    private View.OnClickListener xdlBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            setTabSelection(2);
-        }
-    };
+    @OnClick(R.id.xdl_btn_id)
+    void setXdlBtnOnClickListener() {
+        setTabSelection(2);
+    }
 
 
     /**
@@ -221,8 +203,6 @@ public class ElectricityActivity extends BaseActivity {
         ssdlBtn.setBackgroundColor(getResources().getColor(R.color.color0));
         xdlBtn.setBackgroundColor(getResources().getColor(R.color.color0));
     }
-
-
 
 
 }

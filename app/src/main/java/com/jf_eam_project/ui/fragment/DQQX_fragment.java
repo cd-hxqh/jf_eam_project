@@ -20,32 +20,46 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.FJDQ20VIEW;
 import com.jf_eam_project.ui.adapter.Fjdq20viewListAdapter;
+import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 电气缺陷**
  */
 
 public class DQQX_fragment extends BaseFragment {
-    private final String TAG = "DQQX_fragment";
 
     private View view;
 
-    private TextView dqgz20TextView; //电气故障统计20天以上
+    @Bind(R.id.dqgz_20_text_id)
+    TextView dqgz20TextView; //电气缺陷统计20天以上
+    @Bind(R.id.dengji_text_id)
+    TextView dj20TextView; //缺陷等级20天以上
+
     private LinearLayoutManager dq20layoutManager;
-    public RecyclerView dq20recyclerView;
-    public LinearLayout dq20nodatalayout;
+    @Bind(R.id.dqgz20_recyclerView_id)
+    RecyclerView dq20recyclerView;
+
+    @Bind(R.id.gztj20have_not_data_id)
+    LinearLayout dq20nodatalayout;
 
     private Fjdq20viewListAdapter fjdq20viewListAdapter;
 
-
-    private TextView dqgz10TextView; //电气故障统计10-20天以上
+    @Bind(R.id.dqgz_10_text_id)
+    TextView dqgz10TextView; //电气缺陷统计10-20天以上
+    @Bind(R.id.dengji10_text_id)
+    TextView dj10TextView; //缺陷等级10-20天以上
 
     private LinearLayoutManager dq10layoutManager;
-    public RecyclerView dq10recyclerView;
-    public LinearLayout dq10nodatalayout;
+    @Bind(R.id.dqgz10_recyclerView_id)
+    RecyclerView dq10recyclerView; //dq10recyclerView
+    @Bind(R.id.gztj10have_not_data_id)
+    LinearLayout dq10nodatalayout;
     private Fjdq20viewListAdapter fjdq10viewListAdapter;
 
 
@@ -63,9 +77,8 @@ public class DQQX_fragment extends BaseFragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         view = inflater.inflate(R.layout.fragment_gztj,
                 container, false);
+        ButterKnife.bind(this, view);
 
-
-        findViewById(view);
         initView();
         mProgressDialog = ProgressDialog.show(getActivity(), null,
                 "正在获取数据中...", true, true);
@@ -77,22 +90,10 @@ public class DQQX_fragment extends BaseFragment {
     }
 
 
-    protected void findViewById(View view) {
-        dqgz20TextView = (TextView) view.findViewById(R.id.dqgz_20_text_id);
-
-        dq20recyclerView = (RecyclerView) view.findViewById(R.id.dqgz20_recyclerView_id);
-        dq20nodatalayout = (LinearLayout) view.findViewById(R.id.gztj20have_not_data_id);
-
-        dqgz10TextView = (TextView) view.findViewById(R.id.dqgz_10_text_id);
-
-        dq10recyclerView = (RecyclerView) view.findViewById(R.id.dqgz10_recyclerView_id);
-        dq10nodatalayout = (LinearLayout) view.findViewById(R.id.gztj10have_not_data_id);
-
-    }
-
     private void initView() {
 
         dqgz20TextView.setText(R.string.dqqx1_text);
+        dj20TextView.setText(R.string.qxdj_text);
         dq20layoutManager = new LinearLayoutManager(getActivity());
         dq20layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dq20layoutManager.scrollToPosition(0);
@@ -103,6 +104,7 @@ public class DQQX_fragment extends BaseFragment {
         dq20recyclerView.setAdapter(fjdq20viewListAdapter);
 
         dqgz10TextView.setText(R.string.dqqx_10_text);
+        dj10TextView.setText(R.string.qxdj_text);
         dq10layoutManager = new LinearLayoutManager(getActivity());
         dq10layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dq10layoutManager.scrollToPosition(0);
@@ -118,7 +120,7 @@ public class DQQX_fragment extends BaseFragment {
      * 获取电气故障统计20天以上
      **/
     private void getfjdq20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW("电气", "HIDDEN", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq20VIEW(AccountUtils.getDepartment(getActivity()), "电气", "HIDDEN", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();
@@ -162,7 +164,7 @@ public class DQQX_fragment extends BaseFragment {
      * 获取电气故障统计10-20天
      **/
     private void getfjdq10to20VIEW() {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW("电气", "HIDDEN", 1, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getFjdq10VIEW(AccountUtils.getDepartment(getActivity()), "电气", "HIDDEN", 1, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 mProgressDialog.dismiss();

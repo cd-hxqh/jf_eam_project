@@ -31,32 +31,32 @@ import com.jf_eam_project.utils.AccountUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by think on 2015/11/20.
  * 物资发放
  */
 public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Wzff_ListActivity";
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回*
-     */
-    private ImageView backImage;
-
-
+    @Bind(R.id.title_name)
+    TextView titlename;//标题
+    @Bind(R.id.title_back_id)
+    ImageView backImage;//返回
 
 
     LinearLayoutManager layoutManager;
-    public RecyclerView recyclerView;
-    private LinearLayout nodatalayout;
-    private SwipeRefreshLayout refresh_layout = null;
-
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView;
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout;
+    @Bind(R.id.search_edit)
+    EditText search;
     private WzffListAdapter wzffListAdapter;
-    private EditText search;
     private String searchText = "";
     private int page = 1;
 
@@ -65,7 +65,7 @@ public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-
+        ButterKnife.bind(this);
         findViewById();
         initView();
     }
@@ -73,12 +73,6 @@ public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImage = (ImageView) findViewById(R.id.title_back_id);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
@@ -86,12 +80,6 @@ public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayou
         setSearchEdit();
         titlename.setText(R.string.wzff_text);
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -110,8 +98,9 @@ public class Wzff_ListActivity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-
-
+    @OnClick(R.id.title_back_id)void setBackImageOnClickListener(){
+        finish();
+    }
 
     private void getData(String search) {
         HttpManager.getDataPagingInfo(this, HttpManager.getLocatiosUrl(search, AccountUtils.getDepartment(Wzff_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public final class Person_JsonHelper
         implements JsonHelper<Person> {
-    private static final String TAG = "Person_JsonHelper";
 
     /**
      * 解析List*

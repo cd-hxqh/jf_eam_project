@@ -19,14 +19,6 @@
         android:orientation="horizontal">
 
 
-        <TextView
-            android:id="@+id/upload_choose_id"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="下载任务"
-            android:textColor="@drawable/text_selector" />
 
         <TextView
             android:id="@+id/wait_operating_task_id"

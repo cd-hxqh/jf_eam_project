@@ -33,6 +33,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     private ProgressDialog progressDialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,5 +173,17 @@ public abstract class BaseActivity extends ActionBarActivity {
             progressDialog.dismiss();
         }
 
+    }
+
+
+    //判断是否为存数字
+
+    public boolean isCount(String search) {
+        return search.matches("[0-9]+");
+    }
+
+    //分隔部门
+    public String[] separatedString(String department) {
+        return department.split(",");
     }
 }

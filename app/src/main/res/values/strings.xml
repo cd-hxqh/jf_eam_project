@@ -711,8 +711,8 @@
     <string name="gztj_text">电气故障</string>
     <string name="fjgz_text">风机故障</string>
     <string name="dqqx_text">电气缺陷</string>
-    <string name="fjgz_title_text">风机一.二级故障(20天以上)</string>
-    <string name="dqgz_title_text">电气一.二级故障(20天以上)</string>
+    <string name="fjgz_title_text">风机一、二级故障(20天以上)</string>
+    <string name="dqgz_title_text">电气一、二级故障(20天以上)</string>
     <string name="dqgz_title1_text">电气一、二级故障(10天至20天)</string>
     <string name="fgs_text">分公司</string>
     <string name="fdc_text">风电场</string>
@@ -744,6 +744,11 @@
     <string name="yhmhmmcw_text">用户名或密码错误</string>
     <string name="add_text">新建记录</string>
     <string name="ls_data_text">历史数据</string>
+    <string name="qxdj_text">缺陷等级</string>
+    <string name="loading_text">正在下载...</string>
+    <string name="chenggong_text">数据下载成功</string>
+    <string name="shibai_text">数据下载失败</string>
+    <string name="down_btn_text">下载</string>
 
 
 </resources>

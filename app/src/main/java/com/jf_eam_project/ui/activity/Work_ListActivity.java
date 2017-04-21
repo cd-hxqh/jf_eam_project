@@ -139,8 +139,22 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
 
     private void getData(String search) {
-
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, AccountUtils.getDepartment(Work_ListActivity.this), search, assetsNum, page, 20), new HttpRequestHandler<Results>() {
+        String url = "";
+        if (isCount(search)) {
+            url = HttpManager.getWorkorderByNumUrl(search, page, 20);
+        } else {
+            String[] depatments = separatedString(AccountUtils.getDepartment(Work_ListActivity.this));
+            String department = "";
+            if (depatments.length == 1) {
+                department = depatments[0];
+            } else {
+                for (String s : depatments) {
+                    department += s + ",=";
+                }
+            }
+            url = HttpManager.getworkorderUrl(worktype, department, search, assetsNum, page, 20);
+        }
+        HttpManager.getDataPagingInfo(this, url, new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -283,5 +297,6 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             popupWindow.dismiss();
         }
     };
+
 
 }

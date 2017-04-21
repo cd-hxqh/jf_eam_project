@@ -5,9 +5,7 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.Createreport;
 import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.model.Udinspoasset;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -55,7 +53,6 @@ public class UdinspoDao {
                 @Override
                 public Void call() throws Exception {
                     for (Udinspo udinspo : list) {
-                        Log.i(TAG, "insponum=" + udinspo.insponum);
                         deleteInsponum(udinspo.insponum);
                         udinspoDaoOpe.createOrUpdate(udinspo);
                     }
@@ -67,16 +64,17 @@ public class UdinspoDao {
         }
     }
 
-    /**更新提报单**/
+    /**
+     * 更新提报单
+     **/
     public void update(Udinspo udinspo) {
         try {
             udinspoDaoOpe.update(udinspo);
         } catch (SQLException e) {
-            Log.i(TAG,"this is SQLException");
+            Log.i(TAG, "this is SQLException");
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -93,6 +91,18 @@ public class UdinspoDao {
                     return null;
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param udinspo
+     */
+    public void delete(final Udinspo udinspo) {
+        try {
+            udinspoDaoOpe.delete(udinspo);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

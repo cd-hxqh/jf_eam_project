@@ -1,7 +1,5 @@
 package com.jf_eam_project.api.ig.json.impl;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.instagram.common.json.JsonFactoryHolder;
@@ -33,7 +31,6 @@ public final class Inventory_JsonHelper
             results = new ArrayList<Inventory>();
             while (jp.nextToken() != JsonToken.END_ARRAY) {
                 Inventory parsed = parseFromJson(jp);
-                Log.i(TAG, "parsed=" + parsed);
                 if (parsed != null) {
                     results.add(parsed);
                 }
