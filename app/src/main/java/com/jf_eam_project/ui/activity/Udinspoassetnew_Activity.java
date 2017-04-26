@@ -6,7 +6,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,25 +19,22 @@ import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 设备备件
  */
 public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private static final String TAG = "Udinspoassetnew_Activity";
 
-    /**
-     * 标题
-     */
-    private TextView titleView;
-    /**
-     * 返回
-     */
-    private ImageView backImageView;
+    @Bind(R.id.title_name)
+    TextView titleView;//标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回
 
-    /**
-     * 新增*
-     */
-    private ImageView addImageView;
+
     /**
      * 巡检单
      */
@@ -46,18 +42,15 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
 
 
     LinearLayoutManager layoutManager;
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
 
-    private LinearLayout nodatalayout;
-    private SwipeRefreshLayout refresh_layout = null;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView;
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout;
 
     private UdinspoassetNewListAdapter udinspoassetNewListAdapter;
-    private EditText search;
-    private String searchText = "";
-    private int page = 1;
 
 
     /**
@@ -77,7 +70,7 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-
+        ButterKnife.bind(this);
         initData();
         findViewById();
         initView();
@@ -96,22 +89,11 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
 
     @Override
     protected void findViewById() {
-        titleView = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        addImageView = (ImageView) findViewById(R.id.title_add);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
     }
 
     @Override
     protected void initView() {
-        search.setVisibility(View.GONE);
         titleView.setText(getResources().getString(R.string.udinspoasset_title));
-        backImageView.setOnClickListener(backImageViewOnClickListenrer);
-        addImageView.setImageResource(R.drawable.add_ico);
-        addImageView.setOnClickListener(addImageViewOnClickListener);
 
 
         layoutManager = new LinearLayoutManager(this);
@@ -164,28 +146,14 @@ public class Udinspoassetnew_Activity extends BaseActivity implements SwipeRefre
     }
 
 
-    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-
-            Intent intent = new Intent(Udinspoassetnew_Activity.this, AddUdinspoAssetActivity.class);
-            intent.putExtra("insponum", insponum);
-            intent.putExtra("udinspoassetlinenum", udinspoassetNewListAdapter.getItemCount());
-            startActivityForResult(intent, 0);
-        }
-    };
-
-
     /**
      * 返回点击
      */
-    private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListenrer() {
+        finish();
+    }
 
     @Override
     public void onLoad() {

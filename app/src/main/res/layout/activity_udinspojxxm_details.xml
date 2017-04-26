@@ -15,10 +15,8 @@
         android:layout_below="@+id/title_relativelayout_id">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
             android:padding="@dimen/dimens_10">
 
@@ -290,6 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -325,6 +324,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -360,6 +360,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -55,6 +54,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 检修项目标准
  */
@@ -64,77 +67,87 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     private static final int ADD_REPORT = 1; //提报单新增
     private static final int DETAILS_REPORT = 2; //提报单详情
 
-    /**
-     * 标题*
-     */
-    private TextView titleView;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
+    @Bind(R.id.title_name)
+    TextView titleView;//标题
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
-    /**
-     * 编辑*
-     */
-    private ImageView editImageView;
+    @Bind(R.id.title_add)
+    ImageView editImageView;//编辑
 
 
     /**
      * 界面信息显示*
      */
-    private TextView udinspoassetlinenumText; //序号
-
-    private TextView descriptionText; //检查项目
-
-    private TextView udinspojxxm7Text; //检查内容
-
-    private TextView udinspojxxm9Text; //检查标准
-
-    private TextView udinspojxxm8Text; //检查方法
+    @Bind(R.id.udinspoasset_udinspoassetlinenum_text)
+    TextView udinspoassetlinenumText; //序号
+    @Bind(R.id.udinspojxxm_description_text)
+    TextView descriptionText; //检查项目
+    @Bind(R.id.udinspojxxm7_text)
+    TextView udinspojxxm7Text; //检查内容
+    @Bind(R.id.udinspojxxm9_text)
+    TextView udinspojxxm9Text; //检查标准
+    @Bind(R.id.udinspojxxm8_text)
+    TextView udinspojxxm8Text; //检查方法
 
 
     /**
      * 描述*
      */
-    private View executionView;
-    private LinearLayout executionLinearLayout;
-    private EditText executionText;
+    @Bind(R.id.execution_view)
+    View executionView;
+    @Bind(R.id.execution_linearlayout)
+    LinearLayout executionLinearLayout;
+    @Bind(R.id.execution_text)
+    EditText executionText;
 
     /**
      * 正常异常*
      */
-    private View udinspojxxm1View;
-    private LinearLayout udinspojxxm1LinearLayout;
-    private RadioGroup mRadioGroup1;
-    private RadioButton normalRadioButton; //正常
-    private RadioButton abnormalRadioButton; //异常
-
-//    private TextView udinspojxxm1Text;
+    @Bind(R.id.udinspojxxm1_view)
+    View udinspojxxm1View;
+    @Bind(R.id.udinspojxxm1_linearlayout)
+    LinearLayout udinspojxxm1LinearLayout;
+    @Bind(R.id.gendergroup)
+    RadioGroup mRadioGroup1;
+    @Bind(R.id.udinspojxxm_normal_text)
+    RadioButton normalRadioButton; //正常
+    @Bind(R.id.udinspojxxm_abnormal_text)
+    RadioButton abnormalRadioButton; //异常
 
 
     /**
      * 数值A*
      */
-    private View udinspojxxm2View;
-    private LinearLayout udinspojxxm2LinearLayout;
-    private TextView udinspojxxm2Text;
+    @Bind(R.id.udinspojxxm2_view)
+    View udinspojxxm2View;
+    @Bind(R.id.udinspojxxm2_linearlayout)
+    LinearLayout udinspojxxm2LinearLayout;
+    @Bind(R.id.udinspojxxm2_text)
+    TextView udinspojxxm2Text;
 
     /**
      * 数值B*
      */
-    private View udinspojxxm3View;
-    private LinearLayout udinspojxxm3LinearLayout;
-    private TextView udinspojxxm3Text;
+    @Bind(R.id.udinspojxxm3_view)
+    View udinspojxxm3View;
+    @Bind(R.id.udinspojxxm3_linearlayout)
+    LinearLayout udinspojxxm3LinearLayout;
+    @Bind(R.id.udinspojxxm3_text)
+    TextView udinspojxxm3Text;
 
     /**
      * 数值C*
      */
-    private View udinspojxxm4View;
-    private LinearLayout udinspojxxm4LinearLayout;
-    private TextView udinspojxxm4Text; //数值C
+    @Bind(R.id.udinspojxxm4_view)
+    View udinspojxxm4View;
+    @Bind(R.id.udinspojxxm4_linearlayout)
+    LinearLayout udinspojxxm4LinearLayout;
+    @Bind(R.id.udinspojxxm4_text)
+    TextView udinspojxxm4Text; //数值C
 
-
-    private GridView noScrollgridview;
+    @Bind(R.id.noScrollgridview)
+    GridView noScrollgridview;
     private GridAdapter adapter; //相片选择
 
 
@@ -145,17 +158,15 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     /**
      * 保存按钮*
      */
-    private Button submitBtn;
-    /**
-     * 删除按钮*
-     */
-    private Button deleteBtn;
+    @Bind(R.id.submit_btn_id)
+    Button submitBtn;
 
 
     /**
      * 提报单*
      */
-    private Button reportBtn;
+    @Bind(R.id.report_btn)
+    Button reportBtn;
 
 
     private ProgressDialog mProgressDialog;
@@ -198,6 +209,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_udinspojxxm_details);
+        ButterKnife.bind(this);
         initData();
         findViewById();
         initView();
@@ -213,50 +225,10 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         udbelong = getIntent().getExtras().getString("udbelong");
         assettype = getIntent().getExtras().getString("assettype");
 
-        Log.i(TAG,"branch="+branch+",udbelong="+udbelong+",assettype="+assettype);
     }
 
     @Override
     protected void findViewById() {
-        titleView = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        editImageView = (ImageView) findViewById(R.id.title_add);
-
-
-        udinspoassetlinenumText = (TextView) findViewById(R.id.udinspoasset_udinspoassetlinenum_text);
-        descriptionText = (TextView) findViewById(R.id.udinspojxxm_description_text);
-        udinspojxxm7Text = (TextView) findViewById(R.id.udinspojxxm7_text);
-        udinspojxxm9Text = (TextView) findViewById(R.id.udinspojxxm9_text);
-        udinspojxxm8Text = (TextView) findViewById(R.id.udinspojxxm8_text);
-
-        executionView = (View) findViewById(R.id.execution_view);
-        executionLinearLayout = (LinearLayout) findViewById(R.id.execution_linearlayout);
-        executionText = (EditText) findViewById(R.id.execution_text);
-
-        udinspojxxm1View = (View) findViewById(R.id.udinspojxxm1_view);
-        udinspojxxm1LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm1_linearlayout);
-        mRadioGroup1 = (RadioGroup) findViewById(R.id.gendergroup);
-        normalRadioButton = (RadioButton) findViewById(R.id.udinspojxxm_normal_text);
-        abnormalRadioButton = (RadioButton) findViewById(R.id.udinspojxxm_abnormal_text);
-
-
-        udinspojxxm2View = (View) findViewById(R.id.udinspojxxm2_view);
-        udinspojxxm2LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm2_linearlayout);
-        udinspojxxm2Text = (EditText) findViewById(R.id.udinspojxxm2_text);
-
-        udinspojxxm3View = (View) findViewById(R.id.udinspojxxm3_view);
-        udinspojxxm3LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm3_linearlayout);
-        udinspojxxm3Text = (EditText) findViewById(R.id.udinspojxxm3_text);
-
-        udinspojxxm4View = (View) findViewById(R.id.udinspojxxm4_view);
-        udinspojxxm4LinearLayout = (LinearLayout) findViewById(R.id.udinspojxxm4_linearlayout);
-        udinspojxxm4Text = (EditText) findViewById(R.id.udinspojxxm4_text);
-
-        noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
-
-        submitBtn = (Button) findViewById(R.id.submit_btn_id);
-        reportBtn = (Button) findViewById(R.id.report_btn);
-//        deleteBtn = (Button) findViewById(R.id.submit_btn_id);
 
     }
 
@@ -264,15 +236,11 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     @Override
     protected void initView() {
         titleView.setText(getString(R.string.udinspojxxm_detail_title));
-        backImageView.setOnClickListener(backImageViewOnClickListenrer);
-//        editImageView.setVisibility(View.VISIBLE);
-        editImageView.setImageResource(R.drawable.ic_report);
-        editImageView.setOnClickListener(editImageViewOnClickListener);
-
-
         submitBtn.setVisibility(View.VISIBLE);
 
         if (writemethod.equals("01")) {
+            udinspojxxm1View.setVisibility(View.VISIBLE);
+            udinspojxxm1LinearLayout.setVisibility(View.VISIBLE);
             udinspojxxm2View.setVisibility(View.VISIBLE);
             udinspojxxm2LinearLayout.setVisibility(View.VISIBLE);
         } else if (writemethod.equals("02")) {
@@ -321,13 +289,11 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
         mRadioGroup1.setOnCheckedChangeListener(radiogpchange);
-        submitBtn.setOnClickListener(submitBtnOnClickListener);
 
 
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
         adapter = new GridAdapter(this, readFile());
-//        adapter.update();
         noScrollgridview.setAdapter(adapter);
         noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -349,7 +315,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
-        reportBtn.setOnClickListener(editImageViewOnClickListener);
 
     }
 
@@ -369,24 +334,20 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     };
 
 
-    private View.OnClickListener editImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(udinspojxxmvalue.equals("异常")&&udinspojxxm.reportnum==null){
-                    Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
-                    intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
-                    intent.putExtra("mark", ADD_REPORT);
-                    intent.putExtra("branch", branch);
-                    intent.putExtra("udbelong", udbelong);
-                    intent.putExtra("assettype", assettype);
-                    startActivityForResult(intent, 0);
-            } else {
-                NormalDialogReport(udinspojxxm.reportnum);
-            }
-
-
+    @OnClick(R.id.report_btn)
+    void seyReportBtnOnClickListener() {
+        if (udinspojxxmvalue.equals("异常") && udinspojxxm.reportnum == null) {
+            Intent intent = new Intent(Udinspojxxm_Details_Activity.this, Createreport_Activity.class);
+            intent.putExtra("udinspojxxmid", udinspojxxm.udinspojxxmid + "");
+            intent.putExtra("mark", ADD_REPORT);
+            intent.putExtra("branch", branch);
+            intent.putExtra("udbelong", udbelong);
+            intent.putExtra("assettype", assettype);
+            startActivityForResult(intent, 0);
+        } else {
+            NormalDialogReport(udinspojxxm.reportnum);
         }
-    };
+    }
 
 
     private void NormalDialogReport(final String reportnum) {
@@ -410,7 +371,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                     public void onBtnClick() {
                         //根据reportnum查询Udreport
 
-//                        getUdreport(reportnum, dialog);
                         getUdreportList(reportnum);
                         dialog.dismiss();
 
@@ -518,22 +478,18 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
     /**
      * 返回按钮*
      */
-    private View.OnClickListener backImageViewOnClickListenrer = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListenrer() {
+        finish();
+    }
 
     /**
      * 保存按钮*
      */
-    private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            encapsulationData();
-        }
-    };
+    @OnClick(R.id.submit_btn_id)
+    void setSubmitBtnOnClickListener() {
+        encapsulationData();
+    }
 
 
     /**
@@ -541,23 +497,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
      */
     private void encapsulationData() {
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(Udinspojxxm_Details_Activity.this);
-//        builder.setMessage("确定更新检修项目标准吗？").setTitle("提示")
-//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.dismiss();
-//
-//                saveUdinspo();
-//                setResult(Constants.REFRESH);
-//                finish();
-//            }
-//        }).create().show();
 
         if (saveUdinspo()) {
             setResult(Constants.REFRESH);
@@ -719,15 +658,7 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
 
 
             udinspojxxm.setUdinspojxxm4(udinspojxxm4);
-        }
-//        else if (writemethod.equals("04")) {
-
-//            if (!udinspojxxmvalue.equals(udinspojxxm1.udinspojxxm1) && !TextUtils.isEmpty(udinspojxxmvalue)) {
-//                udinspojxxm1.setUdinspojxxm1(udinspojxxmvalue);
-//            }
-
-//        }
-        else if (writemethod.equals("05")) {
+        } else if (writemethod.equals("05")) {
             String execution = executionText.getText().toString();
             if (!execution.equals(udinspojxxm.execution) && !TextUtils.isEmpty(execution)) {
                 udinspojxxm.setExecution(execution);
@@ -764,9 +695,6 @@ public class Udinspojxxm_Details_Activity extends BaseActivity {
                 if (position == 0) { //拍照
                     photo();
                 }
-//                else if (position == 1) { //相册
-//                    PhotoAlbum();
-//                }
                 dialog.dismiss();
             }
         });

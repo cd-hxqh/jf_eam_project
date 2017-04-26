@@ -19,6 +19,7 @@ import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
+import com.jf_eam_project.utils.MessageUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,21 +85,50 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
         public void bindData(final Udinspo udinspo) {
             itemNum.setText(udinspo.insponum);
             itemDesc.setText(udinspo.description);
-//            statusTextView.setText("未下载");
+            if (isExists(udinspo.insponum, udinspo.inspotype)) {
+//                actionBtn.setClickable(false);
+//                actionBtn.setFocusable(false);
+                statusTextView.setText("下载完成");
+                statusTextView.setTextColor(mContext.getResources().getColor(R.color.press_button_color));
+            }
+
 
             actionBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    statusTextView.setText("正在下载");
-                    progressBar.setVisibility(View.VISIBLE);
-                    actionBtn.setClickable(false);
-                    getUdinspoassetData(progressBar, statusTextView, udinspo.insponum, udinspo);
+                    if (statusTextView.getText().toString().equals("下载完成")) {
+                        MessageUtils.showMiddleToast(mContext, "该任务已下载,不能重复下载");
+                    } else {
+                        statusTextView.setText("正在下载");
+                        progressBar.setVisibility(View.VISIBLE);
+                        actionBtn.setClickable(false);
+                        actionBtn.setFocusable(false);
+                        getUdinspoassetData(progressBar, statusTextView, udinspo.insponum, udinspo);
+                    }
 
 
                 }
             });
 
 
+        }
+
+
+        /**
+         * 判断数据是否下载*
+         */
+        private boolean isExists(String insponum, String inspotype) {
+
+
+            List<Udinspo> list = new UdinspoDao(mContext).findByInspotype(inspotype);
+            if (list != null && list.size() != 0) {
+                for (Udinspo udinspo : list) {
+                    if (udinspo.getInsponum().equals(insponum))
+                        return true;
+                }
+            }
+
+            return false;
         }
 
 

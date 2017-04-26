@@ -1,10 +1,8 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +14,6 @@ import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
-import com.jf_eam_project.ui.activity.Udinspoassetnew_Activity;
-import com.jf_eam_project.ui.activity.UdinspojxxmNew_Activity;
-import com.jf_eam_project.ui.activity.Udinspojxxm_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,13 +75,6 @@ public class UdinspoassetNewListAdapter extends RecyclerView.Adapter<Udinspoasse
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, UdinspojxxmNew_Activity.class);
-//                intent.putExtra("udinspoassetnum", udinspoasset.udinspoassetnum);
-//                intent.putExtra("branch", branch);
-//                intent.putExtra("udbelong", udbelong);
-//                intent.putExtra("assettype", assettype);
-//                mContext.startActivity(intent);
                 onClickListener.cOnClickListener(udinspoasset);
             }
         });

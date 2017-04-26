@@ -18,26 +18,24 @@ import com.jf_eam_project.Dao.UdinspoAssetDao;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.Dao.UdinspojxxmDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.api.HttpManager;
-import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.JsonUtils;
-import com.jf_eam_project.api.ig.json.Ig_Json_Model;
-import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 import com.jf_eam_project.ui.adapter.UdinspoLocationadapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
-import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 巡检单列表
@@ -47,36 +45,24 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     private static final String TAG = "UdinspoLocation_Activity";
 
 
-    /**
-     * 标题*
-     */
-    private TextView titlename;
-    /**
-     * 返回按钮*
-     */
-    private ImageView backImageView;
+    @Bind(R.id.title_name)
+    TextView titlename; //标题
 
-    /**
-     * 菜单按钮*
-     */
-    private ImageView menuImageView;
+    @Bind(R.id.title_back_id)
+    ImageView backImageView;//返回按钮
 
 
     LinearLayoutManager layoutManager;
 
 
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
-    /**
-     * 暂无数据*
-     */
-    private LinearLayout nodatalayout;
-    /**
-     * 界面刷新*
-     */
-    private SwipeRefreshLayout refresh_layout = null;
+    @Bind(R.id.recyclerView_id)
+    RecyclerView recyclerView;//RecyclerView
+
+    @Bind(R.id.have_not_data_id)
+    LinearLayout nodatalayout;//暂无数据
+
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout refresh_layout;//界面刷新
     /**
      * 适配器*
      */
@@ -106,18 +92,14 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     private String checktype = "";
 
 
-    /**
-     * 全选*
-     */
-    private TextView allTextView;
-    /**
-     * 上传*
-     */
-    private TextView uploadTextView;
-    /**
-     * 删除*
-     */
-    private TextView deleteTextView;
+    @Bind(R.id.all_choose_id)
+    TextView allTextView;//全选
+
+    @Bind(R.id.upload_choose_id)
+    TextView uploadTextView;//上传
+
+    @Bind(R.id.delete_choose_id)
+    TextView deleteTextView;//删除
 
     /**
      * 判断是否全选*
@@ -143,6 +125,7 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        ButterKnife.bind(this);
         initDao();
         initData();
         findViewById();
@@ -171,17 +154,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
     @Override
     protected void findViewById() {
-        titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
-        menuImageView = (ImageView) findViewById(R.id.title_add);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-
-        allTextView = (TextView) findViewById(R.id.all_choose_id);
-        uploadTextView = (TextView) findViewById(R.id.upload_choose_id);
-        deleteTextView = (TextView) findViewById(R.id.delete_choose_id);
     }
 
     @Override
@@ -189,9 +161,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
 
         titlename.setText(title);
-        menuImageView.setImageResource(R.drawable.ic_drawer);
-//        menuImageView.setVisibility(View.VISIBLE);
-        backImageView.setOnClickListener(backImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -210,9 +179,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
         refresh_layout.setOnLoadListener(this);
 
 
-        allTextView.setOnClickListener(allOnClickListener);
-        uploadTextView.setOnClickListener(uploadOnClickListener);
-        deleteTextView.setOnClickListener(deleteOnClickListener);
     }
 
     /**
@@ -243,135 +209,67 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
     }
 
-    private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    //返回事件
+    @OnClick(R.id.title_back_id)
+    void setBackImageViewOnClickListener() {
+        finish();
+    }
 
-
-    /**
-     * 全选*
-     */
-    private View.OnClickListener allOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (aBoolean) {
-                aBoolean = false;
-                allTextView.setText("全选");
-                chooseList = new ArrayList<Udinspo>();
+    //全选
+    @OnClick(R.id.all_choose_id)
+    void setAllOnClickListener() {
+        if (aBoolean) {
+            aBoolean = false;
+            allTextView.setText("全选");
+            chooseList = new ArrayList<Udinspo>();
 //                addListData();
-            } else {
-                allTextView.setText("全不选");
-                aBoolean = true;
-
-            }
-            udinspoLocationadapter.setAllChoose(aBoolean);
-            udinspoLocationadapter.notifyDataSetChanged();
+        } else {
+            allTextView.setText("全不选");
+            aBoolean = true;
 
         }
-    };
+        udinspoLocationadapter.setAllChoose(aBoolean);
+        udinspoLocationadapter.notifyDataSetChanged();
+    }
 
-    /**
-     * 上传*
-     */
-    private View.OnClickListener uploadOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (chooseList.size() == 0) {
-                MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择上传数据...");
-            } else {
+    //上传
+    @OnClick(R.id.upload_choose_id)
+    void setUploadOnClickListener() {
+        if (chooseList.size() == 0) {
+            MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择上传数据...");
+        } else {
 
 
-                encapsulationData(chooseList);
+//            encapsulationData(chooseList);
 
-                alerDialog(chooseList.size());
-            }
+            alerDialog(chooseList);
         }
-    };
-    /**
-     * 删除*
-     */
-    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (chooseList != null && chooseList.size() != 0) {
-                deleteData(chooseList);
-            } else {
-                MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择需要删除的任务");
-            }
+    }
+
+    //删除
+    @OnClick(R.id.delete_choose_id)
+    void setDeleteOnClickListener() {
+        if (chooseList != null && chooseList.size() != 0) {
+            deleteData(chooseList);
+        } else {
+            MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "请选择需要删除的任务");
         }
-    };
+    }
 
 
     @Override
     public void onLoad() {
         page = 1;
 
-//        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
-//            getData(searchText);
-//        } else {
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
-//        }
     }
 
     @Override
     public void onRefresh() {
         page++;
-//        if (!NetWorkHelper.isNetwork(UdinspoLocation_Activity.this)) { //没有网络
-//            getData(searchText);
-//        } else {
         refresh_layout.setRefreshing(false);
         refresh_layout.setLoading(false);
-//        }
-    }
-
-
-    /**
-     * 获取数据*
-     */
-    private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdinspourl1(inspotype, assettype, checktype, AccountUtils.getDepartment(UdinspoLocation_Activity.this), search, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-
-
-                ArrayList<Udinspo> items = null;
-                try {
-                    items = Ig_Json_Model.parseUdinspoString(results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (items == null || items.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
-                    } else {
-                        if (page == 1) {
-                            udinspoLocationadapter = new UdinspoLocationadapter(UdinspoLocation_Activity.this);
-                            recyclerView.setAdapter(udinspoLocationadapter);
-                        }
-                        if (totalPages == page) {
-                            new UdinspoDao(UdinspoLocation_Activity.this).create(items);
-                            udinspoLocationadapter.adddate(items);
-                        }
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
 
@@ -499,39 +397,36 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
     /**
      * 根据巡检编号查询备件信息*
      */
-    private void findByUdinspoasset(String insponum) {
+    private List<Udinspojxxm> findByUdinspoasset(String insponum) {
+        List<Udinspojxxm> lists = new ArrayList<Udinspojxxm>();
         List<Udinspoasset> list = new UdinspoAssetDao(UdinspoLocation_Activity.this).queryByInsponum(insponum);
         if (null != list && list.size() != 0) {
             for (Udinspoasset udinspoasset : list) {
-                findByUdinspojxxm(udinspoasset.getUdinspoassetnum());
+                List<Udinspojxxm> udlist = findByUdinspojxxm(udinspoasset.getUdinspoassetnum());
+                for (Udinspojxxm udinspojxxm : udlist) {
+                    lists.add(udinspojxxm);
+                }
             }
         }
 
+        return lists;
     }
-
 
     /**
      * 根据备件编号查询检修项目详情*
      */
-    private void findByUdinspojxxm(String udinspoassetnum) {
+    private List<Udinspojxxm> findByUdinspojxxm(String udinspoassetnum) {
         List<Udinspojxxm> list = new UdinspojxxmDao(UdinspoLocation_Activity.this).findByLocation(udinspoassetnum, 1);
-        if (null != list && list.size() != 0) {
-            for (Udinspojxxm udinspojxxm : list) {
-                chooseUdinspojxxmList.add(udinspojxxm);
-            }
-        }
-
+        return list;
     }
-
-    ;
 
 
     /**
      * 上传弹出框*
      */
-    private void alerDialog(int size) {
+    private void alerDialog(final ArrayList<Udinspo> chooseList) {
         AlertDialog.Builder builder = new AlertDialog.Builder(UdinspoLocation_Activity.this);
-        builder.setMessage("已选择" + size + "条记录，确定上传吗？").setTitle("提示")
+        builder.setMessage("已选择" + chooseList.size() + "条记录，确定上传吗？").setTitle("提示")
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -550,19 +445,18 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                     MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "暂无网络,上传失败");
                 } else {
 
-                    Log.i(TAG, "11111");
                     new AsyncTask<String, String, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
                             String result = null;
-                            if (chooseUdinspojxxmList != null && chooseUdinspojxxmList.size() != 0) {
-                                for (int i = 0; i < chooseUdinspojxxmList.size(); i++) {
-                                    String data = JsonUtils.udinspojxxmJson(chooseUdinspojxxmList.get(i));
-                                    Log.i(TAG, "data=" + data);
-                                    if (data != null || !data.isEmpty()) {
-                                        result = getBaseApplication().getWsService().UpdatePO(UdinspoLocation_Activity.this, data, "");
 
-                                    }
+                            for (Udinspo udinspo : chooseList) {
+                                Log.i(TAG, "udinspo=" + udinspo.insponum);
+                                List<Udinspojxxm> udinspojxxms = findByUdinspoasset(udinspo.insponum);
+                                String data = JsonUtils.udinspojxxmJson(udinspojxxms);
+                                if (data != null || !data.isEmpty()) {
+                                    result = getBaseApplication().getWsService().UpdatePO(UdinspoLocation_Activity.this, data, udinspo.insponum);
+
                                 }
                             }
                             return result;
@@ -582,8 +476,13 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                                     deleteListUdinspoasset(chooseList);
 
                                     udinspoLocationadapter.removeAllData();
+                                    ArrayList<Udinspo> list1=new ArrayList<Udinspo>();
+                                    if (assettype.equals("") && checktype.equals("")) {
+                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
 
-                                    ArrayList<Udinspo> list1 = (ArrayList<Udinspo>) udinspoDao.queryForAll();
+                                    } else {
+                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
+                                    }
                                     if (list1 == null || list1.size() == 0) {
                                         nodatalayout.setVisibility(View.VISIBLE);
                                     }

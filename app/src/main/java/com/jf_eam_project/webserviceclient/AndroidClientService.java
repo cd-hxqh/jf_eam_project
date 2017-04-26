@@ -88,17 +88,16 @@ public class AndroidClientService {
     }
 
 
-
     /**
      * 新增采购订单
      *
      * @param string
      * @return
      */
-    public String InsertGENERAL(Context context, String string, String mboObjectName,String mboKey, String personId) {
-        Log.i(TAG,"string="+string);
+    public String InsertGENERAL(Context context, String string, String mboObjectName, String mboKey, String personId) {
+        Log.i(TAG, "string=" + string);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/MOBILESERVICE";
-        Log.i(TAG,"url="+url);
+        Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -118,7 +117,7 @@ public class AndroidClientService {
             e.printStackTrace();
         }
         String obj = null;
-        String ponum=null;
+        String ponum = null;
         try {
             obj = soapEnvelope.getResponse().toString();
             ponum = JsonUtils.parsingInsertPO(obj);
@@ -127,15 +126,6 @@ public class AndroidClientService {
         }
         return ponum;
     }
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -177,7 +167,7 @@ public class AndroidClientService {
      * @return
      */
     public String startwf(Context context, String processname, String mbo, String keyValue, String key) {
-        Log.i(TAG,"processname="+processname+",mbo="+mbo+",keyValue="+keyValue.replace(",","")+",key="+key);
+        Log.i(TAG, "processname=" + processname + ",mbo=" + mbo + ",keyValue=" + keyValue.replace(",", "") + ",key=" + key);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -185,7 +175,7 @@ public class AndroidClientService {
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
         soapReq.addProperty("processname", processname);//工单：UDFJHWO，采购申请（含零星和集中采购风电场部分审批）：UDPR，集中汇总采购计划流程（分公司发起）：UDPRHZ
         soapReq.addProperty("mbo", mbo);//工单WORKORDER,采购申请pr
-        soapReq.addProperty("keyValue", keyValue.replace(",",""));//对应的表ID的值，如工单需要传送workorderid的值，采购申请prnum的值
+        soapReq.addProperty("keyValue", keyValue.replace(",", ""));//对应的表ID的值，如工单需要传送workorderid的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
@@ -200,7 +190,7 @@ public class AndroidClientService {
         String result = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-            Log.i(TAG,"obj="+obj);
+            Log.i(TAG, "obj=" + obj);
 //            result = JsonUtils.parsingwfserviceResult(obj);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
@@ -217,7 +207,7 @@ public class AndroidClientService {
 
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
 
-        Log.i(TAG,"url="+url);
+        Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -245,7 +235,7 @@ public class AndroidClientService {
             obj = soapEnvelope.getResponse().toString();
             result = JsonUtils.parsingwfserviceGoOnResult(obj);
         } catch (SoapFault soapFault) {
-            Log.i(TAG,"ssssss");
+            Log.i(TAG, "ssssss");
             return null;
         }
         return result;
@@ -260,7 +250,7 @@ public class AndroidClientService {
 
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/WFSERVICE";
 
-        Log.i(TAG,"url="+url);
+        Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -288,7 +278,7 @@ public class AndroidClientService {
             obj = soapEnvelope.getResponse().toString();
             result = JsonUtils.parsingwfserviceGoOnResult(obj);
         } catch (SoapFault soapFault) {
-            Log.i(TAG,"ssssss");
+            Log.i(TAG, "ssssss");
             return null;
         }
         return result;
@@ -338,6 +328,8 @@ public class AndroidClientService {
      * @return
      */
     public String UpdatePO(Context context, String string, String key) {
+
+        Log.i(TAG, "string=" + string + ",key=" + key);
         String url = AccountUtils.getIpAddress(context) + "meaweb/services/COSERVICE";
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -376,7 +368,7 @@ public class AndroidClientService {
      * @return
      */
     public String addReport(Context context, String string, String key) {
-        String url= AccountUtils.getIpAddress(context)+"meaweb/services/UDRPSERVICE";
+        String url = AccountUtils.getIpAddress(context) + "meaweb/services/UDRPSERVICE";
 //        String url = AccountUtils.getIpAddress(context) + "meaweb/wsdl/UDRPSERVICE";
 
         Log.i(TAG, "url=" + url);

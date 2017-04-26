@@ -410,33 +410,47 @@ public class JsonUtils {
     /**
      * 封装Udinspojxxm的json
      */
-    public static String udinspojxxmJson(Udinspojxxm udinspojxxm) {
+    public static String udinspojxxmJson(List<Udinspojxxm> udinspojxxms) {
 
-        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (Udinspojxxm udinspojxxm : udinspojxxms) {
+            Log.i(TAG, "udinspojxxm.writemethod=" + udinspojxxm.execution + ",udinspojxxm.udinspojxxm1=" + udinspojxxm.udinspojxxm1);
+            if (udinspojxxm.writemethod.equals("04") && udinspojxxm.udinspojxxm1.equals("正常")) {
 
+            } else {
+                try {
+                    JSONObject json = new JSONObject();
+                    json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
+
+                    json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
+                    json.put("TYPE", Constants.UPDATE);
+                    json.put("UDINSPOJXXM1", udinspojxxm.udinspojxxm1);
+                    json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
+                    json.put("UDINSPOJXXM3", udinspojxxm.udinspojxxm3);
+
+
+                    json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
+                    json.put("UDINSPOJXXM4", udinspojxxm.udinspojxxm4);
+                    json.put("EXECUTION", udinspojxxm.execution);
+
+                    jsonArray.put(json);
+
+
+                } catch (JSONException e) {
+                    return null;
+                }
+            }
+        }
+        JSONObject jsonObject = new JSONObject();
         try {
-            json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
-
-            json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
-            json.put("TYPE", Constants.UPDATE);
-            json.put("UDINSPOJXXM1", udinspojxxm.udinspojxxm1);
-            json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
-            json.put("UDINSPOJXXM3", udinspojxxm.udinspojxxm3);
-
-
-            json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
-            json.put("UDINSPOJXXM4", udinspojxxm.udinspojxxm4);
-            json.put("EXECUTION", udinspojxxm.execution);
-
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("GRADESON", jsonUdinspojxxmInfo(json.toString()));
+            jsonObject.put("GRADESON", jsonArray);
             Log.i(TAG, "json=" + jsonObject.toString());
             return jsonObject.toString();
-
         } catch (JSONException e) {
+            e.printStackTrace();
             return null;
         }
+
 
     }
 
@@ -485,8 +499,6 @@ public class JsonUtils {
             json.put("UDAPPNAME", po.udappname);//应用程序名称
             json.put("BRANCH", po.branch);//分公司
             json.put("UDBELONG", po.udbelong);//运行单位
-
-
             JSONArray jsonArray = new JSONArray();
             json.put("relationShip", jsonArray);
             return json.toString();

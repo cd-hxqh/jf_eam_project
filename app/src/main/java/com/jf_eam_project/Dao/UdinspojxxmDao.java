@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.jf_eam_project.OrmLiteHelper.DatabaseHelper;
-import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.model.Udinspojxxm;
 
 import java.sql.SQLException;
@@ -277,7 +275,6 @@ public class UdinspojxxmDao {
         List<Udinspojxxm> udinspojxxms=null;
         try {
             udinspojxxms = udinspojxxmDaoOpe.queryBuilder().where().eq("udinspoassetnum",udinspoassetnum).and().eq("local",local).query();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
