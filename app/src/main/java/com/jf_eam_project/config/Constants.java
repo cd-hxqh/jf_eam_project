@@ -240,6 +240,16 @@ public class Constants {
     public static final String COMPCONTACT_NAME = "COMPCONTACT";
 
 
+    /**物资发放**/
+    //已预留项目表名
+    public static final String INVRESERVE_NAME = "INVRESERVE";
+
+
+
+
+
+
+
     /**
      * -----------表名配置--结束*
      */

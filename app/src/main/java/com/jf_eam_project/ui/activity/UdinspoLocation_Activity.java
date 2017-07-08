@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -451,7 +450,6 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
                             String result = null;
 
                             for (Udinspo udinspo : chooseList) {
-                                Log.i(TAG, "udinspo=" + udinspo.insponum);
                                 List<Udinspojxxm> udinspojxxms = findByUdinspoasset(udinspo.insponum);
                                 String data = JsonUtils.udinspojxxmJson(udinspojxxms);
                                 if (data != null || !data.isEmpty()) {
@@ -473,21 +471,21 @@ public class UdinspoLocation_Activity extends BaseActivity implements SwipeRefre
 
                                 if (success.equals("数据更新成功") && errorNo.equals("0")) {
                                     MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "上传成功");
-                                    deleteListUdinspoasset(chooseList);
+//                                    deleteListUdinspoasset(chooseList);
 
-                                    udinspoLocationadapter.removeAllData();
-                                    ArrayList<Udinspo> list1=new ArrayList<Udinspo>();
-                                    if (assettype.equals("") && checktype.equals("")) {
-                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
-
-                                    } else {
-                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
-                                    }
-                                    if (list1 == null || list1.size() == 0) {
-                                        nodatalayout.setVisibility(View.VISIBLE);
-                                    }
-                                    udinspoLocationadapter.adddate(list1);
-                                    udinspoLocationadapter.notifyDataSetChanged();
+//                                    udinspoLocationadapter.removeAllData();
+//                                    ArrayList<Udinspo> list1=new ArrayList<Udinspo>();
+//                                    if (assettype.equals("") && checktype.equals("")) {
+//                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByInspotype(inspotype);
+//
+//                                    } else {
+//                                        list1 = (ArrayList<Udinspo>) new UdinspoDao(UdinspoLocation_Activity.this).findByType(assettype, checktype);
+//                                    }
+//                                    if (list1 == null || list1.size() == 0) {
+//                                        nodatalayout.setVisibility(View.VISIBLE);
+//                                    }
+//                                    udinspoLocationadapter.adddate(list1);
+//                                    udinspoLocationadapter.notifyDataSetChanged();
                                 } else {
                                     MessageUtils.showMiddleToast(UdinspoLocation_Activity.this, "上传失败");
                                 }

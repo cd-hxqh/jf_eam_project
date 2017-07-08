@@ -1,13 +1,11 @@
 package com.jf_eam_project.ui.activity;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,30 +15,22 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jf_eam_project.Dao.UdinspoDao;
 import com.jf_eam_project.R;
-import com.jf_eam_project.api.HttpManager;
-import com.jf_eam_project.api.HttpRequestHandler;
-import com.jf_eam_project.api.ig.json.Ig_Json_Model;
-import com.jf_eam_project.bean.Results;
 import com.jf_eam_project.model.Udinspo;
 import com.jf_eam_project.model.Udinspoasset;
 import com.jf_eam_project.ui.adapter.UdinspoListadapter;
-import com.jf_eam_project.ui.adapter.UdinspoassetListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
 import com.jf_eam_project.utils.MessageUtils;
 import com.jf_eam_project.utils.NetWorkHelper;
@@ -49,7 +39,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -225,14 +214,11 @@ public class Udinspo_History_Activity extends BaseActivity implements SwipeRefre
     };
 
     private void getData(String search) {
-        Log.i(TAG,"search="+search);
         if (search.equals("")) {
             list = (ArrayList<Udinspo>) udinspoDao.queryForAll();
         } else {
-            Log.i(TAG,"ssssss");
             list = (ArrayList<Udinspo>) udinspoDao.queryByDesc(search);
         }
-        Log.i(TAG,"list size="+list.size());
         if (list != null && list.size() != 0) {
             udinspoListadapter.adddate(list);
         } else {

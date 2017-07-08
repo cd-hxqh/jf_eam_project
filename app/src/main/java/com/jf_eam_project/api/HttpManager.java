@@ -39,8 +39,8 @@ public class HttpManager {
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
 
-
         String loginIp = AccountUtils.getIpAddress(cxt) + "mobile/system/login";
+        Log.i(TAG,"loginIp="+loginIp);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -99,19 +99,17 @@ public class HttpManager {
                 return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'}}";
             }
         } else {
-            if (inspotype.equals("05")) {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + vlaue + "','CHECKTYPE':'" + vlaue + "'}}";
+            if (vlaue.matches("[0-9]+")) {
+                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "','INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'}}";
+
             } else {
-                return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "','INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + vlaue + "'}}";
+                if (inspotype.equals("05")) {
+                    return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'ASSETTYPE':'=" + assettype + "','CHECKTYPE':'=" + checktype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','ASSETTYPE':'" + vlaue + "','CHECKTYPE':'" + vlaue + "'}}";
+                } else {
+                    return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "','INSPOTYPE':'=" + inspotype + "','STATUS':'=DRAFT','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'INSPONUM':'" + vlaue + "','INSPOTYPE':'" + vlaue + "'}}";
+                }
             }
         }
-    }
-
-    /**
-     * 设置根据编号精确查询巡检单
-     */
-    public static String getUdinspourl1(String vlaue, int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDINSPO_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(INSPONUM,999999999) desc','condition':{'INSPONUM':'=" + vlaue + "'}}";
     }
 
 
@@ -216,12 +214,18 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'}}";
         } else if (!search.equals("")) {
-            if (assetNum == null) {
+            if (search.matches("[0-9]+")) {
                 return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'WONUM':'=" + search + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'}}";
+
             } else {
-                return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                if (assetNum == null) {
+                    return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                } else {
+                    return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'ASSETNUM':'=" + assetNum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                }
             }
         } else {
             return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
@@ -234,9 +238,9 @@ public class HttpManager {
     /**
      * 根据工单编号接口*
      */
-    public static String getWorkorderByNumUrl(String wonum, int curpage, int showcount) {
+    public static String getWorkorderByNumUrl(String wonum, String udbelong, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'WONUM':'=" + wonum + "','STATUS':'=等待核准,=已核准,=完成'}}";
+                "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'to_number(WONUM,999999999) DESC','condition':{'WONUM':'=" + wonum + "','STATUS':'=等待核准,=已核准,=完成','UDBELONG':'=" + udbelong + "'}}";
 
 
     }
@@ -806,6 +810,17 @@ public class HttpManager {
         }
     }
 
+
+    /**
+     * 设置选择已预留项目*
+     */
+    public static String getINVRESERVEUrl(String vlaue, String location, int curpage, int showcount) {
+        if (vlaue.equals("")) {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.INVRESERVE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LOCATION':'=" + location + "'}}";
+        } else {
+            return "{'appid':'" + Constants.UDWOCM_APPID + "','objectname':'" + Constants.INVRESERVE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LOCATION':'=" + location + "'},'sinorsearch':{'ITEMNUM':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'WONUM':"+vlaue+"'}}";
+        }
+    }
 
     /**
      * 不分页获取信息方法*

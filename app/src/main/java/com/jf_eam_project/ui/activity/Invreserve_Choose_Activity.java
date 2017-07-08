@@ -1,7 +1,6 @@
 package com.jf_eam_project.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,10 +23,9 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
-import com.jf_eam_project.model.Udinspo;
-import com.jf_eam_project.ui.adapter.UdinspoListNewadapter;
+import com.jf_eam_project.model.Invreserve;
+import com.jf_eam_project.ui.adapter.InvreserveAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
-import com.jf_eam_project.utils.AccountUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,15 +35,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 巡检单列表
+ * 预留项目选择
  */
-public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Invreserve_Choose_Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
-    private static final String TAG = "Udinspo_Activity";
+    private static final String TAG = "Invreserve_Choose_Activity";
 
 
     @Bind(R.id.title_name)
-    TextView titlename; //标题
+    TextView titlename;//标题
     @Bind(R.id.title_back_id)
     ImageView backImageView;//返回按钮
 
@@ -54,69 +52,40 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
 
 
     @Bind(R.id.recyclerView_id)
-    RecyclerView recyclerView; //RecyclerView
-    /**
-     * 暂无数据*
-     */
-
+    RecyclerView recyclerView;//RecyclerView
     @Bind(R.id.have_not_data_id)
-    LinearLayout nodatalayout;
+    LinearLayout nodatalayout;//暂无数据
     @Bind(R.id.swipe_container)
-    SwipeRefreshLayout refresh_layout; //界面刷新
+    SwipeRefreshLayout refresh_layout;//界面刷新
     /**
      * 适配器*
      */
-    private UdinspoListNewadapter udinspoListNewadapter;
-
+    private InvreserveAdapter invreserveAdapter;
     @Bind(R.id.search_edit)
-    EditText search; //编辑框
+    EditText search;//编辑框
     /**
      * 查询条件*
      */
     private String searchText = "";
     private int page = 1;
 
-    /**
-     * 获取巡检单标题*
-     */
-    private String title;
-    /**
-     * 巡检单类型*
-     */
-    private String inspotype;
-    /**
-     * assettype*
-     */
-    private String assettype;
-    /**
-     * checktype*
-     */
-    private String checktype;
-
-
-    ArrayList<Udinspo> list = new ArrayList<>();
+    private String location;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.udinspo_activity);
+        setContentView(R.layout.activity_work);
         ButterKnife.bind(this);
         initData();
+
         findViewById();
         initView();
     }
 
-    /**
-     * 获取巡检单*
-     */
+    //获取上个界面的数据
     private void initData() {
-        title = getIntent().getStringExtra("title");
-        inspotype = getIntent().getStringExtra("inspotype");
-        if (inspotype.equals("05")) {
-            assettype = getIntent().getStringExtra("assettype");
-            checktype = getIntent().getStringExtra("checktype");
-        }
+        location = getIntent().getExtras().getString("location");
     }
 
     @Override
@@ -127,53 +96,45 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(getString(R.string.online_text));
+
+
+        titlename.setText(R.string.invreserve_title);
+
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        udinspoListNewadapter = new UdinspoListNewadapter(this);
-        recyclerView.setAdapter(udinspoListNewadapter);
-
-
+        invreserveAdapter = new InvreserveAdapter(this);
+        recyclerView.setAdapter(invreserveAdapter);
         refresh_layout.setColor(R.color.holo_blue_bright,
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
         getData(searchText);
+
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
-
     }
 
-    //返回事件
     @OnClick(R.id.title_back_id)
     void setBackImageViewOnClickListener() {
         finish();
     }
 
-    //待执行任务
-    @OnClick(R.id.wait_operating_task_id)
-    void setWaitOperatingOnClickListener() {
-        Intent intent = getIntent();
-        intent.setClass(Udinspo_Activity.this, UdinspoLocation_Activity.class);
-        startActivityForResult(intent, 0);
-    }
-
 
     @Override
     public void onLoad() {
-        page++;
+        page = 1;
 
         getData(searchText);
     }
 
     @Override
     public void onRefresh() {
-        page = 1;
+        page++;
         getData(searchText);
     }
 
@@ -192,12 +153,11 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Udinspo_Activity.this.getCurrentFocus()
+                                    Invreserve_Choose_Activity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    udinspoListNewadapter.removeAllData();
-                    list = new ArrayList<Udinspo>();
+                    invreserveAdapter.removeAllData();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -213,18 +173,7 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
      * 获取数据*
      */
     private void getData(String search) {
-        String url = "";
-        String[] depatments = separatedString(AccountUtils.getDepartment(Udinspo_Activity.this));
-        String department = "";
-        if (depatments.length == 1) {
-            department = depatments[0];
-        } else {
-            for (String s : depatments) {
-                department += s + ",=";
-            }
-        }
-        url = HttpManager.getUdinspourl1(inspotype, assettype, checktype, department, search, page, 20);
-        HttpManager.getDataPagingInfo(this, url, new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getINVRESERVEUrl(search, location, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
             }
@@ -233,27 +182,25 @@ public class Udinspo_Activity extends BaseActivity implements SwipeRefreshLayout
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
 
+                ArrayList<Invreserve> items = null;
                 try {
-
-                    list = Ig_Json_Model.parseUdinspoString(results.getResultlist());
+                    items = Ig_Json_Model.parsingInvreserve(results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
-                    if (list == null || list.isEmpty()) {
+                    if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
-                        nodatalayout.setVisibility(View.GONE);
                         if (page == 1) {
-                            udinspoListNewadapter = new UdinspoListNewadapter(Udinspo_Activity.this);
-                            recyclerView.setAdapter(udinspoListNewadapter);
+                            invreserveAdapter = new InvreserveAdapter(Invreserve_Choose_Activity.this);
+                            recyclerView.setAdapter(invreserveAdapter);
                         }
-                        udinspoListNewadapter.adddate(list);
-                        udinspoListNewadapter.notifyDataSetChanged();
-
+                        if (totalPages == page) {
+                            invreserveAdapter.adddate(items);
+                        }
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    nodatalayout.setVisibility(View.VISIBLE);
                 }
 
             }

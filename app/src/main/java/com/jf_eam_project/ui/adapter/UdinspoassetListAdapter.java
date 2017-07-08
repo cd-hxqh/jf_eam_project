@@ -73,7 +73,6 @@ public class UdinspoassetListAdapter extends RecyclerView.Adapter<UdinspoassetLi
                 intent.putExtra("branch", branch);
                 intent.putExtra("udbelong", udbelong);
                 intent.putExtra("assettype", assettype);
-                Log.i("UdinspoassetListAdapter","assettype="+assettype);
                 mContext.startActivity(intent);
             }
         });

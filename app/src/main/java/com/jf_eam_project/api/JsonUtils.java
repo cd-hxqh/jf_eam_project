@@ -414,32 +414,35 @@ public class JsonUtils {
 
         JSONArray jsonArray = new JSONArray();
         for (Udinspojxxm udinspojxxm : udinspojxxms) {
-            Log.i(TAG, "udinspojxxm.writemethod=" + udinspojxxm.execution + ",udinspojxxm.udinspojxxm1=" + udinspojxxm.udinspojxxm1);
-            if (udinspojxxm.writemethod.equals("04") && udinspojxxm.udinspojxxm1.equals("正常")) {
-
-            } else {
-                try {
-                    JSONObject json = new JSONObject();
+            JSONObject json = new JSONObject();
+            try {
+                if (udinspojxxm.writemethod.equals("04") && udinspojxxm.udinspojxxm1.equals("正常")) {
+                    json.put("UDINSPOJXXMID", "");
+                    json.put("UDINSPOASSETNUM", "");
+                    json.put("TYPE", Constants.UPDATE);
+                    json.put("UDINSPOJXXM1", "");
+                    json.put("UDINSPOJXXM2", "");
+                    json.put("UDINSPOJXXM3", "");
+                    json.put("UDINSPOJXXM2", "");
+                    json.put("UDINSPOJXXM4", "");
+                    json.put("EXECUTION", "");
+                    jsonArray.put(json);
+                } else {
                     json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
-
                     json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
                     json.put("TYPE", Constants.UPDATE);
                     json.put("UDINSPOJXXM1", udinspojxxm.udinspojxxm1);
                     json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
                     json.put("UDINSPOJXXM3", udinspojxxm.udinspojxxm3);
-
-
                     json.put("UDINSPOJXXM2", udinspojxxm.udinspojxxm2);
                     json.put("UDINSPOJXXM4", udinspojxxm.udinspojxxm4);
                     json.put("EXECUTION", udinspojxxm.execution);
-
                     jsonArray.put(json);
-
-
-                } catch (JSONException e) {
-                    return null;
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
         JSONObject jsonObject = new JSONObject();
         try {
@@ -515,7 +518,6 @@ public class JsonUtils {
     public static String potoWorlOrder(WorkOrder workOrder, List<Wlh> wlhList) {
 
         JSONObject json = new JSONObject();
-
         try {
             json.put("DESCRIPTION", workOrder.description);  //描述
             json.put("UDWONUM", workOrder.udwonum); //关联工单号
@@ -572,6 +574,7 @@ public class JsonUtils {
 
         Log.i(TAG, "json=" + json);
         return json.toString();
+
 
     }
 

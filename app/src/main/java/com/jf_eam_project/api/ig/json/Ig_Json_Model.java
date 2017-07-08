@@ -2,8 +2,6 @@
 
 package com.jf_eam_project.api.ig.json;
 
-import android.util.Log;
-
 import com.jf_eam_project.api.ig.json.impl.Asset_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Assignment_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Companies_JsonHelper;
@@ -23,6 +21,7 @@ import com.jf_eam_project.api.ig.json.impl.Fjdq20view_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Inventory_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.InvoiceLine_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Invoice_JsonHelper;
+import com.jf_eam_project.api.ig.json.impl.Invreserve_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Item_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Jobplan_JsonHelper;
 import com.jf_eam_project.api.ig.json.impl.Labor_JsonHelper;
@@ -69,6 +68,7 @@ import com.jf_eam_project.model.Fgsyussdlview;
 import com.jf_eam_project.model.Inventory;
 import com.jf_eam_project.model.Invoice;
 import com.jf_eam_project.model.InvoiceLine;
+import com.jf_eam_project.model.Invreserve;
 import com.jf_eam_project.model.Item;
 import com.jf_eam_project.model.Jobplan;
 import com.jf_eam_project.model.Labor;
@@ -105,7 +105,6 @@ import java.util.ArrayList;
  */
 public class Ig_Json_Model {
 
-    private static final String TAG = "Ig_Json_Model";
 
 
     /**
@@ -223,7 +222,6 @@ public class Ig_Json_Model {
      * 解析计划工具*
      */
     public static ArrayList<Wptool> parsingWptool(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Wptool_JsonHelper.parseFromJsonList(input);
     }
 
@@ -231,7 +229,6 @@ public class Ig_Json_Model {
      * 解析任务分配*
      */
     public static ArrayList<Assignment> parsingAssignment(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Assignment_JsonHelper.parseFromJsonList(input);
     }
 
@@ -239,7 +236,6 @@ public class Ig_Json_Model {
      * 解析实际员工*
      */
     public static ArrayList<Labtrans> parsingLabtrans(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Labtrans_JsonHelper.parseFromJsonList(input);
     }
 
@@ -247,44 +243,37 @@ public class Ig_Json_Model {
      * 解析故障汇报*
      */
     public static ArrayList<Failurereport> parsingFailurereport(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Failurereport_JsonHelper.parseFromJsonList(input);
     }
 
 
     /**解析位置**/
     public static ArrayList<Location> parsingLocation(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Location_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析资产**/
     public static ArrayList<Assets> parsingAsset(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Asset_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析故障类**/
     public static ArrayList<Failurecode> parsingFailurecode(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Failurecode_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析问题代码**/
     public static ArrayList<Failurelist> parsingFailurelist(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Failurelist_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析作业计划**/
     public static ArrayList<Jobplan> parsingJobplan(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Jobplan_JsonHelper.parseFromJsonList(input);
     }
 
     /**解析人员**/
     public static ArrayList<Person> parsingPerson(String input) throws IOException {
-        Log.i(TAG, "input=" + input);
         return Person_JsonHelper.parseFromJsonList(input);
     }
 
@@ -375,6 +364,10 @@ public class Ig_Json_Model {
     /**解析物资发放**/
     public static ArrayList<Locations> parsingLocations(String input) throws IOException {
         return Locations_JsonHelper.parseFromJsonList(input);
+    }
+    /**解析预留项目表**/
+    public static ArrayList<Invreserve> parsingInvreserve(String input) throws IOException {
+        return Invreserve_JsonHelper.parseFromJsonList(input);
     }
 
 

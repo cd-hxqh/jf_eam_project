@@ -55,7 +55,7 @@
                 android:id="@+id/bt_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bdp_update_bg_dialog_btn"
+                android:background="@drawable/btn_selector"
                 android:text="@string/down_btn_text" />
         </LinearLayout>
 

@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
-import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -29,6 +27,7 @@ import com.jf_eam_project.manager.AppManager;
 import com.jf_eam_project.model.Person;
 import com.jf_eam_project.utils.AccountUtils;
 import com.jf_eam_project.utils.MessageUtils;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
-        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
+        PgyUpdateManager.register(LoginActivity.this, getString(R.string.file_provider));
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
@@ -291,12 +290,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
-        @Override
-        public void onCheckComplete() {
-        }
-
-    }
 
 
     /**

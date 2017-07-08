@@ -28,6 +28,7 @@ import com.jf_eam_project.api.HttpManager;
 import com.jf_eam_project.api.HttpRequestHandler;
 import com.jf_eam_project.api.ig.json.Ig_Json_Model;
 import com.jf_eam_project.bean.Results;
+import com.jf_eam_project.config.Constants;
 import com.jf_eam_project.model.WorkOrder;
 import com.jf_eam_project.ui.adapter.WorkListAdapter;
 import com.jf_eam_project.ui.widget.SwipeRefreshLayout;
@@ -103,7 +104,12 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.title_activity_work_list);
+        if(worktype.equals(Constants.PLAN)){
+            titlename.setText(R.string.plan_serve_work);
+        }else if(worktype.equals(Constants.UNPLAN)){
+            titlename.setText(R.string.not_plan_serve_work);
+        }
+
         meunImageView.setImageResource(R.drawable.ic_more);
         meunImageView.setVisibility(View.VISIBLE);
         layoutManager = new LinearLayoutManager(this);
@@ -140,20 +146,17 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     private void getData(String search) {
         String url = "";
-        if (isCount(search)) {
-            url = HttpManager.getWorkorderByNumUrl(search, page, 20);
+        String[] depatments = separatedString(AccountUtils.getDepartment(Work_ListActivity.this));
+        String department = "";
+        if (depatments.length == 1) {
+            department = depatments[0];
         } else {
-            String[] depatments = separatedString(AccountUtils.getDepartment(Work_ListActivity.this));
-            String department = "";
-            if (depatments.length == 1) {
-                department = depatments[0];
-            } else {
-                for (String s : depatments) {
-                    department += s + ",=";
-                }
+            for (String s : depatments) {
+                department += s + ",=";
             }
-            url = HttpManager.getworkorderUrl(worktype, department, search, assetsNum, page, 20);
+
         }
+        url = HttpManager.getworkorderUrl(worktype, department, search, assetsNum, page, 20);
         HttpManager.getDataPagingInfo(this, url, new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {

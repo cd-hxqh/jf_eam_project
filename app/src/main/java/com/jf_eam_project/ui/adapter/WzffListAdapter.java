@@ -1,6 +1,8 @@
 package com.jf_eam_project.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.jf_eam_project.R;
 import com.jf_eam_project.model.Locations;
+import com.jf_eam_project.ui.activity.Invreserve_Details_Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +48,11 @@ public class WzffListAdapter extends RecyclerView.Adapter<WzffListAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, Inventory_Details_Activity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("inventory", inventory);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, Invreserve_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("locations", locations);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }

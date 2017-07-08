@@ -528,42 +528,37 @@
             android:name=".ui.activity.GzStatisticalActivity"
             android:label="@string/gz_text"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.Invreserve_Details_Activity"
+            android:screenOrientation="portrait" />
 
         <!-- 选择项 -->
         <activity
             android:name=".ui.activity.WorkOrder_Choose_Activity"
             android:label="@string/work_order_choose"
             android:screenOrientation="portrait" />
-
-        <!-- 百度自动更新设置 -->
-        <meta-data
-            android:name="BDAPPID"
-            android:value="8580233" />
-        <meta-data
-            android:name="BDAPPKEY"
-            android:value="YPjsKWF7DryWFOsysk6XyluN3vXCiXnM" />
-
+        <!-- 预留项目选择项 -->
         <activity
-            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
+            android:name=".ui.activity.Invreserve_Choose_Activity"
+            android:screenOrientation="portrait" />
+
+
+        <!--设置蒲公英-->
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="5f1c636e38a3c781c3af525d44ab4ade"></meta-data>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.pgyersdkjfeam.provider.fileProvider"
             android:exported="false"
-            android:screenOrientation="sensor"
-            android:theme="@style/bdp_update_dialog_style_fullscreen" />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
-        <receiver
-            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
 
-        <service
-            android:name=".ui.service.DownLoadService"
-            android:enabled="true"
-            android:exported="true"></service>
     </application>
 
 </manifest>
