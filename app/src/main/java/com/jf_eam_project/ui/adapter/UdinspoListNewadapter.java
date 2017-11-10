@@ -143,7 +143,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
                     try {
                         items = Ig_Json_Model.parseUdinspoassetString(data);
                         if (items == null || items.isEmpty()) {
-                           MessageUtils.showMiddleToast(mContext,"下载失败，没有定（巡）检标准可以下载，请重新创建");
+                            MessageUtils.showMiddleToast(mContext,"下载失败，没有定（巡）检标准可以下载，请重新创建");
                             p.setVisibility(View.GONE);
                             statusTextView.setText("下载失败");
                             statusTextView.setTextColor(mContext.getResources().getColor(R.color.holo_red_light));
@@ -188,6 +188,7 @@ public class UdinspoListNewadapter extends RecyclerView.Adapter<UdinspoListNewad
                     try {
                         items = Ig_Json_Model.parseUdinspojxxmString(data);
                         if (items == null || items.isEmpty()) {
+
                         } else {
                             p.setVisibility(View.GONE);
                             statusTextView.setText("下载完成");

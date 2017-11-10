@@ -417,16 +417,16 @@ public class JsonUtils {
             JSONObject json = new JSONObject();
             try {
                 if (udinspojxxm.writemethod.equals("04") && udinspojxxm.udinspojxxm1.equals("正常")) {
-                    json.put("UDINSPOJXXMID", "");
-                    json.put("UDINSPOASSETNUM", "");
-                    json.put("TYPE", Constants.UPDATE);
-                    json.put("UDINSPOJXXM1", "");
-                    json.put("UDINSPOJXXM2", "");
-                    json.put("UDINSPOJXXM3", "");
-                    json.put("UDINSPOJXXM2", "");
-                    json.put("UDINSPOJXXM4", "");
-                    json.put("EXECUTION", "");
-                    jsonArray.put(json);
+//                    json.put("UDINSPOJXXMID", "");
+//                    json.put("UDINSPOASSETNUM", "");
+//                    json.put("TYPE", Constants.UPDATE);
+//                    json.put("UDINSPOJXXM1", "");
+//                    json.put("UDINSPOJXXM2", "");
+//                    json.put("UDINSPOJXXM3", "");
+//                    json.put("UDINSPOJXXM2", "");
+//                    json.put("UDINSPOJXXM4", "");
+//                    json.put("EXECUTION", "");
+//                    jsonArray.put(json);
                 } else {
                     json.put("UDINSPOJXXMID", udinspojxxm.udinspojxxmid + "");
                     json.put("UDINSPOASSETNUM", udinspojxxm.udinspoassetnum);
